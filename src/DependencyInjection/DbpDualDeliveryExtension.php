@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DBP\API\DbpDualDeliveryBundleBundle\DependencyInjection;
+namespace DBP\API\DualDeliveryBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class DbpDbpDualDeliveryBundleExtension extends Extension
+class DbpDualDeliveryExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
