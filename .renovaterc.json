@@ -5,5 +5,13 @@
     "schedule:weekly"
   ],
   "ignorePresets": [":prHourlyLimit2"],
-  "rangeStrategy": "update-lockfile"
+  "rangeStrategy": "update-lockfile",
+  "packageRules": [
+    {
+      "matchPackagePrefixes": [
+        "symfony/"
+      ],
+      "allowedVersions": "<5"
+    }
+  ]
 }
