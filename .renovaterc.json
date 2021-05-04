@@ -11,7 +11,7 @@
       "matchPackagePrefixes": [
         "symfony/"
       ],
-      "allowedVersions": "<5"
+      "allowedVersions": "<6"
     }
   ]
 }
