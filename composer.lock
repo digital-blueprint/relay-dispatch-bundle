@@ -227,7 +227,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.tugraz.at:dbp/dbp-api/api-core-bundle.git",
-                "reference": "af0795417adff761ee2ad4387abdc7d5be6800e0"
+                "reference": "102562fdd6bbeef7936dbcc8ef57fbf0b4361be7"
             },
             "require": {
                 "api-platform/core": "^2.6.3",
@@ -303,7 +303,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2021-06-19T12:10:34+00:00"
+            "time": "2021-06-22T12:36:25+00:00"
         },
         {
             "name": "doctrine/annotations",
