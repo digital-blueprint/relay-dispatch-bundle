@@ -227,7 +227,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.tugraz.at:dbp/dbp-api/api-core-bundle.git",
-                "reference": "102562fdd6bbeef7936dbcc8ef57fbf0b4361be7"
+                "reference": "330bef3b5e33e5815ac803f8a2b1d1c381b1d028"
             },
             "require": {
                 "api-platform/core": "^2.6.3",
@@ -297,13 +297,13 @@
                     "@php vendor/bin/php-cs-fixer --ansi fix --dry-run --diff"
                 ],
                 "coverage": [
-                    "@php vendor/bin/simple-phpunit --coverage-html _coverage"
+                    "@php -dxdebug.mode=coverage vendor/bin/simple-phpunit --coverage-html _coverage"
                 ]
             },
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2021-06-22T12:36:25+00:00"
+            "time": "2021-06-28T15:34:24+00:00"
         },
         {
             "name": "doctrine/annotations",
