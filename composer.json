@@ -2,6 +2,7 @@
     "name": "dbp/api-dual-delivery-bundle",
     "type": "symfony-bundle",
     "license": "AGPL-3.0-or-later",
+    "version": "0.1.0",
     "require": {
         "php": "^7.3",
         "api-platform/core": "^2.6",
