@@ -226,13 +226,13 @@
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.tugraz.at:dbp/dbp-api/api-core-bundle.git",
-                "reference": "2f3ecf2b90b42a3cef145b733d60ddd99e4de5ce"
+                "url": "https://gitlab.tugraz.at/dbp/dbp-api/api-core-bundle.git",
+                "reference": "84e8645f04ea6ed0effbd207f511b2417771a4c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.tugraz.at/api/v4/projects/dbp%2Fdbp-api%2Fapi-core-bundle/repository/archive.zip?sha=2f3ecf2b90b42a3cef145b733d60ddd99e4de5ce",
-                "reference": "2f3ecf2b90b42a3cef145b733d60ddd99e4de5ce",
+                "url": "https://gitlab.tugraz.at/api/v4/projects/dbp%2Fdbp-api%2Fapi-core-bundle/repository/archive.zip?sha=84e8645f04ea6ed0effbd207f511b2417771a4c3",
+                "reference": "84e8645f04ea6ed0effbd207f511b2417771a4c3",
                 "shasum": ""
             },
             "require": {
@@ -312,7 +312,7 @@
             "support": {
                 "issues": "https://gitlab.tugraz.at/api/v4/projects/8296/issues"
             },
-            "time": "2021-07-08T10:08:43+02:00"
+            "time": "2021-07-17T14:14:07+02:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1015,16 +1015,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "df991fd88693ab703aa403413d83e15f688dae33"
+                "reference": "9738e495f288eec0b187e310b7cdbbb285777dbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/df991fd88693ab703aa403413d83e15f688dae33",
-                "reference": "df991fd88693ab703aa403413d83e15f688dae33",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/9738e495f288eec0b187e310b7cdbbb285777dbe",
+                "reference": "9738e495f288eec0b187e310b7cdbbb285777dbe",
                 "shasum": ""
             },
             "require": {
@@ -1095,7 +1095,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.3.0"
+                "source": "https://github.com/Seldaek/monolog/tree/2.3.1"
             },
             "funding": [
                 {
@@ -1107,7 +1107,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-05T11:34:13+00:00"
+            "time": "2021-07-14T11:56:39+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -6090,27 +6090,27 @@
     "packages-dev": [
         {
             "name": "amphp/amp",
-            "version": "v2.5.2",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "efca2b32a7580087adb8aabbff6be1dc1bb924a9"
+                "reference": "caa95edeb1ca1bf7532e9118ede4a3c3126408cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/efca2b32a7580087adb8aabbff6be1dc1bb924a9",
-                "reference": "efca2b32a7580087adb8aabbff6be1dc1bb924a9",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/caa95edeb1ca1bf7532e9118ede4a3c3126408cc",
+                "reference": "caa95edeb1ca1bf7532e9118ede4a3c3126408cc",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7"
+                "php": ">=7.1"
             },
             "require-dev": {
                 "amphp/php-cs-fixer-config": "dev-master",
                 "amphp/phpunit-util": "^1",
                 "ext-json": "*",
                 "jetbrains/phpstorm-stubs": "^2019.3",
-                "phpunit/phpunit": "^6.0.9 | ^7",
+                "phpunit/phpunit": "^7 | ^8 | ^9",
                 "psalm/phar": "^3.11@dev",
                 "react/promise": "^2"
             },
@@ -6167,7 +6167,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/amphp",
                 "issues": "https://github.com/amphp/amp/issues",
-                "source": "https://github.com/amphp/amp/tree/v2.5.2"
+                "source": "https://github.com/amphp/amp/tree/v2.6.0"
             },
             "funding": [
                 {
@@ -6175,7 +6175,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-01-10T17:06:37+00:00"
+            "time": "2021-07-16T20:06:06+00:00"
         },
         {
             "name": "amphp/byte-stream",
