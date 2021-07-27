@@ -226,14 +226,8 @@
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.tugraz.at/dbp/dbp-api/api-core-bundle.git",
-                "reference": "f9c830f9c6bd11bf15611897e59fc8cae33b90b1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://gitlab.tugraz.at/api/v4/projects/dbp%2Fdbp-api%2Fapi-core-bundle/repository/archive.zip?sha=f9c830f9c6bd11bf15611897e59fc8cae33b90b1",
-                "reference": "f9c830f9c6bd11bf15611897e59fc8cae33b90b1",
-                "shasum": ""
+                "url": "git@gitlab.tugraz.at:dbp/dbp-api/api-core-bundle.git",
+                "reference": "3c805ba5d963849be0b07d6b5f28c2d22a01f3d3"
             },
             "require": {
                 "api-platform/core": "^2.6.3",
@@ -309,10 +303,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "support": {
-                "issues": "https://gitlab.tugraz.at/api/v4/projects/8296/issues"
-            },
-            "time": "2021-07-20T15:33:36+02:00"
+            "time": "2021-07-22T08:56:16+00:00"
         },
         {
             "name": "doctrine/annotations",
