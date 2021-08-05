@@ -1,4 +1,4 @@
-image: registry.gitlab.tugraz.at/dbp/dbp-api/dbp-relay-core-bundle/main:v1
+image: registry.gitlab.tugraz.at/dbp/relay/dbp-relay-core-bundle/main:v1
 
 before_script:
   - 'git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.tugraz.at/".insteadOf "git@gitlab.tugraz.at:"'
