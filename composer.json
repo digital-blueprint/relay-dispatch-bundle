@@ -5,8 +5,8 @@
     "require": {
         "php": "^7.3",
         "api-platform/core": "^2.6",
-        "symfony/framework-bundle": "^5.2",
-        "dbp/api-core-bundle": "main-dev"
+        "dbp/relay-core-bundle": "^0.1.11",
+        "symfony/framework-bundle": "^5.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -15,12 +15,6 @@
         "symfony/phpunit-bridge": "^5.2",
         "vimeo/psalm": "^4.2.1"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@gitlab.tugraz.at:dbp/dbp-api/api-core-bundle.git"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "DBP\\API\\DualDeliveryBundle\\": "src/"
