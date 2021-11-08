@@ -9,5 +9,5 @@ parameters:
         - tests
     bootstrapFiles:
         - vendor/bin/.phpunit/phpunit-9-0/vendor/autoload.php
-    excludes_analyse:
+    excludePaths:
         - tests/bootstrap.php
