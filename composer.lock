@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "767534a0ad04091021611575147e3437",
+    "content-hash": "20d7cc1e555c6ea2396be5eacdebb951",
     "packages": [
         {
             "name": "api-platform/core",
@@ -7486,6 +7486,7 @@
                 "issues": "https://github.com/webmozart/path-util/issues",
                 "source": "https://github.com/webmozart/path-util/tree/2.3.0"
             },
+            "abandoned": "symfony/filesystem",
             "time": "2015-12-17T08:42:14+00:00"
         }
     ],
@@ -7495,7 +7496,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3"
+        "php": "^7.3 || ^8.0"
     },
     "platform-dev": [],
     "platform-overrides": {
