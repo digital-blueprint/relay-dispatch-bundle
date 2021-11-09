@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "license": "AGPL-3.0-or-later",
     "require": {
-        "php": "^7.3",
+        "php": "^7.3 || ^8.0",
         "api-platform/core": "^2.6",
         "dbp/relay-core-bundle": "^0.1.11",
         "symfony/framework-bundle": "^5.2"
