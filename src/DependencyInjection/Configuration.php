@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DBP\API\DualDeliveryBundle\DependencyInjection;
+namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -11,7 +11,7 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('dbp_dual_delivery');
+        $treeBuilder = new TreeBuilder('dbp_relay_dispatch');
 
         $treeBuilder->getRootNode()
             ->children()

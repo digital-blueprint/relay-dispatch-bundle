@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DBP\API\DualDeliveryBundle\Migrations;
+namespace Dbp\Relay\DispatchBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class EntityManagerMigration extends AbstractMigration implements ContainerAwareInterface
 {
-    private const EM_NAME = 'dbp_relay_dual_delivery_bundle';
+    private const EM_NAME = 'dbp_relay_dispatch_bundle';
 
     /** @var ContainerInterface */
     protected $container;

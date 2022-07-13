@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DBP\API\DualDeliveryBundle\DependencyInjection;
+namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
 use Symfony\Component\Config\FileLocator;
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
-class DbpDualDeliveryExtension extends ConfigurableExtension implements PrependExtensionInterface
+class DbpRelayDispatchExtension extends ConfigurableExtension implements PrependExtensionInterface
 {
     use ExtensionTrait;
 
@@ -25,11 +25,11 @@ class DbpDualDeliveryExtension extends ConfigurableExtension implements PrependE
         );
         $loader->load('services.yaml');
 
-//        $cacheDef = $container->register('dbp.relay.cache.dual_delivery', FilesystemAdapter::class);
-//        $cacheDef->setArguments(['dual_delivery', 3600, '%kernel.cache_dir%/dbp/dual_delivery']);
+//        $cacheDef = $container->register('dbp.relay.cache.dispatch', FilesystemAdapter::class);
+//        $cacheDef->setArguments(['dispatch', 3600, '%kernel.cache_dir%/dbp/dispatch']);
 //        $cacheDef->addTag('cache.pool');
 //
-//        $definition = $container->getDefinition('DBP\API\DualDeliveryBundle\Service\DualDeliveryService');
+//        $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\DispatchService');
 //        $definition->addMethodCall('setCache', [$cacheDef]);
     }
 
@@ -50,21 +50,21 @@ class DbpDualDeliveryExtension extends ConfigurableExtension implements PrependE
         $container->prependExtensionConfig('doctrine', [
             'dbal' => [
                 'connections' => [
-                    'dbp_relay_dual_delivery_bundle' => [
+                    'dbp_relay_dispatch_bundle' => [
                         'url' => $config['database_url'] ?? '',
                     ],
                 ],
             ],
             'orm' => [
                 'entity_managers' => [
-                    'dbp_relay_dual_delivery_bundle' => [
+                    'dbp_relay_dispatch_bundle' => [
                         'naming_strategy' => 'doctrine.orm.naming_strategy.underscore_number_aware',
-                        'connection' => 'dbp_relay_dual_delivery_bundle',
+                        'connection' => 'dbp_relay_dispatch_bundle',
                         'mappings' => [
-                            'dbp_relay_dual_delivery' => [
+                            'dbp_relay_dispatch' => [
                                 'type' => 'annotation',
                                 'dir' => __DIR__.'/../Entity',
-                                'prefix' => 'DBP\API\DualDeliveryBundle\Entity',
+                                'prefix' => 'Dbp\Relay\DispatchBundle\Entity',
                             ],
                         ],
                     ],
@@ -74,7 +74,7 @@ class DbpDualDeliveryExtension extends ConfigurableExtension implements PrependE
 
         $container->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [
-                'DBP\API\DualDeliveryBundle\Migrations' => __DIR__.'/../Migrations',
+                'Dbp\Relay\DispatchBundle\Migrations' => __DIR__.'/../Migrations',
             ],
         ]);
     }

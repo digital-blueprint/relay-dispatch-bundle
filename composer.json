@@ -1,5 +1,5 @@
 {
-    "name": "dbp/api-dual-delivery-bundle",
+    "name": "dbp/dbp-relay-dispatch-bundle",
     "type": "symfony-bundle",
     "license": "AGPL-3.0-or-later",
     "require": {
@@ -20,12 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "DBP\\API\\DualDeliveryBundle\\": "src/"
+            "Dbp\\Relay\\DispatchBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DBP\\API\\DualDeliveryBundle\\Tests\\": "tests/"
+            "Dbp\\Relay\\DispatchBundle\\Tests\\": "tests/"
         }
     },
     "config": {
