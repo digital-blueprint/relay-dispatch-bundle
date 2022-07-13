@@ -1,5 +1,5 @@
 {
-    "name": "dbp/dbp-relay-dispatch-bundle",
+    "name": "dbp/relay-dispatch-bundle",
     "type": "symfony-bundle",
     "license": "AGPL-3.0-or-later",
     "require": {
