@@ -9,3 +9,6 @@ parameters:
         - tests
     excludePaths:
         - tests/bootstrap.php
+    ignoreErrors:
+        - message: '#.*NodeDefinition::children.*#'
+          path: ./src/DependencyInjection
