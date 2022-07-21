@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -25,12 +26,12 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         );
         $loader->load('services.yaml');
 
-//        $cacheDef = $container->register('dbp.relay.cache.dispatch', FilesystemAdapter::class);
-//        $cacheDef->setArguments(['dispatch', 3600, '%kernel.cache_dir%/dbp/dispatch']);
-//        $cacheDef->addTag('cache.pool');
-//
-//        $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\DispatchService');
-//        $definition->addMethodCall('setCache', [$cacheDef]);
+        $cacheDef = $container->register('dbp.relay.cache.dispatch', FilesystemAdapter::class);
+        $cacheDef->setArguments(['dispatch', 3600, '%kernel.cache_dir%/dbp/dispatch']);
+        $cacheDef->addTag('cache.pool');
+
+        $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\DispatchService');
+        $definition->addMethodCall('setCache', [$cacheDef]);
     }
 
     /**

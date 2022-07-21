@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -14,7 +15,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/requests",
  *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
+ *                 "tags" = {"Dispatch"},
+ *                 "requestBody" = {
+ *                     "content" = {
+ *                         "application/json" = {
+ *                             "schema" = {"type" = "object"},
+ *                             "example" = {"senderGivenName" = "Max", "senderFamilyName" = "Mustermann", "senderPostalAddress" = "Am Grund 1"},
+ *                         }
+ *                     }
+ *                 },
  *             }
  *         },
  *         "get" = {
@@ -55,31 +64,48 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Request
 {
+    /**
+     * @ApiProperty(identifier=true)
+     * @Groups({"DispatchRequest:output"})
+     */
     private $identifier;
 
     /**
+     * @ApiProperty(iri="https://schema.org/dateCreated")
+     * @Groups({"DispatchRequest:output"})
+     *
      * @var \DateTime
      */
     private $dateCreated;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ApiProperty(iri="https://schema.org/identifier")
+     * @Groups({"DispatchRequest:output"})
      *
      * @var string
      */
     private $personIdentifier;
 
     /**
+     * @ApiProperty(iri="https://schema.org/givenName")
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @var string
      */
     private $senderGivenName;
 
     /**
+     * @ApiProperty(iri="https://schema.org/familyName")
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @var string
      */
     private $senderFamilyName;
 
     /**
+     * @ApiProperty(iri="https://schema.org/address")
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @var string
      */
     private $senderPostalAddress;
@@ -114,7 +140,7 @@ class Request
         $this->personIdentifier = $personIdentifier;
     }
 
-    public function getSenderGivenName(): string
+    public function getSenderGivenName(): ?string
     {
         return $this->senderGivenName;
     }
@@ -124,7 +150,7 @@ class Request
         $this->senderGivenName = $senderGivenName;
     }
 
-    public function getSenderFamilyName(): string
+    public function getSenderFamilyName(): ?string
     {
         return $this->senderFamilyName;
     }
@@ -134,7 +160,7 @@ class Request
         $this->senderFamilyName = $senderFamilyName;
     }
 
-    public function getSenderPostalAddress(): string
+    public function getSenderPostalAddress(): ?string
     {
         return $this->senderPostalAddress;
     }
@@ -158,5 +184,21 @@ class Request
         }
 
         return $request;
+    }
+
+    /**
+     * @param RequestPersistence[] $requestPersistences
+     *
+     * @return Request[]
+     */
+    public static function fromRequestPersistences(array $requestPersistences): array
+    {
+        $requests = [];
+
+        foreach ($requestPersistences as $requestPersistence) {
+            $requests[] = self::fromRequestPersistence($requestPersistence);
+        }
+
+        return $requests;
     }
 }
