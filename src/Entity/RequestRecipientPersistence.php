@@ -134,7 +134,7 @@ class RequestRecipientPersistence
     {
         $requestRecipientPersistence = new RequestRecipientPersistence();
         $requestRecipientPersistence->setIdentifier($requestRecipient->getIdentifier());
-        $requestRecipientPersistence->setDispatchRequestIdentifier($requestRecipient->getDispatchRequestIdentifier() === null ? '' : $requestRecipient->getPersonIdentifier());
+        $requestRecipientPersistence->setDispatchRequestIdentifier($requestRecipient->getDispatchRequestIdentifier() === null ? '' : $requestRecipient->getDispatchRequestIdentifier());
         $requestRecipientPersistence->setGivenName($requestRecipient->getGivenName() === null ? '' : $requestRecipient->getGivenName());
         $requestRecipientPersistence->setFamilyName($requestRecipient->getFamilyName() === null ? '' : $requestRecipient->getFamilyName());
         $requestRecipientPersistence->setPostalAddress($requestRecipient->getPostalAddress() === null ? '' : $requestRecipient->getPostalAddress());

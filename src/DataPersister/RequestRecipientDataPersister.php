@@ -66,6 +66,7 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
 
         $requestRecipient = $data;
         assert($requestRecipient instanceof RequestRecipient);
-        $this->dispatchService->removeRequestRecipientByIdForCurrentPerson($requestRecipient->getIdentifier());
+        // TODO: Implement
+//        $this->dispatchService->removeRequestRecipientByIdForCurrentPerson($requestRecipient->getIdentifier());
     }
 }
