@@ -192,18 +192,16 @@ class RequestRecipient
     }
 
     /**
-     * @param RequestPersistence[] $requestPersistences
-     *
-     * @return Request[]
+     * @return RequestRecipient[]
      */
-    public static function fromRequestPersistences(array $requestPersistences): array
+    public static function fromRequestRecipientPersistences(array $requestRecipientPersistences): array
     {
-        $requests = [];
+        $requestRecipients = [];
 
-        foreach ($requestPersistences as $requestPersistence) {
-            $requests[] = self::fromRequestPersistence($requestPersistence);
+        foreach ($requestRecipientPersistences as $requestRecipientPersistence) {
+            $requestRecipients[] = self::fromRequestRecipientPersistence($requestRecipientPersistence);
         }
 
-        return $requests;
+        return $requestRecipients;
     }
 }

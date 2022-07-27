@@ -203,7 +203,7 @@ class DispatchService
         $requestRecipientPersistence = new RequestRecipientPersistence();
         $requestRecipientPersistence->setIdentifier((string) Uuid::v4());
         $requestRecipientPersistence->setDispatchRequestIdentifier($requestRecipient->getDispatchRequestIdentifier());
-        $requestRecipientPersistence->setRecipientId("");
+        $requestRecipientPersistence->setRecipientId('');
         $requestRecipientPersistence->setDateCreated(new \DateTime('now'));
         $requestRecipientPersistence->setGivenName($requestRecipient->getGivenName() ?? '');
         $requestRecipientPersistence->setFamilyName($requestRecipient->getFamilyName() ?? '');
