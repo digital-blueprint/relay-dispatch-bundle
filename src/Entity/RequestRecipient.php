@@ -20,7 +20,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                     "content" = {
  *                         "application/json" = {
  *                             "schema" = {"type" = "object"},
- *                             "example" = {"givenName" = "Max", "familyName" = "Mustermann", "postalAddress" = "Am Grund 1"},
+ *                             "example" = {
+ *                                 "dispatchRequestIdentifier" = "4d553985-d44f-404f-acf3-cd0eac7ae9c2",
+ *                                 "givenName" = "Max",
+ *                                 "familyName" = "Mustermann",
+ *                                 "postalAddress" = "Am Grund 1"
+ *                             },
  *                         }
  *                     }
  *                 },
@@ -80,7 +85,7 @@ class RequestRecipient
 
     /**
      * @ApiProperty(iri="https://schema.org/identifier")
-     * @Groups({"DispatchRequestRecipient:output"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
      *
      * @var string
      */
@@ -170,20 +175,20 @@ class RequestRecipient
         $this->postalAddress = $postalAddress;
     }
 
-    public static function fromRequestPersistence(RequestPersistence $requestPersistence): Request
+    public static function fromRequestRecipientPersistence(RequestRecipientPersistence $requestRecipientPersistence): RequestRecipient
     {
-        $request = new Request();
-        $request->setIdentifier($requestPersistence->getIdentifier());
-        $request->setDispatchRequestIdentifier($requestPersistence->getDispatchRequestIdentifier() === null ? '' : $requestPersistence->getDispatchRequestIdentifier());
-        $request->setGivenName($requestPersistence->getGivenName() === null ? '' : $requestPersistence->getGivenName());
-        $request->setFamilyName($requestPersistence->getFamilyName() === null ? '' : $requestPersistence->getFamilyName());
-        $request->setPostalAddress($requestPersistence->getPostalAddress() === null ? '' : $requestPersistence->getPostalAddress());
+        $requestRecipient = new RequestRecipient();
+        $requestRecipient->setIdentifier($requestRecipientPersistence->getIdentifier());
+        $requestRecipient->setDispatchRequestIdentifier($requestRecipientPersistence->getDispatchRequestIdentifier() === null ? '' : $requestRecipientPersistence->getDispatchRequestIdentifier());
+        $requestRecipient->setGivenName($requestRecipientPersistence->getGivenName() === null ? '' : $requestRecipientPersistence->getGivenName());
+        $requestRecipient->setFamilyName($requestRecipientPersistence->getFamilyName() === null ? '' : $requestRecipientPersistence->getFamilyName());
+        $requestRecipient->setPostalAddress($requestRecipientPersistence->getPostalAddress() === null ? '' : $requestRecipientPersistence->getPostalAddress());
 
-        if ($requestPersistence->getDateCreated() !== null) {
-            $request->setDateCreated($requestPersistence->getDateCreated());
+        if ($requestRecipientPersistence->getDateCreated() !== null) {
+            $requestRecipient->setDateCreated($requestRecipientPersistence->getDateCreated());
         }
 
-        return $request;
+        return $requestRecipient;
     }
 
     /**
