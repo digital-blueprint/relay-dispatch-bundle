@@ -9,6 +9,8 @@ use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestPersistence;
+use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
+use Dbp\Relay\DispatchBundle\Entity\RequestRecipientPersistence;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -194,5 +196,26 @@ class DispatchService
         foreach ($reviews as $request) {
             $this->removeRequest($request);
         }
+    }
+
+    public function createRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
+    {
+        $requestRecipientPersistence = new RequestRecipientPersistence();
+        $requestRecipientPersistence->setIdentifier((string) Uuid::v4());
+        $requestRecipientPersistence->setDispatchRequestIdentifier($requestRecipient->getDispatchRequestIdentifier());
+        $requestRecipientPersistence->setRecipientId('');
+        $requestRecipientPersistence->setDateCreated(new \DateTime('now'));
+        $requestRecipientPersistence->setGivenName($requestRecipient->getGivenName() ?? '');
+        $requestRecipientPersistence->setFamilyName($requestRecipient->getFamilyName() ?? '');
+        $requestRecipientPersistence->setPostalAddress($requestRecipient->getPostalAddress() ?? '');
+
+        try {
+            $this->em->persist($requestRecipientPersistence);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be created!', 'dispatch:request-recipient-not-created', ['message' => $e->getMessage()]);
+        }
+
+        return RequestRecipient::fromRequestRecipientPersistence($requestRecipientPersistence);
     }
 }
