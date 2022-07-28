@@ -90,6 +90,16 @@ class RequestRecipient
     private $dateCreated;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Request", inversedBy="recipients")
+     * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
+     * @ApiProperty()
+     * @Groups({"DispatchRequestRecipient:output"})
+     *
+     * @var Request
+     */
+    private $request;
+
+    /**
      * @ORM\Column(type="string", length=50)
      * @ApiProperty(iri="https://schema.org/identifier")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
@@ -150,6 +160,14 @@ class RequestRecipient
     public function setDateCreated(\DateTime $dateCreated): void
     {
         $this->dateCreated = $dateCreated;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getDispatchRequest(): Request
+    {
+        return $this->dispatchRequest;
     }
 
     public function getDispatchRequestIdentifier(): string

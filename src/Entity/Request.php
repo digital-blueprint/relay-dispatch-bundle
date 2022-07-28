@@ -6,6 +6,7 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -121,10 +122,14 @@ class Request
     private $senderPostalAddress;
 
     /**
-     * @@ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="dispatchRequestIdentifier")
-     * @@Groups({"DispatchRequest:output"})
+     * @ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="request")
+     * @Groups({"DispatchRequest:output"})
      */
     private $recipients;
+
+    public function __construct() {
+        $this->recipients = new ArrayCollection();
+    }
 
     public function getIdentifier(): string
     {
