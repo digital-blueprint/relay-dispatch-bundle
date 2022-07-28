@@ -53,6 +53,11 @@ class RequestPersistence
      */
     private $senderPostalAddress;
 
+    /**
+     * @OneToMany(targetEntity="RecipientPersistence", mappedBy="dispatchRequestIdentifier")
+     */
+    private $recipientPersistences;
+
     public function getIdentifier(): string
     {
         return (string) $this->identifier;
@@ -127,5 +132,13 @@ class RequestPersistence
         }
 
         return $requestPersistence;
+    }
+
+    /**
+     * @return RequestRecipientPersistence[]
+     */
+    public function getRecipientPersistences()
+    {
+        return $this->recipientPersistences;
     }
 }

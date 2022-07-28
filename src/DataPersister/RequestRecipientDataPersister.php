@@ -8,7 +8,6 @@ use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestRecipientDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
 {
@@ -17,15 +16,9 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
      */
     private $dispatchService;
 
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    public function __construct(DispatchService $dispatchService, RequestStack $requestStack)
+    public function __construct(DispatchService $dispatchService)
     {
         $this->dispatchService = $dispatchService;
-        $this->requestStack = $requestStack;
     }
 
     public function supports($data, array $context = []): bool
@@ -46,9 +39,7 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         $requestRecipient = $data;
         assert($requestRecipient instanceof RequestRecipient);
 
-        dump($data);
-
-        // Check if current person owns request
+        // Check if current person owns the request
         $this->dispatchService->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
 
         return $this->dispatchService->createRequestRecipient($requestRecipient);
@@ -66,7 +57,10 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
 
         $requestRecipient = $data;
         assert($requestRecipient instanceof RequestRecipient);
-        // TODO: Implement
-//        $this->dispatchService->removeRequestRecipientByIdForCurrentPerson($requestRecipient->getIdentifier());
+
+        // Check if current person owns the request
+        $this->dispatchService->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
+
+        $this->dispatchService->removeRequestRecipientById($requestRecipient->getIdentifier());
     }
 }

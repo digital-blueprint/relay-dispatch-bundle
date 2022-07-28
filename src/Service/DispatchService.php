@@ -84,6 +84,23 @@ class DispatchService
     }
 
     /**
+     * Fetches a RequestRecipient.
+     */
+    public function getRequestRecipientById(string $identifier): ?RequestRecipient
+    {
+        /** @var RequestRecipientPersistence $requestRecipientPersistence */
+        $requestRecipientPersistence = $this->em
+            ->getRepository(RequestRecipientPersistence::class)
+            ->find($identifier);
+
+        if (!$requestRecipientPersistence) {
+            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestRecipient was not found!', 'dispatch:request-recipient-not-found');
+        }
+
+        return RequestRecipient::fromRequestRecipientPersistence($requestRecipientPersistence);
+    }
+
+    /**
      * Fetches all Request entities for the current person.
      *
      * @return Request[]
@@ -97,6 +114,22 @@ class DispatchService
             ->findBy(['personIdentifier' => $person->getIdentifier()]);
 
         return Request::fromRequestPersistences($requestPersistences);
+    }
+
+    /**
+     * Fetches all RequestRecipient entities for the current person.
+     *
+     * @return RequestRecipient[]
+     */
+    public function getRequestRecipientsForCurrentPerson(): array
+    {
+        $person = $this->getCurrentPerson();
+
+        $requestRecipientPersistences = $this->em
+            ->getRepository(RequestRecipientPersistence::class)
+            ->findBy(['personIdentifier' => $person->getIdentifier()]);
+
+        return RequestRecipient::fromRequestRecipientPersistences($requestRecipientPersistences);
     }
 
     /**
@@ -130,6 +163,19 @@ class DispatchService
         }
 
         return $request;
+    }
+
+    /**
+     * Fetches a RequestRecipient for the current person.
+     */
+    public function getRequestRecipientByIdForCurrentPerson(string $identifier): ?RequestRecipient
+    {
+        $requestRecipient = $this->getRequestRecipientById($identifier);
+
+        // Check if current person owns the request
+        $this->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
+
+        return $requestRecipient;
     }
 
     /**
@@ -217,5 +263,19 @@ class DispatchService
         }
 
         return RequestRecipient::fromRequestRecipientPersistence($requestRecipientPersistence);
+    }
+
+    public function removeRequestRecipientById(string $identifier)
+    {
+        // Prevent "Detached entity cannot be removed" error by fetching the RequestRecipientPersistence
+        // instead of using "RequestRecipientPersistence::fromRequestRecipient($requestRecipient)".
+        // "$this->em->merge" would fix it too, but is deprecated
+        /** @var RequestRecipientPersistence $requestRecipientPersistence */
+        $requestRecipientPersistence = $this->em
+            ->getRepository(RequestRecipientPersistence::class)
+            ->find($identifier);
+
+        $this->em->remove($requestRecipientPersistence);
+        $this->em->flush();
     }
 }
