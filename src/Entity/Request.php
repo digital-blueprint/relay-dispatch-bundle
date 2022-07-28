@@ -6,9 +6,12 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ORM\Entity
+ * @ORM\Table(name="dispatch_requests")
  * @ApiResource(
  *     collectionOperations={
  *         "post" = {
@@ -65,12 +68,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Request
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(type="string", length=50)
      * @ApiProperty(identifier=true)
      * @Groups({"DispatchRequest:output"})
      */
     private $identifier;
 
     /**
+     * @ORM\Column(type="datetime")
      * @ApiProperty(iri="https://schema.org/dateCreated")
      * @Groups({"DispatchRequest:output"})
      *
@@ -79,6 +85,7 @@ class Request
     private $dateCreated;
 
     /**
+     * @ORM\Column(type="string", length=50)
      * @ApiProperty(iri="https://schema.org/identifier")
      * @Groups({"DispatchRequest:output"})
      *
@@ -87,6 +94,7 @@ class Request
     private $personIdentifier;
 
     /**
+     * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/givenName")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
@@ -95,6 +103,7 @@ class Request
     private $senderGivenName;
 
     /**
+     * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/familyName")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
@@ -103,12 +112,19 @@ class Request
     private $senderFamilyName;
 
     /**
+     * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/address")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
      * @var string
      */
     private $senderPostalAddress;
+
+    /**
+     * @@ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="dispatchRequestIdentifier")
+     * @@Groups({"DispatchRequest:output"})
+     */
+    private $recipients;
 
     public function getIdentifier(): string
     {
@@ -170,35 +186,11 @@ class Request
         $this->senderPostalAddress = $senderPostalAddress;
     }
 
-    public static function fromRequestPersistence(RequestPersistence $requestPersistence): Request
-    {
-        $request = new Request();
-        $request->setIdentifier($requestPersistence->getIdentifier());
-        $request->setPersonIdentifier($requestPersistence->getPersonIdentifier() === null ? '' : $requestPersistence->getPersonIdentifier());
-        $request->setSenderGivenName($requestPersistence->getSenderGivenName() === null ? '' : $requestPersistence->getSenderGivenName());
-        $request->setSenderFamilyName($requestPersistence->getSenderFamilyName() === null ? '' : $requestPersistence->getSenderFamilyName());
-        $request->setSenderPostalAddress($requestPersistence->getSenderPostalAddress() === null ? '' : $requestPersistence->getSenderPostalAddress());
-
-        if ($requestPersistence->getDateCreated() !== null) {
-            $request->setDateCreated($requestPersistence->getDateCreated());
-        }
-
-        return $request;
-    }
-
     /**
-     * @param RequestPersistence[] $requestPersistences
-     *
-     * @return Request[]
+     * @return RequestRecipient[]
      */
-    public static function fromRequestPersistences(array $requestPersistences): array
+    public function getRecipients()
     {
-        $requests = [];
-
-        foreach ($requestPersistences as $requestPersistence) {
-            $requests[] = self::fromRequestPersistence($requestPersistence);
-        }
-
-        return $requests;
+        return $this->recipients;
     }
 }

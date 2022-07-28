@@ -7,7 +7,7 @@ namespace Dbp\Relay\DispatchBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Create table dispatch_requests.
+ * Create table dispatch_request_recipients.
  */
 final class Version20220727105201 extends EntityManagerMigration
 {

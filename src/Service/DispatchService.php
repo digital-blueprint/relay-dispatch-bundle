@@ -8,9 +8,7 @@ use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
-use Dbp\Relay\DispatchBundle\Entity\RequestPersistence;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
-use Dbp\Relay\DispatchBundle\Entity\RequestRecipientPersistence;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -71,16 +69,16 @@ class DispatchService
      */
     public function getRequestById(string $identifier): ?Request
     {
-        /** @var RequestPersistence $requestPersistence */
-        $requestPersistence = $this->em
-            ->getRepository(RequestPersistence::class)
+        /** @var Request $request */
+        $request = $this->em
+            ->getRepository(Request::class)
             ->find($identifier);
 
-        if (!$requestPersistence) {
+        if (!$request) {
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'Request was not found!', 'dispatch:request-not-found');
         }
 
-        return Request::fromRequestPersistence($requestPersistence);
+        return $request;
     }
 
     /**
@@ -88,16 +86,16 @@ class DispatchService
      */
     public function getRequestRecipientById(string $identifier): ?RequestRecipient
     {
-        /** @var RequestRecipientPersistence $requestRecipientPersistence */
-        $requestRecipientPersistence = $this->em
-            ->getRepository(RequestRecipientPersistence::class)
+        /** @var RequestRecipient $requestRecipient */
+        $requestRecipient = $this->em
+            ->getRepository(RequestRecipient::class)
             ->find($identifier);
 
-        if (!$requestRecipientPersistence) {
+        if (!$requestRecipient) {
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestRecipient was not found!', 'dispatch:request-recipient-not-found');
         }
 
-        return RequestRecipient::fromRequestRecipientPersistence($requestRecipientPersistence);
+        return $requestRecipient;
     }
 
     /**
@@ -109,11 +107,11 @@ class DispatchService
     {
         $person = $this->getCurrentPerson();
 
-        $requestPersistences = $this->em
-            ->getRepository(RequestPersistence::class)
+        $requests = $this->em
+            ->getRepository(Request::class)
             ->findBy(['personIdentifier' => $person->getIdentifier()]);
 
-        return Request::fromRequestPersistences($requestPersistences);
+        return $requests;
     }
 
     /**
@@ -125,11 +123,11 @@ class DispatchService
     {
         $person = $this->getCurrentPerson();
 
-        $requestRecipientPersistences = $this->em
-            ->getRepository(RequestRecipientPersistence::class)
+        $requestRecipients = $this->em
+            ->getRepository(RequestRecipient::class)
             ->findBy(['personIdentifier' => $person->getIdentifier()]);
 
-        return RequestRecipient::fromRequestRecipientPersistences($requestRecipientPersistences);
+        return $requestRecipients;
     }
 
     /**
@@ -144,10 +142,10 @@ class DispatchService
         $criteria->where($expr->lt('validUntil', new \DateTime('now')));
 
         $result = $this->em
-            ->getRepository(RequestPersistence::class)
+            ->getRepository(Request::class)
             ->matching($criteria);
 
-        return Request::fromRequestPersistences($result->getValues());
+        return $result->getValues();
     }
 
     /**
@@ -195,15 +193,15 @@ class DispatchService
      */
     public function removeRequest(Request $request): void
     {
-        // Prevent "Detached entity cannot be removed" error by fetching the RequestPersistence
-        // instead of using "RequestPersistence::fromRequest($request)".
+        // Prevent "Detached entity cannot be removed" error by fetching the Request
+        // instead of using "Request::fromRequest($request)".
         // "$this->em->merge" would fix it too, but is deprecated
-        /** @var RequestPersistence $requestPersistence */
-        $requestPersistence = $this->em
-            ->getRepository(RequestPersistence::class)
+        /** @var Request $request */
+        $request = $this->em
+            ->getRepository(Request::class)
             ->find($request->getIdentifier());
 
-        $this->em->remove($requestPersistence);
+        $this->em->remove($request);
         $this->em->flush();
     }
 
@@ -211,22 +209,22 @@ class DispatchService
     {
         $personId = $this->personProvider->getCurrentPerson()->getIdentifier();
 
-        $requestPersistence = new RequestPersistence();
-        $requestPersistence->setIdentifier((string) Uuid::v4());
-        $requestPersistence->setPersonIdentifier($personId);
-        $requestPersistence->setDateCreated(new \DateTime('now'));
-        $requestPersistence->setSenderGivenName($request->getSenderGivenName() ?? '');
-        $requestPersistence->setSenderFamilyName($request->getSenderFamilyName() ?? '');
-        $requestPersistence->setSenderPostalAddress($request->getSenderPostalAddress() ?? '');
+//        $request = new Request();
+        $request->setIdentifier((string) Uuid::v4());
+        $request->setPersonIdentifier($personId);
+        $request->setDateCreated(new \DateTime('now'));
+//        $request->setSenderGivenName($request->getSenderGivenName() ?? '');
+//        $request->setSenderFamilyName($request->getSenderFamilyName() ?? '');
+//        $request->setSenderPostalAddress($request->getSenderPostalAddress() ?? '');
 
         try {
-            $this->em->persist($requestPersistence);
+            $this->em->persist($request);
             $this->em->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Request could not be created!', 'dispatch:request-not-created', ['message' => $e->getMessage()]);
         }
 
-        return Request::fromRequestPersistence($requestPersistence);
+        return $request;
     }
 
     /**
@@ -246,36 +244,33 @@ class DispatchService
 
     public function createRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
     {
-        $requestRecipientPersistence = new RequestRecipientPersistence();
-        $requestRecipientPersistence->setIdentifier((string) Uuid::v4());
-        $requestRecipientPersistence->setDispatchRequestIdentifier($requestRecipient->getDispatchRequestIdentifier());
-        $requestRecipientPersistence->setRecipientId('');
-        $requestRecipientPersistence->setDateCreated(new \DateTime('now'));
-        $requestRecipientPersistence->setGivenName($requestRecipient->getGivenName() ?? '');
-        $requestRecipientPersistence->setFamilyName($requestRecipient->getFamilyName() ?? '');
-        $requestRecipientPersistence->setPostalAddress($requestRecipient->getPostalAddress() ?? '');
+//        $requestRecipient = new RequestRecipient();
+        $requestRecipient->setIdentifier((string) Uuid::v4());
+//        $requestRecipient->setDispatchRequestIdentifier($requestRecipient->getDispatchRequestIdentifier());
+        $requestRecipient->setRecipientId('');
+        $requestRecipient->setDateCreated(new \DateTime('now'));
+//        $requestRecipient->setGivenName($requestRecipient->getGivenName() ?? '');
+//        $requestRecipient->setFamilyName($requestRecipient->getFamilyName() ?? '');
+//        $requestRecipient->setPostalAddress($requestRecipient->getPostalAddress() ?? '');
 
         try {
-            $this->em->persist($requestRecipientPersistence);
+            $this->em->persist($requestRecipient);
             $this->em->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be created!', 'dispatch:request-recipient-not-created', ['message' => $e->getMessage()]);
         }
 
-        return RequestRecipient::fromRequestRecipientPersistence($requestRecipientPersistence);
+        return $requestRecipient;
     }
 
     public function removeRequestRecipientById(string $identifier)
     {
-        // Prevent "Detached entity cannot be removed" error by fetching the RequestRecipientPersistence
-        // instead of using "RequestRecipientPersistence::fromRequestRecipient($requestRecipient)".
-        // "$this->em->merge" would fix it too, but is deprecated
-        /** @var RequestRecipientPersistence $requestRecipientPersistence */
-        $requestRecipientPersistence = $this->em
-            ->getRepository(RequestRecipientPersistence::class)
+        /** @var RequestRecipient $requestRecipient */
+        $requestRecipient = $this->em
+            ->getRepository(RequestRecipient::class)
             ->find($identifier);
 
-        $this->em->remove($requestRecipientPersistence);
+        $this->em->remove($requestRecipient);
         $this->em->flush();
     }
 }

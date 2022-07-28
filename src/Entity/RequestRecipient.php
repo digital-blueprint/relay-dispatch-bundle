@@ -6,9 +6,12 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ORM\Entity
+ * @ORM\Table(name="dispatch_request_recipients")
  * @ApiResource(
  *     collectionOperations={
  *         "post" = {
@@ -58,7 +61,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     iri="https://schema.org/Action",
  *     shortName="DispatchRequestRecipient",
  *     normalizationContext={
- *         "groups" = {"DispatchRequestRecipient:output"},
+ *         "groups" = {"DispatchRequestRecipient:output", "DispatchRequest:output"},
  *         "jsonld_embed_context" = true
  *     },
  *     denormalizationContext={
@@ -70,20 +73,24 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class RequestRecipient
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(type="string", length=50)
      * @ApiProperty(identifier=true)
-     * @Groups({"DispatchRequestRecipient:output"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
+     * @ORM\Column(type="datetime")
      * @ApiProperty(iri="https://schema.org/dateCreated")
-     * @Groups({"DispatchRequestRecipient:output"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var \DateTime
      */
     private $dateCreated;
 
     /**
+     * @ORM\Column(type="string", length=50)
      * @ApiProperty(iri="https://schema.org/identifier")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
      *
@@ -92,24 +99,34 @@ class RequestRecipient
     private $dispatchRequestIdentifier;
 
     /**
+     * @ORM\Column(type="string", length=50)
+     *
+     * @var string
+     */
+    private $recipientId;
+
+    /**
+     * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/givenName")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      *
      * @var string
      */
     private $givenName;
 
     /**
+     * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/familyName")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      *
      * @var string
      */
     private $familyName;
 
     /**
+     * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/address")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      *
      * @var string
      */
@@ -145,6 +162,16 @@ class RequestRecipient
         $this->dispatchRequestIdentifier = $dispatchRequestIdentifier;
     }
 
+    public function getRecipientId(): string
+    {
+        return $this->recipientId;
+    }
+
+    public function setRecipientId(string $recipientId): void
+    {
+        $this->recipientId = $recipientId;
+    }
+
     public function getGivenName(): ?string
     {
         return $this->givenName;
@@ -173,35 +200,5 @@ class RequestRecipient
     public function setPostalAddress(string $postalAddress): void
     {
         $this->postalAddress = $postalAddress;
-    }
-
-    public static function fromRequestRecipientPersistence(RequestRecipientPersistence $requestRecipientPersistence): RequestRecipient
-    {
-        $requestRecipient = new RequestRecipient();
-        $requestRecipient->setIdentifier($requestRecipientPersistence->getIdentifier());
-        $requestRecipient->setDispatchRequestIdentifier($requestRecipientPersistence->getDispatchRequestIdentifier() === null ? '' : $requestRecipientPersistence->getDispatchRequestIdentifier());
-        $requestRecipient->setGivenName($requestRecipientPersistence->getGivenName() === null ? '' : $requestRecipientPersistence->getGivenName());
-        $requestRecipient->setFamilyName($requestRecipientPersistence->getFamilyName() === null ? '' : $requestRecipientPersistence->getFamilyName());
-        $requestRecipient->setPostalAddress($requestRecipientPersistence->getPostalAddress() === null ? '' : $requestRecipientPersistence->getPostalAddress());
-
-        if ($requestRecipientPersistence->getDateCreated() !== null) {
-            $requestRecipient->setDateCreated($requestRecipientPersistence->getDateCreated());
-        }
-
-        return $requestRecipient;
-    }
-
-    /**
-     * @return RequestRecipient[]
-     */
-    public static function fromRequestRecipientPersistences(array $requestRecipientPersistences): array
-    {
-        $requestRecipients = [];
-
-        foreach ($requestRecipientPersistences as $requestRecipientPersistence) {
-            $requestRecipients[] = self::fromRequestRecipientPersistence($requestRecipientPersistence);
-        }
-
-        return $requestRecipients;
     }
 }
