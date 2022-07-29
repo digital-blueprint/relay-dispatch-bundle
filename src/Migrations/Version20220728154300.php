@@ -7,13 +7,13 @@ namespace Dbp\Relay\DispatchBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Create table dispatch_requests.
+ * Create foreign key for table dispatch_request_recipients.
  */
 final class Version20220728154300 extends EntityManagerMigration
 {
     public function getDescription(): string
     {
-        return 'Creates table dispatch_request_recipients.';
+        return 'Creates foreign key for table dispatch_request_recipients.';
     }
 
     public function up(Schema $schema): void
