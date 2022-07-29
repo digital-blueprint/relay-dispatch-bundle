@@ -192,9 +192,6 @@ class Request
         $this->senderPostalAddress = $senderPostalAddress;
     }
 
-    /**
-     * @return RequestRecipient[]
-     */
     public function getRecipients()
     {
         return $this->recipients;
