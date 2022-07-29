@@ -164,7 +164,7 @@ class RequestRecipient
 
     public function getDispatchRequest(): Request
     {
-        return $this->dispatchRequest;
+        return $this->request;
     }
 
     public function getDispatchRequestIdentifier(): string
