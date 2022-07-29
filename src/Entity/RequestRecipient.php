@@ -92,7 +92,7 @@ class RequestRecipient
     /**
      * @ORM\ManyToOne(targetEntity="Request", inversedBy="recipients")
      * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
-     * @ApiProperty()
+     * @ApiProperty
      * @Groups({"DispatchRequestRecipient:output"})
      *
      * @var Request
@@ -162,9 +162,6 @@ class RequestRecipient
         $this->dateCreated = $dateCreated;
     }
 
-    /**
-     * @return Request
-     */
     public function getDispatchRequest(): Request
     {
         return $this->dispatchRequest;

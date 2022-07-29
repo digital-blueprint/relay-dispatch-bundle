@@ -127,7 +127,8 @@ class Request
      */
     private $recipients;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->recipients = new ArrayCollection();
     }
 
