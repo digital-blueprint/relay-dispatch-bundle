@@ -58,7 +58,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             },
  *         }
  *     },
- *     iri="https://schema.org/Action",
+ *     iri="https://schema.org/Person",
  *     shortName="DispatchRequestRecipient",
  *     normalizationContext={
  *         "groups" = {"DispatchRequestRecipient:output", "DispatchRequest:output"},
