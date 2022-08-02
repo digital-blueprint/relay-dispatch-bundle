@@ -8,6 +8,7 @@ use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
+use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
@@ -271,6 +272,32 @@ class DispatchService
             ->find($identifier);
 
         $this->em->remove($requestRecipient);
+        $this->em->flush();
+    }
+
+    public function createRequestFile(RequestFile $requestFile): RequestFile
+    {
+        $requestFile->setIdentifier((string) Uuid::v4());
+        $requestFile->setDateCreated(new \DateTime('now'));
+
+        try {
+            $this->em->persist($requestFile);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be created!', 'dispatch:request-file-not-created', ['message' => $e->getMessage()]);
+        }
+
+        return $requestFile;
+    }
+
+    public function removeRequestFileById(string $identifier)
+    {
+        /** @var RequestFile $requestFile */
+        $requestFile = $this->em
+            ->getRepository(RequestFile::class)
+            ->find($identifier);
+
+        $this->em->remove($requestFile);
         $this->em->flush();
     }
 }

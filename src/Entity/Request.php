@@ -127,6 +127,12 @@ class Request
      */
     private $recipients;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RequestFile", mappedBy="request")
+     * @Groups({"DispatchRequest:output"})
+     */
+    private $files;
+
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
@@ -195,5 +201,10 @@ class Request
     public function getRecipients()
     {
         return $this->recipients;
+    }
+
+    public function getFiles()
+    {
+        return $this->files;
     }
 }
