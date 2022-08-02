@@ -20,6 +20,15 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
     {
         $this->addResourceClassDirectory($container, __DIR__.'/../Entity');
 
+        $pathsToHide = [
+            '/dispatch/request-recipients',
+            '/dispatch/request-files',
+        ];
+
+        foreach ($pathsToHide as $path) {
+            $this->addPathToHide($container, $path);
+        }
+
         $loader = new YamlFileLoader(
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
