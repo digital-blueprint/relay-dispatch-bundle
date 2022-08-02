@@ -136,6 +136,7 @@ class Request
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     public function getIdentifier(): string

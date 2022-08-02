@@ -216,4 +216,9 @@ class RequestRecipient
     {
         $this->postalAddress = $postalAddress;
     }
+
+    public function setRequest(Request $request): void
+    {
+        $this->request = $request;
+    }
 }

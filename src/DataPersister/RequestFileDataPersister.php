@@ -28,21 +28,9 @@ class RequestFileDataPersister extends AbstractController implements ContextAwar
 
     /**
      * @param mixed $data
-     *
-     * @return RequestFile
      */
     public function persist($data, array $context = [])
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->denyAccessUnlessGranted('ROLE_SCOPE_DISPATCH');
-
-        $requestFile = $data;
-        assert($requestFile instanceof RequestFile);
-
-        // Check if current person owns the request
-        $this->dispatchService->getRequestByIdForCurrentPerson($requestFile->getDispatchRequestIdentifier());
-
-        return $this->dispatchService->createRequestFile($requestFile);
     }
 
     /**

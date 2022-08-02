@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
@@ -100,6 +101,23 @@ class DispatchService
     }
 
     /**
+     * Fetches a RequestFile.
+     */
+    public function getRequestFileById(string $identifier): ?RequestFile
+    {
+        /** @var RequestFile $requestFile */
+        $requestFile = $this->em
+            ->getRepository(RequestFile::class)
+            ->find($identifier);
+
+        if (!$requestFile) {
+            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestFile was not found!', 'dispatch:request-file-not-found');
+        }
+
+        return $requestFile;
+    }
+
+    /**
      * Fetches all Request entities for the current person.
      *
      * @return Request[]
@@ -113,22 +131,6 @@ class DispatchService
             ->findBy(['personIdentifier' => $person->getIdentifier()]);
 
         return $requests;
-    }
-
-    /**
-     * Fetches all RequestRecipient entities for the current person.
-     *
-     * @return RequestRecipient[]
-     */
-    public function getRequestRecipientsForCurrentPerson(): array
-    {
-        $person = $this->getCurrentPerson();
-
-        $requestRecipients = $this->em
-            ->getRepository(RequestRecipient::class)
-            ->findBy(['personIdentifier' => $person->getIdentifier()]);
-
-        return $requestRecipients;
     }
 
     /**
@@ -175,6 +177,19 @@ class DispatchService
         $this->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
 
         return $requestRecipient;
+    }
+
+    /**
+     * Fetches a RequestFile for the current person.
+     */
+    public function getRequestFileByIdForCurrentPerson(string $identifier): ?RequestFile
+    {
+        $requestFile = $this->getRequestFileById($identifier);
+
+        // Check if current person owns the request
+        $this->getRequestByIdForCurrentPerson($requestFile->getDispatchRequestIdentifier());
+
+        return $requestFile;
     }
 
     /**
@@ -245,14 +260,13 @@ class DispatchService
 
     public function createRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
     {
-//        $requestRecipient = new RequestRecipient();
+        // A request object needs to be set for the ORM, setting the identifier only will not persist it
+        $request = $this->getRequestById($requestRecipient->getDispatchRequestIdentifier());
+
         $requestRecipient->setIdentifier((string) Uuid::v4());
-//        $requestRecipient->setDispatchRequestIdentifier($requestRecipient->getDispatchRequestIdentifier());
+        $requestRecipient->setRequest($request);
         $requestRecipient->setRecipientId('');
         $requestRecipient->setDateCreated(new \DateTime('now'));
-//        $requestRecipient->setGivenName($requestRecipient->getGivenName() ?? '');
-//        $requestRecipient->setFamilyName($requestRecipient->getFamilyName() ?? '');
-//        $requestRecipient->setPostalAddress($requestRecipient->getPostalAddress() ?? '');
 
         try {
             $this->em->persist($requestRecipient);
@@ -275,10 +289,22 @@ class DispatchService
         $this->em->flush();
     }
 
-    public function createRequestFile(RequestFile $requestFile): RequestFile
+    public function createRequestFile(UploadedFile $uploadedFile, string $dispatchRequestIdentifier): RequestFile
     {
+        $data = $uploadedFile->getContent();
+        $requestFile = new RequestFile();
+
+        // A request object needs to be set for the ORM, setting the identifier only will not persist it
+        $requestFile->setDispatchRequestIdentifier($dispatchRequestIdentifier);
+        $request = $this->getRequestById($requestFile->getDispatchRequestIdentifier());
+        $requestFile->setRequest($request);
+
         $requestFile->setIdentifier((string) Uuid::v4());
         $requestFile->setDateCreated(new \DateTime('now'));
+        $requestFile->setName($uploadedFile->getClientOriginalName());
+        $requestFile->setData($data);
+        $requestFile->setFileFormat($uploadedFile->getClientMimeType());
+        $requestFile->setContentSize($uploadedFile->getSize());
 
         try {
             $this->em->persist($requestFile);

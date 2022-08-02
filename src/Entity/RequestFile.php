@@ -6,6 +6,8 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Dbp\Relay\DispatchBundle\Controller\CreateRequestFileAction;
+use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -15,23 +17,33 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     collectionOperations={
  *         "post" = {
+ *             "method" = "POST",
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/request-files",
+ *             "controller" = CreateRequestFileAction::class,
+ *             "deserialize" = false,
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"},
  *                 "requestBody" = {
  *                     "content" = {
- *                         "application/json" = {
- *                             "schema" = {"type" = "object"},
- *                             "example" = {
- *                                 "dispatchRequestIdentifier" = "4d553985-d44f-404f-acf3-cd0eac7ae9c2",
- *                                 "name" = "myfile.pdf",
- *                                 "data" = "binarydata",
- *                                 "size" = "10"
- *                             },
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "dispatchRequestIdentifier" = {"description" = "ID of the request", "type" = "string", "example" = "4d553985-d44f-404f-acf3-cd0eac7ae9c2"},
+ *                                     "file" = {"type" = "string", "format" = "binary"}
+ *                                 },
+ *                                 "required" = {"file", "dispatchRequestIdentifier"},
+ *                             }
  *                         }
  *                     }
  *                 },
+ *                 "responses" = {
+ *                     "415" = {
+ *                         "description" = "Unsupported Media Type - Only PDF files can be added!",
+ *                         "content" = {}
+ *                     }
+ *                 }
  *             }
  *         },
  *         "get" = {
@@ -118,21 +130,37 @@ class RequestFile
     private $name;
 
     /**
-     * @ORM\Column(type="blob")
-     * @Groups({"DispatchRequestFile:output", "DispatchRequestFile:input", "DispatchRequest:output"})
+     * @ApiProperty(iri="http://schema.org/contentUrl")
+     * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      *
      * @var string
+     */
+    private $contentUrl;
+
+    /**
+     * @ORM\Column(type="binary", length=209715200)
+     *
+     * @var resource
      */
     private $data;
 
     /**
-     * @ORM\Column(type="int")
-     * @ApiProperty(iri="https://schema.org/size")
-     * @Groups({"DispatchRequestFile:output", "DispatchRequestFile:input", "DispatchRequest:output"})
+     * @ApiProperty(iri="https://schema.org/fileFormat")
+     * @ORM\Column(type="string", length=100)
+     * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
+     *
+     * @var string
+     */
+    private $fileFormat;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ApiProperty(iri="https://schema.org/contentSize")
+     * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      *
      * @var int
      */
-    private $size;
+    private $contentSize;
 
     public function getIdentifier(): string
     {
@@ -179,23 +207,49 @@ class RequestFile
         $this->name = $name;
     }
 
-    public function getData(): ?string
+    /**
+     * @return resource|string
+     */
+    public function getData()
     {
         return $this->data;
     }
 
-    public function setData(string $data): void
+    /**
+     * @param $data resource|string
+     */
+    public function setData($data): void
     {
         $this->data = $data;
     }
 
-    public function getSize(): int
+    public function getContentSize(): int
     {
-        return $this->size;
+        return $this->contentSize;
     }
 
-    public function setSize(int $size): void
+    public function setContentSize(int $contentSize): void
     {
-        $this->size = $size;
+        $this->contentSize = $contentSize;
+    }
+
+    public function getContentUrl(): string
+    {
+        return Tools::getDataURI(is_resource($this->data) ? stream_get_contents($this->data) : $this->data, $this->fileFormat);
+    }
+
+    public function getFileFormat(): string
+    {
+        return $this->fileFormat;
+    }
+
+    public function setFileFormat(string $fileFormat): void
+    {
+        $this->fileFormat = $fileFormat;
+    }
+
+    public function setRequest(Request $request): void
+    {
+        $this->request = $request;
     }
 }
