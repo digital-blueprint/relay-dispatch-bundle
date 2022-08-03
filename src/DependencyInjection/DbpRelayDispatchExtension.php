@@ -23,6 +23,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         $pathsToHide = [
             '/dispatch/request-recipients',
             '/dispatch/request-files',
+            '/dispatch/request-statuses',
         ];
 
         foreach ($pathsToHide as $path) {

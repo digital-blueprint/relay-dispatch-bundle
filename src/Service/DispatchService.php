@@ -10,6 +10,7 @@ use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
+use Dbp\Relay\DispatchBundle\Entity\RequestStatus;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -314,6 +315,30 @@ class DispatchService
         }
 
         return $requestFile;
+    }
+
+    public function createRequestStatus(string $dispatchRequestIdentifier, int $statusType, string $description): RequestStatus
+    {
+        $requestStatus = new RequestStatus();
+
+        // A request object needs to be set for the ORM, setting the identifier only will not persist it
+        $requestStatus->setDispatchRequestIdentifier($dispatchRequestIdentifier);
+        $request = $this->getRequestById($requestStatus->getDispatchRequestIdentifier());
+        $requestStatus->setRequest($request);
+
+        $requestStatus->setIdentifier((string) Uuid::v4());
+        $requestStatus->setDateCreated(new \DateTime('now'));
+        $requestStatus->setStatusType($statusType);
+        $requestStatus->setDescription($description);
+
+        try {
+            $this->em->persist($requestStatus);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestStatus could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
+        }
+
+        return $requestStatus;
     }
 
     public function removeRequestFileById(string $identifier)

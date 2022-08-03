@@ -133,6 +133,12 @@ class Request
      */
     private $files;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RequestStatus", mappedBy="request")
+     * @Groups({"DispatchRequest:output"})
+     */
+    private $statuses;
+
     public function __construct()
     {
         $this->recipients = new ArrayCollection();

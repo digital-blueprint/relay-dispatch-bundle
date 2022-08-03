@@ -29,3 +29,7 @@ services:
     resource: '../../Controller'
     autowire: true
     autoconfigure: true
+
+  Dbp\Relay\DispatchBundle\Command\StatusTestCommand:
+    autowire: true
+    autoconfigure: true
