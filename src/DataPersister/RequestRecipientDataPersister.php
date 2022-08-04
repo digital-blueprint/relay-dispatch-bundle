@@ -42,7 +42,11 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         // Check if current person owns the request
         $this->dispatchService->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
 
-        return $this->dispatchService->createRequestRecipient($requestRecipient);
+        if ($requestRecipient->getIdentifier() === '') {
+            return $this->dispatchService->createRequestRecipient($requestRecipient);
+        } else {
+            return $this->dispatchService->updateRequestRecipient($requestRecipient);
+        }
     }
 
     /**

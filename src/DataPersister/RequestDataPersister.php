@@ -46,7 +46,11 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
         $request = $data;
         assert($request instanceof Request);
 
-        return $this->dispatchService->createRequestForCurrentPerson($request);
+        if ($request->getIdentifier() === '') {
+            return $this->dispatchService->createRequestForCurrentPerson($request);
+        } else {
+            return $this->dispatchService->updateRequestForCurrentPerson($request);
+        }
     }
 
     /**

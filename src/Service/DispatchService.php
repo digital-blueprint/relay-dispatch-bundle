@@ -252,17 +252,31 @@ class DispatchService
         $this->em->flush();
     }
 
+    public function updateRequestForCurrentPerson(Request $request): Request
+    {
+        $person = $this->getCurrentPerson();
+
+        if ($person->getIdentifier() !== $request->getPersonIdentifier()) {
+            throw ApiError::withDetails(Response::HTTP_FORBIDDEN, "Current person doesn't own this request!", 'dispatch:person-does-not-own-request');
+        }
+
+        try {
+            $this->em->persist($request);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Request could not be updated!', 'dispatch:request-not-created', ['message' => $e->getMessage()]);
+        }
+
+        return $request;
+    }
+
     public function createRequestForCurrentPerson(Request $request): Request
     {
-        $personId = $this->personProvider->getCurrentPerson()->getIdentifier();
+        $personId = $this->getCurrentPerson()->getIdentifier();
 
-//        $request = new Request();
         $request->setIdentifier((string) Uuid::v4());
         $request->setPersonIdentifier($personId);
         $request->setDateCreated(new \DateTime('now'));
-//        $request->setSenderGivenName($request->getSenderGivenName() ?? '');
-//        $request->setSenderFamilyName($request->getSenderFamilyName() ?? '');
-//        $request->setSenderPostalAddress($request->getSenderPostalAddress() ?? '');
 
         try {
             $this->em->persist($request);
@@ -304,6 +318,18 @@ class DispatchService
             $this->em->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be created!', 'dispatch:request-recipient-not-created', ['message' => $e->getMessage()]);
+        }
+
+        return $requestRecipient;
+    }
+
+    public function updateRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
+    {
+        try {
+            $this->em->persist($requestRecipient);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be updated!', 'dispatch:request-recipient-not-created', ['message' => $e->getMessage()]);
         }
 
         return $requestRecipient;
