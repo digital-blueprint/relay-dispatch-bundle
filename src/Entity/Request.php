@@ -153,6 +153,7 @@ class Request
     {
         $this->recipients = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->statusChanges = new ArrayCollection();
     }
 
     public function getIdentifier(): string
