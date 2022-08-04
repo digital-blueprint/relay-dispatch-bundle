@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     collectionOperations={
  *         "post" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
  *             "path" = "/dispatch/request-recipients",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"},
@@ -35,7 +35,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             }
  *         },
  *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
  *             "path" = "/dispatch/request-recipients",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
@@ -44,21 +44,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     },
  *     itemOperations={
  *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
  *             "path" = "/dispatch/request-recipients/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
  *         },
  *         "put" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
  *             "path" = "/dispatch/request-recipients/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
  *         },
  *         "delete" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
  *             "path" = "/dispatch/request-recipients/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
