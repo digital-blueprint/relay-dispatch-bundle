@@ -11,12 +11,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="dispatch_request_statuses")
+ * @ORM\Table(name="dispatch_request_status_changes")
  * @ApiResource(
  *     collectionOperations={
  *         "get" = {
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-statuses",
+ *             "path" = "/dispatch/request-status-changes",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
@@ -25,44 +25,44 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     itemOperations={
  *         "get" = {
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-statuses/{identifier}",
+ *             "path" = "/dispatch/request-status-changes/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
  *         },
  *     },
  *     iri="https://schema.org/Status",
- *     shortName="DispatchRequestStatus",
+ *     shortName="DispatchRequestStatusChange",
  *     normalizationContext={
- *         "groups" = {"DispatchRequestStatus:output", "DispatchRequest:output"},
+ *         "groups" = {"DispatchRequestStatusChange:output", "DispatchRequest:output"},
  *         "jsonld_embed_context" = true
  *     }
  * )
  */
-class RequestStatus
+class RequestStatusChange
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=50)
      * @ApiProperty(identifier=true)
-     * @Groups({"DispatchRequestStatus:output", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
      * @ApiProperty(iri="https://schema.org/dateCreated")
-     * @Groups({"DispatchRequestStatus:output", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
      *
      * @var \DateTime
      */
     private $dateCreated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Request", inversedBy="statuses")
+     * @ORM\ManyToOne(targetEntity="Request", inversedBy="statusChanges")
      * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
      * @ApiProperty
-     * @Groups({"DispatchRequestStatus:output"})
+     * @Groups({"DispatchRequestStatusChange:output"})
      *
      * @var Request
      */
@@ -71,7 +71,7 @@ class RequestStatus
     /**
      * @ORM\Column(type="string", length=50)
      * @ApiProperty(iri="https://schema.org/identifier")
-     * @Groups({"DispatchRequestStatus:output"})
+     * @Groups({"DispatchRequestStatusChange:output"})
      *
      * @var string
      */
@@ -80,7 +80,7 @@ class RequestStatus
     /**
      * @ORM\Column(type="integer")
      * @ApiProperty(iri="https://schema.org/statusType")
-     * @Groups({"DispatchRequestStatus:output", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
      *
      * @var int
      */
@@ -89,7 +89,7 @@ class RequestStatus
     /**
      * @ORM\Column(type="text")
      * @ApiProperty(iri="https://schema.org/description")
-     * @Groups({"DispatchRequestStatus:output", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
      *
      * @var string
      */

@@ -134,10 +134,10 @@ class Request
     private $files;
 
     /**
-     * @ORM\OneToMany(targetEntity="RequestStatus", mappedBy="request")
+     * @ORM\OneToMany(targetEntity="RequestStatusChange", mappedBy="request")
      * @Groups({"DispatchRequest:output"})
      */
-    private $statuses;
+    private $statusChanges;
 
     public function __construct()
     {
@@ -213,5 +213,10 @@ class Request
     public function getFiles()
     {
         return $this->files;
+    }
+
+    public function getStatusChanges()
+    {
+        return $this->statusChanges;
     }
 }

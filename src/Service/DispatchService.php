@@ -10,7 +10,7 @@ use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
-use Dbp\Relay\DispatchBundle\Entity\RequestStatus;
+use Dbp\Relay\DispatchBundle\Entity\RequestStatusChange;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -317,28 +317,28 @@ class DispatchService
         return $requestFile;
     }
 
-    public function createRequestStatus(string $dispatchRequestIdentifier, int $statusType, string $description): RequestStatus
+    public function createRequestStatusChange(string $dispatchRequestIdentifier, int $statusType, string $description): RequestStatusChange
     {
-        $requestStatus = new RequestStatus();
+        $requestStatusChange = new RequestStatusChange();
 
         // A request object needs to be set for the ORM, setting the identifier only will not persist it
-        $requestStatus->setDispatchRequestIdentifier($dispatchRequestIdentifier);
-        $request = $this->getRequestById($requestStatus->getDispatchRequestIdentifier());
-        $requestStatus->setRequest($request);
+        $requestStatusChange->setDispatchRequestIdentifier($dispatchRequestIdentifier);
+        $request = $this->getRequestById($requestStatusChange->getDispatchRequestIdentifier());
+        $requestStatusChange->setRequest($request);
 
-        $requestStatus->setIdentifier((string) Uuid::v4());
-        $requestStatus->setDateCreated(new \DateTime('now'));
-        $requestStatus->setStatusType($statusType);
-        $requestStatus->setDescription($description);
+        $requestStatusChange->setIdentifier((string) Uuid::v4());
+        $requestStatusChange->setDateCreated(new \DateTime('now'));
+        $requestStatusChange->setStatusType($statusType);
+        $requestStatusChange->setDescription($description);
 
         try {
-            $this->em->persist($requestStatus);
+            $this->em->persist($requestStatusChange);
             $this->em->flush();
         } catch (\Exception $e) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestStatus could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestStatusChange could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
         }
 
-        return $requestStatus;
+        return $requestStatusChange;
     }
 
     public function removeRequestFileById(string $identifier)

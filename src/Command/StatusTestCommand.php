@@ -35,8 +35,8 @@ class StatusTestCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Create status change...');
-        $this->dispatchService->createRequestStatus('4d553985-d44f-404f-acf3-cd0eac7ae9c2', 1, 'Test');
+        $output->writeln('Creating status change...');
+        $this->dispatchService->createRequestStatusChange('4d553985-d44f-404f-acf3-cd0eac7ae9c2', 1, 'Test');
 
         return 0;
     }
