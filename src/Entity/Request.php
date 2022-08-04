@@ -123,18 +123,21 @@ class Request
 
     /**
      * @ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="request")
+     * @ORM\OrderBy({"dateCreated" = "ASC"})
      * @Groups({"DispatchRequest:output"})
      */
     private $recipients;
 
     /**
      * @ORM\OneToMany(targetEntity="RequestFile", mappedBy="request")
+     * @ORM\OrderBy({"dateCreated" = "ASC"})
      * @Groups({"DispatchRequest:output"})
      */
     private $files;
 
     /**
      * @ORM\OneToMany(targetEntity="RequestStatusChange", mappedBy="request")
+     * @ORM\OrderBy({"dateCreated" = "DESC"})
      * @Groups({"DispatchRequest:output"})
      */
     private $statusChanges;
