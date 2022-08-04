@@ -50,6 +50,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                 "tags" = {"Dispatch"}
  *             },
  *         },
+ *         "put" = {
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "path" = "/dispatch/request-recipients/{identifier}",
+ *             "openapi_context" = {
+ *                 "tags" = {"Dispatch"}
+ *             },
+ *         },
  *         "delete" = {
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/request-recipients/{identifier}",
