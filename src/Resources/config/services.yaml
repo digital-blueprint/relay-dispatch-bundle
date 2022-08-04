@@ -20,6 +20,10 @@ services:
     tags: ['api_platform.item_data_provider']
     autowire: true
 
+  Dbp\Relay\DispatchBundle\DataProvider\RequestStatusChangeItemDataProvider:
+    tags: ['api_platform.item_data_provider']
+    autowire: true
+
   Dbp\Relay\DispatchBundle\Service\DispatchService:
     autowire: true
     autoconfigure: true

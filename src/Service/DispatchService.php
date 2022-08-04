@@ -85,6 +85,23 @@ class DispatchService
     }
 
     /**
+     * Fetches a RequestStatusChange.
+     */
+    public function getRequestStatusChangeById(string $identifier): ?RequestStatusChange
+    {
+        /** @var RequestStatusChange $requestStatusChange */
+        $requestStatusChange = $this->em
+            ->getRepository(RequestStatusChange::class)
+            ->find($identifier);
+
+        if (!$requestStatusChange) {
+            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestStatusChange was not found!', 'dispatch:request-status-change-not-found');
+        }
+
+        return $requestStatusChange;
+    }
+
+    /**
      * Fetches a RequestRecipient.
      */
     public function getRequestRecipientById(string $identifier): ?RequestRecipient
@@ -165,6 +182,19 @@ class DispatchService
         }
 
         return $request;
+    }
+
+    /**
+     * Fetches a RequestStatusChange for the current person.
+     */
+    public function getRequestStatusChangeByIdForCurrentPerson(string $identifier): ?RequestStatusChange
+    {
+        $requestStatusChange = $this->getRequestStatusChangeById($identifier);
+
+        // Check if current person owns the request
+        $this->getRequestByIdForCurrentPerson($requestStatusChange->getDispatchRequestIdentifier());
+
+        return $requestStatusChange;
     }
 
     /**
