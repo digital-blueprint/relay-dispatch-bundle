@@ -6,6 +6,7 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Dbp\Relay\DispatchBundle\Controller\PostSubmitRequest;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -59,7 +60,30 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
- *         }
+ *         },
+ *         "post_submit" = {
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "method" = "POST",
+ *             "path" = "/dispatch/requests/{identifier}/submit",
+ *             "controller" = PostSubmitRequest::class,
+ *             "read" = false,
+ *             "write" = false,
+ *             "openapi_context" = {
+ *                 "tags" = {"Dispatch"},
+ *                 "summary" = "Submits the request.",
+ *                 "requestBody" = {
+ *                     "content" = {
+ *                         "application/json" = {
+ *                             "schema" = {"type" = "object"},
+ *                             "example" = {}
+ *                         }
+ *                     }
+ *                 },
+ *                 "parameters" = {
+ *                     {"name" = "identifier", "in" = "path", "description" = "ID of the request", "required" = true, "type" = "string", "example" = "4d553985-d44f-404f-acf3-cd0eac7ae9c2"},
+ *                 }
+ *             },
+ *         },
  *     },
  *     iri="https://schema.org/Action",
  *     shortName="DispatchRequest",
@@ -118,6 +142,15 @@ class Request
      * @var string
      */
     private $senderFamilyName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @ApiProperty
+     * @Groups({"DispatchRequest:output"})
+     *
+     * @var \DateTime
+     */
+    private $dateSubmitted;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -229,5 +262,15 @@ class Request
     public function getStatusChanges()
     {
         return $this->statusChanges;
+    }
+
+    public function getDateSubmitted(): ?\DateTime
+    {
+        return $this->dateSubmitted;
+    }
+
+    public function setDateSubmitted(\DateTime $dateSubmitted): void
+    {
+        $this->dateSubmitted = $dateSubmitted;
     }
 }

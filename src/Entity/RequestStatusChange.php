@@ -41,6 +41,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class RequestStatusChange
 {
+    public const STATUS_SUBMITTED = 1;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=50)

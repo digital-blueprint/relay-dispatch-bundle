@@ -407,4 +407,14 @@ class DispatchService
         $this->em->remove($requestFile);
         $this->em->flush();
     }
+
+    public function submitRequest(Request $request)
+    {
+        $request->setDateSubmitted(new \DateTime('now'));
+        $this->updateRequestForCurrentPerson($request);
+
+        $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_SUBMITTED, 'Request submitted');
+
+        // TODO: Put request in queue for dispatch
+    }
 }
