@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
 /**
  * Create table dispatch_request_statuses.
  */
-final class Version20220803103531 extends AbstractMigration
+final class Version20220803103531 extends EntityManagerMigration
 {
     public function getDescription(): string
     {
