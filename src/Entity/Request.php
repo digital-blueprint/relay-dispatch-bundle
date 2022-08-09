@@ -33,7 +33,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                                 "senderAddressLocality" = "Graz",
  *                                 "senderStreetAddress" = "Am Grund",
  *                                 "senderBuildingNumber" = "1"
- *                              },
+ *                             },
  *                         }
  *                     }
  *                 },
