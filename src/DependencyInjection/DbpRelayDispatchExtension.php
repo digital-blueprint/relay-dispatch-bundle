@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
+use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -49,6 +50,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
      */
     public function prepend(ContainerBuilder $container): void
     {
+        $this->addQueueMessageClass($container, RequestSubmissionMessage::class);
         $configs = $container->getExtensionConfig($this->getAlias());
         $config = $this->processConfiguration(new Configuration(), $configs);
 

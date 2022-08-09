@@ -11,12 +11,14 @@ use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Entity\RequestStatusChange;
+use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
 class DispatchService
@@ -36,14 +38,21 @@ class DispatchService
      */
     private $cachePool;
 
+    /**
+     * @var MessageBusInterface
+     */
+    private $bus;
+
     public function __construct(
         PersonProviderInterface $personProvider,
-        ManagerRegistry $managerRegistry
+        ManagerRegistry $managerRegistry,
+        MessageBusInterface $bus
     ) {
         $this->personProvider = $personProvider;
         $manager = $managerRegistry->getManager('dbp_relay_dispatch_bundle');
         assert($manager instanceof EntityManagerInterface);
         $this->em = $manager;
+        $this->bus = $bus;
     }
 
     public function setCache(?CacheItemPoolInterface $cachePool)
@@ -415,6 +424,19 @@ class DispatchService
 
         $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_SUBMITTED, 'Request submitted');
 
-        // TODO: Put request in queue for dispatch
+        // Put request in queue for submission
+        $this->createAndDispatchRequestSubmissionMessage($request);
+    }
+
+    public function createAndDispatchRequestSubmissionMessage(Request $request): RequestSubmissionMessage
+    {
+        $message = new RequestSubmissionMessage($request);
+        $this->bus->dispatch($message);
+
+        return $message;
+    }
+
+    public function handleRequestSubmissionMessage(RequestSubmissionMessage $message)
+    {
     }
 }
