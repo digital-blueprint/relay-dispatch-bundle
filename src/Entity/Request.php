@@ -25,7 +25,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                     "content" = {
  *                         "application/json" = {
  *                             "schema" = {"type" = "object"},
- *                             "example" = {"senderGivenName" = "Max", "senderFamilyName" = "Mustermann", "senderPostalAddress" = "Am Grund 1"},
+ *                             "example" = {
+ *                                 "senderGivenName" = "Max",
+ *                                 "senderFamilyName" = "Mustermann",
+ *                                 "senderAddressCountry" = "AT",
+ *                                 "senderPostalCode" = "8010",
+ *                                 "senderAddressLocality" = "Graz",
+ *                                 "senderStreetAddress" = "Am Grund",
+ *                                 "senderBuildingNumber" = "1"
+ *                              },
  *                         }
  *                     }
  *                 },
@@ -153,13 +161,49 @@ class Request
     private $dateSubmitted;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @ApiProperty(iri="https://schema.org/address")
+     * @ORM\Column(type="string", length=2)
+     * @ApiProperty(iri="https://schema.org/addressCountry")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
      * @var string
      */
-    private $senderPostalAddress;
+    private $senderAddressCountry;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @ApiProperty(iri="https://schema.org/postalCode")
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
+     * @var string
+     */
+    private $senderPostalCode;
+
+    /**
+     * @ORM\Column(type="string", length=120)
+     * @ApiProperty(iri="https://schema.org/addressLocality")
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
+     * @var string
+     */
+    private $senderAddressLocality;
+
+    /**
+     * @ORM\Column(type="string", length=120)
+     * @ApiProperty(iri="https://schema.org/streetAddress")
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
+     * @var string
+     */
+    private $senderStreetAddress;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     * @ApiProperty
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
+     * @var string
+     */
+    private $senderBuildingNumber;
 
     /**
      * @ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="request")
@@ -239,16 +283,6 @@ class Request
         $this->senderFamilyName = $senderFamilyName;
     }
 
-    public function getSenderPostalAddress(): ?string
-    {
-        return $this->senderPostalAddress;
-    }
-
-    public function setSenderPostalAddress(string $senderPostalAddress): void
-    {
-        $this->senderPostalAddress = $senderPostalAddress;
-    }
-
     public function getRecipients()
     {
         return $this->recipients;
@@ -272,5 +306,55 @@ class Request
     public function setDateSubmitted(\DateTime $dateSubmitted): void
     {
         $this->dateSubmitted = $dateSubmitted;
+    }
+
+    public function getSenderAddressCountry(): string
+    {
+        return $this->senderAddressCountry;
+    }
+
+    public function setSenderAddressCountry(string $senderAddressCountry): void
+    {
+        $this->senderAddressCountry = $senderAddressCountry;
+    }
+
+    public function getSenderPostalCode(): string
+    {
+        return $this->senderPostalCode;
+    }
+
+    public function setSenderPostalCode(string $senderPostalCode): void
+    {
+        $this->senderPostalCode = $senderPostalCode;
+    }
+
+    public function getSenderAddressLocality(): string
+    {
+        return $this->senderAddressLocality;
+    }
+
+    public function setSenderAddressLocality(string $senderAddressLocality): void
+    {
+        $this->senderAddressLocality = $senderAddressLocality;
+    }
+
+    public function getSenderStreetAddress(): string
+    {
+        return $this->senderStreetAddress;
+    }
+
+    public function setSenderStreetAddress(string $senderStreetAddress): void
+    {
+        $this->senderStreetAddress = $senderStreetAddress;
+    }
+
+    public function getSenderBuildingNumber(): string
+    {
+        return $this->senderBuildingNumber;
+    }
+
+    public function setSenderBuildingNumber(string $senderBuildingNumber): void
+    {
+        $this->senderBuildingNumber = $senderBuildingNumber;
     }
 }

@@ -27,7 +27,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                                 "dispatchRequestIdentifier" = "4d553985-d44f-404f-acf3-cd0eac7ae9c2",
  *                                 "givenName" = "Max",
  *                                 "familyName" = "Mustermann",
- *                                 "postalAddress" = "Am Grund 1"
+ *                                 "addressCountry" = "AT",
+ *                                 "postalCode" = "8010",
+ *                                 "addressLocality" = "Graz",
+ *                                 "streetAddress" = "Am Grund",
+ *                                 "buildingNumber" = "1"
  *                             },
  *                         }
  *                     }
@@ -141,13 +145,49 @@ class RequestRecipient
     private $familyName;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @ApiProperty(iri="https://schema.org/address")
+     * @ORM\Column(type="string", length=2)
+     * @ApiProperty(iri="https://schema.org/addressCountry")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      *
      * @var string
      */
-    private $postalAddress;
+    private $addressCountry;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @ApiProperty(iri="https://schema.org/postalCode")
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     *
+     * @var string
+     */
+    private $postalCode;
+
+    /**
+     * @ORM\Column(type="string", length=120)
+     * @ApiProperty(iri="https://schema.org/addressLocality")
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     *
+     * @var string
+     */
+    private $addressLocality;
+
+    /**
+     * @ORM\Column(type="string", length=120)
+     * @ApiProperty(iri="https://schema.org/streetAddress")
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     *
+     * @var string
+     */
+    private $streetAddress;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     *
+     * @var string
+     */
+    private $buildingNumber;
 
     public function getIdentifier(): string
     {
@@ -214,18 +254,58 @@ class RequestRecipient
         $this->familyName = $familyName;
     }
 
-    public function getPostalAddress(): ?string
-    {
-        return $this->postalAddress;
-    }
-
-    public function setPostalAddress(string $postalAddress): void
-    {
-        $this->postalAddress = $postalAddress;
-    }
-
     public function setRequest(Request $request): void
     {
         $this->request = $request;
+    }
+
+    public function getAddressCountry(): string
+    {
+        return $this->addressCountry;
+    }
+
+    public function setAddressCountry(string $addressCountry): void
+    {
+        $this->addressCountry = $addressCountry;
+    }
+
+    public function getPostalCode(): string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(string $postalCode): void
+    {
+        $this->postalCode = $postalCode;
+    }
+
+    public function getAddressLocality(): string
+    {
+        return $this->addressLocality;
+    }
+
+    public function setAddressLocality(string $addressLocality): void
+    {
+        $this->addressLocality = $addressLocality;
+    }
+
+    public function getStreetAddress(): string
+    {
+        return $this->streetAddress;
+    }
+
+    public function setStreetAddress(string $streetAddress): void
+    {
+        $this->streetAddress = $streetAddress;
+    }
+
+    public function getBuildingNumber(): string
+    {
+        return $this->buildingNumber;
+    }
+
+    public function setBuildingNumber(string $buildingNumber): void
+    {
+        $this->buildingNumber = $buildingNumber;
     }
 }
