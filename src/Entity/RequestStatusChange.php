@@ -42,6 +42,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class RequestStatusChange
 {
     public const STATUS_SUBMITTED = 1;
+    public const STATUS_IN_PROGRESS = 2;
 
     /**
      * @ORM\Id

@@ -37,3 +37,9 @@ services:
   Dbp\Relay\DispatchBundle\Command\StatusTestCommand:
     autowire: true
     autoconfigure: true
+
+  Dbp\Relay\DispatchBundle\MessageHandler\RequestSubmissionHandler:
+    public: false
+    autowire: true
+    autoconfigure: true
+    tags: ['messenger.message_handler']

@@ -438,5 +438,11 @@ class DispatchService
 
     public function handleRequestSubmissionMessage(RequestSubmissionMessage $message)
     {
+        $request = $message->getRequest();
+
+        // TODO: Do Vendo API request
+        dump($request);
+        // Dispatch another delayed message if Vendo request failed
+        $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_IN_PROGRESS, 'Request transfered to Vendo');
     }
 }
