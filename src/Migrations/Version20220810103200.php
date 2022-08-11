@@ -25,7 +25,6 @@ final class Version20220810103200 extends EntityManagerMigration
         $this->addSql('ALTER TABLE dispatch_request_recipients ADD FOREIGN KEY (dispatch_request_identifier) REFERENCES dispatch_requests(identifier) ON DELETE CASCADE ON UPDATE CASCADE');
 
         $this->addSql('ALTER TABLE dispatch_request_status_changes DROP FOREIGN KEY FK_83F6E7C899F83637');
-        $this->addSql('ALTER TABLE dispatch_request_status_changes DROP FOREIGN KEY dispatch_request_status_changes_ibfk_1');
         $this->addSql('ALTER TABLE dispatch_request_status_changes ADD FOREIGN KEY (dispatch_request_identifier) REFERENCES dispatch_requests(identifier) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 
