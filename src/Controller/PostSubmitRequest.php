@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Controller;
 
+use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostSubmitRequest extends BaseDispatchController
 {
@@ -25,6 +27,10 @@ class PostSubmitRequest extends BaseDispatchController
         $this->denyAccessUnlessGranted('ROLE_SCOPE_DISPATCH');
 
         $request = $this->dispatchService->getRequestByIdForCurrentPerson($identifier);
+
+        if ($request->isSubmitted()) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request was already submitted!', 'dispatch:request-submitted-read-only');
+        }
 
         $this->dispatchService->submitRequest($request);
 

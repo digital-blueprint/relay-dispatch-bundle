@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DataPersister;
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class RequestFileDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
 {
@@ -47,7 +49,11 @@ class RequestFileDataPersister extends AbstractController implements ContextAwar
         assert($requestFile instanceof RequestFile);
 
         // Check if current person owns the request
-        $this->dispatchService->getRequestByIdForCurrentPerson($requestFile->getDispatchRequestIdentifier());
+        $request = $this->dispatchService->getRequestByIdForCurrentPerson($requestFile->getDispatchRequestIdentifier());
+
+        if ($request->isSubmitted()) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+        }
 
         $this->dispatchService->removeRequestFileById($requestFile->getIdentifier());
     }

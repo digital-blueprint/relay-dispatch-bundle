@@ -303,6 +303,11 @@ class Request
         return $this->dateSubmitted;
     }
 
+    public function isSubmitted(): bool
+    {
+        return $this->dateSubmitted !== null;
+    }
+
     public function setDateSubmitted(\DateTime $dateSubmitted): void
     {
         $this->dateSubmitted = $dateSubmitted;

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DataPersister;
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 class RequestRecipientDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
 {
@@ -40,11 +42,15 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         assert($requestRecipient instanceof RequestRecipient);
 
         // Check if current person owns the request
-        $this->dispatchService->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
+        $request = $this->dispatchService->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
 
         if ($requestRecipient->getIdentifier() === '') {
             return $this->dispatchService->createRequestRecipient($requestRecipient);
         } else {
+            if ($request->isSubmitted()) {
+                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+            }
+
             return $this->dispatchService->updateRequestRecipient($requestRecipient);
         }
     }
@@ -63,7 +69,11 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         assert($requestRecipient instanceof RequestRecipient);
 
         // Check if current person owns the request
-        $this->dispatchService->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
+        $request = $this->dispatchService->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
+
+        if ($request->isSubmitted()) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+        }
 
         $this->dispatchService->removeRequestRecipientById($requestRecipient->getIdentifier());
     }

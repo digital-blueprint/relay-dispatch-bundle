@@ -39,7 +39,11 @@ final class CreateRequestFileAction extends BaseDispatchController
         }
 
         // Check if current person owns the request
-        $this->dispatchService->getRequestByIdForCurrentPerson($dispatchRequestIdentifier);
+        $dispatchRequest = $this->dispatchService->getRequestByIdForCurrentPerson($dispatchRequestIdentifier);
+
+        if ($dispatchRequest->isSubmitted()) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+        }
 
         /** @var ?UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');

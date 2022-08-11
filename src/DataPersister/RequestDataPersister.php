@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DataPersister;
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 
 class RequestDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
 {
@@ -49,6 +51,10 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
         if ($request->getIdentifier() === '') {
             return $this->dispatchService->createRequestForCurrentPerson($request);
         } else {
+            if ($request->isSubmitted()) {
+                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+            }
+
             return $this->dispatchService->updateRequestForCurrentPerson($request);
         }
     }
@@ -65,6 +71,11 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
 
         $request = $data;
         assert($request instanceof Request);
+
+        if ($request->isSubmitted()) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+        }
+
         $this->dispatchService->removeRequestByIdForCurrentPerson($request->getIdentifier());
     }
 }
