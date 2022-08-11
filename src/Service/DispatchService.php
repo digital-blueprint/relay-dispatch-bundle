@@ -181,7 +181,7 @@ class DispatchService
     /**
      * Fetches a Request for the current person.
      */
-    public function getRequestByIdForCurrentPerson(string $identifier): ?Request
+    public function getRequestByIdForCurrentPerson(string $identifier): Request
     {
         $request = $this->getRequestById($identifier);
         $person = $this->getCurrentPerson();
