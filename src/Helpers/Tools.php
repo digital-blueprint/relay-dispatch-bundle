@@ -20,9 +20,8 @@ class Tools
         $tabs = '',
         $breakType = "\n",
         $tabType = '    '
-    ): string
-    {
-        $xmlString = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2___$3", $soapString);
+    ): string {
+        $xmlString = preg_replace("/(<\/?)(\w+):([^>]*>)/", '$1$2___$3', $soapString);
         $xml = simplexml_load_string($xmlString);
 
         return self::makeXmlCode($xml, $parentNodeName, $tabs, $breakType, $tabType);
@@ -32,7 +31,7 @@ class Tools
         $xmlData,
         $parentNodeName = '$xml',
         $tabs = '',
-        $breakType = "<br>",
+        $breakType = '<br>',
         $tabType = '&#9;',
         $soapReplacement = '___'
     ): string {
@@ -40,7 +39,7 @@ class Tools
         $tabs = $tabs.$tabType;
         $codeText = '';
 
-        if ($parentNodeName == '$xml') {
+        if ($parentNodeName === '$xml') {
             $codeText = '$xml = new \DOMDocument(\'1.0\',\'UTF-8\');'.$breakType;
         }
 
@@ -61,7 +60,7 @@ class Tools
 
             if (trim($xmlnode->__toString())) {
                 $nodeVal = ',\''.trim($xmlnode->__toString()).'\'';
-            } elseif (count($xmlnode->children()) == 0) {
+            } elseif (count($xmlnode->children()) === 0) {
                 //empty child element
             } else {
                 $nestedCodeText .= self::makeXmlCode(
