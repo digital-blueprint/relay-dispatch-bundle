@@ -445,4 +445,84 @@ class DispatchService
         // Dispatch another delayed message if Vendo request failed
         $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
+
+    /**
+     * See: https://cloud.tugraz.at/index.php/f/102577184.
+     */
+    public static function generateRequestAPIXML(Request $request)
+    {
+//        $xml = new \SimpleXMLElement('<request/>');
+//        $xml->addChild('request_id', $request->getIdentifier());
+//        $xml->addChild('request_type', $request->getRequestType());
+//        $xml->addChild('request_status', $request->getStatus());
+//        $xml->addChild('request_status_description', $request->getStatusDescription());
+//        $xml->addChild('request_status_date', $request->getStatusDate()->format('Y-m-d H:i:s'));
+//        $xml->addChild('request_status_user', $request->getStatusUser());
+//        $xml->addChild('request_status_user_description', $request->getStatusUserDescription());
+//        $xml->addChild('request_status_user_date', $request->getStatusUserDate()->format('Y-m-d H:i:s'));
+//        $xml->addChild('request_status_user_email', $request->getStatusUserEmail());
+//        $xml->addChild('request_status_user_phone', $request->getStatusUserPhone());
+//        $xml->addChild('request_status_user_phone_extension', $request->getStatusUserPhoneExtension());
+//        $xml->addChild('request_status_user_phone_type', $request->getStatusUserPhoneType());
+//        $xml->addChild('request_status_user_phone_country', $request->getStatusUserPhoneCountry());
+//        $xml->addChild('request_status_user_phone_area', $request->getStatusUserPhoneArea());
+//        $xml->addChild('request_status_user_phone_number', $request->getStatusUserPhoneNumber());
+//        $xml->addChild('request_status_user_phone_extension', $request->getStatusUserPhoneExtension());
+//        $xml->addChild('request_status_user_phone_type', $request->getStatusUserPhoneType());
+//        $xml->addChild('request_status_user_phone_country', $request->getStatusUserPhoneCountry());
+//        $xml->addChild('request_status_user_phone_area', $request->getStatusUserPhoneArea());
+
+        $xml = new \DOMDocument('1.0', 'UTF-8');
+        $xml_soapenvHeader = $xml->createElement('soapenv:Header');
+        $xml->appendChild($xml_soapenvHeader);
+
+        $xml_soapenvBody = $xml->createElement('soapenv:Body');
+        $xml_nsDualDeliveryRequest = $xml->createElement('ns:DualDeliveryRequest');
+        $xml_nsDualDeliveryRequest->setAttribute('version', '1.0');
+        $xml_nsSender = $xml->createElement('ns:Sender');
+        $xml_nsSenderProfile = $xml->createElement('ns:SenderProfile', 'hierMagIhresStehen');
+        $xml_nsSenderProfile->setAttribute('version', '1.0');
+        $xml_nsSender->appendChild($xml_nsSenderProfile);
+        $xml_nsDualDeliveryRequest->appendChild($xml_nsSender);
+        $xml_nsDualDeliveryID = $xml->createElement('ns:DualDeliveryID', '87720');
+        $xml_nsDualDeliveryRequest->appendChild($xml_nsDualDeliveryID);
+        $xml_nsMetaData = $xml->createElement('ns:MetaData');
+        $xml_nsAppDeliveryID = $xml->createElement('ns:AppDeliveryID', '12399_WFF_Rsa_1');
+        $xml_nsMetaData->appendChild($xml_nsAppDeliveryID);
+        $xml_nsDeliveryQuality = $xml->createElement('ns:DeliveryQuality', 'Rsa');
+        $xml_nsMetaData->appendChild($xml_nsDeliveryQuality);
+        $xml_nsAsynchronous = $xml->createElement('ns:Asynchronous', 'false');
+        $xml_nsMetaData->appendChild($xml_nsAsynchronous);
+        $xml_nsSubject = $xml->createElement('ns:Subject', 'Testsendung');
+        $xml_nsMetaData->appendChild($xml_nsSubject);
+        $xml_nsAdditionalMetaData = $xml->createElement('ns:AdditionalMetaData');
+        $xml_nsPropertyValueMetaDataSet = $xml->createElement('ns:PropertyValueMetaDataSet');
+        $xml_nsParameter = $xml->createElement('ns:Parameter');
+        $xml_nsProperty = $xml->createElement('ns:Property', 'TAGS');
+        $xml_nsParameter->appendChild($xml_nsProperty);
+        $xml_nsValue = $xml->createElement('ns:Value', 'Schriftstueck');
+        $xml_nsParameter->appendChild($xml_nsValue);
+        $xml_nsPropertyValueMetaDataSet->appendChild($xml_nsParameter);
+        $xml_nsAdditionalMetaData->appendChild($xml_nsPropertyValueMetaDataSet);
+        $xml_nsMetaData->appendChild($xml_nsAdditionalMetaData);
+        $xml_nsGZ = $xml->createElement('ns:GZ', '2349FB27-259E-46CA-B323-3922038982E7');
+        $xml_nsMetaData->appendChild($xml_nsGZ);
+        $xml_nsDualDeliveryRequest->appendChild($xml_nsMetaData);
+        $xml_nsDeliveryChannels = $xml->createElement('ns:DeliveryChannels');
+        $xml_nsDualDeliveryRequest->appendChild($xml_nsDeliveryChannels);
+        $xml_nsPayload = $xml->createElement('ns:Payload');
+        $xml_nsPayloadAttributes = $xml->createElement('ns:PayloadAttributes');
+        $xml_nsFileName = $xml->createElement('ns:FileName', 'docname.pdf');
+        $xml_nsPayloadAttributes->appendChild($xml_nsFileName);
+        $xml_nsMIMEType = $xml->createElement('ns:MIMEType', 'application/pdf');
+        $xml_nsPayloadAttributes->appendChild($xml_nsMIMEType);
+        $xml_nsPayload->appendChild($xml_nsPayloadAttributes);
+        $xml_nsBinaryDocument = $xml->createElement('ns:BinaryDocument');
+        $xml_nsContent = $xml->createElement('ns:Content', 'JVBERi0xLjQKJdP0zOEKMSAwIG...');
+        $xml_nsBinaryDocument->appendChild($xml_nsContent);
+        $xml_nsPayload->appendChild($xml_nsBinaryDocument);
+        $xml_nsDualDeliveryRequest->appendChild($xml_nsPayload);
+        $xml_soapenvBody->appendChild($xml_nsDualDeliveryRequest);
+        $xml->appendChild($xml_soapenvBody);
+    }
 }
