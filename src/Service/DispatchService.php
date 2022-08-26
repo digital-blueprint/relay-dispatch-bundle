@@ -449,7 +449,7 @@ class DispatchService
     /**
      * See: https://cloud.tugraz.at/index.php/f/102577184.
      */
-    public static function generateRequestAPIXML(Request $request)
+    public static function generateRequestAPIXML(Request $request): string
     {
 //        $xml = new \SimpleXMLElement('<request/>');
 //        $xml->addChild('request_id', $request->getIdentifier());
@@ -473,8 +473,13 @@ class DispatchService
 //        $xml->addChild('request_status_user_phone_area', $request->getStatusUserPhoneArea());
 
         $xml = new \DOMDocument('1.0', 'UTF-8');
+        $xml_soapenvEnvelope = $xml->createElement('soapenv:Envelope');
+        $xml_soapenvEnvelope->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns', 'http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns1', 'http://reference.e-government.gv.at/namespace/persondata/20130121#');
+
         $xml_soapenvHeader = $xml->createElement('soapenv:Header');
-        $xml->appendChild($xml_soapenvHeader);
+        $xml_soapenvEnvelope->appendChild($xml_soapenvHeader);
 
         $xml_soapenvBody = $xml->createElement('soapenv:Body');
         $xml_nsDualDeliveryRequest = $xml->createElement('ns:DualDeliveryRequest');
@@ -484,16 +489,16 @@ class DispatchService
         $xml_nsSenderProfile->setAttribute('version', '1.0');
         $xml_nsSender->appendChild($xml_nsSenderProfile);
         $xml_nsDualDeliveryRequest->appendChild($xml_nsSender);
-        $xml_nsDualDeliveryID = $xml->createElement('ns:DualDeliveryID', '87720');
-        $xml_nsDualDeliveryRequest->appendChild($xml_nsDualDeliveryID);
+//        $xml_nsDualDeliveryID = $xml->createElement('ns:DualDeliveryID', '87720');
+//        $xml_nsDualDeliveryRequest->appendChild($xml_nsDualDeliveryID);
         $xml_nsMetaData = $xml->createElement('ns:MetaData');
-        $xml_nsAppDeliveryID = $xml->createElement('ns:AppDeliveryID', '12399_WFF_Rsa_1');
+        $xml_nsAppDeliveryID = $xml->createElement('ns:AppDeliveryID', $request->getIdentifier());
         $xml_nsMetaData->appendChild($xml_nsAppDeliveryID);
         $xml_nsDeliveryQuality = $xml->createElement('ns:DeliveryQuality', 'Rsa');
         $xml_nsMetaData->appendChild($xml_nsDeliveryQuality);
         $xml_nsAsynchronous = $xml->createElement('ns:Asynchronous', 'false');
         $xml_nsMetaData->appendChild($xml_nsAsynchronous);
-        $xml_nsSubject = $xml->createElement('ns:Subject', 'Testsendung');
+        $xml_nsSubject = $xml->createElement('ns:Subject', 'Duale Zustellung');
         $xml_nsMetaData->appendChild($xml_nsSubject);
         $xml_nsAdditionalMetaData = $xml->createElement('ns:AdditionalMetaData');
         $xml_nsPropertyValueMetaDataSet = $xml->createElement('ns:PropertyValueMetaDataSet');
@@ -505,24 +510,37 @@ class DispatchService
         $xml_nsPropertyValueMetaDataSet->appendChild($xml_nsParameter);
         $xml_nsAdditionalMetaData->appendChild($xml_nsPropertyValueMetaDataSet);
         $xml_nsMetaData->appendChild($xml_nsAdditionalMetaData);
-        $xml_nsGZ = $xml->createElement('ns:GZ', '2349FB27-259E-46CA-B323-3922038982E7');
+        // will be printed, doesn't need to be unique
+        $xml_nsGZ = $xml->createElement('ns:GZ', $request->getIdentifier());
         $xml_nsMetaData->appendChild($xml_nsGZ);
         $xml_nsDualDeliveryRequest->appendChild($xml_nsMetaData);
         $xml_nsDeliveryChannels = $xml->createElement('ns:DeliveryChannels');
         $xml_nsDualDeliveryRequest->appendChild($xml_nsDeliveryChannels);
-        $xml_nsPayload = $xml->createElement('ns:Payload');
-        $xml_nsPayloadAttributes = $xml->createElement('ns:PayloadAttributes');
-        $xml_nsFileName = $xml->createElement('ns:FileName', 'docname.pdf');
-        $xml_nsPayloadAttributes->appendChild($xml_nsFileName);
-        $xml_nsMIMEType = $xml->createElement('ns:MIMEType', 'application/pdf');
-        $xml_nsPayloadAttributes->appendChild($xml_nsMIMEType);
-        $xml_nsPayload->appendChild($xml_nsPayloadAttributes);
-        $xml_nsBinaryDocument = $xml->createElement('ns:BinaryDocument');
-        $xml_nsContent = $xml->createElement('ns:Content', 'JVBERi0xLjQKJdP0zOEKMSAwIG...');
-        $xml_nsBinaryDocument->appendChild($xml_nsContent);
-        $xml_nsPayload->appendChild($xml_nsBinaryDocument);
-        $xml_nsDualDeliveryRequest->appendChild($xml_nsPayload);
+
+        /** @var RequestFile[] $files */
+        $files = $request->getFiles();
+        foreach($files as $file) {
+            $xml_nsPayload = $xml->createElement('ns:Payload');
+            $xml_nsPayloadAttributes = $xml->createElement('ns:PayloadAttributes');
+            $xml_nsFileName = $xml->createElement('ns:FileName', $file->getName());
+            $xml_nsPayloadAttributes->appendChild($xml_nsFileName);
+            $xml_nsMIMEType = $xml->createElement('ns:MIMEType', $file->getFileFormat());
+            $xml_nsPayloadAttributes->appendChild($xml_nsMIMEType);
+            $xml_nsPayload->appendChild($xml_nsPayloadAttributes);
+            $xml_nsBinaryDocument = $xml->createElement('ns:BinaryDocument');
+            $content = base64_encode(stream_get_contents($file->getData()));
+            // TODO: remove debug limit
+            $content = substr($content, 0, 100);
+            $xml_nsContent = $xml->createElement('ns:Content', $content);
+            $xml_nsBinaryDocument->appendChild($xml_nsContent);
+            $xml_nsPayload->appendChild($xml_nsBinaryDocument);
+            $xml_nsDualDeliveryRequest->appendChild($xml_nsPayload);
+        }
+
         $xml_soapenvBody->appendChild($xml_nsDualDeliveryRequest);
-        $xml->appendChild($xml_soapenvBody);
+        $xml_soapenvEnvelope->appendChild($xml_soapenvBody);
+        $xml->appendChild($xml_soapenvEnvelope);
+
+        return $xml->saveXML();
     }
 }
