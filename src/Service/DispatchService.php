@@ -451,27 +451,6 @@ class DispatchService
      */
     public static function generateRequestAPIXML(Request $request): string
     {
-//        $xml = new \SimpleXMLElement('<request/>');
-//        $xml->addChild('request_id', $request->getIdentifier());
-//        $xml->addChild('request_type', $request->getRequestType());
-//        $xml->addChild('request_status', $request->getStatus());
-//        $xml->addChild('request_status_description', $request->getStatusDescription());
-//        $xml->addChild('request_status_date', $request->getStatusDate()->format('Y-m-d H:i:s'));
-//        $xml->addChild('request_status_user', $request->getStatusUser());
-//        $xml->addChild('request_status_user_description', $request->getStatusUserDescription());
-//        $xml->addChild('request_status_user_date', $request->getStatusUserDate()->format('Y-m-d H:i:s'));
-//        $xml->addChild('request_status_user_email', $request->getStatusUserEmail());
-//        $xml->addChild('request_status_user_phone', $request->getStatusUserPhone());
-//        $xml->addChild('request_status_user_phone_extension', $request->getStatusUserPhoneExtension());
-//        $xml->addChild('request_status_user_phone_type', $request->getStatusUserPhoneType());
-//        $xml->addChild('request_status_user_phone_country', $request->getStatusUserPhoneCountry());
-//        $xml->addChild('request_status_user_phone_area', $request->getStatusUserPhoneArea());
-//        $xml->addChild('request_status_user_phone_number', $request->getStatusUserPhoneNumber());
-//        $xml->addChild('request_status_user_phone_extension', $request->getStatusUserPhoneExtension());
-//        $xml->addChild('request_status_user_phone_type', $request->getStatusUserPhoneType());
-//        $xml->addChild('request_status_user_phone_country', $request->getStatusUserPhoneCountry());
-//        $xml->addChild('request_status_user_phone_area', $request->getStatusUserPhoneArea());
-
         $xml = new \DOMDocument('1.0', 'UTF-8');
         $xml_soapenvEnvelope = $xml->createElement('soapenv:Envelope');
         $xml_soapenvEnvelope->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
@@ -485,6 +464,7 @@ class DispatchService
         $xml_nsDualDeliveryRequest = $xml->createElement('ns:DualDeliveryRequest');
         $xml_nsDualDeliveryRequest->setAttribute('version', '1.0');
         $xml_nsSender = $xml->createElement('ns:Sender');
+        // TODO: Add SenderProfile (setting?)
         $xml_nsSenderProfile = $xml->createElement('ns:SenderProfile', 'hierMagIhresStehen');
         $xml_nsSenderProfile->setAttribute('version', '1.0');
         $xml_nsSender->appendChild($xml_nsSenderProfile);
@@ -494,10 +474,12 @@ class DispatchService
         $xml_nsMetaData = $xml->createElement('ns:MetaData');
         $xml_nsAppDeliveryID = $xml->createElement('ns:AppDeliveryID', $request->getIdentifier());
         $xml_nsMetaData->appendChild($xml_nsAppDeliveryID);
+        // TODO: Is this always "Rsa"?
         $xml_nsDeliveryQuality = $xml->createElement('ns:DeliveryQuality', 'Rsa');
         $xml_nsMetaData->appendChild($xml_nsDeliveryQuality);
         $xml_nsAsynchronous = $xml->createElement('ns:Asynchronous', 'false');
         $xml_nsMetaData->appendChild($xml_nsAsynchronous);
+        // TODO: Do be need a subject?
         $xml_nsSubject = $xml->createElement('ns:Subject', 'Duale Zustellung');
         $xml_nsMetaData->appendChild($xml_nsSubject);
         $xml_nsAdditionalMetaData = $xml->createElement('ns:AdditionalMetaData');
@@ -516,6 +498,8 @@ class DispatchService
         $xml_nsDualDeliveryRequest->appendChild($xml_nsMetaData);
         $xml_nsDeliveryChannels = $xml->createElement('ns:DeliveryChannels');
         $xml_nsDualDeliveryRequest->appendChild($xml_nsDeliveryChannels);
+
+        // TODO: Add recipients
 
         /** @var RequestFile[] $files */
         $files = $request->getFiles();
