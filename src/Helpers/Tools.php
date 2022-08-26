@@ -21,6 +21,11 @@ class Tools
         $breakType = "\n",
         $tabType = '    '
     ): string {
+        // remove xml declaration
+        $soapString = preg_replace('/<\?xml .+\?>/', '', $soapString);
+        // add fake root to get real root
+        $soapString = "<root>$soapString</root>";
+
         $xmlString = preg_replace("/(<\/?)(\w+):([^>]*>)/", '$1$2___$3', $soapString);
         $xml = simplexml_load_string($xmlString);
 
@@ -41,6 +46,10 @@ class Tools
 
         if ($parentNodeName === '$xml') {
             $codeText = '$xml = new \DOMDocument(\'1.0\',\'UTF-8\');'.$breakType;
+
+            foreach($xmlData->getDocNamespaces() as $prefix => $namespace) {
+                $codeText .= $tabs.'$xml->createAttributeNS(\''.$namespace.'\', \'xmlns:'.$prefix.'\');'.$breakType;
+            }
         }
 
         foreach ($xmlData as $xmlVarName => $xmlNode) {
