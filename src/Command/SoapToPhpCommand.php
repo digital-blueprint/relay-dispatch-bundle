@@ -40,12 +40,7 @@ class SoapToPhpCommand extends Command
         }
 
         $soapString = file_get_contents($filePath);
-        $xmlString = preg_replace("/(<\/?)(\w+):([^>]*>)/", '$1$2___$3', $soapString);
-
-//        var_dump($soapString);
-        $xml = simplexml_load_string($xmlString);
-//        var_dump($xml);
-        $result = Tools::makeXmlCode($xml, '$xml', '', "\n", '    ');
+        $result = Tools::makeXmlCodeFromSoap($soapString);
 
         echo $result;
 
