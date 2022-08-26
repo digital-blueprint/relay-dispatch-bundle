@@ -42,6 +42,11 @@ class StatusTestCommand extends Command
         $dispatchRequestIdentifier = $input->getArgument('dispatch_request_identifier');
         $this->dispatchService->createRequestStatusChange($dispatchRequestIdentifier, 1, 'Test');
 
+//        $request = $this->dispatchService->getRequestById($dispatchRequestIdentifier);
+//        $xmlString = DispatchService::generateRequestAPIXML($request);
+//
+//        print $xmlString;
+
         return 0;
     }
 }
