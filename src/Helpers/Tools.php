@@ -43,29 +43,29 @@ class Tools
             $codeText = '$xml = new \DOMDocument(\'1.0\',\'UTF-8\');'.$breakType;
         }
 
-        foreach ($xmlData as $xmlvarname => $xmlnode) {
+        foreach ($xmlData as $xmlVarName => $xmlNode) {
             $attCodeText = '';
             $nodeVal = '';
             $nestedCodeText = '';
 
-            $xmlnodename = str_replace($soapReplacement, ':', $xmlvarname);
-            $xmlvarname = str_replace($soapReplacement, '', $xmlvarname);
+            $xmlNodeName = str_replace($soapReplacement, ':', $xmlVarName);
+            $xmlVarName = str_replace($soapReplacement, '', $xmlVarName);
 
-            if ($xmlnode->attributes()) {
-                foreach ($xmlnode->attributes() as $attname => $attvalue) {
-                    $attname = str_replace($soapReplacement, ':', $attname);
-                    $attCodeText .= $tabs.'$xml_'.$xmlvarname.'->setAttribute(\''.$attname.'\',\''.$attvalue.'\');'.$breakType;
+            if ($xmlNode->attributes()) {
+                foreach ($xmlNode->attributes() as $attName => $attValue) {
+                    $attName = str_replace($soapReplacement, ':', $attName);
+                    $attCodeText .= $tabs.'$xml_'.$xmlVarName.'->setAttribute(\''.$attName.'\',\''.$attValue.'\');'.$breakType;
                 }
             }
 
-            if (trim($xmlnode->__toString())) {
-                $nodeVal = ',\''.trim($xmlnode->__toString()).'\'';
-            } elseif (count($xmlnode->children()) === 0) {
+            if (trim($xmlNode->__toString())) {
+                $nodeVal = ',\''.trim($xmlNode->__toString()).'\'';
+            } elseif (count($xmlNode->children()) === 0) {
                 //empty child element
             } else {
                 $nestedCodeText .= self::makeXmlCode(
-                    $xmlnode,
-                    '$xml_'.$xmlvarname,
+                    $xmlNode,
+                    '$xml_'.$xmlVarName,
                     $tabs,
                     $breakType,
                     $tabType,
@@ -73,11 +73,11 @@ class Tools
                 );
             }
 
-            $codeText .= $tabs.'$xml_'.$xmlvarname.' = $xml->createElement(\''.$xmlnodename.'\''.$nodeVal.');'.$breakType;
+            $codeText .= $tabs.'$xml_'.$xmlVarName.' = $xml->createElement(\''.$xmlNodeName.'\''.$nodeVal.');'.$breakType;
             $codeText .= $attCodeText;
             $codeText .= $nestedCodeText;
 
-            $codeText .= $start_tabs.$parentNodeName.'->appendChild($xml_'.$xmlvarname.');'.$breakType;
+            $codeText .= $start_tabs.$parentNodeName.'->appendChild($xml_'.$xmlVarName.');'.$breakType;
         }
 
         return $codeText;
