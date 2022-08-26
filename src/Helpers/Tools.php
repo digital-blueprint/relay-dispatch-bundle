@@ -47,7 +47,7 @@ class Tools
         if ($parentNodeName === '$xml') {
             $codeText = '$xml = new \DOMDocument(\'1.0\',\'UTF-8\');'.$breakType;
 
-            foreach($xmlData->getDocNamespaces() as $prefix => $namespace) {
+            foreach ($xmlData->getDocNamespaces() as $prefix => $namespace) {
                 $codeText .= $tabs.'$xml->createAttributeNS(\''.$namespace.'\', \'xmlns:'.$prefix.'\');'.$breakType;
             }
         }
