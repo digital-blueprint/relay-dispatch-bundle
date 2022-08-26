@@ -519,7 +519,7 @@ class DispatchService
 
         /** @var RequestFile[] $files */
         $files = $request->getFiles();
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $xml_nsPayload = $xml->createElement('ns:Payload');
             $xml_nsPayloadAttributes = $xml->createElement('ns:PayloadAttributes');
             $xml_nsFileName = $xml->createElement('ns:FileName', $file->getName());
