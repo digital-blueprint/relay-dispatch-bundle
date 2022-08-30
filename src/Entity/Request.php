@@ -10,6 +10,7 @@ use Dbp\Relay\DispatchBundle\Controller\PostSubmitRequest;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -137,6 +138,10 @@ class Request
      * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/givenName")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Only {{ limit }} letters are allowed"
+     * )
      *
      * @var string
      */
@@ -146,6 +151,10 @@ class Request
      * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/familyName")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Only {{ limit }} letters are allowed"
+     * )
      *
      * @var string
      */
@@ -164,6 +173,10 @@ class Request
      * @ORM\Column(type="string", length=2)
      * @ApiProperty(iri="https://schema.org/addressCountry")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *      max = 2,
+     *      maxMessage = "Only {{ limit }} letter country codes are allowed"
+     * )
      *
      * @var string
      */
@@ -173,6 +186,10 @@ class Request
      * @ORM\Column(type="string", length=20)
      * @ApiProperty(iri="https://schema.org/postalCode")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *      max = 20,
+     *      maxMessage = "Only {{ limit }} letter postal codes are allowed"
+     * )
      *
      * @var string
      */
@@ -182,6 +199,10 @@ class Request
      * @ORM\Column(type="string", length=120)
      * @ApiProperty(iri="https://schema.org/addressLocality")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *      max = 120,
+     *      maxMessage = "Only {{ limit }} letters are allowed"
+     * )
      *
      * @var string
      */
@@ -191,6 +212,10 @@ class Request
      * @ORM\Column(type="string", length=120)
      * @ApiProperty(iri="https://schema.org/streetAddress")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *      max = 120,
+     *      maxMessage = "Only {{ limit }} letters are allowed"
+     * )
      *
      * @var string
      */
@@ -200,6 +225,10 @@ class Request
      * @ORM\Column(type="string", length=10)
      * @ApiProperty
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "Only {{ limit }} letters are allowed"
+     * )
      *
      * @var string
      */
