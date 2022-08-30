@@ -474,7 +474,6 @@ class DispatchService
         $xml_nsDualDeliveryRequest = $xml->createElement('ns:DualDeliveryRequest');
         $xml_nsDualDeliveryRequest->setAttribute('version', '1.0');
         $xml_nsSender = $xml->createElement('ns:Sender');
-        // TODO: Add SenderProfile (setting?)
         $xml_nsSenderProfile = $xml->createElement('ns:SenderProfile', $this->senderProfile);
         $xml_nsSenderProfile->setAttribute('version', '1.0');
         $xml_nsSender->appendChild($xml_nsSenderProfile);
@@ -489,7 +488,7 @@ class DispatchService
         $xml_nsMetaData->appendChild($xml_nsDeliveryQuality);
         $xml_nsAsynchronous = $xml->createElement('ns:Asynchronous', 'false');
         $xml_nsMetaData->appendChild($xml_nsAsynchronous);
-        // TODO: Do be need a subject?
+        // TODO: Do we need a subject?
         $xml_nsSubject = $xml->createElement('ns:Subject', 'Duale Zustellung');
         $xml_nsMetaData->appendChild($xml_nsSubject);
         $xml_nsAdditionalMetaData = $xml->createElement('ns:AdditionalMetaData');
@@ -509,7 +508,18 @@ class DispatchService
         $xml_nsDeliveryChannels = $xml->createElement('ns:DeliveryChannels');
         $xml_nsDualDeliveryRequest->appendChild($xml_nsDeliveryChannels);
 
-        // TODO: Add recipients
+        /** @var RequestRecipient[] $recipients */
+        $recipients = $request->getRecipients();
+        foreach ($recipients as $recipient) {
+            $xml_nsRecipient = $xml->createElement('ns:Recipient');
+            $xml_nsRecipientData = $xml->createElement('ns:RecipientData');
+            // TODO: Which fields should be submitted? Do we always have a PreAddressingRequest?
+//            $xml_nsRecipientId = $xml->createElement('ns:RecipientId', $recipient->getRecipientId());
+            $xml_nsRecipientId = $xml->createElement('ns:RecipientId', $recipient->getIdentifier());
+            $xml_nsRecipientData->appendChild($xml_nsRecipientId);
+            $xml_nsRecipient->appendChild($xml_nsRecipientData);
+            $xml_nsDualDeliveryRequest->appendChild($xml_nsRecipient);
+        }
 
         /** @var RequestFile[] $files */
         $files = $request->getFiles();
