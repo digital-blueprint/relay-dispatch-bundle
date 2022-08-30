@@ -43,6 +43,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
 
         $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\DispatchService');
         $definition->addMethodCall('setCache', [$cacheDef]);
+        $definition->addMethodCall('setConfig', [$mergedConfig]);
     }
 
     /**

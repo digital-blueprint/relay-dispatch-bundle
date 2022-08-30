@@ -43,6 +43,11 @@ class DispatchService
      */
     private $bus;
 
+    /**
+     * @var string
+     */
+    private $senderProfile;
+
     public function __construct(
         PersonProviderInterface $personProvider,
         ManagerRegistry $managerRegistry,
@@ -53,6 +58,11 @@ class DispatchService
         assert($manager instanceof EntityManagerInterface);
         $this->em = $manager;
         $this->bus = $bus;
+    }
+
+    public function setConfig(array $config)
+    {
+        $this->senderProfile = $config['sender_profile'] ?? '';
     }
 
     public function setCache(?CacheItemPoolInterface $cachePool)
@@ -449,7 +459,7 @@ class DispatchService
     /**
      * See: https://cloud.tugraz.at/index.php/f/102577184.
      */
-    public static function generateRequestAPIXML(Request $request): string
+    public function generateRequestAPIXML(Request $request): string
     {
         $xml = new \DOMDocument('1.0', 'UTF-8');
         $xml_soapenvEnvelope = $xml->createElement('soapenv:Envelope');
@@ -465,7 +475,7 @@ class DispatchService
         $xml_nsDualDeliveryRequest->setAttribute('version', '1.0');
         $xml_nsSender = $xml->createElement('ns:Sender');
         // TODO: Add SenderProfile (setting?)
-        $xml_nsSenderProfile = $xml->createElement('ns:SenderProfile', 'hierMagIhresStehen');
+        $xml_nsSenderProfile = $xml->createElement('ns:SenderProfile', $this->senderProfile);
         $xml_nsSenderProfile->setAttribute('version', '1.0');
         $xml_nsSender->appendChild($xml_nsSenderProfile);
         $xml_nsDualDeliveryRequest->appendChild($xml_nsSender);

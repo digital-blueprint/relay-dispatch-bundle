@@ -16,6 +16,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->children()
             ->scalarNode('database_url')->end()
+            ->scalarNode('sender_profile')->end()
             ->end()
             ->end();
 
