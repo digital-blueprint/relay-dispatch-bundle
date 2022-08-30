@@ -132,8 +132,8 @@ class RequestRecipient
      * @ApiProperty(iri="https://schema.org/givenName")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "Only {{ limit }} letters are allowed"
+     *     max=255,
+     *     maxMessage="Only {{ limit }} letters are allowed"
      * )
      *
      * @var string
@@ -145,8 +145,8 @@ class RequestRecipient
      * @ApiProperty(iri="https://schema.org/familyName")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "Only {{ limit }} letters are allowed"
+     *     max=255,
+     *     maxMessage="Only {{ limit }} letters are allowed"
      * )
      *
      * @var string
@@ -158,8 +158,8 @@ class RequestRecipient
      * @ApiProperty(iri="https://schema.org/addressCountry")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
-     *      max = 2,
-     *      maxMessage = "Only {{ limit }} letter country codes are allowed"
+     *     max=2,
+     *     maxMessage="Only {{ limit }} letter country codes are allowed"
      * )
      *
      * @var string
@@ -171,8 +171,8 @@ class RequestRecipient
      * @ApiProperty(iri="https://schema.org/postalCode")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
-     *      max = 20,
-     *      maxMessage = "Only {{ limit }} letter postal codes are allowed"
+     *     max=20,
+     *     maxMessage="Only {{ limit }} letter postal codes are allowed"
      * )
      *
      * @var string
@@ -184,8 +184,8 @@ class RequestRecipient
      * @ApiProperty(iri="https://schema.org/addressLocality")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
-     *      max = 120,
-     *      maxMessage = "Only {{ limit }} letters are allowed"
+     *     max=120,
+     *     maxMessage="Only {{ limit }} letters are allowed"
      * )
      *
      * @var string
@@ -197,8 +197,8 @@ class RequestRecipient
      * @ApiProperty(iri="https://schema.org/streetAddress")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
-     *      max = 120,
-     *      maxMessage = "Only {{ limit }} letters are allowed"
+     *     max=120,
+     *     maxMessage="Only {{ limit }} letters are allowed"
      * )
      *
      * @var string
@@ -210,8 +210,8 @@ class RequestRecipient
      * @ApiProperty
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
-     *      max = 10,
-     *      maxMessage = "Only {{ limit }} letters are allowed"
+     *     max=10,
+     *     maxMessage="Only {{ limit }} letters are allowed"
      * )
      *
      * @var string
