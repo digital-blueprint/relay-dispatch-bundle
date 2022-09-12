@@ -54,6 +54,12 @@ class DebugCommand extends Command
 
                 echo $xmlString;
                 break;
+            case 'do-api-request':
+                $output->writeln('Do API request...');
+                $response = $this->dispatchService->doAPIRequest("");
+
+                var_dump($response);
+                break;
             default:
                 $output->writeln('Action not found!');
 

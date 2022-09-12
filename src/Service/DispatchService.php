@@ -456,6 +456,20 @@ class DispatchService
         $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
+    public function doAPIRequest($url) {
+        $client = new \GuzzleHttp\Client();
+        $password = "the_password";
+        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12";
+//        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem";
+        $method = "POST";
+
+        $response = $client->request($method, 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor', ['cert' => [
+            $cert, $password
+        ]]);
+
+        return $response;
+    }
+
     /**
      * See: https://cloud.tugraz.at/index.php/f/102577184.
      */
