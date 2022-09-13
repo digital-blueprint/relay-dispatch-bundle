@@ -15,6 +15,7 @@ use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +49,11 @@ class DispatchService
      */
     private $senderProfile;
 
+    /**
+     * @var string
+     */
+    private $certPassword;
+
     public function __construct(
         PersonProviderInterface $personProvider,
         ManagerRegistry $managerRegistry,
@@ -63,6 +69,7 @@ class DispatchService
     public function setConfig(array $config)
     {
         $this->senderProfile = $config['sender_profile'] ?? '';
+        $this->certPassword = $config['cert_password'] ?? '';
     }
 
     public function setCache(?CacheItemPoolInterface $cachePool)
@@ -456,16 +463,36 @@ class DispatchService
         $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
-    public function doAPIRequest($url) {
+    public function doAPIRequest($url, $body)
+    {
         $client = new \GuzzleHttp\Client();
-        $password = "the_password";
-        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12";
-//        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem";
-        $method = "POST";
+        $password = $this->certPassword;
 
-        $response = $client->request($method, 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor', ['cert' => [
-            $cert, $password
-        ]]);
+        $cert = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
+//        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem";
+        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
+        $method = 'POST';
+
+        $options = ['headers' => [
+            'SOAPAction' => '',
+        ]];
+        $options['cert'] = [$cert, $password];
+        // https://docs.guzzlephp.org/en/stable/request-options.html#verify-option
+        $options['verify'] = false;
+//        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
+//        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/_.vendo.pem';
+
+        $options['body'] = $body;
+
+        try {
+            $response = $client->request($method, $uri, $options);
+        } catch (RequestException $e) {
+            // Error 500 go here
+//            var_dump($e->getRequest());
+            var_dump($e->getMessage());
+            // TODO: Handle errors
+            $response = $e->getResponse();
+        }
 
         return $response;
     }
@@ -528,10 +555,11 @@ class DispatchService
             $xml_nsRecipient = $xml->createElement('ns:Recipient');
             $xml_nsRecipientData = $xml->createElement('ns:RecipientData');
             // TODO: Which fields should be submitted? Do we always have a PreAddressingRequest?
+            // There is no "RecipientId", says the API
 //            $xml_nsRecipientId = $xml->createElement('ns:RecipientId', $recipient->getRecipientId());
-            $xml_nsRecipientId = $xml->createElement('ns:RecipientId', $recipient->getIdentifier());
-            $xml_nsRecipientData->appendChild($xml_nsRecipientId);
-            $xml_nsRecipient->appendChild($xml_nsRecipientData);
+//            $xml_nsRecipientId = $xml->createElement('ns:RecipientId', $recipient->getIdentifier());
+//            $xml_nsRecipientData->appendChild($xml_nsRecipientId);
+//            $xml_nsRecipient->appendChild($xml_nsRecipientData);
             $xml_nsDualDeliveryRequest->appendChild($xml_nsRecipient);
         }
 
@@ -548,7 +576,7 @@ class DispatchService
             $xml_nsBinaryDocument = $xml->createElement('ns:BinaryDocument');
             $content = base64_encode(stream_get_contents($file->getData()));
             // TODO: remove debug limit
-            $content = substr($content, 0, 100);
+//            $content = substr($content, 0, 100);
             $xml_nsContent = $xml->createElement('ns:Content', $content);
             $xml_nsBinaryDocument->appendChild($xml_nsContent);
             $xml_nsPayload->appendChild($xml_nsBinaryDocument);

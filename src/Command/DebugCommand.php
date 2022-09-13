@@ -56,9 +56,20 @@ class DebugCommand extends Command
                 break;
             case 'do-api-request':
                 $output->writeln('Do API request...');
-                $response = $this->dispatchService->doAPIRequest("");
+                $request = $this->dispatchService->getRequestById($identifier);
+                $xmlString = $this->dispatchService->generateRequestAPIXML($request);
+
+//                echo $xmlString;
+
+                $response = $this->dispatchService->doAPIRequest('', $xmlString);
 
                 var_dump($response);
+
+                if ($response) {
+                    var_dump($response->getHeaders());
+                    var_dump($response->getStatusCode());
+                    echo $response->getBody()->getContents();
+                }
                 break;
             default:
                 $output->writeln('Action not found!');
