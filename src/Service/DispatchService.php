@@ -470,6 +470,11 @@ class DispatchService
 
         $cert = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
 //        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem";
+//        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.key.pem";
+
+        // We converted the p12 file to pem to get a text file we can store in a variable
+        // openssl pkcs12 -in tu_graz_client.kbprintcom.at_.p12 -out tu_graz_client.kbprintcom.at_.pem
+        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.pem";
         $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
         $method = 'POST';
 
@@ -477,10 +482,12 @@ class DispatchService
             'SOAPAction' => '',
         ]];
         $options['cert'] = [$cert, $password];
+        // TODO: We should get verification working
         // https://docs.guzzlephp.org/en/stable/request-options.html#verify-option
         $options['verify'] = false;
 //        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
 //        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/_.vendo.pem';
+//        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.pem';
 
         $options['body'] = $body;
 
