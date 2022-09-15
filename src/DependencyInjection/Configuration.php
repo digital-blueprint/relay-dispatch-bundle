@@ -18,6 +18,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('database_url')->end()
             ->scalarNode('sender_profile')->end()
             ->scalarNode('cert_password')->end()
+            ->scalarNode('cert_p12')->end()
             ->end()
             ->end();
 

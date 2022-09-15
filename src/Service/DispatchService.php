@@ -54,6 +54,11 @@ class DispatchService
      */
     private $certPassword;
 
+    /**
+     * @var string
+     */
+    private $certP12Base64;
+
     public function __construct(
         PersonProviderInterface $personProvider,
         ManagerRegistry $managerRegistry,
@@ -70,6 +75,7 @@ class DispatchService
     {
         $this->senderProfile = $config['sender_profile'] ?? '';
         $this->certPassword = $config['cert_password'] ?? '';
+        $this->certP12Base64 = $config['cert_p12'] ?? '';
     }
 
     public function setCache(?CacheItemPoolInterface $cachePool)
@@ -467,21 +473,40 @@ class DispatchService
     {
         $client = new \GuzzleHttp\Client();
         $password = $this->certPassword;
+        $useCert = $this->certPassword !== '' && $this->certP12Base64 !== '';
+        $certFileName = '';
 
-        $cert = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
-//        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem";
-//        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.key.pem";
+        if ($useCert) {
+            $tmpDir = sys_get_temp_dir();
+            $certFileName = tempnam($tmpDir, 'dispatch');
 
-        // We converted the p12 file to pem to get a text file we can store in a variable
-        // openssl pkcs12 -in tu_graz_client.kbprintcom.at_.p12 -out tu_graz_client.kbprintcom.at_.pem
-        $cert = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.pem";
+            if ($certFileName === false) {
+                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Could not create temporary cert file!', 'dispatch:temp-cert-error');
+            }
+
+//            var_dump(base64_decode($this->certP12Base64));
+//            var_dump($certFileName);
+
+//            file_put_contents($certFileName, base64_decode($this->certP12Base64, true));
+//            copy($certFileName, './tu_graz_client.kbprintcom.at_.p12');
+        }
+
+//        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
+//        $certFileName = './tu_graz_client.kbprintcom.at_.p12';
+//        $certFileName = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem";
         $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
         $method = 'POST';
 
         $options = ['headers' => [
             'SOAPAction' => '',
         ]];
-        $options['cert'] = [$cert, $password];
+
+//        var_dump(file_get_contents($certFileName));
+
+        if ($useCert) {
+            $options['cert'] = [$certFileName, $password];
+        }
+
         // TODO: We should get verification working
         // https://docs.guzzlephp.org/en/stable/request-options.html#verify-option
         $options['verify'] = false;

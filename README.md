@@ -14,4 +14,14 @@ after every update to adapt the database to the new source code.
 php bin/console doctrine:migrations:migrate --em=dbp_relay_dispatch_bundle
 ```
 
+### Settings
+
+```bash
+# base64 encode p12 cert
+base64 -w 0 < cert.p12 > cert.p12.base64
+
+# set secret for the .env file
+php bin/console secrets:set DISPATCH_CERT_P12 cert.p12.base64
+```
+
 TODO
