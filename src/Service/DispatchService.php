@@ -487,12 +487,21 @@ class DispatchService
 //            var_dump(base64_decode($this->certP12Base64));
 //            var_dump($certFileName);
 
-//            file_put_contents($certFileName, base64_decode($this->certP12Base64, true));
+            $certData = base64_decode($this->certP12Base64, true);
+
+            if ($certData === false) {
+                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be decoded!', 'dispatch:base64-cert-error');
+            }
+
+            // TODO: it seems that this file can't be used in the request, it's not a valid cert file. maybe use 2nd temp file?
+            file_put_contents($certFileName, $certData, LOCK_EX);
 //            copy($certFileName, './tu_graz_client.kbprintcom.at_.p12');
+//            copy($certFileName, '/tmp/tu_graz_client.kbprintcom.at_.p12');
         }
 
 //        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
 //        $certFileName = './tu_graz_client.kbprintcom.at_.p12';
+//        $certFileName = '/tmp/tu_graz_client.kbprintcom.at_.p12';
 //        $certFileName = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem";
         $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
         $method = 'POST';
