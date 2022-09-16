@@ -95,7 +95,8 @@ class Tools
     /**
      * Creates a random filename with a given extension.
      */
-    public static function tempnam($extension = 'tmp') {
+    public static function getTempFileName($extension = 'tmp'): string
+    {
         return sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('dispatch_').'.'.$extension;
     }
 }

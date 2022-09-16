@@ -479,7 +479,7 @@ class DispatchService
 
         if ($useCert) {
             // It's essential to use a file name with a .p12 extension, otherwise the certificate will not be recognized by Guzzle
-            $certFileName = Tools::tempnam('p12');
+            $certFileName = Tools::getTempFileName('p12');
 
             $certData = base64_decode($this->certP12Base64, true);
 
