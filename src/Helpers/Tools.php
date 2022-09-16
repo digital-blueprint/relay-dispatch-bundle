@@ -91,4 +91,11 @@ class Tools
 
         return $codeText;
     }
+
+    /**
+     * Creates a random filename with a given extension.
+     */
+    public static function tempnam($extension = 'tmp') {
+        return sys_get_temp_dir().DIRECTORY_SEPARATOR.uniqid('dispatch_').'.'.$extension;
+    }
 }

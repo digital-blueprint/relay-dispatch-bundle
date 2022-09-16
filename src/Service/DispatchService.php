@@ -11,6 +11,7 @@ use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Entity\RequestStatusChange;
+use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
@@ -477,15 +478,8 @@ class DispatchService
         $certFileName = '';
 
         if ($useCert) {
-            $tmpDir = sys_get_temp_dir();
-            $certFileName = tempnam($tmpDir, 'dispatch');
-
-            if ($certFileName === false) {
-                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Could not create temporary cert file!', 'dispatch:temp-cert-error');
-            }
-
-//            var_dump(base64_decode($this->certP12Base64));
-//            var_dump($certFileName);
+            // It's essential to use a file name with a .p12 extension, otherwise the certificate will not be recognized by Guzzle
+            $certFileName = Tools::tempnam('p12');
 
             $certData = base64_decode($this->certP12Base64, true);
 
@@ -493,24 +487,19 @@ class DispatchService
                 throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be decoded!', 'dispatch:base64-cert-error');
             }
 
-            // TODO: it seems that this file can't be used in the request, it's not a valid cert file. maybe use 2nd temp file?
-            file_put_contents($certFileName, $certData, LOCK_EX);
-//            copy($certFileName, './tu_graz_client.kbprintcom.at_.p12');
-//            copy($certFileName, '/tmp/tu_graz_client.kbprintcom.at_.p12');
+            $byteWritten = file_put_contents($certFileName, $certData);
+
+            if ($byteWritten === false) {
+                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be written to file!', 'dispatch:write-cert-error');
+            }
         }
 
-//        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
-//        $certFileName = './tu_graz_client.kbprintcom.at_.p12';
-//        $certFileName = '/tmp/tu_graz_client.kbprintcom.at_.p12';
-//        $certFileName = "./vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem";
         $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
         $method = 'POST';
 
         $options = ['headers' => [
             'SOAPAction' => '',
         ]];
-
-//        var_dump(file_get_contents($certFileName));
 
         if ($useCert) {
             $options['cert'] = [$certFileName, $password];
@@ -533,6 +522,10 @@ class DispatchService
             var_dump($e->getMessage());
             // TODO: Handle errors
             $response = $e->getResponse();
+        } finally {
+            if ($useCert) {
+                unlink($certFileName);
+            }
         }
 
         return $response;
