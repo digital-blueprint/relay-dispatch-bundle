@@ -77,6 +77,7 @@ class DispatchService
         $this->senderProfile = $config['sender_profile'] ?? '';
         $this->certPassword = $config['cert_password'] ?? '';
         $this->certP12Base64 = $config['cert_p12'] ?? '';
+//        $this->deliveryRequestUrl = $config['delivery_request_url_part'] ?? '';
     }
 
     public function setCache(?CacheItemPoolInterface $cachePool)

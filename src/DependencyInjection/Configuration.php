@@ -15,14 +15,14 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
-            ->scalarNode('database_url')->end()
-            ->scalarNode('sender_profile')->end()
+            ->scalarNode('database_url')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('sender_profile')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('cert_password')->end()
             ->scalarNode('cert_p12')->end()
-            ->scalarNode('base_url')->end()
-            ->scalarNode('delivery_request_url_part')->end()
-            ->scalarNode('pre_addressing_request_url_part')->end()
-            ->scalarNode('status_request_url_part')->end()
+            ->scalarNode('base_url')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('delivery_request_url_part')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('pre_addressing_request_url_part')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('status_request_url_part')->isRequired()->cannotBeEmpty()->end()
             ->end()
             ->end();
 
