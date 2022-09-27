@@ -502,6 +502,22 @@ class DispatchService
             'SOAPAction' => '',
         ]];
 
+//        $options = [
+//            'defaults' => [
+//                'config' => [
+//                    'curl' => [
+//                        CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2
+//                    ]
+//                ]
+//            ],
+//            'headers' => [
+//                'SOAPAction' => '',
+//                //            'curl' => array(
+//                //                CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2
+//                //            )
+//            ]
+//        ];
+
         if ($useCert) {
             $options['cert'] = [$certFileName, $password];
         }
