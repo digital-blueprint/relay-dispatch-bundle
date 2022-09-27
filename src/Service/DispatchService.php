@@ -60,6 +60,21 @@ class DispatchService
      */
     private $certP12Base64;
 
+    /**
+     * @var string
+     */
+    private $deliveryRequestUrl;
+
+    /**
+     * @var string
+     */
+    private $preAddressingRequestUrl;
+
+    /**
+     * @var string
+     */
+    private $statusRequestUrl;
+
     public function __construct(
         PersonProviderInterface $personProvider,
         ManagerRegistry $managerRegistry,
@@ -77,7 +92,9 @@ class DispatchService
         $this->senderProfile = $config['sender_profile'] ?? '';
         $this->certPassword = $config['cert_password'] ?? '';
         $this->certP12Base64 = $config['cert_p12'] ?? '';
-//        $this->deliveryRequestUrl = $config['delivery_request_url_part'] ?? '';
+        $this->deliveryRequestUrl = $config['base_url'].$config['delivery_request_url_part'];
+        $this->preAddressingRequestUrl = $config['base_url'].$config['pre_addressing_request_url_part'];
+        $this->statusRequestUrl = $config['base_url'].$config['status_request_url_part'];
     }
 
     public function setCache(?CacheItemPoolInterface $cachePool)
@@ -495,7 +512,8 @@ class DispatchService
             }
         }
 
-        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
+//        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
+        $uri = $this->deliveryRequestUrl;
         $method = 'POST';
 
         $options = ['headers' => [
