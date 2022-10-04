@@ -86,6 +86,8 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
             ],
         ]);
 
+        $this->registerEntityManager($container, 'dbp_relay_dispatch_bundle');
+
         $container->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [
                 'Dbp\Relay\DispatchBundle\Migrations' => __DIR__.'/../Migrations',
