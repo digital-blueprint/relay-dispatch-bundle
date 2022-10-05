@@ -494,6 +494,9 @@ class DispatchService
         $password = $this->certPassword;
         $useCert = $this->certPassword !== '' && $this->certP12Base64 !== '';
         $certFileName = '';
+//        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.clcerts.pem';
+//        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
+//        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
 
         if ($useCert) {
             // It's essential to use a file name with a .p12 extension, otherwise the certificate will not be recognized by Guzzle
@@ -513,28 +516,25 @@ class DispatchService
         }
 
 //        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
+//        $uri = 'https://www.howsmyssl.com/a/check';
         $uri = $this->deliveryRequestUrl;
         $method = 'POST';
 
-        $options = ['headers' => [
-            'SOAPAction' => '',
-        ]];
-
-//        $options = [
-//            'defaults' => [
-//                'config' => [
-//                    'curl' => [
-//                        CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2
-//                    ]
-//                ]
-//            ],
-//            'headers' => [
-//                'SOAPAction' => '',
-//                //            'curl' => array(
-//                //                CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2
-//                //            )
-//            ]
-//        ];
+        $options = [
+            'headers' => [
+                'Content-Type' => 'text/xml;charset=UTF-8',
+                'SOAPAction' => '',
+            ],
+            'curl' => [
+                CURLOPT_SSLVERSION => CURL_SSLVERSION_MAX_TLSv1_2,
+//                CURLOPT_SSL_VERIFYHOST => false,
+//                CURLOPT_SSL_VERIFYPEER => false,
+//                CURLOPT_SSLCERT => $certFileName,
+//                CURLOPT_SSLCERT => './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem',
+//                CURLOPT_SSLCERTPASSWD => $password,
+//                CURLOPT_SSLKEY => './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.key.pem',
+            ],
+        ];
 
         if ($useCert) {
             $options['cert'] = [$certFileName, $password];
@@ -546,7 +546,9 @@ class DispatchService
 //        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
 //        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/_.vendo.pem';
 //        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.pem';
+//        var_dump($options);
 
+//        $body = file_get_contents('./vendor/dbp/relay-dispatch-bundle/examples/DualDeliveryRequest.xml');
         $options['body'] = $body;
 
         try {
