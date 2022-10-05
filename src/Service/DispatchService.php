@@ -577,7 +577,7 @@ class DispatchService
         $xml_soapenvEnvelope = $xml->createElement('soapenv:Envelope');
         $xml_soapenvEnvelope->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
         $xml_soapenvEnvelope->setAttribute('xmlns:ns', 'http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#');
-        $xml_soapenvEnvelope->setAttribute('xmlns:ns1', 'http://reference.e-government.gv.at/namespace/persondata/20130121#');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns2', 'http://reference.e-government.gv.at/namespace/persondata/20130121#');
 
         $xml_soapenvHeader = $xml->createElement('soapenv:Header');
         $xml_soapenvEnvelope->appendChild($xml_soapenvHeader);
@@ -598,7 +598,7 @@ class DispatchService
         // TODO: Is this always "Rsa"?
         $xml_nsDeliveryQuality = $xml->createElement('ns:DeliveryQuality', 'Rsa');
         $xml_nsMetaData->appendChild($xml_nsDeliveryQuality);
-        $xml_nsAsynchronous = $xml->createElement('ns:Asynchronous', 'false');
+        $xml_nsAsynchronous = $xml->createElement('ns:Asynchronous', 'true');
         $xml_nsMetaData->appendChild($xml_nsAsynchronous);
         // TODO: Do we need a subject?
         $xml_nsSubject = $xml->createElement('ns:Subject', 'Duale Zustellung');
@@ -624,7 +624,35 @@ class DispatchService
         $recipients = $request->getRecipients();
         foreach ($recipients as $recipient) {
             $xml_nsRecipient = $xml->createElement('ns:Recipient');
-            $xml_nsRecipientData = $xml->createElement('ns:RecipientData');
+//            $xml_nsRecipientData = $xml->createElement('ns:RecipientData');
+            $xml_RecipientData = $xml->createElement('ns:RecipientData');
+            $xml_ns2PhysicalPerson = $xml->createElement('ns2:PhysicalPerson');
+            $xml_ns2Name = $xml->createElement('ns2:Name');
+            $xml_ns2GivenName = $xml->createElement('ns2:GivenName', $recipient->getGivenName());
+            $xml_ns2Name->appendChild($xml_ns2GivenName);
+            $xml_ns2FamilyName = $xml->createElement('ns2:FamilyName', $recipient->getFamilyName());
+            $xml_ns2Name->appendChild($xml_ns2FamilyName);
+            $xml_ns2PhysicalPerson->appendChild($xml_ns2Name);
+            // TODO: We need a DateOfBirth
+//            $xml_ns2DateOfBirth = $xml->createElement('ns2:DateOfBirth','1970-06-04');
+//            $xml_ns2PhysicalPerson->appendChild($xml_ns2DateOfBirth);
+            $xml_RecipientData->appendChild($xml_ns2PhysicalPerson);
+            $xml_ns2PostalAddress = $xml->createElement('ns2:PostalAddress');
+            $xml_ns2CountryCode = $xml->createElement('ns2:CountryCode', $recipient->getAddressCountry());
+            $xml_ns2PostalAddress->appendChild($xml_ns2CountryCode);
+            $xml_ns2PostalCode = $xml->createElement('ns2:PostalCode', $recipient->getPostalCode());
+            $xml_ns2PostalAddress->appendChild($xml_ns2PostalCode);
+            $xml_ns2Municipality = $xml->createElement('ns2:Municipality', $recipient->getAddressLocality());
+            $xml_ns2PostalAddress->appendChild($xml_ns2Municipality);
+            $xml_ns2DeliveryAddress = $xml->createElement('ns2:DeliveryAddress');
+            $xml_ns2StreetName = $xml->createElement('ns2:StreetName', $recipient->getStreetAddress());
+            $xml_ns2DeliveryAddress->appendChild($xml_ns2StreetName);
+            $xml_ns2BuildingNumber = $xml->createElement('ns2:BuildingNumber', $recipient->getBuildingNumber());
+            $xml_ns2DeliveryAddress->appendChild($xml_ns2BuildingNumber);
+            $xml_ns2PostalAddress->appendChild($xml_ns2DeliveryAddress);
+            $xml_RecipientData->appendChild($xml_ns2PostalAddress);
+            $xml_nsRecipient->appendChild($xml_RecipientData);
+
             // TODO: Which fields should be submitted? Do we always have a PreAddressingRequest?
             // There is no "RecipientId", says the API
 //            $xml_nsRecipientId = $xml->createElement('ns:RecipientId', $recipient->getRecipientId());
