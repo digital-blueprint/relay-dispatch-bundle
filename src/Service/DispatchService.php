@@ -488,7 +488,21 @@ class DispatchService
         $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
-    public function doAPIRequest($url, $body)
+    public function doDualDeliveryRequestAPIRequest($body): ?\Psr\Http\Message\ResponseInterface
+    {
+        $uri = $this->deliveryRequestUrl;
+
+        return $this->doAPIRequest($uri, $body);
+    }
+
+    public function doPreAddressingAPIRequest($body): ?\Psr\Http\Message\ResponseInterface
+    {
+        $uri = $this->preAddressingRequestUrl;
+
+        return $this->doAPIRequest($uri, $body);
+    }
+
+    protected function doAPIRequest($uri, $body): ?\Psr\Http\Message\ResponseInterface
     {
         $client = new \GuzzleHttp\Client();
         $password = $this->certPassword;
@@ -517,7 +531,7 @@ class DispatchService
 
 //        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
 //        $uri = 'https://www.howsmyssl.com/a/check';
-        $uri = $this->deliveryRequestUrl;
+//        $uri = $this->deliveryRequestUrl;
         $method = 'POST';
 
         $options = [
@@ -545,7 +559,6 @@ class DispatchService
         // https://docs.guzzlephp.org/en/stable/request-options.html#verify-option
         $options['verify'] = false;
 //        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
-//        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/_.vendo.pem';
 //        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.pem';
 //        var_dump($options);
 
@@ -684,6 +697,84 @@ class DispatchService
         }
 
         $xml_soapenvBody->appendChild($xml_nsDualDeliveryRequest);
+        $xml_soapenvEnvelope->appendChild($xml_soapenvBody);
+        $xml->appendChild($xml_soapenvEnvelope);
+
+        return $xml->saveXML();
+    }
+
+    /**
+     * See: https://cloud.tugraz.at/index.php/f/102577198.
+     */
+    public function generatePreAddressingAPIXML(RequestRecipient $requestRecipient): string
+    {
+        $xml = new \DOMDocument('1.0','UTF-8');
+        $xml_soapenvEnvelope = $xml->createElement('soapenv:Envelope');
+
+        $xml_soapenvEnvelope->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns1', 'http://reference.e-government.gv.at/namespace/zustellung/dual_pa/20130121#');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns2', 'http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns3', 'http://reference.e-government.gv.at/namespace/persondata/20130121#');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns4', 'http://reference.postserver.at/namespace/persondata/20170308#');
+
+        $xml_soapenvHeader = $xml->createElement('soapenv:Header');
+        $xml_soapenvEnvelope->appendChild($xml_soapenvHeader);
+        $xml_soapenvBody = $xml->createElement('soapenv:Body');
+        $xml_ns1DualDeliveryPreAddressingRequest = $xml->createElement('ns1:DualDeliveryPreAddressingRequest');
+        $xml_ns1DualDeliveryPreAddressingRequest->setAttribute('version','1.0');
+        $xml_ns2Sender = $xml->createElement('ns2:Sender');
+        $xml_ns2SenderProfile = $xml->createElement('ns2:SenderProfile','TU_GRAZ');
+        $xml_ns2SenderProfile->setAttribute('version','1.0');
+        $xml_ns2Sender->appendChild($xml_ns2SenderProfile);
+        $xml_ns1DualDeliveryPreAddressingRequest->appendChild($xml_ns2Sender);
+        $xml_ns1Recipients = $xml->createElement('ns1:Recipients');
+        $xml_ns1Recipient = $xml->createElement('ns1:Recipient');
+//        $xml_ns2RecipientID = $xml->createElement('ns2:RecipientID','A7BDB73B-B310-409A-AB6C-2B45F6818140');
+//        $xml_ns1Recipient->appendChild($xml_ns2RecipientID);
+        $xml_ns2Recipient = $xml->createElement('ns2:Recipient');
+        $xml_ns2RecipientData = $xml->createElement('ns2:RecipientData');
+        $xml_ns3PhysicalPerson = $xml->createElement('ns3:PhysicalPerson');
+        $xml_ns3Name = $xml->createElement('ns3:Name');
+        $xml_ns3GivenName = $xml->createElement('ns3:GivenName','Max');
+        $xml_ns3Name->appendChild($xml_ns3GivenName);
+        $xml_ns3FamilyName = $xml->createElement('ns3:FamilyName','Mustermann');
+        $xml_ns3Name->appendChild($xml_ns3FamilyName);
+        $xml_ns3PhysicalPerson->appendChild($xml_ns3Name);
+        $xml_ns3DateOfBirth = $xml->createElement('ns3:DateOfBirth','1970-06-04');
+        $xml_ns3PhysicalPerson->appendChild($xml_ns3DateOfBirth);
+        $xml_ns2RecipientData->appendChild($xml_ns3PhysicalPerson);
+        $xml_ns2Recipient->appendChild($xml_ns2RecipientData);
+        $xml_ns1Recipient->appendChild($xml_ns2Recipient);
+        $xml_ns1Recipients->appendChild($xml_ns1Recipient);
+        $xml_ns1DualDeliveryPreAddressingRequest->appendChild($xml_ns1Recipients);
+
+        $xml_ns1MetaData = $xml->createElement('ns1:MetaData');
+        $xml_ns2AppDeliveryID = $xml->createElement('ns2:AppDeliveryID','12399_AE_W_Rsa_1');
+        $xml_ns1MetaData->appendChild($xml_ns2AppDeliveryID);
+        $xml_ns2AdditionalMetaData = $xml->createElement('ns2:AdditionalMetaData');
+        $xml_ns2PropertyValueMetaDataSet = $xml->createElement('ns2:PropertyValueMetaDataSet');
+        $xml_ns2Parameter = $xml->createElement('ns2:Parameter');
+        $xml_ns2Property = $xml->createElement('ns2:Property','CampaignId');
+        $xml_ns2Parameter->appendChild($xml_ns2Property);
+        $xml_ns2Value = $xml->createElement('ns2:Value','DUMMY');
+        $xml_ns2Parameter->appendChild($xml_ns2Value);
+        $xml_ns2PropertyValueMetaDataSet->appendChild($xml_ns2Parameter);
+        $xml_ns2AdditionalMetaData->appendChild($xml_ns2PropertyValueMetaDataSet);
+        $xml_ns1MetaData->appendChild($xml_ns2AdditionalMetaData);
+        $xml_ns2TestCase = $xml->createElement('ns2:TestCase','true');
+        $xml_ns1MetaData->appendChild($xml_ns2TestCase);
+        $xml_ns2ProcessingProfile = $xml->createElement('ns2:ProcessingProfile','ZuseDD');
+        $xml_ns2ProcessingProfile->setAttribute('version','1.1');
+        $xml_ns1MetaData->appendChild($xml_ns2ProcessingProfile);
+        $xml_ns2Asynchronous = $xml->createElement('ns2:Asynchronous','false');
+        $xml_ns1MetaData->appendChild($xml_ns2Asynchronous);
+        $xml_ns1PreCreateSendings = $xml->createElement('ns1:PreCreateSendings','true');
+        $xml_ns1MetaData->appendChild($xml_ns1PreCreateSendings);
+        $xml_ns1DualDeliveryPreAddressingRequest->appendChild($xml_ns1MetaData);
+        $xml_ns2DeliveryChannels = $xml->createElement('ns2:DeliveryChannels');
+        $xml_ns1DualDeliveryPreAddressingRequest->appendChild($xml_ns2DeliveryChannels);
+
+        $xml_soapenvBody->appendChild($xml_ns1DualDeliveryPreAddressingRequest);
         $xml_soapenvEnvelope->appendChild($xml_soapenvBody);
         $xml->appendChild($xml_soapenvEnvelope);
 

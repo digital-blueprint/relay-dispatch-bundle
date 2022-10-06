@@ -54,14 +54,31 @@ class DebugCommand extends Command
 
                 echo $xmlString;
                 break;
-            case 'do-api-request':
+            case 'do-api-dualdelivery-request':
                 $output->writeln('Do API request...');
                 $request = $this->dispatchService->getRequestById($identifier);
                 $xmlString = $this->dispatchService->generateRequestAPIXML($request);
 
 //                echo $xmlString;
 
-                $response = $this->dispatchService->doAPIRequest('', $xmlString);
+                $response = $this->dispatchService->doDualDeliveryRequestAPIRequest($xmlString);
+
+                var_dump($response);
+
+                if ($response) {
+                    var_dump($response->getHeaders());
+                    var_dump($response->getStatusCode());
+                    echo $response->getBody()->getContents();
+                }
+                break;
+            case 'do-api-pre-addressing-request':
+                $output->writeln('Do API PreAddrssing request...');
+                $requestRecipient = $this->dispatchService->getRequestRecipientById($identifier);
+                $xmlString = $this->dispatchService->generatePreAddressingAPIXML($requestRecipient);
+
+                echo $xmlString;
+
+                $response = $this->dispatchService->doPreAddressingAPIRequest($xmlString);
 
                 var_dump($response);
 
