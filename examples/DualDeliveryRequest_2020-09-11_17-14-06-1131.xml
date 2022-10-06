@@ -4,7 +4,7 @@
   <soapenv:Body>
     <ns:DualDeliveryRequest version="1.0">
       <ns:Sender>
-        <ns:SenderProfile version="1.0">hierMagIhresStehen</ns:SenderProfile>
+        <ns:SenderProfile version="1.0">TU_GRAZ</ns:SenderProfile>
       </ns:Sender>
       <ns:DualDeliveryID>87720</ns:DualDeliveryID>
       <ns:MetaData>

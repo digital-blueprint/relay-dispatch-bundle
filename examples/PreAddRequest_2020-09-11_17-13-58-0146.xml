@@ -4,7 +4,7 @@
   <soapenv:Body>
     <ns1:DualDeliveryPreAddressingRequest version="1.0">
       <ns2:Sender>
-        <ns2:SenderProfile version="1.0">hierMagIhresStehen</ns2:SenderProfile>
+        <ns2:SenderProfile version="1.0">TU_GRAZ</ns2:SenderProfile>
       </ns2:Sender>
       <ns1:Recipients>
         <ns1:Recipient>
