@@ -521,6 +521,7 @@ class DispatchService
         $method = 'POST';
 
         $options = [
+//            'proxy' => "socks5://localhost:32222",
             'headers' => [
                 'Content-Type' => 'text/xml;charset=UTF-8',
                 'SOAPAction' => '',
