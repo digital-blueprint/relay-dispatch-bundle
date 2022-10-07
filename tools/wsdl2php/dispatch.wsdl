@@ -1,0 +1,4038 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.postserver.at/mprs/services/v10/DualDeliveryProcessor" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns3="http://schemas.xmlsoap.org/soap/http" xmlns:ns2="http://reference.e-government.gv.at/namespace/zustellung/dual_ca/20130121#" xmlns:ns1="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" name="DDPollingWebService10_2Service" targetNamespace="http://www.postserver.at/mprs/services/v10/DualDeliveryProcessor">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:oasis:names:tc:SAML:1.0:assertion" xmlns:ns1="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:SAML:1.0:assertion" version="1.0">
+
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"/>
+
+  <xs:element name="Action" type="tns:ActionType"/>
+
+  <xs:element name="Advice" type="tns:AdviceType"/>
+
+  <xs:element name="Assertion" type="tns:AssertionType"/>
+
+  <xs:element name="AssertionIDReference" type="xs:string"/>
+
+  <xs:element name="Attribute" type="tns:AttributeType"/>
+
+  <xs:element name="AttributeDesignator" type="tns:AttributeDesignatorType"/>
+
+  <xs:element name="AttributeStatement" type="tns:AttributeStatementType"/>
+
+  <xs:element name="AttributeValue" type="xs:anyType"/>
+
+  <xs:element name="Audience" type="xs:string"/>
+
+  <xs:element name="AudienceRestrictionCondition" type="tns:AudienceRestrictionConditionType"/>
+
+  <xs:element name="AuthenticationStatement" type="tns:AuthenticationStatementType"/>
+
+  <xs:element name="AuthorityBinding" type="tns:AuthorityBindingType"/>
+
+  <xs:element name="AuthorizationDecisionStatement" type="tns:AuthorizationDecisionStatementType"/>
+
+  <xs:element name="Condition" type="tns:ConditionAbstractType"/>
+
+  <xs:element name="Conditions" type="tns:ConditionsType"/>
+
+  <xs:element name="ConfirmationMethod" type="xs:string"/>
+
+  <xs:element name="Evidence" type="tns:EvidenceType"/>
+
+  <xs:element name="NameIdentifier" type="tns:NameIdentifierType"/>
+
+  <xs:element name="Statement" type="tns:StatementAbstractType"/>
+
+  <xs:element name="Subject" type="tns:SubjectType"/>
+
+  <xs:element name="SubjectConfirmation" type="tns:SubjectConfirmationType"/>
+
+  <xs:element name="SubjectConfirmationData" type="xs:anyType"/>
+
+  <xs:element name="SubjectLocality" type="tns:SubjectLocalityType"/>
+
+  <xs:element name="SubjectStatement" type="tns:SubjectStatementAbstractType"/>
+
+  <xs:complexType name="AssertionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Conditions" type="tns:ConditionsType"/>
+      <xs:element minOccurs="0" name="Advice" type="tns:AdviceType"/>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="Statement" type="tns:StatementAbstractType"/>
+        <xs:element name="SubjectStatement" type="tns:SubjectStatementAbstractType"/>
+        <xs:element name="AuthenticationStatement" type="tns:AuthenticationStatementType"/>
+        <xs:element name="AuthorizationDecisionStatement" type="tns:AuthorizationDecisionStatementType"/>
+        <xs:element name="AttributeStatement" type="tns:AttributeStatementType"/>
+      </xs:choice>
+      <xs:element minOccurs="0" ref="ns1:Signature"/>
+    </xs:sequence>
+    <xs:attribute name="MajorVersion" type="xs:integer" use="required"/>
+    <xs:attribute name="MinorVersion" type="xs:integer" use="required"/>
+    <xs:attribute name="AssertionID" type="xs:string" use="required"/>
+    <xs:attribute name="Issuer" type="xs:string" use="required"/>
+    <xs:attribute name="IssueInstant" type="xs:dateTime" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="ConditionsType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="AudienceRestrictionCondition" type="tns:AudienceRestrictionConditionType"/>
+        <xs:element name="Condition" type="tns:ConditionAbstractType"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="NotBefore" type="xs:dateTime"/>
+    <xs:attribute name="NotOnOrAfter" type="xs:dateTime"/>
+  </xs:complexType>
+
+  <xs:complexType name="AudienceRestrictionConditionType">
+    <xs:complexContent>
+      <xs:extension base="tns:ConditionAbstractType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="Audience" type="xs:anyURI"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="ConditionAbstractType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="AdviceType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="tns:AssertionIDReference"/>
+        <xs:element ref="tns:Assertion"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ActionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Namespace" type="xs:anyURI"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="SubjectType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="tns:NameIdentifier"/>
+        <xs:element ref="tns:SubjectConfirmation"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NameIdentifierType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="NameQualifier" type="xs:string"/>
+        <xs:attribute name="Format" type="xs:anyURI"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="SubjectConfirmationType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="ConfirmationMethod" type="xs:anyURI"/>
+      <xs:element minOccurs="0" name="SubjectConfirmationData" type="xs:anyType"/>
+      <xs:element minOccurs="0" ref="ns1:KeyInfo"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AuthenticationStatementType">
+    <xs:complexContent>
+      <xs:extension base="tns:SubjectStatementAbstractType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SubjectLocality" type="tns:SubjectLocalityType"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="AuthorityBinding" type="tns:AuthorityBindingType"/>
+        </xs:sequence>
+        <xs:attribute name="AuthenticationMethod" type="xs:anyURI" use="required"/>
+        <xs:attribute name="AuthenticationInstant" type="xs:dateTime" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="SubjectStatementAbstractType">
+    <xs:complexContent>
+      <xs:extension base="tns:StatementAbstractType">
+        <xs:sequence>
+          <xs:element name="Subject" type="tns:SubjectType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="StatementAbstractType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="SubjectLocalityType">
+    <xs:sequence/>
+    <xs:attribute name="IPAddress" type="xs:string"/>
+    <xs:attribute name="DNSAddress" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="AuthorityBindingType">
+    <xs:sequence/>
+    <xs:attribute name="AuthorityKind" type="xs:QName" use="required"/>
+    <xs:attribute name="Location" type="xs:anyURI" use="required"/>
+    <xs:attribute name="Binding" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="AuthorizationDecisionStatementType">
+    <xs:complexContent>
+      <xs:extension base="tns:SubjectStatementAbstractType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="Action" type="tns:ActionType"/>
+          <xs:element minOccurs="0" name="Evidence" type="tns:EvidenceType"/>
+        </xs:sequence>
+        <xs:attribute name="Resource" type="xs:anyURI" use="required"/>
+        <xs:attribute name="Decision" type="tns:DecisionType" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EvidenceType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="AssertionIDReference" type="xs:string"/>
+        <xs:element name="Assertion" type="tns:AssertionType"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AttributeStatementType">
+    <xs:complexContent>
+      <xs:extension base="tns:SubjectStatementAbstractType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="Attribute" type="tns:AttributeType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AttributeType">
+    <xs:complexContent>
+      <xs:extension base="tns:AttributeDesignatorType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="AttributeValue" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AttributeDesignatorType">
+    <xs:sequence/>
+    <xs:attribute name="AttributeName" type="xs:string" use="required"/>
+    <xs:attribute name="AttributeNamespace" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+
+  <xs:simpleType name="DecisionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Permit"/>
+      <xs:enumeration value="Deny"/>
+      <xs:enumeration value="Indeterminate"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="uri:general.additional.params/20130121#" xmlns:ns1="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" elementFormDefault="qualified" targetNamespace="uri:general.additional.params/20130121#" version="1.0">
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#"/>
+
+  <xs:element name="GeneralAditionalPrintParameter" type="tns:GeneralAditionalPrintParameterType"/>
+
+  <xs:element name="PostageRange" type="xs:string"/>
+
+  <xs:complexType name="GeneralAditionalPrintParameterType">
+    <xs:complexContent>
+      <xs:extension base="ns1:AdditionalPrintParameterSetType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PostageRange" type="xs:string"/>
+          <xs:element minOccurs="0" name="PrinterName" type="xs:string"/>
+          <xs:element minOccurs="0" name="Auflieferort" type="xs:string"/>
+          <xs:element minOccurs="0" name="Auslieferdatum" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" targetNamespace="http://www.w3.org/2000/09/xmldsig#" version="1.0">
+
+  <xs:element name="CanonicalizationMethod" type="tns:CanonicalizationMethodType"/>
+
+  <xs:element name="DSAKeyValue" type="tns:DSAKeyValueType"/>
+
+  <xs:element name="DigestMethod" type="tns:DigestMethodType"/>
+
+  <xs:element name="DigestValue" type="xs:string"/>
+
+  <xs:element name="KeyInfo" type="tns:KeyInfoType"/>
+
+  <xs:element name="KeyName" type="xs:string"/>
+
+  <xs:element name="KeyValue" type="tns:KeyValueType"/>
+
+  <xs:element name="Manifest" type="tns:ManifestType"/>
+
+  <xs:element name="MgmtData" type="xs:string"/>
+
+  <xs:element name="Object" type="tns:ObjectType"/>
+
+  <xs:element name="PGPData" type="tns:PGPDataType"/>
+
+  <xs:element name="RSAKeyValue" type="tns:RSAKeyValueType"/>
+
+  <xs:element name="Reference" type="tns:ReferenceType"/>
+
+  <xs:element name="RetrievalMethod" type="tns:RetrievalMethodType"/>
+
+  <xs:element name="SPKIData" type="tns:SPKIDataType"/>
+
+  <xs:element name="Signature" type="tns:SignatureType"/>
+
+  <xs:element name="SignatureMethod" type="tns:SignatureMethodType"/>
+
+  <xs:element name="SignatureProperties" type="tns:SignaturePropertiesType"/>
+
+  <xs:element name="SignatureProperty" type="tns:SignaturePropertyType"/>
+
+  <xs:element name="SignatureValue" type="tns:SignatureValueType"/>
+
+  <xs:element name="SignedInfo" type="tns:SignedInfoType"/>
+
+  <xs:element name="Transform" type="tns:TransformType"/>
+
+  <xs:element name="Transforms" type="tns:TransformsType"/>
+
+  <xs:element name="X509Data" type="tns:X509DataType"/>
+
+  <xs:complexType name="SignatureType">
+    <xs:sequence>
+      <xs:element name="SignedInfo" type="tns:SignedInfoType"/>
+      <xs:element name="SignatureValue" type="tns:SignatureValueType"/>
+      <xs:element minOccurs="0" name="KeyInfo" type="tns:KeyInfoType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Object" type="tns:ObjectType"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="SignedInfoType">
+    <xs:sequence>
+      <xs:element name="CanonicalizationMethod" type="tns:CanonicalizationMethodType"/>
+      <xs:element name="SignatureMethod" type="tns:SignatureMethodType"/>
+      <xs:element maxOccurs="unbounded" name="Reference" type="tns:ReferenceType"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType mixed="true" name="CanonicalizationMethodType">
+    <xs:sequence>
+      <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+    </xs:sequence>
+    <xs:attribute name="Algorithm" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="SignatureValueType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Id" type="xs:ID"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType mixed="true" name="SignatureMethodType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="HMACOutputLength" type="xs:integer"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Algorithm" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="ReferenceType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Transforms" type="tns:TransformsType"/>
+      <xs:element name="DigestMethod" type="tns:DigestMethodType"/>
+      <xs:element name="DigestValue" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+    <xs:attribute name="URI" type="xs:anyURI"/>
+    <xs:attribute name="Type" type="xs:anyURI"/>
+  </xs:complexType>
+
+  <xs:complexType name="TransformsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Transform" type="tns:TransformType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType mixed="true" name="TransformType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="XPath" type="xs:string"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Algorithm" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType mixed="true" name="DigestMethodType">
+    <xs:sequence>
+      <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+    </xs:sequence>
+    <xs:attribute name="Algorithm" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType mixed="true" name="KeyInfoType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="tns:KeyName"/>
+        <xs:element ref="tns:KeyValue"/>
+        <xs:element ref="tns:RetrievalMethod"/>
+        <xs:element ref="tns:X509Data"/>
+        <xs:element ref="tns:PGPData"/>
+        <xs:element ref="tns:SPKIData"/>
+        <xs:element ref="tns:MgmtData"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType mixed="true" name="KeyValueType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="tns:DSAKeyValue"/>
+        <xs:element ref="tns:RSAKeyValue"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RetrievalMethodType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Transforms" type="tns:TransformsType"/>
+    </xs:sequence>
+    <xs:attribute name="URI" type="xs:anyURI"/>
+    <xs:attribute name="Type" type="xs:anyURI"/>
+  </xs:complexType>
+
+  <xs:complexType name="X509DataType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="X509IssuerSerial" type="tns:X509IssuerSerialType"/>
+        <xs:element name="X509SKI" type="xs:string"/>
+        <xs:element name="X509SubjectName" type="xs:string"/>
+        <xs:element name="X509Certificate" type="xs:string"/>
+        <xs:element name="X509CRL" type="xs:string"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PGPDataType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="PGPKeyID" type="xs:string"/>
+        <xs:element name="PGPKeyPacket" type="xs:string"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SPKIDataType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="SPKISexp" type="xs:string"/>
+        <xs:any namespace="##other" processContents="lax"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType mixed="true" name="ObjectType">
+    <xs:sequence>
+      <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+    <xs:attribute name="MimeType" type="xs:string"/>
+    <xs:attribute name="Encoding" type="xs:anyURI"/>
+  </xs:complexType>
+
+  <xs:complexType name="ManifestType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Reference" type="tns:ReferenceType"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="SignaturePropertiesType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="SignatureProperty" type="tns:SignaturePropertyType"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType mixed="true" name="SignaturePropertyType">
+    <xs:sequence>
+      <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+    </xs:sequence>
+    <xs:attribute name="Target" type="xs:anyURI" use="required"/>
+    <xs:attribute name="Id" type="xs:ID"/>
+  </xs:complexType>
+
+  <xs:complexType name="DSAKeyValueType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="P" type="xs:string"/>
+      <xs:element minOccurs="0" name="Q" type="xs:string"/>
+      <xs:element minOccurs="0" name="J" type="xs:string"/>
+      <xs:element minOccurs="0" name="G" type="xs:string"/>
+      <xs:element name="Y" type="xs:string"/>
+      <xs:element minOccurs="0" name="Seed" type="xs:string"/>
+      <xs:element minOccurs="0" name="PgenCounter" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RSAKeyValueType">
+    <xs:sequence>
+      <xs:element name="Modulus" type="xs:string"/>
+      <xs:element name="Exponent" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="X509IssuerSerialType">
+    <xs:sequence>
+      <xs:element name="X509IssuerName" type="xs:string"/>
+      <xs:element name="X509SerialNumber" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ebinterface.at/schema/4p0/extensions/sv" elementFormDefault="qualified" targetNamespace="http://www.ebinterface.at/schema/4p0/extensions/sv" version="1.0">
+
+  <xs:element name="BeneficiarySocialInsuranceNumber" type="xs:string"/>
+
+  <xs:element name="BillerExtension" type="tns:BillerExtensionType"/>
+
+  <xs:element name="BillersContractPartnerNumber" type="xs:string"/>
+
+  <xs:element name="DeliveryExtension" type="tns:DeliveryExtensionType"/>
+
+  <xs:element name="DetailsExtension" type="tns:DetailsExtensionType"/>
+
+  <xs:element name="InvoiceRecipientExtension" type="tns:InvoiceRecipientExtensionType"/>
+
+  <xs:element name="InvoiceRootExtension" type="tns:InvoiceRootExtensionType"/>
+
+  <xs:element name="ListLineItemExtension" type="tns:ListLineItemExtensionType"/>
+
+  <xs:element name="OrderingPartyExtension" type="tns:OrderingPartyExtensionType"/>
+
+  <xs:element name="PaymentConditionsExtension" type="tns:PaymentConditionsExtensionType"/>
+
+  <xs:element name="PaymentMethodExtension" type="tns:PaymentMethodExtensionType"/>
+
+  <xs:element name="PresentationDetailsExtension" type="tns:PresentationDetailsExtensionType"/>
+
+  <xs:element name="ReductionAndSurchargeDetailsExtension" type="tns:ReductionAndSurchargeDetailsExtensionType"/>
+
+  <xs:element name="TaxExtension" type="tns:TaxExtensionType"/>
+
+  <xs:complexType name="DeliveryExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="BillerExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BillersContractPartnerNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DetailsExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="InvoiceRecipientExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="InvoiceRootExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="ListLineItemExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeneficiarySocialInsuranceNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="OrderingPartyExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="PaymentConditionsExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="PaymentMethodExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="PresentationDetailsExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="ReductionAndSurchargeDetailsExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="TaxExtensionType">
+    <xs:sequence/>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ebinterface.at/schema/4p0/extensions/ext" xmlns:ns1="http://www.ebinterface.at/schema/4p0/extensions/sv" elementFormDefault="qualified" targetNamespace="http://www.ebinterface.at/schema/4p0/extensions/ext" version="1.0">
+
+  <xs:import namespace="http://www.ebinterface.at/schema/4p0/extensions/sv"/>
+
+  <xs:element name="BillerExtension" type="tns:BillerExtensionType"/>
+
+  <xs:element name="Custom" type="tns:CustomType"/>
+
+  <xs:element name="DeliveryExtension" type="tns:DeliveryExtensionType"/>
+
+  <xs:element name="DetailsExtension" type="tns:DetailsExtensionType"/>
+
+  <xs:element name="InvoiceRecipientExtension" type="tns:InvoiceRecipientExtensionType"/>
+
+  <xs:element name="InvoiceRootExtension" type="tns:InvoiceRootExtensionType"/>
+
+  <xs:element name="ListLineItemExtension" type="tns:ListLineItemExtensionType"/>
+
+  <xs:element name="OrderingPartyExtension" type="tns:OrderingPartyExtensionType"/>
+
+  <xs:element name="PaymentConditionsExtension" type="tns:PaymentConditionsExtensionType"/>
+
+  <xs:element name="PaymentMethodExtension" type="tns:PaymentMethodExtensionType"/>
+
+  <xs:element name="PresentationDetailsExtension" type="tns:PresentationDetailsExtensionType"/>
+
+  <xs:element name="ReductionAndSurchargeDetailsExtension" type="tns:ReductionAndSurchargeDetailsExtensionType"/>
+
+  <xs:element name="TaxExtension" type="tns:TaxExtensionType"/>
+
+  <xs:complexType name="DeliveryExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:DeliveryExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CustomType">
+    <xs:sequence>
+      <xs:any namespace="##other" processContents="lax"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="BillerExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:BillerExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DetailsExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:DetailsExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InvoiceRecipientExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:InvoiceRecipientExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InvoiceRootExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:InvoiceRootExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ListLineItemExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:ListLineItemExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="OrderingPartyExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:OrderingPartyExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PaymentConditionsExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:PaymentConditionsExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PaymentMethodExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:PaymentMethodExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PresentationDetailsExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:PresentationDetailsExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ReductionAndSurchargeDetailsExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:ReductionAndSurchargeDetailsExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TaxExtensionType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:TaxExtension"/>
+      <xs:element minOccurs="0" name="Custom" type="tns:CustomType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ebinterface.at/schema/4p0/" xmlns:ns3="http://www.ebinterface.at/schema/4p0/extensions/sv" xmlns:ns2="http://www.ebinterface.at/schema/4p0/extensions/ext" xmlns:ns1="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" targetNamespace="http://www.ebinterface.at/schema/4p0/" version="1.0">
+
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"/>
+
+  <xs:import namespace="http://www.ebinterface.at/schema/4p0/extensions/ext"/>
+
+  <xs:import namespace="http://www.ebinterface.at/schema/4p0/extensions/sv"/>
+
+  <xs:element name="AccountingArea" type="xs:string"/>
+
+  <xs:element name="AdditionalInformation" type="tns:AdditionalInformationType"/>
+
+  <xs:element name="Address" type="tns:AddressType"/>
+
+  <xs:element name="AddressExtension" type="xs:string"/>
+
+  <xs:element name="AddressIdentifier" type="tns:AddressIdentifierType"/>
+
+  <xs:element name="AlternativeQuantity" type="tns:UnitType"/>
+
+  <xs:element name="Amount" type="xs:decimal"/>
+
+  <xs:element name="ArticleNumber" type="tns:ArticleNumberType"/>
+
+  <xs:element name="BIC" type="xs:string"/>
+
+  <xs:element name="BankAccountNr" type="xs:string"/>
+
+  <xs:element name="BankAccountOwner" type="xs:string"/>
+
+  <xs:element name="BankCode" type="tns:BankCodeCType"/>
+
+  <xs:element name="BankName" type="xs:string"/>
+
+  <xs:element name="BaseAmount" type="xs:decimal"/>
+
+  <xs:element name="BeneficiaryAccount" type="tns:AccountType"/>
+
+  <xs:element name="Biller" type="tns:BillerType"/>
+
+  <xs:element name="BillersInvoiceRecipientID" type="xs:string"/>
+
+  <xs:element name="BillersOrderReference" type="tns:OrderReferenceDetailType"/>
+
+  <xs:element name="BillersOrderingPartyID" type="xs:string"/>
+
+  <xs:element name="Boxes" type="xs:string"/>
+
+  <xs:element name="ChargeNumber" type="xs:string"/>
+
+  <xs:element name="Classification" type="tns:ClassificationType"/>
+
+  <xs:element name="Color" type="xs:string"/>
+
+  <xs:element name="Comment" type="xs:string"/>
+
+  <xs:element name="ConsolidatorsBillerID" type="xs:string"/>
+
+  <xs:element name="Contact" type="xs:string"/>
+
+  <xs:element name="Country" type="tns:CountryType"/>
+
+  <xs:element name="Custom" type="tns:CustomType"/>
+
+  <xs:element name="Date" type="xs:anySimpleType"/>
+
+  <xs:element name="Delivery" type="tns:DeliveryType"/>
+
+  <xs:element name="DeliveryID" type="xs:string"/>
+
+  <xs:element name="Description" type="xs:string"/>
+
+  <xs:element name="Details" type="tns:DetailsType"/>
+
+  <xs:element name="DirectDebit" type="tns:DirectDebitType"/>
+
+  <xs:element name="Discount" type="tns:DiscountType"/>
+
+  <xs:element name="DiscountFlag" type="xs:boolean"/>
+
+  <xs:element name="DueDate" type="xs:anySimpleType"/>
+
+  <xs:element name="Email" type="xs:string"/>
+
+  <xs:element name="FooterDescription" type="xs:string"/>
+
+  <xs:element name="FromDate" type="xs:anySimpleType"/>
+
+  <xs:element name="FurtherIdentification" type="tns:FurtherIdentificationType"/>
+
+  <xs:element name="HeaderDescription" type="xs:string"/>
+
+  <xs:element name="IBAN" type="xs:string"/>
+
+  <xs:element name="Invoice" type="tns:InvoiceType"/>
+
+  <xs:element name="InvoiceDate" type="xs:anySimpleType"/>
+
+  <xs:element name="InvoiceNumber" type="xs:string"/>
+
+  <xs:element name="InvoiceRecipient" type="tns:InvoiceRecipientType"/>
+
+  <xs:element name="InvoiceRecipientsBillerID" type="xs:string"/>
+
+  <xs:element name="InvoiceRecipientsOrderReference" type="tns:OrderReferenceDetailType"/>
+
+  <xs:element name="Item" type="tns:ItemType"/>
+
+  <xs:element name="ItemList" type="tns:ItemListType"/>
+
+  <xs:element name="LayoutID" type="xs:string"/>
+
+  <xs:element name="LineItemAmount" type="xs:decimal"/>
+
+  <xs:element name="ListLineItem" type="tns:ListLineItemType"/>
+
+  <xs:element name="LogoURL" type="xs:string"/>
+
+  <xs:element name="MinimumPayment" type="xs:decimal"/>
+
+  <xs:element name="Name" type="xs:string"/>
+
+  <xs:element name="NoPayment" type="tns:NoPaymentType"/>
+
+  <xs:element name="OrderID" type="xs:string"/>
+
+  <xs:element name="OrderPositionNumber" type="xs:string"/>
+
+  <xs:element name="OrderReference" type="tns:OrderReferenceType"/>
+
+  <xs:element name="OrderingParty" type="tns:OrderingPartyType"/>
+
+  <xs:element name="OtherTax" type="tns:OtherTaxType"/>
+
+  <xs:element name="POBox" type="xs:string"/>
+
+  <xs:element name="PaymentConditions" type="tns:PaymentConditionsType"/>
+
+  <xs:element name="PaymentDate" type="xs:anySimpleType"/>
+
+  <xs:element name="PaymentMethod" type="tns:PaymentMethodType"/>
+
+  <xs:element name="PaymentReference" type="tns:PaymentReferenceType"/>
+
+  <xs:element name="Percentage" type="xs:decimal"/>
+
+  <xs:element name="Period" type="tns:PeriodType"/>
+
+  <xs:element name="Phone" type="xs:string"/>
+
+  <xs:element name="PositionNumber" type="xs:string"/>
+
+  <xs:element name="PresentationDetails" type="tns:PresentationDetailsType"/>
+
+  <xs:element name="Quantity" type="tns:UnitType"/>
+
+  <xs:element name="Reduction" type="tns:ReductionAndSurchargeType"/>
+
+  <xs:element name="ReductionAndSurchargeDetails" type="tns:ReductionAndSurchargeDetailsType"/>
+
+  <xs:element name="ReductionAndSurchargeListLineItemDetails" type="tns:ReductionAndSurchargeListLineItemDetailsType"/>
+
+  <xs:element name="ReductionListLineItem" type="tns:ReductionAndSurchargeBaseType"/>
+
+  <xs:element name="ReferenceDate" type="xs:anySimpleType"/>
+
+  <xs:element name="Salutation" type="xs:string"/>
+
+  <xs:element name="SerialNumber" type="xs:string"/>
+
+  <xs:element name="Size" type="xs:string"/>
+
+  <xs:element name="Street" type="xs:string"/>
+
+  <xs:element name="SubOrganizationID" type="xs:string"/>
+
+  <xs:element name="SuppressZero" type="xs:boolean"/>
+
+  <xs:element name="Surcharge" type="tns:ReductionAndSurchargeType"/>
+
+  <xs:element name="SurchargeListLineItem" type="tns:ReductionAndSurchargeBaseType"/>
+
+  <xs:element name="Tax" type="tns:TaxType"/>
+
+  <xs:element name="TaxExemption" type="xs:string"/>
+
+  <xs:element name="TaxRate" type="tns:TaxRateType"/>
+
+  <xs:element name="TaxedAmount" type="xs:decimal"/>
+
+  <xs:element name="ToDate" type="xs:anySimpleType"/>
+
+  <xs:element name="TotalGrossAmount" type="xs:decimal"/>
+
+  <xs:element name="Town" type="xs:string"/>
+
+  <xs:element name="URL" type="xs:string"/>
+
+  <xs:element name="UnitPrice" type="xs:decimal"/>
+
+  <xs:element name="UniversalBankTransaction" type="tns:UniversalBankTransactionType"/>
+
+  <xs:element name="VAT" type="tns:VATType"/>
+
+  <xs:element name="VATIdentificationNumber" type="xs:string"/>
+
+  <xs:element name="Weight" type="tns:UnitType"/>
+
+  <xs:element name="ZIP" type="xs:string"/>
+
+  <xs:complexType name="InvoiceType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:Signature"/>
+      <xs:element name="InvoiceNumber" type="xs:string"/>
+      <xs:element name="InvoiceDate" type="xs:date"/>
+      <xs:element minOccurs="0" name="Delivery" type="tns:DeliveryType"/>
+      <xs:element name="Biller" type="tns:BillerType"/>
+      <xs:element name="InvoiceRecipient" type="tns:InvoiceRecipientType"/>
+      <xs:element minOccurs="0" name="OrderingParty" type="tns:OrderingPartyType"/>
+      <xs:element name="Details" type="tns:DetailsType"/>
+      <xs:element minOccurs="0" name="ReductionAndSurchargeDetails" type="tns:ReductionAndSurchargeDetailsType"/>
+      <xs:element name="Tax" type="tns:TaxType"/>
+      <xs:element name="TotalGrossAmount" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="PaymentMethod" type="tns:PaymentMethodType"/>
+      <xs:element minOccurs="0" name="PaymentConditions" type="tns:PaymentConditionsType"/>
+      <xs:element minOccurs="0" name="PresentationDetails" type="tns:PresentationDetailsType"/>
+      <xs:element minOccurs="0" ref="ns2:InvoiceRootExtension"/>
+    </xs:sequence>
+    <xs:attribute ref="tns:GeneratingSystem" use="required"/>
+    <xs:attribute ref="tns:CancelledOriginalDocument"/>
+    <xs:attribute ref="tns:DocumentType" use="required"/>
+    <xs:attribute ref="tns:InvoiceCurrency" use="required"/>
+    <xs:attribute ref="tns:ManualProcessing"/>
+    <xs:attribute ref="tns:DocumentTitle"/>
+    <xs:attribute ref="tns:Language"/>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DeliveryID" type="xs:string"/>
+      <xs:element minOccurs="0" name="Date" type="xs:date"/>
+      <xs:element minOccurs="0" name="Period" type="tns:PeriodType"/>
+      <xs:element minOccurs="0" name="Address" type="tns:AddressType"/>
+      <xs:element minOccurs="0" name="Description" type="xs:string"/>
+      <xs:element minOccurs="0" ref="ns2:DeliveryExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PeriodType">
+    <xs:sequence>
+      <xs:element name="FromDate" type="xs:date"/>
+      <xs:element name="ToDate" type="xs:date"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AddressType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="AddressIdentifier" type="tns:AddressIdentifierType"/>
+      <xs:element minOccurs="0" name="Salutation" type="xs:string"/>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element name="Street" type="xs:string"/>
+      <xs:element minOccurs="0" name="POBox" type="xs:string"/>
+      <xs:element name="Town" type="xs:string"/>
+      <xs:element name="ZIP" type="xs:string"/>
+      <xs:element name="Country" type="tns:CountryType"/>
+      <xs:element minOccurs="0" name="Phone" type="xs:string"/>
+      <xs:element minOccurs="0" name="Email" type="xs:string"/>
+      <xs:element minOccurs="0" name="Contact" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="AddressExtension" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AddressIdentifierType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="tns:AddressIdentifierType"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="CountryType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="tns:CountryCode"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="BillerType">
+    <xs:sequence>
+      <xs:element name="VATIdentificationNumber" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="FurtherIdentification" type="tns:FurtherIdentificationType"/>
+      <xs:element minOccurs="0" name="ConsolidatorsBillerID" type="xs:string"/>
+      <xs:element minOccurs="0" name="InvoiceRecipientsBillerID" type="xs:string"/>
+      <xs:element minOccurs="0" name="OrderReference" type="tns:OrderReferenceType"/>
+      <xs:element name="Address" type="tns:AddressType"/>
+      <xs:element minOccurs="0" ref="ns2:BillerExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FurtherIdentificationType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="tns:IdentificationType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="OrderReferenceType">
+    <xs:sequence>
+      <xs:element name="OrderID" type="xs:string"/>
+      <xs:element minOccurs="0" name="ReferenceDate" type="xs:date"/>
+      <xs:element minOccurs="0" name="Description" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InvoiceRecipientType">
+    <xs:sequence>
+      <xs:element name="VATIdentificationNumber" type="xs:string"/>
+      <xs:element name="BillersInvoiceRecipientID" type="xs:string"/>
+      <xs:element minOccurs="0" name="AccountingArea" type="xs:string"/>
+      <xs:element minOccurs="0" name="SubOrganizationID" type="xs:string"/>
+      <xs:element minOccurs="0" name="OrderReference" type="tns:OrderReferenceType"/>
+      <xs:element name="Address" type="tns:AddressType"/>
+      <xs:element minOccurs="0" ref="ns2:InvoiceRecipientExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="OrderingPartyType">
+    <xs:sequence>
+      <xs:element name="VATIdentificationNumber" type="xs:string"/>
+      <xs:element name="BillersOrderingPartyID" type="xs:string"/>
+      <xs:element minOccurs="0" name="OrderReference" type="tns:OrderReferenceType"/>
+      <xs:element name="Address" type="tns:AddressType"/>
+      <xs:element minOccurs="0" ref="ns2:OrderingPartyExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DetailsType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HeaderDescription" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" name="ItemList" type="tns:ItemListType"/>
+      <xs:element minOccurs="0" name="FooterDescription" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ItemListType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HeaderDescription" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" name="ListLineItem" type="tns:ListLineItemType"/>
+      <xs:element minOccurs="0" name="FooterDescription" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ListLineItemType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PositionNumber" type="xs:positiveInteger"/>
+      <xs:element maxOccurs="unbounded" name="Description" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ArticleNumber" type="tns:ArticleNumberType"/>
+      <xs:element name="Quantity" type="tns:UnitType"/>
+      <xs:element name="UnitPrice" type="xs:decimal"/>
+      <xs:element name="TaxRate" type="tns:TaxRateType"/>
+      <xs:element minOccurs="0" name="DiscountFlag" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="ReductionAndSurchargeListLineItemDetails" type="tns:ReductionAndSurchargeListLineItemDetailsType"/>
+      <xs:element minOccurs="0" name="Delivery" type="tns:DeliveryType"/>
+      <xs:element minOccurs="0" name="BillersOrderReference" type="tns:OrderReferenceDetailType"/>
+      <xs:element minOccurs="0" name="InvoiceRecipientsOrderReference" type="tns:OrderReferenceDetailType"/>
+      <xs:element minOccurs="0" name="AdditionalInformation" type="tns:AdditionalInformationType"/>
+      <xs:element name="LineItemAmount" type="xs:decimal"/>
+      <xs:element minOccurs="0" ref="ns2:ListLineItemExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ArticleNumberType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="tns:ArticleNumberType"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="UnitType">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attribute ref="tns:Unit" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="TaxRateType">
+    <xs:simpleContent>
+      <xs:extension base="xs:decimal">
+        <xs:attribute ref="tns:TaxCode"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ReductionAndSurchargeListLineItemDetailsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ReductionListLineItem" type="tns:ReductionAndSurchargeBaseType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="SurchargeListLineItem" type="tns:ReductionAndSurchargeBaseType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ReductionAndSurchargeBaseType">
+    <xs:sequence>
+      <xs:element name="BaseAmount" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="Percentage" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ReductionAndSurchargeType">
+    <xs:complexContent>
+      <xs:extension base="tns:ReductionAndSurchargeBaseType">
+        <xs:sequence>
+          <xs:element name="TaxRate" type="tns:TaxRateType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="OrderReferenceDetailType">
+    <xs:sequence>
+      <xs:element name="OrderID" type="xs:string"/>
+      <xs:element minOccurs="0" name="OrderPositionNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AdditionalInformationType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="SerialNumber" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ChargeNumber" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Classification" type="tns:ClassificationType"/>
+      <xs:element minOccurs="0" name="AlternativeQuantity" type="tns:UnitType"/>
+      <xs:element minOccurs="0" name="Size" type="xs:string"/>
+      <xs:element minOccurs="0" name="Weight" type="tns:UnitType"/>
+      <xs:element minOccurs="0" name="Boxes" type="xs:positiveInteger"/>
+      <xs:element minOccurs="0" name="Color" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ClassificationType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="tns:ClassificationSchema"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ReductionAndSurchargeDetailsType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="tns:Reduction"/>
+        <xs:element ref="tns:Surcharge"/>
+      </xs:choice>
+      <xs:element minOccurs="0" ref="ns2:ReductionAndSurchargeDetailsExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CustomType">
+    <xs:sequence>
+      <xs:any namespace="##other" processContents="lax"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="BankCodeCType">
+    <xs:simpleContent>
+      <xs:extension base="xs:integer">
+        <xs:attribute ref="tns:BankCodeType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="AccountType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BankName" type="xs:string"/>
+      <xs:element minOccurs="0" name="BankCode" type="tns:BankCodeCType"/>
+      <xs:element minOccurs="0" name="BIC" type="xs:string"/>
+      <xs:element minOccurs="0" name="BankAccountNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="IBAN" type="xs:string"/>
+      <xs:element minOccurs="0" name="BankAccountOwner" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DirectDebitType">
+    <xs:complexContent>
+      <xs:extension base="tns:PaymentMethodType">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PaymentMethodType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comment" type="xs:string"/>
+      <xs:element minOccurs="0" ref="ns2:PaymentMethodExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NoPaymentType">
+    <xs:complexContent>
+      <xs:extension base="tns:PaymentMethodType">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UniversalBankTransactionType">
+    <xs:complexContent>
+      <xs:extension base="tns:PaymentMethodType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="BeneficiaryAccount" type="tns:AccountType"/>
+          <xs:element minOccurs="0" name="PaymentReference" type="tns:PaymentReferenceType"/>
+        </xs:sequence>
+        <xs:attribute ref="tns:ConsolidatorPayable"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PaymentReferenceType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="tns:CheckSum"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="DiscountType">
+    <xs:sequence>
+      <xs:element name="PaymentDate" type="xs:date"/>
+      <xs:element minOccurs="0" name="BaseAmount" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="Percentage" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ItemType">
+    <xs:sequence>
+      <xs:element name="TaxedAmount" type="xs:decimal"/>
+      <xs:element name="TaxRate" type="tns:TaxRateType"/>
+      <xs:element name="Amount" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="OtherTaxType">
+    <xs:sequence>
+      <xs:element name="Comment" type="xs:string"/>
+      <xs:element name="Amount" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PaymentConditionsType">
+    <xs:sequence>
+      <xs:element name="DueDate" type="xs:date"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Discount" type="tns:DiscountType"/>
+      <xs:element minOccurs="0" name="MinimumPayment" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="Comment" type="xs:string"/>
+      <xs:element minOccurs="0" ref="ns2:PaymentConditionsExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PresentationDetailsType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="URL" type="xs:anyURI"/>
+      <xs:element minOccurs="0" name="LogoURL" type="xs:anyURI"/>
+      <xs:element minOccurs="0" name="LayoutID" type="xs:string"/>
+      <xs:element minOccurs="0" name="SuppressZero" type="xs:boolean"/>
+      <xs:element minOccurs="0" ref="ns2:PresentationDetailsExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TaxType">
+    <xs:sequence>
+      <xs:element name="VAT" type="tns:VATType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="OtherTax" type="tns:OtherTaxType"/>
+      <xs:element minOccurs="0" ref="ns2:TaxExtension"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VATType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TaxExemption" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Item" type="tns:ItemType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="AddressIdentifierTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="GLN"/>
+      <xs:enumeration value="DUNS"/>
+      <xs:enumeration value="ProprietaryAddressID"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CountryCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AF"/>
+      <xs:enumeration value="AX"/>
+      <xs:enumeration value="AL"/>
+      <xs:enumeration value="DZ"/>
+      <xs:enumeration value="AS"/>
+      <xs:enumeration value="AD"/>
+      <xs:enumeration value="AO"/>
+      <xs:enumeration value="AI"/>
+      <xs:enumeration value="AQ"/>
+      <xs:enumeration value="AG"/>
+      <xs:enumeration value="AR"/>
+      <xs:enumeration value="AM"/>
+      <xs:enumeration value="AW"/>
+      <xs:enumeration value="AU"/>
+      <xs:enumeration value="AT"/>
+      <xs:enumeration value="AZ"/>
+      <xs:enumeration value="BS"/>
+      <xs:enumeration value="BH"/>
+      <xs:enumeration value="BD"/>
+      <xs:enumeration value="BB"/>
+      <xs:enumeration value="BY"/>
+      <xs:enumeration value="BE"/>
+      <xs:enumeration value="BZ"/>
+      <xs:enumeration value="BJ"/>
+      <xs:enumeration value="BM"/>
+      <xs:enumeration value="BT"/>
+      <xs:enumeration value="BO"/>
+      <xs:enumeration value="BQ"/>
+      <xs:enumeration value="BA"/>
+      <xs:enumeration value="BW"/>
+      <xs:enumeration value="BV"/>
+      <xs:enumeration value="BR"/>
+      <xs:enumeration value="IO"/>
+      <xs:enumeration value="BN"/>
+      <xs:enumeration value="BG"/>
+      <xs:enumeration value="BF"/>
+      <xs:enumeration value="BI"/>
+      <xs:enumeration value="KH"/>
+      <xs:enumeration value="CM"/>
+      <xs:enumeration value="CA"/>
+      <xs:enumeration value="CV"/>
+      <xs:enumeration value="KY"/>
+      <xs:enumeration value="CF"/>
+      <xs:enumeration value="TD"/>
+      <xs:enumeration value="CL"/>
+      <xs:enumeration value="CN"/>
+      <xs:enumeration value="CX"/>
+      <xs:enumeration value="CC"/>
+      <xs:enumeration value="CO"/>
+      <xs:enumeration value="KM"/>
+      <xs:enumeration value="CG"/>
+      <xs:enumeration value="CD"/>
+      <xs:enumeration value="CK"/>
+      <xs:enumeration value="CR"/>
+      <xs:enumeration value="CI"/>
+      <xs:enumeration value="HR"/>
+      <xs:enumeration value="CU"/>
+      <xs:enumeration value="CW"/>
+      <xs:enumeration value="CY"/>
+      <xs:enumeration value="CZ"/>
+      <xs:enumeration value="DK"/>
+      <xs:enumeration value="DJ"/>
+      <xs:enumeration value="DM"/>
+      <xs:enumeration value="DO"/>
+      <xs:enumeration value="EC"/>
+      <xs:enumeration value="EG"/>
+      <xs:enumeration value="SV"/>
+      <xs:enumeration value="GQ"/>
+      <xs:enumeration value="ER"/>
+      <xs:enumeration value="EE"/>
+      <xs:enumeration value="ET"/>
+      <xs:enumeration value="FK"/>
+      <xs:enumeration value="FO"/>
+      <xs:enumeration value="FJ"/>
+      <xs:enumeration value="FI"/>
+      <xs:enumeration value="FR"/>
+      <xs:enumeration value="GF"/>
+      <xs:enumeration value="PF"/>
+      <xs:enumeration value="TF"/>
+      <xs:enumeration value="GA"/>
+      <xs:enumeration value="GM"/>
+      <xs:enumeration value="GE"/>
+      <xs:enumeration value="DE"/>
+      <xs:enumeration value="GH"/>
+      <xs:enumeration value="GI"/>
+      <xs:enumeration value="GR"/>
+      <xs:enumeration value="GL"/>
+      <xs:enumeration value="GD"/>
+      <xs:enumeration value="GP"/>
+      <xs:enumeration value="GU"/>
+      <xs:enumeration value="GT"/>
+      <xs:enumeration value="GG"/>
+      <xs:enumeration value="GN"/>
+      <xs:enumeration value="GW"/>
+      <xs:enumeration value="GY"/>
+      <xs:enumeration value="HT"/>
+      <xs:enumeration value="HM"/>
+      <xs:enumeration value="VA"/>
+      <xs:enumeration value="HN"/>
+      <xs:enumeration value="HK"/>
+      <xs:enumeration value="HU"/>
+      <xs:enumeration value="IS"/>
+      <xs:enumeration value="IN"/>
+      <xs:enumeration value="ID"/>
+      <xs:enumeration value="IR"/>
+      <xs:enumeration value="IQ"/>
+      <xs:enumeration value="IE"/>
+      <xs:enumeration value="IM"/>
+      <xs:enumeration value="IL"/>
+      <xs:enumeration value="IT"/>
+      <xs:enumeration value="JM"/>
+      <xs:enumeration value="JP"/>
+      <xs:enumeration value="JE"/>
+      <xs:enumeration value="JO"/>
+      <xs:enumeration value="KZ"/>
+      <xs:enumeration value="KE"/>
+      <xs:enumeration value="KI"/>
+      <xs:enumeration value="KP"/>
+      <xs:enumeration value="KR"/>
+      <xs:enumeration value="KW"/>
+      <xs:enumeration value="KG"/>
+      <xs:enumeration value="LA"/>
+      <xs:enumeration value="LV"/>
+      <xs:enumeration value="LB"/>
+      <xs:enumeration value="LS"/>
+      <xs:enumeration value="LR"/>
+      <xs:enumeration value="LY"/>
+      <xs:enumeration value="LI"/>
+      <xs:enumeration value="LT"/>
+      <xs:enumeration value="LU"/>
+      <xs:enumeration value="MO"/>
+      <xs:enumeration value="MK"/>
+      <xs:enumeration value="MG"/>
+      <xs:enumeration value="MW"/>
+      <xs:enumeration value="MY"/>
+      <xs:enumeration value="MV"/>
+      <xs:enumeration value="ML"/>
+      <xs:enumeration value="MT"/>
+      <xs:enumeration value="MH"/>
+      <xs:enumeration value="MQ"/>
+      <xs:enumeration value="MR"/>
+      <xs:enumeration value="MU"/>
+      <xs:enumeration value="YT"/>
+      <xs:enumeration value="MX"/>
+      <xs:enumeration value="FM"/>
+      <xs:enumeration value="MD"/>
+      <xs:enumeration value="MC"/>
+      <xs:enumeration value="MN"/>
+      <xs:enumeration value="ME"/>
+      <xs:enumeration value="MS"/>
+      <xs:enumeration value="MA"/>
+      <xs:enumeration value="MZ"/>
+      <xs:enumeration value="MM"/>
+      <xs:enumeration value="NA"/>
+      <xs:enumeration value="NR"/>
+      <xs:enumeration value="NP"/>
+      <xs:enumeration value="NL"/>
+      <xs:enumeration value="NC"/>
+      <xs:enumeration value="NZ"/>
+      <xs:enumeration value="NI"/>
+      <xs:enumeration value="NE"/>
+      <xs:enumeration value="NG"/>
+      <xs:enumeration value="NU"/>
+      <xs:enumeration value="NF"/>
+      <xs:enumeration value="MP"/>
+      <xs:enumeration value="NO"/>
+      <xs:enumeration value="OM"/>
+      <xs:enumeration value="PK"/>
+      <xs:enumeration value="PW"/>
+      <xs:enumeration value="PS"/>
+      <xs:enumeration value="PA"/>
+      <xs:enumeration value="PG"/>
+      <xs:enumeration value="PY"/>
+      <xs:enumeration value="PE"/>
+      <xs:enumeration value="PH"/>
+      <xs:enumeration value="PN"/>
+      <xs:enumeration value="PL"/>
+      <xs:enumeration value="PT"/>
+      <xs:enumeration value="PR"/>
+      <xs:enumeration value="QA"/>
+      <xs:enumeration value="RE"/>
+      <xs:enumeration value="RO"/>
+      <xs:enumeration value="RU"/>
+      <xs:enumeration value="RW"/>
+      <xs:enumeration value="BL"/>
+      <xs:enumeration value="SH"/>
+      <xs:enumeration value="KN"/>
+      <xs:enumeration value="LC"/>
+      <xs:enumeration value="MF"/>
+      <xs:enumeration value="PM"/>
+      <xs:enumeration value="VC"/>
+      <xs:enumeration value="WS"/>
+      <xs:enumeration value="SM"/>
+      <xs:enumeration value="ST"/>
+      <xs:enumeration value="SA"/>
+      <xs:enumeration value="SN"/>
+      <xs:enumeration value="RS"/>
+      <xs:enumeration value="SC"/>
+      <xs:enumeration value="SL"/>
+      <xs:enumeration value="SG"/>
+      <xs:enumeration value="SX"/>
+      <xs:enumeration value="SK"/>
+      <xs:enumeration value="SI"/>
+      <xs:enumeration value="SB"/>
+      <xs:enumeration value="SO"/>
+      <xs:enumeration value="ZA"/>
+      <xs:enumeration value="GS"/>
+      <xs:enumeration value="SS"/>
+      <xs:enumeration value="ES"/>
+      <xs:enumeration value="LK"/>
+      <xs:enumeration value="SD"/>
+      <xs:enumeration value="SR"/>
+      <xs:enumeration value="SJ"/>
+      <xs:enumeration value="SZ"/>
+      <xs:enumeration value="SE"/>
+      <xs:enumeration value="CH"/>
+      <xs:enumeration value="SY"/>
+      <xs:enumeration value="TW"/>
+      <xs:enumeration value="TJ"/>
+      <xs:enumeration value="TZ"/>
+      <xs:enumeration value="TH"/>
+      <xs:enumeration value="TL"/>
+      <xs:enumeration value="TG"/>
+      <xs:enumeration value="TK"/>
+      <xs:enumeration value="TO"/>
+      <xs:enumeration value="TT"/>
+      <xs:enumeration value="TN"/>
+      <xs:enumeration value="TR"/>
+      <xs:enumeration value="TM"/>
+      <xs:enumeration value="TC"/>
+      <xs:enumeration value="TV"/>
+      <xs:enumeration value="UG"/>
+      <xs:enumeration value="UA"/>
+      <xs:enumeration value="AE"/>
+      <xs:enumeration value="GB"/>
+      <xs:enumeration value="US"/>
+      <xs:enumeration value="UM"/>
+      <xs:enumeration value="UY"/>
+      <xs:enumeration value="UZ"/>
+      <xs:enumeration value="VU"/>
+      <xs:enumeration value="VE"/>
+      <xs:enumeration value="VN"/>
+      <xs:enumeration value="VG"/>
+      <xs:enumeration value="VI"/>
+      <xs:enumeration value="WF"/>
+      <xs:enumeration value="EH"/>
+      <xs:enumeration value="YE"/>
+      <xs:enumeration value="ZM"/>
+      <xs:enumeration value="ZW"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ArticleNumberTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PZN"/>
+      <xs:enumeration value="GTIN"/>
+      <xs:enumeration value="InvoiceRecipientsArticleNumber"/>
+      <xs:enumeration value="BillersArticleNumber"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DocumentTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Invoice"/>
+      <xs:enumeration value="InvoiceForAdvancePayment"/>
+      <xs:enumeration value="InvoiceForPartialDelivery"/>
+      <xs:enumeration value="FinalSettlement"/>
+      <xs:enumeration value="SubsequentCredit"/>
+      <xs:enumeration value="CreditMemo"/>
+      <xs:enumeration value="SubsequentDebit"/>
+      <xs:enumeration value="SelfBilling"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CurrencyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AFN"/>
+      <xs:enumeration value="EUR"/>
+      <xs:enumeration value="ALL"/>
+      <xs:enumeration value="DZD"/>
+      <xs:enumeration value="USD"/>
+      <xs:enumeration value="AOA"/>
+      <xs:enumeration value="XCD"/>
+      <xs:enumeration value="ARS"/>
+      <xs:enumeration value="AMD"/>
+      <xs:enumeration value="AWG"/>
+      <xs:enumeration value="AUD"/>
+      <xs:enumeration value="AZN"/>
+      <xs:enumeration value="BSD"/>
+      <xs:enumeration value="BHD"/>
+      <xs:enumeration value="BDT"/>
+      <xs:enumeration value="BBD"/>
+      <xs:enumeration value="BYR"/>
+      <xs:enumeration value="BZD"/>
+      <xs:enumeration value="XOF"/>
+      <xs:enumeration value="BMD"/>
+      <xs:enumeration value="INR"/>
+      <xs:enumeration value="BTN"/>
+      <xs:enumeration value="BOB"/>
+      <xs:enumeration value="BOV"/>
+      <xs:enumeration value="BAM"/>
+      <xs:enumeration value="BWP"/>
+      <xs:enumeration value="NOK"/>
+      <xs:enumeration value="BRL"/>
+      <xs:enumeration value="BND"/>
+      <xs:enumeration value="BGN"/>
+      <xs:enumeration value="BIF"/>
+      <xs:enumeration value="KHR"/>
+      <xs:enumeration value="XAF"/>
+      <xs:enumeration value="CAD"/>
+      <xs:enumeration value="CVE"/>
+      <xs:enumeration value="KYD"/>
+      <xs:enumeration value="CLP"/>
+      <xs:enumeration value="CLF"/>
+      <xs:enumeration value="CNY"/>
+      <xs:enumeration value="COP"/>
+      <xs:enumeration value="COU"/>
+      <xs:enumeration value="KMF"/>
+      <xs:enumeration value="CDF"/>
+      <xs:enumeration value="NZD"/>
+      <xs:enumeration value="CRC"/>
+      <xs:enumeration value="HRK"/>
+      <xs:enumeration value="CUP"/>
+      <xs:enumeration value="CUC"/>
+      <xs:enumeration value="ANG"/>
+      <xs:enumeration value="CZK"/>
+      <xs:enumeration value="DKK"/>
+      <xs:enumeration value="DJF"/>
+      <xs:enumeration value="DOP"/>
+      <xs:enumeration value="EGP"/>
+      <xs:enumeration value="SVC"/>
+      <xs:enumeration value="ERN"/>
+      <xs:enumeration value="ETB"/>
+      <xs:enumeration value="FKP"/>
+      <xs:enumeration value="FJD"/>
+      <xs:enumeration value="XPF"/>
+      <xs:enumeration value="GMD"/>
+      <xs:enumeration value="GEL"/>
+      <xs:enumeration value="GHS"/>
+      <xs:enumeration value="GIP"/>
+      <xs:enumeration value="GTQ"/>
+      <xs:enumeration value="GBP"/>
+      <xs:enumeration value="GNF"/>
+      <xs:enumeration value="GYD"/>
+      <xs:enumeration value="HTG"/>
+      <xs:enumeration value="HNL"/>
+      <xs:enumeration value="HKD"/>
+      <xs:enumeration value="HUF"/>
+      <xs:enumeration value="ISK"/>
+      <xs:enumeration value="IDR"/>
+      <xs:enumeration value="XDR"/>
+      <xs:enumeration value="IRR"/>
+      <xs:enumeration value="IQD"/>
+      <xs:enumeration value="ILS"/>
+      <xs:enumeration value="JMD"/>
+      <xs:enumeration value="JPY"/>
+      <xs:enumeration value="JOD"/>
+      <xs:enumeration value="KZT"/>
+      <xs:enumeration value="KES"/>
+      <xs:enumeration value="KPW"/>
+      <xs:enumeration value="KRW"/>
+      <xs:enumeration value="KWD"/>
+      <xs:enumeration value="KGS"/>
+      <xs:enumeration value="LAK"/>
+      <xs:enumeration value="LVL"/>
+      <xs:enumeration value="LBP"/>
+      <xs:enumeration value="LSL"/>
+      <xs:enumeration value="ZAR"/>
+      <xs:enumeration value="LRD"/>
+      <xs:enumeration value="LYD"/>
+      <xs:enumeration value="CHF"/>
+      <xs:enumeration value="LTL"/>
+      <xs:enumeration value="MOP"/>
+      <xs:enumeration value="MKD"/>
+      <xs:enumeration value="MGA"/>
+      <xs:enumeration value="MWK"/>
+      <xs:enumeration value="MYR"/>
+      <xs:enumeration value="MVR"/>
+      <xs:enumeration value="MRO"/>
+      <xs:enumeration value="MUR"/>
+      <xs:enumeration value="XUA"/>
+      <xs:enumeration value="MXN"/>
+      <xs:enumeration value="MXV"/>
+      <xs:enumeration value="MDL"/>
+      <xs:enumeration value="MNT"/>
+      <xs:enumeration value="MAD"/>
+      <xs:enumeration value="MZN"/>
+      <xs:enumeration value="MMK"/>
+      <xs:enumeration value="NAD"/>
+      <xs:enumeration value="NPR"/>
+      <xs:enumeration value="NIO"/>
+      <xs:enumeration value="NGN"/>
+      <xs:enumeration value="OMR"/>
+      <xs:enumeration value="PKR"/>
+      <xs:enumeration value="PAB"/>
+      <xs:enumeration value="PGK"/>
+      <xs:enumeration value="PYG"/>
+      <xs:enumeration value="PEN"/>
+      <xs:enumeration value="PHP"/>
+      <xs:enumeration value="PLN"/>
+      <xs:enumeration value="QAR"/>
+      <xs:enumeration value="RON"/>
+      <xs:enumeration value="RUB"/>
+      <xs:enumeration value="RWF"/>
+      <xs:enumeration value="SHP"/>
+      <xs:enumeration value="WST"/>
+      <xs:enumeration value="STD"/>
+      <xs:enumeration value="SAR"/>
+      <xs:enumeration value="RSD"/>
+      <xs:enumeration value="SCR"/>
+      <xs:enumeration value="SLL"/>
+      <xs:enumeration value="SGD"/>
+      <xs:enumeration value="XSU"/>
+      <xs:enumeration value="SBD"/>
+      <xs:enumeration value="SOS"/>
+      <xs:enumeration value="SSP"/>
+      <xs:enumeration value="LKR"/>
+      <xs:enumeration value="SDG"/>
+      <xs:enumeration value="SRD"/>
+      <xs:enumeration value="SZL"/>
+      <xs:enumeration value="SEK"/>
+      <xs:enumeration value="CHE"/>
+      <xs:enumeration value="CHW"/>
+      <xs:enumeration value="SYP"/>
+      <xs:enumeration value="TWD"/>
+      <xs:enumeration value="TJS"/>
+      <xs:enumeration value="TZS"/>
+      <xs:enumeration value="THB"/>
+      <xs:enumeration value="TOP"/>
+      <xs:enumeration value="TTD"/>
+      <xs:enumeration value="TND"/>
+      <xs:enumeration value="TRY"/>
+      <xs:enumeration value="TMT"/>
+      <xs:enumeration value="UGX"/>
+      <xs:enumeration value="UAH"/>
+      <xs:enumeration value="AED"/>
+      <xs:enumeration value="USN"/>
+      <xs:enumeration value="USS"/>
+      <xs:enumeration value="UYU"/>
+      <xs:enumeration value="UYI"/>
+      <xs:enumeration value="UZS"/>
+      <xs:enumeration value="VUV"/>
+      <xs:enumeration value="VEF"/>
+      <xs:enumeration value="VND"/>
+      <xs:enumeration value="YER"/>
+      <xs:enumeration value="ZMK"/>
+      <xs:enumeration value="ZWL"/>
+      <xs:enumeration value="XBA"/>
+      <xs:enumeration value="XBB"/>
+      <xs:enumeration value="XBC"/>
+      <xs:enumeration value="XBD"/>
+      <xs:enumeration value="XFU"/>
+      <xs:enumeration value="XTS"/>
+      <xs:enumeration value="XXX"/>
+      <xs:enumeration value="XAU"/>
+      <xs:enumeration value="XPD"/>
+      <xs:enumeration value="XPT"/>
+      <xs:enumeration value="XAG"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:attribute name="AddressIdentifierType" type="tns:AddressIdentifierTypeType"/>
+
+  <xs:attribute name="ArticleNumberType" type="tns:ArticleNumberTypeType"/>
+
+  <xs:attribute name="BankCodeType" type="tns:CountryCodeType"/>
+
+  <xs:attribute name="CancelledOriginalDocument" type="xs:string"/>
+
+  <xs:attribute name="CheckSum" type="xs:string"/>
+
+  <xs:attribute name="ClassificationSchema" type="xs:string"/>
+
+  <xs:attribute name="ConsolidatorPayable" type="xs:boolean"/>
+
+  <xs:attribute name="CountryCode" type="tns:CountryCodeType"/>
+
+  <xs:attribute name="DocumentTitle" type="xs:string"/>
+
+  <xs:attribute name="DocumentType" type="tns:DocumentTypeType"/>
+
+  <xs:attribute name="GeneratingSystem" type="xs:string"/>
+
+  <xs:attribute name="IdentificationType" type="xs:string"/>
+
+  <xs:attribute name="InvoiceCurrency" type="tns:CurrencyType"/>
+
+  <xs:attribute name="Language" type="xs:string"/>
+
+  <xs:attribute name="ManualProcessing" type="xs:boolean"/>
+
+  <xs:attribute name="TaxCode" type="xs:string"/>
+
+  <xs:attribute name="Unit" type="xs:string"/>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.e-zustellung.at/namespaces/zuse_20090922" xmlns:ns1="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" targetNamespace="http://www.e-zustellung.at/namespaces/zuse_20090922" version="1.0">
+
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"/>
+
+  <xs:element name="DeliveryNotification">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DeliveryNotificationType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeliveryNotificationResponse" type="tns:DeliveryNotificationResponseType"/>
+
+  <xs:element name="DeliveryRequest" type="tns:DeliveryRequestType"/>
+
+  <xs:element name="DeliveryResponse">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DeliveryResponseType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="DeliveryNotificationType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:Signature"/>
+      <xs:element minOccurs="0" name="Success">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="tns:IdentifierType">
+              <xs:sequence>
+                <xs:element name="Notifications" type="tns:NotificationsType"/>
+                <xs:element name="ConfirmationInformation" type="tns:ConfirmationInformationType"/>
+                <xs:element name="DeliveryType" type="xs:string"/>
+                <xs:element minOccurs="0" name="DeliveryInformation" type="tns:DeliveryInformationType"/>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Error">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="tns:IdentifierType">
+              <xs:sequence>
+                <xs:element name="Notifications" type="tns:NotificationsType"/>
+                <xs:element name="Errors" type="tns:ErrorsType"/>
+                <xs:element minOccurs="0" name="DeliveryInformation" type="tns:DeliveryInformationType"/>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="NotificationsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Notifcation">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Method" type="xs:string"/>
+            <xs:element name="TimeStamp" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="Address" type="xs:anyURI"/>
+          </xs:sequence>
+          <xs:attribute name="number" type="xs:positiveInteger"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ConfirmationInformationType">
+    <xs:sequence>
+      <xs:element name="TimeStamp" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Confirmation">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="SignedConfirmation" type="xs:anyType"/>
+            <xs:element minOccurs="0" name="Certificate" type="xs:anyType"/>
+            <xs:element minOccurs="0" name="AuthBlock" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryInformationType">
+    <xs:sequence>
+      <xs:element name="Receiver" type="tns:SenderReceiverType"/>
+      <xs:element name="Sender" type="tns:SenderReceiverType"/>
+      <xs:element name="Subject" type="xs:string"/>
+      <xs:element minOccurs="0" name="Documents" type="tns:DocumentsType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SenderReceiverType">
+    <xs:sequence>
+      <xs:element name="ID" type="tns:IDType"/>
+      <xs:element minOccurs="0" name="xxx_ed">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Organisation" type="xs:string"/>
+            <xs:element minOccurs="0" name="FullName" type="xs:string"/>
+            <xs:element minOccurs="0" name="Reference" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="xxx_eGov">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Organisation" type="xs:anyType"/>
+            <xs:element minOccurs="0" name="p_PhysicalPerson" type="xs:anyType"/>
+            <xs:element minOccurs="0" name="p_CorporateBody" type="xs:anyType"/>
+            <xs:element minOccurs="0" name="p_Address" type="xs:anyType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="IDType">
+    <xs:sequence>
+      <xs:element name="Type" type="xs:string"/>
+      <xs:element name="Value" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="NotificationAddressType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Type" type="xs:string"/>
+      <xs:element minOccurs="0" name="Value" type="xs:anyURI"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DocumentsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Document">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Filename" type="xs:string"/>
+            <xs:element name="FileSize" type="xs:positiveInteger"/>
+            <xs:element name="MIMEType" type="xs:string"/>
+            <xs:element name="CheckSum">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Type" type="xs:string"/>
+                  <xs:element name="Value" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="IdentifierType">
+    <xs:sequence>
+      <xs:element name="DeliveryService">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ServiceURL" type="xs:anyURI"/>
+            <xs:element minOccurs="0" name="Name" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SendingApplicationID" type="xs:token"/>
+      <xs:element minOccurs="0" name="SendingServiceID" type="xs:token"/>
+      <xs:element name="DeliveryServiceID" type="xs:token"/>
+      <xs:element name="DeliveryServiceTimeStamp" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ErrorsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Error">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Code" type="xs:positiveInteger"/>
+            <xs:element name="Text" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryRequestType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:Signature"/>
+      <xs:element name="Receiver" type="tns:SenderReceiverType"/>
+      <xs:element name="Sender">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="tns:SenderReceiverType">
+              <xs:sequence>
+                <xs:element name="NotificationAddress" type="tns:NotificationAddressType"/>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Subject" type="xs:string"/>
+      <xs:element name="MetaData" type="tns:MetaDataType"/>
+      <xs:element minOccurs="0" name="Documents" type="tns:DocumentsType"/>
+      <xs:element minOccurs="0" name="CallbackAttachments" type="tns:CallbackAttachmentsType"/>
+    </xs:sequence>
+    <xs:attribute name="Version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="MetaDataType">
+    <xs:sequence>
+      <xs:element name="SendingApplicationID" type="xs:token"/>
+      <xs:element minOccurs="0" name="SendingServiceID" type="xs:token"/>
+      <xs:element minOccurs="0" name="DeliverBefore" type="xs:dateTime"/>
+      <xs:element name="DeliveryQuality" type="xs:string"/>
+      <xs:element name="DocumentClass" type="xs:string"/>
+      <xs:element minOccurs="0" name="DeliveryChannel" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="BillingInfo" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="LockUntil" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="StartNotificationBefore" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CallbackAttachmentsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="CallbackAttachment">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="URL" type="xs:anyURI"/>
+            <xs:element name="FileName" type="xs:string"/>
+            <xs:element name="FileSize" type="xs:positiveInteger"/>
+            <xs:element name="MIMEType" type="xs:string"/>
+            <xs:element name="CheckSum">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Type" type="xs:string"/>
+                  <xs:element name="Value" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryNotificationResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:Signature"/>
+      <xs:element minOccurs="0" name="Success" type="tns:IdentifierTypeIDs"/>
+      <xs:element minOccurs="0" name="Error">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="tns:IdentifierTypeIDs">
+              <xs:sequence>
+                <xs:element name="Errors" type="tns:ErrorsType"/>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="IdentifierTypeIDs">
+    <xs:sequence>
+      <xs:element name="SendingApplicationID" type="xs:token"/>
+      <xs:element minOccurs="0" name="SendingServiceID" type="xs:token"/>
+      <xs:element name="DeliveryServiceID" type="xs:token"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:Signature"/>
+      <xs:element minOccurs="0" name="Success" type="tns:IdentifierType"/>
+      <xs:element minOccurs="0" name="Error">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="tns:IdentifierType">
+              <xs:sequence>
+                <xs:element name="Errors" type="tns:ErrorsType"/>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Version" type="xs:string"/>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://reference.postserver.at/namespace/persondata/20170308#" xmlns:ns1="http://reference.e-government.gv.at/namespace/persondata/20130121#" elementFormDefault="qualified" targetNamespace="http://reference.postserver.at/namespace/persondata/20170308#" version="1.0">
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/persondata/20130121#"/>
+
+  <xs:element name="PostalAddressOptional" type="tns:PostalAddressOptionalType"/>
+
+  <xs:complexType name="PostalAddressOptionalType">
+    <xs:complexContent>
+      <xs:extension base="ns1:AbstractAddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CountryCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="PostalCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="Municipality" type="xs:string"/>
+          <xs:element minOccurs="0" name="DeliveryAddress">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="StreetName" type="xs:string"/>
+                <xs:element minOccurs="0" name="BuildingNumber" type="xs:string"/>
+                <xs:element minOccurs="0" name="Unit" type="xs:string"/>
+                <xs:element minOccurs="0" name="DoorNumber" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://reference.e-government.gv.at/namespace/zustellung/msg" xmlns:ns3="http://reference.e-government.gv.at/namespace/persondata/20020228#" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" xmlns:ns1="urn:oasis:names:tc:SAML:1.0:assertion" elementFormDefault="qualified" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/msg" version="1.0">
+
+  <xs:import namespace="urn:oasis:names:tc:SAML:1.0:assertion"/>
+
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"/>
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/persondata/20020228#"/>
+
+  <xs:element name="AppDeliveryID" type="xs:string"/>
+
+  <xs:element name="DeliveryNotification">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DeliveryNotificationType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeliveryNotificationACK">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DeliveryNotificationACKType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeliveryRequest" type="tns:DeliveryRequestType"/>
+
+  <xs:element name="DeliveryRequestStatus">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DeliveryRequestStatusType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeliveryRequestStatusACK">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DeliveryRequestStatusACKType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeliveryResponse" type="tns:DeliveryRequestStatusType"/>
+
+  <xs:element name="DocumentClass">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="Namespace" type="xs:anyURI"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GZ" type="xs:string"/>
+
+  <xs:element name="MZSDeliveryID" type="xs:string"/>
+
+  <xs:element name="MailBox" type="xs:anyType"/>
+
+  <xs:element name="Receiver">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PhysicalPerson" type="ns3:PhysicalPersonType"/>
+        <xs:element minOccurs="0" name="CorporateBody" type="ns3:CorporateBodyType"/>
+        <xs:element minOccurs="0" name="MailBox" type="xs:anyType"/>
+        <xs:element minOccurs="0" name="PostalAddress" type="ns3:PostalAddressType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="References" type="tns:ReferencesType"/>
+
+  <xs:element name="Sender">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Organisation">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="ns3:CorporateBodyType">
+                <xs:sequence/>
+                <xs:anyAttribute namespace="##other" processContents="skip"/>
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="PhysicalPerson" type="ns3:PhysicalPersonType"/>
+        <xs:element minOccurs="0" name="CorporateBody" type="ns3:CorporateBodyType"/>
+        <xs:element minOccurs="0" name="MailBox" type="xs:anyType"/>
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+          <xs:element ref="ns3:Address"/>
+          <xs:element ref="ns3:PostalAddress"/>
+          <xs:element ref="ns3:InternetAddress"/>
+          <xs:element ref="ns3:TelephoneAddress"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ZSDeliveryID" type="xs:string"/>
+
+  <xs:complexType name="DeliveryNotificationType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Success">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="tns:DeliveryAnswerType">
+              <xs:sequence>
+                <xs:element ref="tns:Sender"/>
+                <xs:element ref="tns:Receiver"/>
+                <xs:element name="NotificationsPerformed">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element maxOccurs="unbounded" name="RecipientNotification">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="NotificationMethod" type="xs:string"/>
+                            <xs:element name="Timestamp" type="xs:dateTime"/>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="ConfirmationTimestamp" type="xs:dateTime"/>
+                <xs:element minOccurs="0" name="AuthBlock" type="ns1:AssertionType"/>
+                <xs:element minOccurs="0" name="BinaryConfirmation">
+                  <xs:complexType>
+                    <xs:simpleContent>
+                      <xs:extension base="xs:base64Binary">
+                        <xs:attribute name="Type" type="xs:anySimpleType" use="required"/>
+                      </xs:extension>
+                    </xs:simpleContent>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="Signature" type="ns2:SignatureType"/>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Error">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="tns:DeliveryAnswerType">
+              <xs:sequence>
+                <xs:element ref="tns:Sender"/>
+                <xs:element ref="tns:Receiver"/>
+                <xs:element name="NotificationsPerformed">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element maxOccurs="unbounded" minOccurs="0" name="RecipientNotification">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="NotificationMethod" type="xs:string"/>
+                            <xs:element name="Timestamp" type="xs:dateTime"/>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="ErrorInfo">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Code" type="xs:positiveInteger"/>
+                      <xs:element name="Text" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="Signature" type="ns2:SignatureType"/>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="AdditionalFormat">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:base64Binary">
+              <xs:attribute name="Type" type="xs:anySimpleType" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryRequestStatusType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Success" type="tns:DeliveryAnswerType"/>
+      <xs:element minOccurs="0" name="DeliveryConfirmation" type="tns:DeliveryConfirmationType"/>
+      <xs:element minOccurs="0" name="PartialSuccess" type="tns:DeliveryAnswerType"/>
+      <xs:element minOccurs="0" name="Error">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="tns:DeliveryAnswerType">
+              <xs:sequence>
+                <xs:element name="ErrorInfo">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Code" type="xs:positiveInteger"/>
+                      <xs:element name="Text" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryAnswerType">
+    <xs:sequence>
+      <xs:element name="DeliveryService" type="xs:string"/>
+      <xs:element name="AppDeliveryID" type="xs:token"/>
+      <xs:element minOccurs="0" name="GZ" type="xs:string"/>
+      <xs:element minOccurs="0" name="MZSDeliveryID" type="xs:token"/>
+      <xs:element name="ZSDeliveryID" type="xs:token"/>
+      <xs:element minOccurs="0" name="RelayedViaERV" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryConfirmationType">
+    <xs:complexContent>
+      <xs:extension base="tns:DeliveryAnswerType">
+        <xs:sequence>
+          <xs:element ref="tns:Sender"/>
+          <xs:element ref="tns:Receiver"/>
+          <xs:element name="DeliveryTimestamp" type="xs:dateTime"/>
+          <xs:element ref="ns2:Signature"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryRequestType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ZbPK" type="xs:token"/>
+      <xs:element minOccurs="0" name="edID" type="xs:token"/>
+      <xs:element minOccurs="0" name="Identification">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Type" type="xs:string"/>
+            <xs:element name="Value" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NotificationAddress">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="WebserviceURL">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="AlternativeEmail" type="xs:anyURI"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="Email" type="ns3:InternetAddressType"/>
+          </xs:sequence>
+          <xs:attribute name="Type" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element ref="tns:Sender"/>
+      <xs:element minOccurs="0" ref="tns:Receiver"/>
+      <xs:element name="MetaData">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="Subject" type="xs:string"/>
+            <xs:element name="AppDeliveryID" type="xs:token"/>
+            <xs:element minOccurs="0" name="GZ" type="xs:string"/>
+            <xs:element minOccurs="0" name="MZSDeliveryID" type="xs:token"/>
+            <xs:element name="DeliveryQuality" type="xs:token"/>
+            <xs:element minOccurs="0" name="DeliveryConfirmation" type="xs:boolean"/>
+            <xs:element minOccurs="0" ref="tns:DocumentClass"/>
+            <xs:element minOccurs="0" name="References" type="tns:ReferencesType"/>
+            <xs:element minOccurs="0" name="StartNotificationBefore" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="DeliverBefore" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="PrintParameter">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+                </xs:sequence>
+                <xs:attribute name="profile" type="xs:anyURI" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="DocumentReference">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="URL" type="xs:anyURI"/>
+            <xs:element minOccurs="0" name="MimeType" type="xs:token"/>
+            <xs:element minOccurs="0" name="FileName" type="xs:string"/>
+            <xs:element minOccurs="0" name="MD5Checksum" type="xs:token"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="CustomNotificationIntervals">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="RecipientNotification">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="NotificationMethod" type="xs:token"/>
+                  <xs:element name="TimeSinceDisposal" type="xs:duration"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="ReferencesType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="tns:AppDeliveryID"/>
+        <xs:element ref="tns:GZ"/>
+        <xs:element ref="tns:MZSDeliveryID"/>
+        <xs:element ref="tns:ZSDeliveryID"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryRequestStatusACKType">
+    <xs:sequence>
+      <xs:element name="AppDeliveryID" type="xs:token"/>
+      <xs:element name="ZSDeliveryID" type="xs:token"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryNotificationACKType">
+    <xs:sequence>
+      <xs:element name="AppDeliveryID" type="xs:token"/>
+      <xs:element name="ZSDeliveryID" type="xs:token"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string"/>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" xmlns:ns3="http://www.e-zustellung.at/namespaces/zuse_20090922" xmlns:ns2="http://reference.e-government.gv.at/namespace/zustellung/msg" xmlns:ns1="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" elementFormDefault="qualified" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" version="1.0">
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#"/>
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/msg"/>
+
+  <xs:import namespace="http://www.e-zustellung.at/namespaces/zuse_20090922"/>
+
+  <xs:element name="AdditionalPrintResultSet" type="tns:AdditionalPrintResultSetType"/>
+
+  <xs:element name="AdditionalResults">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+          <xs:element ref="tns:AdditonalResultSet"/>
+          <xs:element ref="tns:PropertyValueAdditonalResultSet"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AdditonalPrintResults">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+          <xs:element ref="tns:AdditionalPrintResultSet"/>
+          <xs:element ref="tns:PropertyValuePrintResultSet"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AdditonalResultSet" type="tns:AdditonalResultSetType"/>
+
+  <xs:element name="DualNotificationRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualNotificationRequestType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DualNotificationResponse" type="tns:DualNotificationResponseType"/>
+
+  <xs:element name="EDeliveryNotification" type="tns:AbstractEDeliveryNotificationType"/>
+
+  <xs:element name="NotificationChannel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="tns:NotificationChannelSet"/>
+          <xs:element ref="tns:EDeliveryNotification"/>
+          <xs:element ref="tns:OtherNotification"/>
+          <xs:element ref="tns:PostalNotification"/>
+        </xs:choice>
+        <xs:element minOccurs="0" name="UserPdf" type="xs:base64Binary"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="NotificationChannelSet" type="tns:NotificationChannelSetType"/>
+
+  <xs:element name="OtherNotification" type="tns:OtherNotificationType"/>
+
+  <xs:element name="PostalNotification" type="tns:PostalNotificationType"/>
+
+  <xs:element name="PropertyValueAdditonalResultSet" type="tns:PropertyValueAdditonalResultSetType"/>
+
+  <xs:element name="PropertyValuePrintResultSet" type="tns:PropertyValuePrintResultSetType"/>
+
+  <xs:element name="StatusRequest" type="tns:StatusRequestType"/>
+
+  <xs:element name="StatusResponse" type="tns:DualNotificationRequestType"/>
+
+  <xs:complexType name="DualNotificationRequestType">
+    <xs:sequence>
+      <xs:element ref="ns1:AppDeliveryID"/>
+      <xs:element minOccurs="0" ref="ns1:DualDeliveryID"/>
+      <xs:element minOccurs="0" name="Result">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="tns:NotificationChannel"/>
+            <xs:element minOccurs="0" name="Error" type="ns1:ErrorType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:AdditionalResults"/>
+      <xs:element minOccurs="0" name="ManipulatedPayloads" type="ns1:ManipulatedPayloadsType"/>
+      <xs:element ref="ns1:Status"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="PostalNotificationType">
+    <xs:complexContent>
+      <xs:extension base="tns:NotificationChannelSetType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Pages" type="xs:long"/>
+          <xs:element minOccurs="0" name="Printtime" type="xs:anySimpleType"/>
+          <xs:element minOccurs="0" name="PrintType" type="xs:string"/>
+          <xs:element minOccurs="0" name="Weight" type="xs:string"/>
+          <xs:element minOccurs="0" name="EnvelopeType" type="xs:string"/>
+          <xs:element minOccurs="0" name="PostalDeliveryTime" type="xs:anySimpleType"/>
+          <xs:element minOccurs="0" name="ServiceDeliveryTime" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="Sheets" type="xs:long"/>
+          <xs:element minOccurs="0" name="PaymentForms" type="xs:int"/>
+          <xs:element minOccurs="0" name="Costs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="TotalCosts" type="xs:decimal"/>
+                <xs:element minOccurs="0" name="DetailedCosts">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="PrintingCosts" type="xs:decimal"/>
+                      <xs:element minOccurs="0" name="HandlingCosts" type="xs:decimal"/>
+                      <xs:element minOccurs="0" name="PostageCosts" type="xs:decimal"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:AdditonalPrintResults"/>
+          <xs:element minOccurs="0" name="DelivererInformation">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Deliverer" type="xs:token"/>
+                <xs:element minOccurs="0" name="DelivererReference" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="ScannedData">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="BinaryDocument">
+                  <xs:complexType>
+                    <xs:complexContent>
+                      <xs:extension base="ns1:BinaryDocumentType">
+                        <xs:sequence/>
+                        <xs:attribute name="MIMEType" type="xs:string" use="required"/>
+                      </xs:extension>
+                    </xs:complexContent>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="ExtractedMetaData" type="ns1:ExtensionPointType"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NotificationChannelSetType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="OtherNotificationType">
+    <xs:complexContent>
+      <xs:extension base="tns:NotificationChannelSetType">
+        <xs:sequence>
+          <xs:element name="NotificationInformation" type="ns1:ExtensionPointType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="AbstractEDeliveryNotificationType">
+    <xs:complexContent>
+      <xs:extension base="tns:NotificationChannelSetType">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EDeliveryNotificationType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractEDeliveryNotificationType">
+        <xs:sequence>
+          <xs:element ref="ns2:DeliveryNotification"/>
+          <xs:element name="BinaryDeliveryNotification" type="xs:base64Binary"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EDeliveryWkoNotificationType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractEDeliveryNotificationType">
+        <xs:sequence>
+          <xs:element ref="ns3:DeliveryNotification"/>
+          <xs:element name="BinaryDeliveryNotification" type="xs:base64Binary"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AdditonalResultSetType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="PropertyValueAdditonalResultSetType">
+    <xs:complexContent>
+      <xs:extension base="tns:AdditonalResultSetType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" ref="ns1:Parameter"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DualNotificationResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Success" type="xs:string"/>
+      <xs:element minOccurs="0" ref="ns1:Error"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="StatusRequestType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:ApplicationID"/>
+      <xs:element ref="ns1:AppDeliveryID"/>
+      <xs:element minOccurs="0" ref="ns1:DualDeliveryID"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AdditionalPrintResultSetType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="PropertyValuePrintResultSetType">
+    <xs:complexContent>
+      <xs:extension base="tns:AdditionalPrintResultSetType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" ref="ns1:Parameter"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://reference.e-government.gv.at/namespace/zustellung/dual_ca/20130121#" xmlns:ns3="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" xmlns:ns2="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" xmlns:ns1="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" elementFormDefault="qualified" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/dual_ca/20130121#" version="1.0">
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#"/>
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#"/>
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#"/>
+
+  <xs:element name="DualDeliveryCancellationRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualDeliveryCancellationRequestType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DualDeliveryCancellationResponse">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualDeliveryCancellationResponseType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="DualDeliveryCancellationRequestType">
+    <xs:sequence>
+      <xs:element ref="ns1:SenderProfile"/>
+      <xs:element ref="ns1:ApplicationID"/>
+      <xs:element ref="ns1:DualDeliveryID"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="DualDeliveryCancellationResponseType">
+    <xs:sequence>
+      <xs:element ref="ns1:DualDeliveryID"/>
+      <xs:element ref="ns1:AppDeliveryID"/>
+      <xs:element ref="ns1:Status"/>
+      <xs:element minOccurs="0" ref="ns3:BulkElements"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" xmlns:ns2="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ns1="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" elementFormDefault="qualified" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" version="1.0">
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#"/>
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#"/>
+
+  <xs:element name="BulkElements">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ns1:DualNotificationRequest"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DualDeliveryBulkRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualDeliveryBulkRequestType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DualDeliveryBulkResponse">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualDeliveryBulkResponseType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DualNotificationBulkRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualNotificationBulkRequestType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DualNotificationBulkResponse">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualNotificationBulkResponseType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="DualDeliveryBulkRequestType">
+    <xs:sequence>
+      <xs:element name="Sender">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="SenderProfile">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="version" type="xs:token"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="SenderData">
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:extension xmlns:ns3="http://reference.e-government.gv.at/namespace/persondata/20130121#" base="ns3:PersonDataType">
+                    <xs:sequence/>
+                  </xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="Parameters" type="ns2:ParametersType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MetaData">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="ns2:ApplicationID"/>
+            <xs:element minOccurs="0" name="GZ" type="xs:string"/>
+            <xs:element minOccurs="0" ref="ns2:AdditionalMetaData"/>
+            <xs:element minOccurs="0" name="TestCase" type="xs:boolean"/>
+            <xs:element minOccurs="0" ref="ns2:ProcessingProfile"/>
+            <xs:element minOccurs="0" name="Asynchronous" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns2:Payload"/>
+      <xs:element minOccurs="0" name="StartBulk" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="FinishBulk">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="BulkId" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="DualNotificationBulkResponseType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="DualNotificationResponses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DualNotificationResponse" type="ns1:DualNotificationResponseType"/>
+            <xs:element name="ApplicationDeliveryID" type="xs:string"/>
+            <xs:element minOccurs="0" name="DualZSID" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="DualDeliveryBulkResponseType">
+    <xs:sequence>
+      <xs:element ref="ns2:Status"/>
+      <xs:element minOccurs="0" ref="ns2:BulkId"/>
+      <xs:element minOccurs="0" ref="ns2:AdditionalMetaData"/>
+      <xs:element minOccurs="0" ref="ns2:Errors"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="DualNotificationBulkRequestType">
+    <xs:sequence>
+      <xs:element name="ApplicationDeliveryID" type="xs:string"/>
+      <xs:element minOccurs="0" name="DualZSID" type="xs:integer"/>
+      <xs:element minOccurs="0" ref="tns:BulkElements"/>
+      <xs:element ref="ns2:Status"/>
+      <xs:element minOccurs="0" ref="ns2:Errors"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ns3="uri:general.additional.params/20130121#" xmlns:ns2="http://reference.postserver.at/namespace/persondata/20170308#" xmlns:ns1="http://reference.e-government.gv.at/namespace/persondata/20130121#" elementFormDefault="qualified" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" version="1.0">
+
+  <xs:import namespace="http://reference.e-government.gv.at/namespace/persondata/20130121#"/>
+
+  <xs:import namespace="http://reference.postserver.at/namespace/persondata/20170308#"/>
+
+  <xs:import namespace="uri:general.additional.params/20130121#"/>
+
+  <xs:element name="AccountInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Receiver">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" ref="tns:InternationalAccount"/>
+              <xs:element minOccurs="0" ref="tns:LocalAccount"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="Depositor">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" ref="tns:InternationalAccount"/>
+              <xs:element minOccurs="0" ref="tns:LocalAccount"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AdditionalMetaData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+          <xs:element ref="tns:AdditionalMetaDataSet"/>
+          <xs:element ref="tns:PropertyValueMetaDataSet"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AdditionalMetaDataSet" type="tns:AdditionalMetaDataSetType"/>
+
+  <xs:element name="AdditionalPrintParameter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+          <xs:element ref="tns:AdditionalPrintParameterSet"/>
+          <xs:element ref="tns:PropertyValuePrintParameterSet"/>
+          <xs:element ref="ns3:GeneralAditionalPrintParameter"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AdditionalPrintParameterSet" type="tns:AdditionalPrintParameterSetType"/>
+
+  <xs:element name="AppDeliveryID" type="xs:string"/>
+
+  <xs:element name="ApplicationID">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="version" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Asynchronous" type="xs:boolean"/>
+
+  <xs:element name="AuthorizationId" type="xs:string"/>
+
+  <xs:element name="BillingToken" type="xs:string"/>
+
+  <xs:element name="BinaryDocument" type="tns:BinaryDocumentType"/>
+
+  <xs:element name="BulkId" type="xs:long"/>
+
+  <xs:element name="DeliveryChannelSet" type="tns:DeliveryChannelSetType"/>
+
+  <xs:element name="DeliveryChannels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+          <xs:element ref="tns:DeliveryChannelSet"/>
+          <xs:element ref="tns:ElectronicDelivery"/>
+          <xs:element ref="tns:PostalDelivery"/>
+          <xs:element ref="tns:EMailDelivery"/>
+          <xs:element ref="tns:OtherDelivery"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeliveryQuality" type="xs:string"/>
+
+  <xs:element name="Document" type="tns:DocumentType"/>
+
+  <xs:element name="DocumentClass" type="xs:string"/>
+
+  <xs:element name="DocumentReference" type="tns:DocumentReferenceType"/>
+
+  <xs:element name="DualDeliveryID" type="xs:string"/>
+
+  <xs:element name="DualDeliveryRequest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualDeliveryRequestType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DualDeliveryResponse">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:DualDeliveryResponseType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="EMailDelivery" type="tns:EMailDeliveryType"/>
+
+  <xs:element name="ElectronicDelivery" type="tns:ElectronicDeliveryType"/>
+
+  <xs:element name="EnvelopeFormat" type="xs:string"/>
+
+  <xs:element name="Error" type="tns:ErrorType"/>
+
+  <xs:element name="Errors" type="tns:ErrorsType"/>
+
+  <xs:element name="GZ" type="xs:string"/>
+
+  <xs:element name="GetVersionRequest">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetVersionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Version" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="IdReference" type="tns:IdReferenceType"/>
+
+  <xs:element name="InternationalAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BIC" type="xs:string"/>
+        <xs:element name="IBAN" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="LocalAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BLZ" type="xs:string"/>
+        <xs:element name="AccountNr" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="LocalFileReference" type="tns:LocalFileReferenceType"/>
+
+  <xs:element name="OtherDelivery" type="tns:OtherDeliveryType"/>
+
+  <xs:element name="Parameter" type="tns:ParameterType"/>
+
+  <xs:element name="Parameters" type="tns:ParametersType"/>
+
+  <xs:element name="Payload" type="tns:PayloadType"/>
+
+  <xs:element name="PayloadAttributes" type="tns:PayloadAttributesType"/>
+
+  <xs:element name="PaymentForm">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Receiver" type="xs:string"/>
+        <xs:element minOccurs="0" name="ReceiverBank" type="xs:string"/>
+        <xs:element minOccurs="0" name="Amount" type="xs:decimal"/>
+        <xs:element minOccurs="0" name="Purpose" type="xs:string"/>
+        <xs:element minOccurs="0" name="CustomerData" type="xs:string"/>
+        <xs:element minOccurs="0" name="ReadingArea" type="xs:string"/>
+        <xs:element minOccurs="0" name="Currency" type="xs:string"/>
+        <xs:element minOccurs="0" ref="tns:AccountInfo"/>
+        <xs:element minOccurs="0" name="DueDate" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="DirectDebit" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="ParameterSet">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Parameter" type="tns:ParameterType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PostalDelivery" type="tns:PostalDeliveryType"/>
+
+  <xs:element name="PrintParameter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element default="false" minOccurs="0" name="Color" type="xs:boolean"/>
+        <xs:element default="A4" minOccurs="0" name="PaperFormat" type="xs:string"/>
+        <xs:element minOccurs="0" name="PrintType" type="xs:string"/>
+        <xs:element default="false" minOccurs="0" name="OverPrint" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="Parameters" type="tns:ParametersType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Priority" type="xs:integer"/>
+
+  <xs:element name="ProcessingProfile">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="version" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PropertyValueMetaDataSet" type="tns:PropertyValueMetaDataSetType"/>
+
+  <xs:element name="PropertyValuePrintParameterSet" type="tns:PropertyValuePrintParameterSetType"/>
+
+  <xs:element name="Recipient" type="tns:RecipientType"/>
+
+  <xs:element name="RecipientID" type="xs:string"/>
+
+  <xs:element name="Sender" type="tns:SenderType"/>
+
+  <xs:element name="SenderProfile">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="version" type="xs:token"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Status" type="tns:StatusType"/>
+
+  <xs:element name="TestCase" type="xs:boolean"/>
+
+  <xs:element name="UsedDeliveryChannel" type="tns:UsedDeliveryChannelType"/>
+
+  <xs:element name="User" type="xs:string"/>
+
+  <xs:complexType name="BinaryDocumentType">
+    <xs:complexContent>
+      <xs:extension base="tns:DocumentType">
+        <xs:sequence>
+          <xs:element name="Content" type="xs:base64Binary"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DocumentType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="DocumentReferenceType">
+    <xs:complexContent>
+      <xs:extension base="tns:DocumentType">
+        <xs:sequence>
+          <xs:element name="URL" type="xs:anyURI"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="LocalFileReferenceType">
+    <xs:complexContent>
+      <xs:extension base="tns:DocumentType">
+        <xs:sequence>
+          <xs:element name="File" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="IdReferenceType">
+    <xs:complexContent>
+      <xs:extension base="tns:DocumentType">
+        <xs:sequence>
+          <xs:element name="Id" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ExtensionPointType">
+    <xs:sequence>
+      <xs:any namespace="##other" processContents="lax"/>
+    </xs:sequence>
+    <xs:attribute name="namespace" type="xs:anyURI" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="StatusType">
+    <xs:sequence>
+      <xs:element name="Code" type="xs:token"/>
+      <xs:element minOccurs="0" name="Text" type="xs:string"/>
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="StatusRequestType">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:ApplicationID"/>
+      <xs:element name="ApplicationDeliveryID" type="xs:string"/>
+      <xs:element minOccurs="0" name="DualDeliveryID" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UsedDeliveryChannelType">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:token"/>
+      <xs:element name="Status" type="tns:StatusType"/>
+      <xs:element minOccurs="0" name="Parameters" type="tns:ParametersType"/>
+      <xs:element minOccurs="0" name="Errors" type="tns:ErrorsType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ParametersType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Parameter" type="tns:ParameterType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ParameterType">
+    <xs:sequence>
+      <xs:element name="Property" type="xs:string"/>
+      <xs:element minOccurs="0" name="Value" type="xs:string"/>
+      <xs:element minOccurs="0" name="Type" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ErrorsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Error" type="tns:ErrorType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ErrorType">
+    <xs:sequence>
+      <xs:element name="Info" type="xs:string"/>
+      <xs:element name="Code" type="xs:token"/>
+      <xs:element minOccurs="0" name="Severity" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DualDeliveryRequestType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Sender" type="tns:SenderType"/>
+      <xs:element minOccurs="0" name="RecipientID" type="xs:token"/>
+      <xs:element minOccurs="0" name="Recipient" type="tns:RecipientType"/>
+      <xs:element minOccurs="0" name="DualDeliveryID" type="xs:token"/>
+      <xs:element name="MetaData">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="AppDeliveryID" type="xs:token"/>
+            <xs:element minOccurs="0" ref="tns:ApplicationID"/>
+            <xs:element name="DeliveryQuality" type="xs:token"/>
+            <xs:element minOccurs="0" name="Subject" type="xs:string"/>
+            <xs:element minOccurs="0" name="GZ" type="xs:string"/>
+            <xs:element minOccurs="0" name="Payments">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element maxOccurs="unbounded" name="Payment">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element minOccurs="0" ref="tns:PaymentForm"/>
+                        <xs:element xmlns:ns4="http://www.ebinterface.at/schema/4p0/" minOccurs="0" name="Invoice" type="ns4:InvoiceType"/>
+                      </xs:sequence>
+                      <xs:attribute name="Printout" type="xs:boolean"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" ref="tns:AdditionalMetaData"/>
+            <xs:element minOccurs="0" name="TestCase" type="xs:boolean"/>
+            <xs:element minOccurs="0" ref="tns:ProcessingProfile"/>
+            <xs:element minOccurs="0" name="DocumentClass" type="xs:token"/>
+            <xs:element minOccurs="0" name="Asynchronous" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="BulkId" type="xs:long"/>
+            <xs:element minOccurs="0" name="User" type="xs:string"/>
+            <xs:element minOccurs="0" name="BillingToken" type="xs:token"/>
+            <xs:element minOccurs="0" name="Preview">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:boolean">
+                    <xs:attribute name="URL" type="xs:anyURI"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" ref="tns:DeliveryChannels"/>
+      <xs:element maxOccurs="unbounded" name="Payload" type="tns:PayloadType"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="SenderType">
+    <xs:sequence>
+      <xs:element ref="tns:SenderProfile"/>
+      <xs:element minOccurs="0" name="SenderData">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="ns1:PersonDataType">
+              <xs:sequence/>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Parameters" type="tns:ParametersType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RecipientType">
+    <xs:sequence>
+      <xs:element name="RecipientData" type="ns1:PersonDataType"/>
+      <xs:element minOccurs="0" name="Parameters" type="tns:ParametersType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PayloadType">
+    <xs:sequence>
+      <xs:element name="PayloadAttributes" type="tns:PayloadAttributesType"/>
+      <xs:choice>
+        <xs:element ref="tns:Document"/>
+        <xs:element ref="tns:BinaryDocument"/>
+        <xs:element ref="tns:DocumentReference"/>
+        <xs:element ref="tns:LocalFileReference"/>
+        <xs:element ref="tns:IdReference"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PayloadAttributesType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:ID"/>
+      <xs:element name="FileName" type="xs:string"/>
+      <xs:element name="MIMEType" type="xs:token"/>
+      <xs:element minOccurs="0" name="Size" type="xs:positiveInteger"/>
+      <xs:element minOccurs="0" name="PageCount" type="xs:int"/>
+      <xs:element minOccurs="0" name="Checksum" type="tns:Checksum"/>
+      <xs:element minOccurs="0" name="Index" type="xs:positiveInteger"/>
+      <xs:element minOccurs="0" name="Parameters" type="tns:ParametersType"/>
+      <xs:element minOccurs="0" ref="tns:PrintParameter"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Checksum">
+    <xs:sequence>
+      <xs:element name="AlgorithmID" type="xs:token"/>
+      <xs:element name="Value" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DualDeliveryResponseType">
+    <xs:sequence>
+      <xs:element name="AppDeliveryID" type="xs:token"/>
+      <xs:element name="Status" type="tns:StatusType"/>
+      <xs:element minOccurs="0" name="DualDeliveryID" type="xs:token"/>
+      <xs:element minOccurs="0" ref="tns:AdditionalMetaData"/>
+      <xs:element minOccurs="0" name="UsedDeliveryChannels">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="UsedDeliveryChannel" type="tns:UsedDeliveryChannelType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ManipulatedPayloads" type="tns:ManipulatedPayloadsType"/>
+      <xs:element minOccurs="0" name="Errors" type="tns:ErrorsType"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="ManipulatedPayloadsType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="ManipulatedPayload" type="tns:PayloadType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PostalDeliveryType">
+    <xs:complexContent>
+      <xs:extension base="tns:DeliveryChannelSetType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Priority" type="xs:integer"/>
+          <xs:element minOccurs="0" name="EnvelopeFormat" type="xs:string"/>
+          <xs:element minOccurs="0" name="PrintType" type="xs:string"/>
+          <xs:element default="A4" minOccurs="0" name="PaperFormat" type="xs:string"/>
+          <xs:element default="false" minOccurs="0" name="Color" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="PrintedEnvelope">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="RsID" type="xs:string"/>
+                <xs:element minOccurs="0" name="Spec_Info_Adr" type="xs:string"/>
+                <xs:element minOccurs="0" name="Spec_Info_Top" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Spec_Info_Center" type="xs:string"/>
+                <xs:element minOccurs="0" name="Spec_Info_Bottom" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Name_Row" type="xs:string"/>
+                <xs:element minOccurs="0" name="Zustellverfuegung" type="xs:string"/>
+                <xs:element minOccurs="0" name="ZustellverfuegungErgaenzung" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" ref="tns:AdditionalPrintParameter"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryChannelSetType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="ElectronicDeliveryType">
+    <xs:complexContent>
+      <xs:extension base="tns:DeliveryChannelSetType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RequiresEncryption" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="DeliveryConfirmation" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="CustomNotificationIntervals">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="RecipientNotification">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="NotificationMethod" type="xs:token"/>
+                      <xs:element name="TimeSinceDisposal" type="xs:duration"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EMailDeliveryType">
+    <xs:complexContent>
+      <xs:extension base="tns:DeliveryChannelSetType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RegMail" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="RegMailDepositUntil" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="MailBody" type="xs:base64Binary"/>
+          <xs:element minOccurs="0" name="MIMEType" type="xs:token"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="OtherDeliveryType">
+    <xs:complexContent>
+      <xs:extension base="tns:DeliveryChannelSetType">
+        <xs:sequence>
+          <xs:element name="DeliveryInformation" type="tns:ExtensionPointType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AdditionalMetaDataSetType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="PropertyValueMetaDataSetType">
+    <xs:complexContent>
+      <xs:extension base="tns:AdditionalMetaDataSetType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="Parameter" type="tns:ParameterType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AdditionalPrintParameterSetType">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="PropertyValuePrintParameterSetType">
+    <xs:complexContent>
+      <xs:extension base="tns:AdditionalPrintParameterSetType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="Parameter" type="tns:ParameterType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:ns1="http://reference.postserver.at/namespace/persondata/20170308#" elementFormDefault="qualified" targetNamespace="http://reference.e-government.gv.at/namespace/persondata/20130121#" version="1.0">
+
+  <xs:import namespace="http://reference.postserver.at/namespace/persondata/20170308#"/>
+
+  <xs:element name="AbstractPersonData" type="tns:AbstractPersonType"/>
+
+  <xs:element name="Address" type="tns:AbstractAddressType"/>
+
+  <xs:element name="CorporateBody" type="tns:CorporateBodyType"/>
+
+  <xs:element name="DateOfBirth" type="xs:anySimpleType"/>
+
+  <xs:element name="FormattedNumber" type="xs:string"/>
+
+  <xs:element name="IdentifiedPerson" type="tns:IdentifiedPersonType"/>
+
+  <xs:element name="InternetAddress" type="tns:InternetAddressType"/>
+
+  <xs:element name="Name" type="tns:PersonNameType"/>
+
+  <xs:element name="Person" type="tns:AbstractPersonType"/>
+
+  <xs:element name="PersonData" type="tns:PersonDataType"/>
+
+  <xs:element name="PhysicalPerson" type="tns:PhysicalPersonType"/>
+
+  <xs:element name="PostalAddress" type="tns:PostalAddressType"/>
+
+  <xs:element name="TelephoneAddress" type="tns:TelephoneAddressType"/>
+
+  <xs:complexType name="PersonDataType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element ref="tns:Person"/>
+        <xs:element ref="tns:PhysicalPerson"/>
+        <xs:element ref="tns:CorporateBody"/>
+        <xs:element ref="tns:IdentifiedPerson"/>
+      </xs:choice>
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element ref="tns:Address"/>
+        <xs:element ref="tns:PostalAddress"/>
+        <xs:element ref="tns:InternetAddress"/>
+        <xs:element ref="tns:TelephoneAddress"/>
+        <xs:element ref="ns1:PostalAddressOptional"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AbstractAddressType">
+    <xs:sequence/>
+    <xs:attribute name="Id" type="xs:ID"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="PostalAddressType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractAddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CountryCode" type="xs:string"/>
+          <xs:element name="PostalCode" type="xs:string"/>
+          <xs:element name="Municipality" type="xs:string"/>
+          <xs:element name="DeliveryAddress">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="StreetName" type="xs:string"/>
+                <xs:element name="BuildingNumber" type="xs:string"/>
+                <xs:element minOccurs="0" name="Unit" type="xs:string"/>
+                <xs:element minOccurs="0" name="DoorNumber" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="InternetAddressType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractAddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Address" type="xs:anyURI"/>
+        </xs:sequence>
+        <xs:attribute name="ReplyToAddress" type="xs:boolean"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TelephoneAddressType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractAddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Number" type="tns:TelcomNumberType"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TelcomNumberType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FormattedNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="IdentificationType">
+    <xs:sequence>
+      <xs:element name="Value">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="Id" type="xs:ID"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Type" type="xs:anyURI"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="IdentifiedPersonType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractPersonType">
+        <xs:sequence/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AbstractPersonType">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Identification" type="tns:IdentificationType"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="PhysicalPersonType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractPersonType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" type="tns:PersonNameType"/>
+          <xs:element minOccurs="0" name="DateOfBirth" type="xs:date"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PersonNameType">
+    <xs:sequence>
+      <xs:element name="GivenName" type="xs:string"/>
+      <xs:element name="FamilyName">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="primary" type="xs:string"/>
+              <xs:attribute name="prefix" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="prefixTitle" type="xs:string"/>
+    <xs:attribute name="postfixTitle" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="CorporateBodyType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractPersonType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FullName" type="xs:token"/>
+          <xs:element minOccurs="0" name="Organization" type="xs:token"/>
+          <xs:element minOccurs="0" name="ForAttentionOf">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="Identification" type="tns:IdentificationType"/>
+                <xs:element minOccurs="0" name="Department" type="xs:string"/>
+                <xs:element minOccurs="0" name="GivenName" type="xs:string"/>
+                <xs:element minOccurs="0" name="FamilyName">
+                  <xs:complexType>
+                    <xs:simpleContent>
+                      <xs:extension base="xs:string">
+                        <xs:attribute name="primary" type="xs:string"/>
+                        <xs:attribute name="prefix" type="xs:string"/>
+                      </xs:extension>
+                    </xs:simpleContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://reference.e-government.gv.at/namespace/persondata/20020228#" xmlns:ns1="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" targetNamespace="http://reference.e-government.gv.at/namespace/persondata/20020228#" version="1.0">
+
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"/>
+
+  <xs:element name="AbstractPersonData" type="tns:AbstractPersonType"/>
+
+  <xs:element name="AbstractSimpleIdentification" type="xs:string"/>
+
+  <xs:element name="Address" type="tns:AbstractAddressType"/>
+
+  <xs:element name="CorporateBody" type="tns:CorporateBodyType"/>
+
+  <xs:element name="DateOfBirth" type="xs:string"/>
+
+  <xs:element name="FirmenbuchNummer" type="xs:string"/>
+
+  <xs:element name="FormattedNumber" type="xs:string"/>
+
+  <xs:element name="InternetAddress" type="tns:InternetAddressType"/>
+
+  <xs:element name="Name" type="tns:PersonNameType"/>
+
+  <xs:element name="NatPErgaenzungsRegisterZahl" type="xs:string"/>
+
+  <xs:element name="NichtNatPErgaenzungsRegisterZahl" type="xs:string"/>
+
+  <xs:element name="OID" type="xs:string"/>
+
+  <xs:element name="Person" type="tns:AbstractPersonType"/>
+
+  <xs:element name="PersonData" type="tns:PersonDataType"/>
+
+  <xs:element name="PhysicalPerson" type="tns:PhysicalPersonType"/>
+
+  <xs:element name="PostalAddress" type="tns:PostalAddressType"/>
+
+  <xs:element name="TelephoneAddress" type="tns:TelephoneAddressType"/>
+
+  <xs:element name="VereinsRegisterZahl" type="xs:string"/>
+
+  <xs:complexType name="CorporateBodyType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractPersonType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FullName" type="xs:token"/>
+          <xs:element minOccurs="0" name="Organization" type="xs:token"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AbstractPersonType">
+    <xs:sequence>
+      <xs:choice minOccurs="0">
+        <xs:element ref="tns:AbstractSimpleIdentification"/>
+        <xs:element ref="tns:OID"/>
+        <xs:element ref="tns:NatPErgaenzungsRegisterZahl"/>
+        <xs:element ref="tns:NichtNatPErgaenzungsRegisterZahl"/>
+        <xs:element ref="tns:VereinsRegisterZahl"/>
+        <xs:element ref="tns:FirmenbuchNummer"/>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="AbstractAddressType">
+    <xs:sequence/>
+    <xs:attribute name="Id" type="xs:ID"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="PostalAddressType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractAddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CountryCode" type="xs:string"/>
+          <xs:element name="PostalCode" type="xs:string"/>
+          <xs:element name="Municipality" type="xs:string"/>
+          <xs:element minOccurs="0" name="MunicipalityNumber" type="xs:string"/>
+          <xs:element name="DeliveryAddress">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="StreetName" type="xs:string"/>
+                <xs:element name="BuildingNumber" type="xs:string"/>
+                <xs:element minOccurs="0" name="Unit" type="xs:string"/>
+                <xs:element minOccurs="0" name="DoorNumber" type="xs:string"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="type" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="InternetAddressType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractAddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" ref="ns1:KeyInfo"/>
+          <xs:element minOccurs="0" name="Address" type="xs:anyURI"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TelephoneAddressType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractAddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Number" type="tns:TelcomNumberType"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TelcomNumberType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FormattedNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="IdentificationType">
+    <xs:sequence>
+      <xs:element name="Value">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="Id" type="xs:ID"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Type" type="xs:anyURI"/>
+      <xs:element minOccurs="0" name="Authority" type="xs:anyURI"/>
+      <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+    <xs:anyAttribute namespace="##other" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="PersonNameType">
+    <xs:sequence>
+      <xs:element name="GivenName" type="xs:string"/>
+      <xs:element name="FamilyName">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="primary" type="xs:string"/>
+              <xs:attribute name="prefix" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Affix">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="type" type="xs:string" use="required"/>
+              <xs:attribute name="position" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PersonDataType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractPersonType">
+        <xs:sequence>
+          <xs:choice>
+            <xs:element ref="tns:Person"/>
+            <xs:element ref="tns:PhysicalPerson"/>
+            <xs:element ref="tns:CorporateBody"/>
+          </xs:choice>
+          <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element ref="tns:Address"/>
+            <xs:element ref="tns:PostalAddress"/>
+            <xs:element ref="tns:InternetAddress"/>
+            <xs:element ref="tns:TelephoneAddress"/>
+          </xs:choice>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PhysicalPersonType">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractPersonType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" type="tns:PersonNameType"/>
+          <xs:element minOccurs="0" name="DateOfBirth" type="xs:string"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="skip"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="notificate">
+    <wsdl:part element="ns1:DualNotificationRequest" name="NotificationRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="pollResponse">
+    <wsdl:part element="ns1:StatusResponse" name="StatusResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="poll">
+    <wsdl:part element="ns1:StatusRequest" name="StatusRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="notificateResponse">
+    <wsdl:part element="ns1:DualNotificationResponse" name="NotificationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelResponse">
+    <wsdl:part element="ns2:DualDeliveryCancellationResponse" name="CancelResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancel">
+    <wsdl:part element="ns2:DualDeliveryCancellationRequest" name="CancelRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DualNotificationWebServiceProcessor">
+    <wsdl:operation name="notificate">
+      <wsdl:input message="tns:notificate" name="notificate">
+    </wsdl:input>
+      <wsdl:output message="tns:notificateResponse" name="notificateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="poll">
+      <wsdl:input message="tns:poll" name="poll">
+    </wsdl:input>
+      <wsdl:output message="tns:pollResponse" name="pollResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancel">
+      <wsdl:input message="tns:cancel" name="cancel">
+    </wsdl:input>
+      <wsdl:output message="tns:cancelResponse" name="cancelResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DDPollingWebService10_2ServiceSoapBinding" type="tns:DualNotificationWebServiceProcessor">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="notificate">
+      <soap12:operation soapAction="notificate" style="document"/>
+      <wsdl:input name="notificate">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="notificateResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="poll">
+      <soap12:operation soapAction="poll" style="document"/>
+      <wsdl:input name="poll">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="pollResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancel">
+      <soap12:operation soapAction="cancel" style="document"/>
+      <wsdl:input name="cancel">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DDPollingWebService10_2Service">
+    <wsdl:port binding="tns:DDPollingWebService10_2ServiceSoapBinding" name="DualNotificationWebServiceProcessor10Port">
+      <soap12:address location="https://dualtest.vendo.at/mprs-polling/services10/DDPollingServiceProcessor"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
