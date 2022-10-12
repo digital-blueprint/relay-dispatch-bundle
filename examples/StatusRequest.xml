@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1='http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#' xmlns:ns2='http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#'>
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ns1:StatusRequest>
+            <!-- optional -->
+<!--            <ns2:ApplicationID>?XXX?</ns2:ApplicationID>-->
+            <ns2:AppDeliveryID>12399_AE_W_Rsa_1</ns2:AppDeliveryID>
+            <!-- optional -->
+            <ns2:DualDeliveryID>131506</ns2:DualDeliveryID>
+        </ns1:StatusRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

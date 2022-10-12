@@ -34,13 +34,15 @@ class DebugCommand extends Command
         $this
             ->setDescription('Debug command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: generate-request-api-xml|generate-request-status-change')
-            ->addArgument('identifier', InputArgument::OPTIONAL, 'identifier', '4d553985-d44f-404f-acf3-cd0eac7ae9c2');
+            ->addArgument('identifier', InputArgument::OPTIONAL, 'identifier', '4d553985-d44f-404f-acf3-cd0eac7ae9c2')
+            ->addArgument('identifier2', InputArgument::OPTIONAL, 'identifier', '4d553985-d44f-404f-acf3-cd0eac7ae9c2');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $action = $input->getArgument('action');
         $identifier = $input->getArgument('identifier');
+        $identifier2 = $input->getArgument('identifier2');
 
         switch ($action) {
             case 'generate-request-status-change':
@@ -79,6 +81,22 @@ class DebugCommand extends Command
                 echo $xmlString;
 
                 $response = $this->dispatchService->doPreAddressingAPIRequest($xmlString);
+
+                var_dump($response);
+
+                if ($response) {
+                    var_dump($response->getHeaders());
+                    var_dump($response->getStatusCode());
+                    echo $response->getBody()->getContents();
+                }
+                break;
+            case 'do-api-status-request':
+                $output->writeln('Do API StatusRequest request...');
+                $xmlString = $this->dispatchService->generateStatusRequestAPIXML($identifier, $identifier2);
+
+                echo $xmlString;
+
+                $response = $this->dispatchService->doStatusRequestAPIRequest($xmlString);
 
                 var_dump($response);
 

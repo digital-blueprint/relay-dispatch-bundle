@@ -13,6 +13,9 @@ use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Entity\RequestStatusChange;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
+//use Dbp\Relay\DispatchBundle\SoapClient\ApplicationID;
+//use Dbp\Relay\DispatchBundle\SoapClient\DDPollingWebService10_2Service;
+//use Dbp\Relay\DispatchBundle\SoapClient\StatusRequestType;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -502,6 +505,13 @@ class DispatchService
         return $this->doAPIRequest($uri, $body);
     }
 
+    public function doStatusRequestAPIRequest($body): ?\Psr\Http\Message\ResponseInterface
+    {
+        $uri = $this->statusRequestUrl;
+
+        return $this->doAPIRequest($uri, $body);
+    }
+
     protected function doAPIRequest($uri, $body): ?\Psr\Http\Message\ResponseInterface
     {
         $client = new \GuzzleHttp\Client();
@@ -581,6 +591,116 @@ class DispatchService
 
         return $response;
     }
+
+//    protected function doSoapAPIRequest($uri, $body): ?\Psr\Http\Message\ResponseInterface
+//    {
+//        $client = new \GuzzleHttp\Client();
+//        $password = $this->certPassword;
+//        $useCert = $this->certPassword !== '' && $this->certP12Base64 !== '';
+//        $certFileName = '';
+////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.clcerts.pem';
+////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
+////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
+//
+//        if ($useCert) {
+//            // It's essential to use a file name with a .p12 extension, otherwise the certificate will not be recognized by Guzzle
+//            $certFileName = Tools::getTempFileName('p12');
+//
+//            $certData = base64_decode($this->certP12Base64, true);
+//
+//            if ($certData === false) {
+//                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be decoded!', 'dispatch:base64-cert-error');
+//            }
+//
+//            $byteWritten = file_put_contents($certFileName, $certData);
+//
+//            if ($byteWritten === false) {
+//                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be written to file!', 'dispatch:write-cert-error');
+//            }
+//        }
+//
+////        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
+////        $uri = 'https://www.howsmyssl.com/a/check';
+////        $uri = $this->deliveryRequestUrl;
+//        $method = 'POST';
+//
+//        $options = [
+////            'proxy' => "socks5://localhost:32222",
+//            'headers' => [
+//                'Content-Type' => 'text/xml;charset=UTF-8',
+//                'SOAPAction' => '',
+//            ],
+//            'curl' => [
+//                CURLOPT_SSLVERSION => CURL_SSLVERSION_MAX_TLSv1_2,
+////                CURLOPT_SSL_VERIFYHOST => false,
+////                CURLOPT_SSL_VERIFYPEER => false,
+////                CURLOPT_SSLCERT => $certFileName,
+////                CURLOPT_SSLCERT => './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem',
+////                CURLOPT_SSLCERTPASSWD => $password,
+////                CURLOPT_SSLKEY => './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.key.pem',
+//            ],
+//        ];
+//
+//        if ($useCert) {
+//            $options['cert'] = [$certFileName, $password];
+//        }
+//
+//        // TODO: We should get verification working
+//        // https://docs.guzzlephp.org/en/stable/request-options.html#verify-option
+//        $options['verify'] = false;
+////        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
+////        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.pem';
+////        var_dump($options);
+//
+////        $body = file_get_contents('./vendor/dbp/relay-dispatch-bundle/examples/DualDeliveryRequest.xml');
+//        $options['body'] = $body;
+//
+//        try {
+////            $response = $client->request($method, $uri, $options);
+//
+//            $options = array(
+//                'uri' => $uri,
+////                'uri' => 'https://dualtest.vendo.at',
+////                'location'      => $uri,
+//                'location'      => 'https://dualtest.vendo.at/mprs-polling/services10/DDPollingServiceProcessor',
+//                'ssl_method'    => SOAP_SSL_METHOD_SSLv2,
+//                'local_cert'    => $certFileName,
+//                'passphrase'    => $password,
+//                'cache_wsdl'    => WSDL_CACHE_NONE,
+//                "context" => stream_context_create(
+//                    array(
+//                        "ssl"=>array(
+//                            "verify_peer"=>false
+//                        )
+//                    )
+//                )
+//            );
+//
+//            var_dump($options);
+//
+//            $service = new DDPollingWebService10_2Service($options);
+//            $applicationId = new ApplicationID('1234567890', '1');
+//            $statusRequestType = new StatusRequestType($applicationId, '1234567890', 1231123);
+//            var_dump($statusRequestType);
+////            /** @var DualNotificationRequestType $response */
+//            $response = $service->poll($statusRequestType);
+//            var_dump($service);
+//
+//            var_dump($response);
+//        } catch (RequestException $e) {
+//            // Error 500 go here
+////            var_dump($e->getRequest());
+//            var_dump($e->getMessage());
+//            // TODO: Handle errors
+//            $response = $e->getResponse();
+//        } finally {
+//            if ($useCert) {
+//                unlink($certFileName);
+//            }
+//        }
+//
+//        return $response;
+//    }
 
     /**
      * See: https://cloud.tugraz.at/index.php/f/102577184.
@@ -775,6 +895,35 @@ class DispatchService
         $xml_ns1DualDeliveryPreAddressingRequest->appendChild($xml_ns2DeliveryChannels);
 
         $xml_soapenvBody->appendChild($xml_ns1DualDeliveryPreAddressingRequest);
+        $xml_soapenvEnvelope->appendChild($xml_soapenvBody);
+        $xml->appendChild($xml_soapenvEnvelope);
+
+        return $xml->saveXML();
+    }
+
+    /**
+     *
+     */
+    public function generateStatusRequestAPIXML(string $appDeliveryId, string $dualDeliveryId): string
+    {
+        $xml = new \DOMDocument('1.0', 'UTF-8');
+        $xml_soapenvEnvelope = $xml->createElement('soapenv:Envelope');
+
+        $xml_soapenvEnvelope->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns1', 'http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#');
+        $xml_soapenvEnvelope->setAttribute('xmlns:ns2', 'http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#');
+
+        $xml_soapenvHeader = $xml->createElement('soapenv:Header');
+        $xml_soapenvEnvelope->appendChild($xml_soapenvHeader);
+        $xml_soapenvBody = $xml->createElement('soapenv:Body');
+        $xml_ns1StatusRequest = $xml->createElement('ns1:StatusRequest');
+//        $xml_ns2ApplicationID = $xml->createElement('ns2:ApplicationID', '?XXX?');
+//        $xml_ns1StatusRequest->appendChild($xml_ns2ApplicationID);
+        $xml_ns2AppDeliveryID = $xml->createElement('ns2:AppDeliveryID', $appDeliveryId);
+        $xml_ns1StatusRequest->appendChild($xml_ns2AppDeliveryID);
+        $xml_ns2DualDeliveryID = $xml->createElement('ns2:DualDeliveryID', $dualDeliveryId);
+        $xml_ns1StatusRequest->appendChild($xml_ns2DualDeliveryID);
+        $xml_soapenvBody->appendChild($xml_ns1StatusRequest);
         $xml_soapenvEnvelope->appendChild($xml_soapenvBody);
         $xml->appendChild($xml_soapenvEnvelope);
 
