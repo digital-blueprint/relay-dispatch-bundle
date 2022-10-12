@@ -598,9 +598,9 @@ class DispatchService
 //        $password = $this->certPassword;
 //        $useCert = $this->certPassword !== '' && $this->certP12Base64 !== '';
 //        $certFileName = '';
-////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.clcerts.pem';
-////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
-////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
+    ////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.clcerts.pem';
+    ////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
+    ////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.p12';
 //
 //        if ($useCert) {
 //            // It's essential to use a file name with a .p12 extension, otherwise the certificate will not be recognized by Guzzle
@@ -619,25 +619,25 @@ class DispatchService
 //            }
 //        }
 //
-////        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
-////        $uri = 'https://www.howsmyssl.com/a/check';
-////        $uri = $this->deliveryRequestUrl;
+    ////        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
+    ////        $uri = 'https://www.howsmyssl.com/a/check';
+    ////        $uri = $this->deliveryRequestUrl;
 //        $method = 'POST';
 //
 //        $options = [
-////            'proxy' => "socks5://localhost:32222",
+    ////            'proxy' => "socks5://localhost:32222",
 //            'headers' => [
 //                'Content-Type' => 'text/xml;charset=UTF-8',
 //                'SOAPAction' => '',
 //            ],
 //            'curl' => [
 //                CURLOPT_SSLVERSION => CURL_SSLVERSION_MAX_TLSv1_2,
-////                CURLOPT_SSL_VERIFYHOST => false,
-////                CURLOPT_SSL_VERIFYPEER => false,
-////                CURLOPT_SSLCERT => $certFileName,
-////                CURLOPT_SSLCERT => './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem',
-////                CURLOPT_SSLCERTPASSWD => $password,
-////                CURLOPT_SSLKEY => './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.key.pem',
+    ////                CURLOPT_SSL_VERIFYHOST => false,
+    ////                CURLOPT_SSL_VERIFYPEER => false,
+    ////                CURLOPT_SSLCERT => $certFileName,
+    ////                CURLOPT_SSLCERT => './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem',
+    ////                CURLOPT_SSLCERTPASSWD => $password,
+    ////                CURLOPT_SSLKEY => './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.key.pem',
 //            ],
 //        ];
 //
@@ -648,20 +648,20 @@ class DispatchService
 //        // TODO: We should get verification working
 //        // https://docs.guzzlephp.org/en/stable/request-options.html#verify-option
 //        $options['verify'] = false;
-////        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
-////        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.pem';
-////        var_dump($options);
+    ////        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
+    ////        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.pem';
+    ////        var_dump($options);
 //
-////        $body = file_get_contents('./vendor/dbp/relay-dispatch-bundle/examples/DualDeliveryRequest.xml');
+    ////        $body = file_get_contents('./vendor/dbp/relay-dispatch-bundle/examples/DualDeliveryRequest.xml');
 //        $options['body'] = $body;
 //
 //        try {
-////            $response = $client->request($method, $uri, $options);
+    ////            $response = $client->request($method, $uri, $options);
 //
 //            $options = array(
 //                'uri' => $uri,
-////                'uri' => 'https://dualtest.vendo.at',
-////                'location'      => $uri,
+    ////                'uri' => 'https://dualtest.vendo.at',
+    ////                'location'      => $uri,
 //                'location'      => 'https://dualtest.vendo.at/mprs-polling/services10/DDPollingServiceProcessor',
 //                'ssl_method'    => SOAP_SSL_METHOD_SSLv2,
 //                'local_cert'    => $certFileName,
@@ -682,14 +682,14 @@ class DispatchService
 //            $applicationId = new ApplicationID('1234567890', '1');
 //            $statusRequestType = new StatusRequestType($applicationId, '1234567890', 1231123);
 //            var_dump($statusRequestType);
-////            /** @var DualNotificationRequestType $response */
+    ////            /** @var DualNotificationRequestType $response */
 //            $response = $service->poll($statusRequestType);
 //            var_dump($service);
 //
 //            var_dump($response);
 //        } catch (RequestException $e) {
 //            // Error 500 go here
-////            var_dump($e->getRequest());
+    ////            var_dump($e->getRequest());
 //            var_dump($e->getMessage());
 //            // TODO: Handle errors
 //            $response = $e->getResponse();
@@ -901,9 +901,6 @@ class DispatchService
         return $xml->saveXML();
     }
 
-    /**
-     *
-     */
     public function generateStatusRequestAPIXML(string $appDeliveryId, string $dualDeliveryId): string
     {
         $xml = new \DOMDocument('1.0', 'UTF-8');

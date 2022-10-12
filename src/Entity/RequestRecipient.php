@@ -223,7 +223,7 @@ class RequestRecipient
      * @ORM\Column(type="date")
      * @ApiProperty(iri="http://schema.org/birthDate")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
-     * @Assert\Date()
+     * @Assert\Date
      *
      * @var string
      */
@@ -349,17 +349,11 @@ class RequestRecipient
         $this->buildingNumber = $buildingNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getBirthDate(): string
     {
         return $this->birthDate;
     }
 
-    /**
-     * @param string $birthDate
-     */
     public function setBirthDate(string $birthDate): void
     {
         $this->birthDate = $birthDate;
