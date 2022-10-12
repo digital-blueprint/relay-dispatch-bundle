@@ -224,7 +224,7 @@ class RequestRecipient
      * @ApiProperty(iri="http://schema.org/birthDate")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
      * I could not find an Assert that doesn't cause an error to do proper checks
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      *
      * @var \DateTime
      */
