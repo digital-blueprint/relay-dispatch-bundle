@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Command to convert a soap request to php code.
  * ./console dbp:relay-dispatch:soap-to-php ./vendor/dbp/relay-dispatch-bundle/examples/DualDeliveryRequest.xml > ../vendor/dbp/relay-dispatch-bundle/examples/DualDeliveryRequest.php.
  * ./console dbp:relay-dispatch:soap-to-php ./vendor/dbp/relay-dispatch-bundle/examples/PreAddRequest_2020-09-11_17-13-58-0146.xml > ../vendor/dbp/relay-dispatch-bundle/examples/PreAddRequest.php.
+ * ./console dbp:relay-dispatch:soap-to-php ./vendor/dbp/relay-dispatch-bundle/examples/StatusRequest.xml > ../vendor/dbp/relay-dispatch-bundle/examples/StatusRequest.php.
  */
 class SoapToPhpCommand extends Command
 {
