@@ -225,7 +225,7 @@ class RequestRecipient
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
      * @Assert\Date
      *
-     * @var string
+     * @var \DateTime
      */
     private $birthDate;
 
@@ -349,12 +349,12 @@ class RequestRecipient
         $this->buildingNumber = $buildingNumber;
     }
 
-    public function getBirthDate(): string
+    public function getBirthDate(): \DateTime
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(string $birthDate): void
+    public function setBirthDate(\DateTime $birthDate): void
     {
         $this->birthDate = $birthDate;
     }
