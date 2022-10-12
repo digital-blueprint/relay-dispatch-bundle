@@ -32,7 +32,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                                 "postalCode" = "8010",
  *                                 "addressLocality" = "Graz",
  *                                 "streetAddress" = "Am Grund",
- *                                 "buildingNumber" = "1"
+ *                                 "buildingNumber" = "1",
+ *                                 "birthDate" = "1980-01-01"
  *                             },
  *                         }
  *                     }
@@ -218,6 +219,16 @@ class RequestRecipient
      */
     private $buildingNumber;
 
+    /**
+     * @ORM\Column(type="date")
+     * @ApiProperty(iri="http://schema.org/birthDate")
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     * @Assert\Date()
+     *
+     * @var string
+     */
+    private $birthDate;
+
     public function getIdentifier(): string
     {
         return (string) $this->identifier;
@@ -336,5 +347,21 @@ class RequestRecipient
     public function setBuildingNumber(string $buildingNumber): void
     {
         $this->buildingNumber = $buildingNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBirthDate(): string
+    {
+        return $this->birthDate;
+    }
+
+    /**
+     * @param string $birthDate
+     */
+    public function setBirthDate(string $birthDate): void
+    {
+        $this->birthDate = $birthDate;
     }
 }
