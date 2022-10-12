@@ -223,7 +223,8 @@ class RequestRecipient
      * @ORM\Column(type="date")
      * @ApiProperty(iri="http://schema.org/birthDate")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
-     * @Assert\Date
+     * I could not find an Assert that doesn't cause an error to do proper checks
+     * @Assert\NotBlank()
      *
      * @var \DateTime
      */
