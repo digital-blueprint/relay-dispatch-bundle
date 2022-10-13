@@ -1,0 +1,1103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2016 sp1 (x64) (http://www.altova.com) von atauber (TU Graz) bearbeitet -->
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Arne Tauber (Technische Universität Graz) -->
+<xs:schema xmlns:dd="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ebi="http://www.ebinterface.at/schema/4p0/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:p="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:egiz="uri:egiz.additional.params/20130121#" xmlns:zuse="http://reference.e-government.gv.at/namespace/zustellung/msg" xmlns:ns1="uri:general.additional.params/20130121#" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/persondata/20130121#" schemaLocation="dual_mypersondata_en.xsd"/>
+	<xs:import namespace="uri:general.additional.params/20130121#" schemaLocation="general-additonal-parameter.xsd"/>
+	<xs:import namespace="http://www.ebinterface.at/schema/4p0/" schemaLocation="ebinterface-4.0.xsd"/>
+	<xs:element name="DualDeliveryRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="dd:DualDeliveryRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DualDeliveryResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="dd:DualDeliveryResponseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Payload" type="dd:PayloadType"/>
+	<xs:complexType name="DualDeliveryRequestType">
+		<xs:annotation>
+			<xs:documentation>Root Element des dualen Zustellrequests</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="dd:Sender" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Der Absender der Aussendung.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element ref="dd:RecipientID"/>
+				<xs:element ref="dd:Recipient">
+					<xs:annotation>
+						<xs:documentation>Empfänger der Sendung</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="MetaData">
+				<xs:annotation>
+					<xs:documentation>Metadaten</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="dd:AppDeliveryID"/>
+						<xs:element ref="dd:ApplicationID" minOccurs="0"/>
+						<xs:element ref="dd:DeliveryQuality">
+							<xs:annotation>
+								<xs:documentation>Zustellqualität, bspw. RSa, nonRSa, RSb, RSa+, RS</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Subject" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Betreff</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="dd:GZ" minOccurs="0"/>
+						<xs:element name="Payments" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Zahlungsinformationen</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Payment" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>@postserver.at: Bitte Verfahrensvorschriften befügen, wie ebi:Invoice zu befüllen ist, um östrr. Zahlschein abbilden zu können. Sollte zwingend eine bereits bestehende Spezifikation aus dem Bankwesen oder der Wirtschaft sein, um nicht einen weiteren Standard zu erfinden.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:choice>
+												<xs:element ref="dd:PaymentForm">
+													<xs:annotation>
+														<xs:documentation>Zahlscheindaten, muss alle Informationen für Erlegsscheine und E-Zahlung enthalten. zB EPS</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element ref="ebi:Invoice"/>
+											</xs:choice>
+											<xs:attribute name="Printout" type="xs:boolean">
+												<xs:annotation>
+													<xs:documentation>Falls gesetzt, muss im Falle einer postalischen Zustellung ein druckbarer Zahlschein erzeugt werden</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="dd:AdditionalMetaData" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Weitere Metadaten</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="dd:TestCase" minOccurs="0"/>
+						<xs:element ref="dd:ProcessingProfile" minOccurs="0"/>
+						<xs:element ref="dd:DocumentClass" minOccurs="0"/>
+						<xs:element ref="dd:Asynchronous" minOccurs="0"/>
+						<xs:element ref="dd:BulkId" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Eindeutige (Bulk-) Zustell-ID; ID zur Identifizierung eines übergeordneten Verarbeitungslaufs. Die ID wurde zuvor von der Dualen Zustellung mit Hilfe des Bulkrequests erzeugt.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="dd:User" minOccurs="0"/>
+						<xs:element ref="dd:BillingToken" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Verrechnungsinformation; SAP Konto, Auftragsnr, etc...</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="dd:DeliveryChannels"/>
+			<xs:element ref="dd:Payload" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Die Zuzustellenden Dokumente der Sendung.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Gibt an, um Welche Schemaversion es sich handelt.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="AuthorizationId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Authorisierungszuordnungsdaten zur Protokollierung (und ggf. für Authorisierung, falls vom Fremdsystem gefordert). Der Inhalt kann ein PVP-Header sein, oder der Benutzer und/oder TenanntId und/oder weitere Credentials sein.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentClass" type="xs:token">
+		<xs:annotation>
+			<xs:documentation>Dokumentenklasse</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Asynchronous" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Bei Angabe des Elements Asynchronous wird der Zustellauftrag entgegengenommen, geprüft (Schemaprüfung und fachliche Prüfung soweit zu diesem Zeitpunkt möglich) und verspeichert. In der synchronen Antwort wird die DualDeliveryID zurückgegeben. Sämtliche weiteren Verarbeitungsschritte (Signatur, Kanaladressierungsabfragen, Kanalansteuerung etc.) erfolgen asynchron. Der Sender wird über den Verlauf der asynchronen Schritte notifiziert (Versendet, der Druckstaße übergeben, etc. z.B. per Callback-WS)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BulkId" type="xs:long">
+		<xs:annotation>
+			<xs:documentation>ID zur Identifizierung eines übergeordneten Verarbeitungslaufs.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="User" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Der Benutzer der Anwendung, welcher den Request ausgeloest hat.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="BillingToken" type="xs:token">
+		<xs:annotation>
+			<xs:documentation>Verrechnungsinformation.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TestCase" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>Angabe, ob es sich bei diesem Request um einen Test handelt. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ProcessingProfile">
+		<xs:annotation>
+			<xs:documentation>In diesem Profil sind Verarbeitungsvorschriften hinterlegt die festlegen welche Zustellkanäle in welcher Reihenfolge aufgerufen werden. Ferner legt das Profil auch fest welche XML-Schemata ein Client valdieren können muss, um mit der Dualen Zustellweiche kommunizieren zu können. D.h. auch die XSDs der verwendenten Erweiterungen (Stichwort Substitution Group)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="version" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Die Verison des MessageProfils.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Sender" type="dd:SenderType"/>
+	<xs:element name="SenderProfile">
+		<xs:annotation>
+			<xs:documentation>Im dualen Zustellsystem hinterlegte ID des Senders</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:token">
+					<xs:attribute name="version" type="xs:token" use="optional">
+						<xs:annotation>
+							<xs:documentation>Version des Senderprofils</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SenderType">
+		<xs:sequence>
+			<xs:element ref="dd:SenderProfile"/>
+			<xs:element name="SenderData" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Daten des Versenders, falls die Angaben des Profils übersteuert werden sollen.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="p:PersonDataType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="dd:Parameters" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Zusätzliche Parameter des Absenders.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Recipient" type="dd:RecipientType">
+		<xs:annotation>
+			<xs:documentation>Empfänger</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="RecipientType">
+		<xs:sequence>
+			<xs:element name="RecipientData" type="p:PersonDataType">
+				<xs:annotation>
+					<xs:documentation>EmpfängerDaten</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:Parameters" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Zusätzliche Parameter des Empfängers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DualDeliveryResponseType">
+		<xs:annotation>
+			<xs:documentation>Antwort auf den dualen Zustellrequest</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="dd:AppDeliveryID"/>
+			<xs:element ref="dd:Status">
+				<xs:annotation>
+					<xs:documentation>Der Status der Verabeitung.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:DualDeliveryID" minOccurs="0"/>
+			<xs:element ref="dd:AdditionalMetaData" minOccurs="0"/>
+			<xs:element name="UsedDeliveryChannels" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Die verwendeten Zustellkanäle</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="dd:UsedDeliveryChannel" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ManipulatedPayloads" type="dd:ManipulatedPayloadsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Zurücklieferung von manipulierten Payload (z.B. ASS oder Rendering) für den Fall der syncronen Verarbeitung.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:Errors" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fehelrmeldungen zum Request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Gibt an, um Welche Schemaversion es sich handelt.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ManipulatedPayloadsType">
+		<xs:sequence>
+			<xs:element name="ManipulatedPayload" type="dd:PayloadType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UsedDeliveryChannel" type="dd:UsedDeliveryChannelType"/>
+	<xs:complexType name="UsedDeliveryChannelType">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>Der Name des Zustellkanals</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:Status">
+				<xs:annotation>
+					<xs:documentation>der Status der Verabritung des Zustellkanals</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:Parameters" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Zusätzliche Pakamater, die der Zustellkanal zurückliefert.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:Errors" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>fehler beim konkreten Zustellkanal.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Errors" type="dd:ErrorsType"/>
+	<xs:complexType name="ErrorsType">
+		<xs:sequence>
+			<xs:element ref="dd:Error" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PayloadType">
+		<xs:sequence>
+			<xs:element ref="dd:PayloadAttributes">
+				<xs:annotation>
+					<xs:documentation>Die Metainformationen zu einem Dokument</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:Document">
+				<xs:annotation>
+					<xs:documentation>SubstitutionGroup, welche die Anlieferungsart des Dokuments beinhaltet. Lässt sich anbieterabhängig erweitern.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Document" type="dd:DocumentType"/>
+	<xs:complexType name="DocumentType"/>
+	<xs:element name="BinaryDocument" type="dd:BinaryDocumentType" substitutionGroup="dd:Document">
+		<xs:annotation>
+			<xs:documentation>Das Dokument ist im Request eingebettet.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BinaryDocumentType">
+		<xs:complexContent>
+			<xs:extension base="dd:DocumentType">
+				<xs:sequence>
+					<xs:element name="Content" type="xs:base64Binary"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DocumentReference" type="dd:DocumentReferenceType" substitutionGroup="dd:Document">
+		<xs:annotation>
+			<xs:documentation>Referenz auf das Dokument, wo dieses bezogen werden kann.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DocumentReferenceType">
+		<xs:complexContent>
+			<xs:extension base="dd:DocumentType">
+				<xs:sequence>
+					<xs:element name="URL" type="xs:anyURI"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LocalFileReference" type="dd:LocalFileReferenceType" substitutionGroup="dd:Document">
+		<xs:annotation>
+			<xs:documentation>Ist für file-basierte Massendaten-Services gedacht. Ist eine Referenz auf das lokale Filesystem, in welchem sich das Dokument befindet. Die Angabe erfolgt relativ zu einem im Profil hinterlegtem Pfad.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LocalFileReferenceType">
+		<xs:complexContent>
+			<xs:extension base="dd:DocumentType">
+				<xs:sequence>
+					<xs:element name="File" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="IdReference" type="dd:IdReferenceType" substitutionGroup="dd:Document">
+		<xs:annotation>
+			<xs:documentation>Ist für Massendaten-Services gedacht. Ist eine Referenz auf eine Datei, welche bereits im Rahmen eines Massenauftrags übergeben wurde. Die Angabe erfolgt über Referenzierung der Dokumenten-Id.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="IdReferenceType">
+		<xs:complexContent>
+			<xs:extension base="dd:DocumentType">
+				<xs:sequence>
+					<xs:element name="Id" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AdditionalMetaData">
+		<xs:annotation>
+			<xs:documentation>Erweiterung der ZUSE-Spezifikation durch das BKA</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="dd:AdditionalMetaDataSet">
+					<xs:annotation>
+						<xs:documentation>Substitutiongroup, welche Anbieterabhängig erweitert werden kann, um zusätzliche Funktionalitäten anzubieten.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AdditionalMetaDataSet" type="dd:AdditionalMetaDataSetType"/>
+	<xs:complexType name="AdditionalMetaDataSetType">
+		<xs:annotation>
+			<xs:documentation>Gruppe von Parametern</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="DeliveryChannels">
+		<xs:annotation>
+			<xs:documentation>Angabe der Zustellkanäle</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="dd:DeliveryChannelSet">
+					<xs:annotation>
+						<xs:documentation>Substitutiongroup mit Zustellkanälen, welche sich vom Anbieter erweitern lässt.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PayloadAttributes" type="dd:PayloadAttributesType"/>
+	<xs:complexType name="PayloadAttributesType">
+		<xs:annotation>
+			<xs:documentation>Allgemeine Eigenschaften eines Zustellstücks</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Id" type="xs:ID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Eindeutige ID des Dokuments</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Dateiname</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MIMEType" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>MIME Typ, z.B. application/pdf</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Größein bytes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PageCount" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Die Anzahl der Seiten des Dokuments. Dient Kontrollzwecken.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Checksum" type="dd:Checksum" minOccurs="0"/>
+			<xs:element name="Index" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reihung (Sortierung der Dokumente), falls nicht angegeben, werden die Dokumente in der Reihenfolge sortiert, wie sie im XML angegeben sind.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:Parameters" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Zusätzliche Parameter zu diesem Dokument.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:PrintParameter" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Checksum">
+		<xs:annotation>
+			<xs:documentation>Prüfsumme</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AlgorithmID" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>Hash Algorithmus, z.B. SHA-1, SHA-265, SHA-512</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value" type="xs:base64Binary">
+				<xs:annotation>
+					<xs:documentation>Hashwert</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeliveryQuality" type="xs:token">
+		<xs:annotation>
+			<xs:documentation>Zustellqualität, bspw. RSa, nonRSa, RSb, RSa+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PaymentForm">
+		<xs:annotation>
+			<xs:documentation>Zahlscheindaten</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Receiver">
+					<xs:annotation>
+						<xs:documentation>Name des Zahlungsempfänger</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="240"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="ReceiverBank" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Name der Empfängerbank</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="240"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Amount" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Betrag (letzten beiden Stellen - Kommastellen)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:decimal">
+							<xs:totalDigits value="14"/>
+							<xs:fractionDigits value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Purpose" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Verwendungszweck</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="240"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="CustomerData" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>15-stelliger numerischer Wert, der in der Lesezone angedruckt wird</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ReadingArea" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Infos zur Lesezone: 
+entweder Feld nicht vorhanden - dann Lesezone leer oder
+Inhalt gleich "KTO" - dann Aufbereitung Felder AccRec und BLZRec als Lesezonenfelder durch OCC oder 
+Inhalt gleich "KTOAMO" - dann  Aufbereitung Felder AccRec, BLZRec und Amount als Lesezonenfelder durch OCC</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="KTO"/>
+							<xs:enumeration value="KTOAMO"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Currency" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Währungscode</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="3"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element ref="dd:AccountInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Kontodaten des Empfängers und des Einzahlers</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DueDate" type="xs:dateTime" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Fälligkeitsdatum, das am Zahlschein aufgedruckt wird</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DirectDebit" type="xs:boolean" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Erzeugt "Bitte nicht zahlen" Text am Zahlschein - Betrag wird vom Konto eingezogen</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ParameterSet" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="dd:Parameter" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliveryChannelSet" type="dd:DeliveryChannelSetType"/>
+	<xs:complexType name="DeliveryChannelSetType"/>
+	<xs:element name="ElectronicDelivery" type="dd:ElectronicDeliveryType" substitutionGroup="dd:DeliveryChannelSet">
+		<xs:annotation>
+			<xs:documentation>Kanal für die elektronische Zustellung.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ElectronicDeliveryType">
+		<xs:complexContent>
+			<xs:extension base="dd:DeliveryChannelSetType">
+				<xs:sequence>
+					<xs:element name="RequiresEncryption" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Verschlüsselung notwendig (moazsspec)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DeliveryConfirmation" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Übergabebestätigung, Aufgabeschein (zusemsg)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CustomNotificationIntervals" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Verständigungsintervalle für die private Zustellung.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="RecipientNotification" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="NotificationMethod" type="dd:token255">
+												<xs:annotation>
+													<xs:documentation>electronic or paperbased notification</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="TimeSinceDisposal" type="xs:duration">
+												<xs:annotation>
+													<xs:documentation>Verständigungsintervall, Zeit seit Übergabe an den Zusztellserver in Tagen oder Stunden</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PostalDelivery" type="dd:PostalDeliveryType" substitutionGroup="dd:DeliveryChannelSet">
+		<xs:annotation>
+			<xs:documentation>Kanal für die postalische Zustellung.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PostalDeliveryType">
+		<xs:complexContent>
+			<xs:extension base="dd:DeliveryChannelSetType">
+				<xs:annotation>
+					<xs:documentation>Parameter für die postalische Zustellung</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element ref="dd:Priority" minOccurs="0"/>
+					<xs:element ref="dd:EnvelopeFormat" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kuvertyp</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PrintType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Art des Druckes  (DUP - Duplex, SIM - Simplex)</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="DUP"/>
+								<xs:enumeration value="SIM"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="PaperFormat" type="xs:string" default="A4" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Papierformat: A4, A3, Dynamic (Default=A4)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Color" type="xs:boolean" default="false" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Farbdruck (Default=false)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PrintedEnvelope" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Zusätzliche Informationen, die auf ein Kuvert angedruckt werden können.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="RsID" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Rückschein Identifikation: Wenn das Feld nicht gesetzt ist wird die ApplicationDeliveryID verwendet</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="40"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="Spec_Info_Adr" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Zusätzliche  Informationen RS* Kuvert unterhalb des Adressblocks</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="40"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="Spec_Info_Top" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Zusätzliche Informationen RS* Kuvert oben</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="40"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="Spec_Info_Center" minOccurs="0" maxOccurs="2">
+									<xs:annotation>
+										<xs:documentation>Zusätzliche Informationen RS* Kuvert mittig</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="Spec_Info_Bottom" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Zusätzliche Informationen RS* Kuvert unten</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="Name_Row" minOccurs="0" maxOccurs="4">
+									<xs:annotation>
+										<xs:documentation>Namenszeile beim RSa bzw. Container für unstrukturierte bzw. vorerstellte Empfänger-/Adressdaten. </xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="40"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="Zustellverfuegung" type="xs:string" minOccurs="0"/>
+								<xs:element name="ZustellverfuegungErgaenzung" type="xs:string" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Nur wenn Zustellverfuegung = 99</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="dd:AdditionalPrintParameter" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Zusätzliche Printparameter</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EMailDelivery" type="dd:EMailDeliveryType" substitutionGroup="dd:DeliveryChannelSet">
+		<xs:annotation>
+			<xs:documentation>Kanal für die E-Mai-Zustellung.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="EMailDeliveryType">
+		<xs:complexContent>
+			<xs:extension base="dd:DeliveryChannelSetType">
+				<xs:sequence>
+					<xs:element name="RegMail" type="xs:boolean" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Registered Mail = Bestätigung der Abholung</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegMailDepositUntil" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Zeitpunkt, bis wann das Zustellstück für Registered-Mail hinterlegt wird</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MailBody" type="xs:base64Binary" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Inhalt des Mailtextes.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MIMEType" type="xs:token" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Mimetype des Mailtextes.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="OtherDelivery" type="dd:OtherDeliveryType" substitutionGroup="dd:DeliveryChannelSet">
+		<xs:annotation>
+			<xs:documentation>Platzhalter für einen weiteren Zustellkanal, welcher verwendet werden kann, ohne die SubstitutionGroup zu erweitern.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="OtherDeliveryType">
+		<xs:complexContent>
+			<xs:extension base="dd:DeliveryChannelSetType">
+				<xs:sequence>
+					<xs:element name="DeliveryInformation" type="dd:ExtensionPointType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AccountInfo">
+		<xs:annotation>
+			<xs:documentation>Kontodaten des Empfängers und Einzahlers</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Receiver">
+					<xs:annotation>
+						<xs:documentation>Enpfänger</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="dd:InternationalAccount"/>
+							<xs:element ref="dd:LocalAccount"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Depositor" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Einzahler</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="dd:InternationalAccount"/>
+							<xs:element ref="dd:LocalAccount"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InternationalAccount">
+		<xs:annotation>
+			<xs:documentation>Kontodaten im internationalen Format</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BIC">
+					<xs:annotation>
+						<xs:documentation>Bank Identifier Code (BIC) </xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="11"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="IBAN">
+					<xs:annotation>
+						<xs:documentation>International Bank Account Number (IBAN) </xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="34"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LocalAccount">
+		<xs:annotation>
+			<xs:documentation>Kontodaten im österreichischen Format</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BLZ">
+					<xs:annotation>
+						<xs:documentation>Bankleitzahl</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="11"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="AccountNr">
+					<xs:annotation>
+						<xs:documentation>Kontonummer</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="34"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ApplicationID">
+		<xs:annotation>
+			<xs:documentation>ID der Fachanwendung</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:token">
+					<xs:attribute name="version" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AppDeliveryID" type="xs:token">
+		<xs:annotation>
+			<xs:documentation>Eindeutige ID</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DualDeliveryID" type="xs:token">
+		<xs:annotation>
+			<xs:documentation>Interne ID des dualen Zustellsystems</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PropertyValueMetaDataSet" type="dd:PropertyValueMetaDataSetType" substitutionGroup="dd:AdditionalMetaDataSet"/>
+	<xs:complexType name="PropertyValueMetaDataSetType">
+		<xs:complexContent>
+			<xs:extension base="dd:AdditionalMetaDataSetType">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:element ref="dd:Parameter"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AdditionalPrintParameter">
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="dd:AdditionalPrintParameterSet">
+					<xs:annotation>
+						<xs:documentation>SubstitutionGroup, welche Druckstraßenabhängige Printparameter aufnehmen kann.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AdditionalPrintParameterSet" type="dd:AdditionalPrintParameterSetType"/>
+	<xs:complexType name="AdditionalPrintParameterSetType"/>
+	<xs:element name="PropertyValuePrintParameterSet" type="dd:PropertyValuePrintParameterSetType" substitutionGroup="dd:AdditionalPrintParameterSet">
+		<xs:annotation>
+			<xs:documentation>Nimmt allgemeine weitere Parameter auf, für z.B. „Code für Freimachungsvermerk“, oder „Freimachungsvermerk“, oder „personalisierte Nachricht“, oder „personalisierte Grafik“. Über diesen Weg ist es auch möglich ein EnvelopeLogo mitzusenden, der Inhalt kann dann eine Referenz oder das base64-codierte Logo sein.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PropertyValuePrintParameterSetType">
+		<xs:complexContent>
+			<xs:extension base="dd:AdditionalPrintParameterSetType">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:element ref="dd:Parameter"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Parameter" type="dd:ParameterType">
+		<xs:annotation>
+			<xs:documentation>Parameter sind für Bugfixes gedacht für den Fall das bei der Schema Erstellung einzelnen Felder vergessen wurden und der Aufwand für ein Redeployment aller Services zu hoch ist. Wenn neue Strukturen erforderlich sind, ist das Konstrukt der Substitiongroup ab den entsprechenden Erweiterungspunkten des Schemas zu verwenden </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ParameterType">
+		<xs:sequence>
+			<xs:element name="Property" type="xs:string"/>
+			<xs:element name="Value" type="xs:string" minOccurs="0"/>
+			<xs:element name="Type" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Status" type="dd:StatusType"/>
+	<xs:complexType name="StatusType">
+		<xs:sequence>
+			<xs:element name="Code" type="xs:token"/>
+			<xs:element name="Text" type="xs:string" minOccurs="0"/>
+			<xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Error" type="dd:ErrorType"/>
+	<xs:complexType name="ErrorType">
+		<xs:sequence>
+			<xs:element name="Info" type="xs:string"/>
+			<xs:element name="Code" type="xs:token"/>
+			<xs:element name="Severity" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetVersionRequest">
+		<xs:annotation>
+			<xs:documentation>Request enthält keinen Parameter</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetVersionResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Version" type="dd:versionNumberType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="versionNumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StatusRequestType">
+		<xs:sequence>
+			<xs:element ref="dd:ApplicationID" minOccurs="0"/>
+			<xs:element name="ApplicationDeliveryID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>ApplicationDelivery_ID gemäß Zustellrequest</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DualDeliveryID" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Die ID unter der der Request für die duale Zustellung im DUAL-ZS abgespeichert ist.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExtensionPointType">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax">
+				<xs:annotation>
+					<xs:documentation>Hier können zusätzliche  Informationen hinterlegt werden. </xs:documentation>
+				</xs:annotation>
+			</xs:any>
+		</xs:sequence>
+		<xs:attribute name="namespace" type="xs:anyURI" use="required">
+			<xs:annotation>
+				<xs:documentation>Namespace des verwendeten Schemas</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="Parameters" type="dd:ParametersType"/>
+	<xs:complexType name="ParametersType">
+		<xs:sequence>
+			<xs:element ref="dd:Parameter" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="token255">
+		<xs:annotation>
+			<xs:documentation>Token auf 255 Zeichen beschränkt.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Elements -->
+	<xs:element name="Priority">
+		<xs:annotation>
+			<xs:documentation>erwünschte Priorität
+0 .. niedrigste
+9.. höchste</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:totalDigits value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="EnvelopeFormat" type="xs:string" nillable="false">
+		<xs:annotation>
+			<xs:documentation>Kuvertyp entsprechend DIN 678 - z.B. C6/5, C4 
+Nur bei 'nonR' und 'nonRSa'!!! (Default=C6/5)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="GZ" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Geschäftszahl</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="RecipientID" type="xs:token"/>
+	<xs:element name="PrintParameter">
+		<xs:annotation>
+			<xs:documentation>Zusätzliche Druckparameter zu diesem Dokument.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Color" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Farbdruck (Default=false)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PaperFormat" type="xs:string" default="A4" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Papierformat: A4, A3, Dynamic (Default=A4)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PrintType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Art des Druckes  (DUP - Duplex, SIM - Simplex)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="DUP"/>
+							<xs:enumeration value="SIM"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="OverPrint" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Nicht abfallender (OverPrint=false, Defaultwert) oder Abfallender Druck (true)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="dd:Parameters" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

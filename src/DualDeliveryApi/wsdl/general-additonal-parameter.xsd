@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (http://www.altova.com) by Hendryk Lechtenbrink (Bundesrechenzentrum GmbH) -->
+<xs:schema xmlns:dd="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ddgp="uri:general.additional.params/20130121#" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="uri:general.additional.params/20130121#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" schemaLocation="DualeZustellung.xsd"/>
+	<xs:element name="GeneralAditionalPrintParameter" type="ddgp:GeneralAditionalPrintParameterType" substitutionGroup="dd:AdditionalPrintParameterSet"/>
+	<xs:complexType name="GeneralAditionalPrintParameterType">
+		<xs:complexContent>
+			<xs:extension base="dd:AdditionalPrintParameterSetType">
+				<xs:sequence>
+					<xs:element ref="ddgp:PostageRange" minOccurs="0"/>
+					<xs:element name="PrinterName" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Druckername (z.B. td08466), sonst default Druckstrasse</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Auflieferort" type="xs:string" minOccurs="0"/>
+					<xs:element name="Auflieferdatum" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PostageRange" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Portobereich (inland, eu, noneu). Dient zur Sortierung</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

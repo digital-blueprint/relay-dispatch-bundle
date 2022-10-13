@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Arne Tauber (Technische Universität Graz) -->
+<xs:schema xmlns:dd="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ddn="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:p="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:zuse="http://reference.e-government.gv.at/namespace/zustellung/msg" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/msg" schemaLocation="zuse.xsd"/>
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" schemaLocation="DualeZustellung.xsd"/>
+	<xs:element name="DualNotificationRequest">
+		<xs:annotation>
+			<xs:documentation>Asynchrone Rückmeldung der Weiche an die Versenderapllikation über eine Statusänderung der Sendung (Versendet, Angenommen, Frist etc.)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ddn:DualNotificationRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DualNotificationResponse" type="ddn:DualNotificationResponseType">
+		<xs:annotation>
+			<xs:documentation>Acknowlegde der Versenderapplikation über die erfolgreiche Verarbeitung der Notification</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StatusRequest" type="ddn:StatusRequestType">
+		<xs:annotation>
+			<xs:documentation>Statusabfrage für eine Sendung (kann auch ein Bulk-Container sein) durch den Versender </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="StatusResponse" type="ddn:DualNotificationRequestType">
+		<xs:annotation>
+			<xs:documentation>Aktueller Status der Nachricht als Antwort auf die Statusabfrage</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DualNotificationRequestType">
+		<xs:annotation>
+			<xs:documentation>Type für: Asynchrone Rückmeldung der Weiche an die Versenderapllikation über eine Statusänderung der Sendung (Versendet, Angenommen, Frist etc.)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="dd:AppDeliveryID"/>
+			<xs:element ref="dd:DualDeliveryID" minOccurs="0"/>
+			<xs:element name="Result" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Das Ergebnis der Zustellung.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element ref="ddn:NotificationChannel">
+							<xs:annotation>
+								<xs:documentation>Der Zustellkanal, für den diese Notofication versendet wird.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="dd:Error">
+							<xs:annotation>
+								<xs:documentation>Element im Fehlerfall vorhanden</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ddn:AdditionalResults" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ManipulatedPayloads" type="dd:ManipulatedPayloadsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Zurücklieferung von manipulierten Payload (z.B. ASS oder Rendering) für den Fall der asyncronen Verarbeitung.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:Status"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Gibt an, um Welche Schemaversion es sich handelt.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="NotificationChannel">
+		<xs:annotation>
+			<xs:documentation>Kanal/Kanäle für den die Notification gilt</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ddn:NotificationChannelSet"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotificationChannelSet" type="ddn:NotificationChannelSetType">
+		<xs:annotation>
+			<xs:documentation>Kanal/Kanäle für den die Notification gilt</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="NotificationChannelSetType">
+		<xs:annotation>
+			<xs:documentation>Parametergruppe</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:complexType name="DualNotificationResponseType">
+		<xs:annotation>
+			<xs:documentation>Type für: Acknowlegde der Versenderapplikation über die erfolgreiche Verarbeitung der Notification</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="Success">
+				<xs:annotation>
+					<xs:documentation>Element im Erfolgsfall vorhanden</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element ref="dd:Error">
+				<xs:annotation>
+					<xs:documentation>Element im Fehlerfall vorhanden</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="version" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:element name="EDeliveryNotification" type="ddn:EDeliveryNotificationType" substitutionGroup="ddn:NotificationChannelSet">
+		<xs:annotation>
+			<xs:documentation>Rückmeldung der elektronischen Zustellung.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OtherNotification" type="ddn:OtherNotificationType" substitutionGroup="ddn:NotificationChannelSet">
+		<xs:annotation>
+			<xs:documentation>Platzhalter für weitere Rückmeldungen.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PostalNotification" type="ddn:PostalNotificationType" substitutionGroup="ddn:NotificationChannelSet">
+		<xs:annotation>
+			<xs:documentation>Informationen von der Druckstraße über die erfolgreiche Übergabe der Zustellung an die Post.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="EDeliveryNotificationType">
+		<xs:annotation>
+			<xs:documentation>Notification für elektronische Zustellung</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ddn:NotificationChannelSetType">
+				<xs:sequence>
+					<xs:element ref="zuse:DeliveryNotification"/>
+					<xs:element name="BinaryDeliveryNotification" type="xs:base64Binary">
+						<xs:annotation>
+							<xs:documentation>Enthält die gleiche Info wie das Element "zuse:DeliveryNotification" jedoch base64 codiert. Hintergrund: durch die XML Parser und die Transformation der XML Strukturen wird bei vielen XML-Tools ansonst die Signatur zerstört. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OtherNotificationType">
+		<xs:annotation>
+			<xs:documentation>Allgemeine Notification für im Schema nicht im speziellen berücksichtigten Kanäle</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ddn:NotificationChannelSetType">
+				<xs:sequence>
+					<xs:element name="NotificationInformation" type="dd:ExtensionPointType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PostalNotificationType">
+		<xs:annotation>
+			<xs:documentation>Notification für physische Zustellung</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ddn:NotificationChannelSetType">
+				<xs:sequence>
+					<xs:element name="Pages" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Seitenzahl</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:long">
+								<xs:totalDigits value="6"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Printtime" type="xs:dateTime" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Druckdatum und -zeit</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PrintType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Art des Druckes  (DUP - Duplex, SIM - Simplex)</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="DUP"/>
+								<xs:enumeration value="SIM"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Weight" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Gewicht der Sendung (Inhalt plus Kuvert)</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="13"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="EnvelopeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kuvertyp</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="3"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="PostalDeliveryTime" type="xs:dateTime" nillable="true" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Übergabezeitpunkt an die Post</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ServiceDeliveryTime" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Übergabezeitpunkt an die Druckstraße</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Sheets" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Anzahl der Bögen/Blätter 
+Anmerkung: Im Druckjargon ist ein Blatt eine A3-Format, auf das abhängig von der Druckart (simplex, duplex) bis zu 4 A4-Seiten gedruckt werden können.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:long">
+								<xs:totalDigits value="10"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="PaymentForms" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Anzahl der Zahlscheine</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:int">
+								<xs:totalDigits value="3"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Costs" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Kosten</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="TotalCosts" type="xs:decimal">
+									<xs:annotation>
+										<xs:documentation>Die Gesamtkosten, falls keine Aufteilung möglich ist.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="DetailedCosts">
+									<xs:annotation>
+										<xs:documentation>Die aufgeschlüsselten Kosten der postalischen Zustellung.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="PrintingCosts" type="xs:decimal" minOccurs="0"/>
+											<xs:element name="HandlingCosts" type="xs:decimal" minOccurs="0"/>
+											<xs:element name="PostageCosts" type="xs:decimal" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="ddn:AdditonalPrintResults" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Weitere Rückmeldungen der Druckstraße.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DelivererInformation" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Informationen über den verwendeten Zusteller.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Deliverer" type="xs:token"/>
+								<xs:element name="DelivererReference" type="xs:string" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ScannedData" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Für den Fall, dass der Dienstleister die Rückscheine einscannt, wird hier das Dokument mitgeliefert. Außerdem können hier die Scans des hybriden Rückscheinbriefs mitgeliefert werden.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="BinaryDocument" minOccurs="0">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="dd:BinaryDocumentType">
+												<xs:attribute name="MIMEType" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ExtractedMetaData" type="dd:ExtensionPointType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Wenn aus den gescannten Dokumenten Informationen gewonnen werden können, so können diese hier eingebettet werden.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StatusRequestType">
+		<xs:annotation>
+			<xs:documentation>Type für Statusrequest</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="dd:ApplicationID" minOccurs="0"/>
+			<xs:element ref="dd:AppDeliveryID"/>
+			<xs:element ref="dd:DualDeliveryID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AdditionalResults">
+		<xs:annotation>
+			<xs:documentation>TODO: Genauere Spezifikation der Erweiterungen notwendig</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="ddn:AdditonalResultSet"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AdditonalResultSet" type="ddn:AdditonalResultSetType"/>
+	<xs:complexType name="AdditonalResultSetType">
+		<xs:annotation>
+			<xs:documentation>Gruppe von Parametern</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="PropertyValueAdditonalResultSet" type="ddn:PropertyValueAdditonalResultSetType" substitutionGroup="ddn:AdditonalResultSet">
+		<xs:annotation>
+			<xs:documentation>Property Value Paare für weitere Ergebnisse</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PropertyValueAdditonalResultSetType">
+		<xs:annotation>
+			<xs:documentation>Property Value Paare für weitere Ergebnisse</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ddn:AdditonalResultSetType">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:element ref="dd:Parameter"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="AdditonalPrintResults">
+		<xs:annotation>
+			<xs:documentation>Rückmeldungen von der Druckstraße</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element ref="ddn:AdditionalPrintResultSet"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AdditionalPrintResultSet" type="ddn:AdditionalPrintResultSetType">
+		<xs:annotation>
+			<xs:documentation>Rückmeldungen von der Druckstraße</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AdditionalPrintResultSetType">
+		<xs:annotation>
+			<xs:documentation>Gruppe von Parametern</xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:element name="PropertyValuePrintResultSet" type="ddn:PropertyValuePrintResultSetType" substitutionGroup="ddn:AdditionalPrintResultSet">
+		<xs:annotation>
+			<xs:documentation>Property Value Paare für Rückmeldungen von der Druckstraße</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PropertyValuePrintResultSetType">
+		<xs:annotation>
+			<xs:documentation>Property Value Paare für Rückmeldungen von der Druckstraße</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ddn:AdditionalPrintResultSetType">
+				<xs:sequence maxOccurs="unbounded">
+					<xs:element ref="dd:Parameter"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

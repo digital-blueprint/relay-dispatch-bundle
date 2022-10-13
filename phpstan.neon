@@ -9,6 +9,7 @@ parameters:
         - tests
     excludePaths:
         - tests/bootstrap.php
+        - src/DualDeliveryApi
     ignoreErrors:
         - message: '#.*NodeDefinition::children.*#'
           path: ./src/DependencyInjection

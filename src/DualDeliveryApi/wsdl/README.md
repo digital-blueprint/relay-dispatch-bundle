@@ -1,0 +1,3 @@
+Duale_Zustellung_-_Schnittstellenspezifikation_1.0.3:
+
+https://neu.ref.wien.gv.at/at.gv.wien.ref-live/web/reference-server/elkat?p_p_id=20&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_20_struts_action=%2Fdocument_library%2Fview_file_entry&_20_redirect=https%3A%2F%2Fneu.ref.wien.gv.at%2Fat.gv.wien.ref-live%2Fweb%2Freference-server%2Felektronische-zustellung%3Fp_p_id%3D3%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_3_groupId%3D0%26_3_keywords%3Dduale%26_3_struts_action%3D%252Fsearch%252Fsearch&_20_fileEntryId=52150

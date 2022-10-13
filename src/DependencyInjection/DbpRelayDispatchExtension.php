@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
+use Dbp\Relay\DispatchBundle\Command\Debug2Command;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
@@ -43,6 +44,9 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
 
         $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\DispatchService');
         $definition->addMethodCall('setCache', [$cacheDef]);
+        $definition->addMethodCall('setConfig', [$mergedConfig]);
+
+        $definition = $container->getDefinition(Debug2Command::class);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
     }
 

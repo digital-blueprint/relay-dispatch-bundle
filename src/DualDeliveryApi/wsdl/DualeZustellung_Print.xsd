@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2013 (http://www.altova.com) von Arne Tauber (Graz University of Technology IAIK) bearbeitet -->
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Arne Tauber (Technische Universität Graz) -->
+<xs:schema xmlns:dd="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ddpr="http://reference.e-government.gv.at/namespace/zustellung/dual_print/20130121#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:p="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:egiz="uri:egiz.additional.params" xmlns:zuse="http://reference.e-government.gv.at/namespace/zustellung/msg" xmlns:ddb="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" xmlns:ddgp="uri:general.additional.params/20130121#" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/dual_print/20130121#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" schemaLocation="DualeZustellung.xsd"/>
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/persondata/20130121#" schemaLocation="dual_mypersondata_en.xsd"/>
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" schemaLocation="DualeZustellung_Bulk.xsd"/>
+	<xs:import namespace="uri:general.additional.params/20130121#" schemaLocation="general-additonal-parameter.xsd"/>
+	<xs:element name="DualDeliveryPrintRequest" type="ddpr:DualDeliveryPrintRequestType"/>
+	<xs:element name="DualDeliveryPrintResponse" type="ddpr:DualDeliveryPrintResponseType"/>
+	<xs:complexType name="DualDeliveryPrintRequestType">
+		<xs:sequence>
+			<xs:element ref="dd:BulkId" minOccurs="0"/>
+			<xs:element ref="dd:AppDeliveryID" minOccurs="0"/>
+			<xs:element ref="dd:DualDeliveryID"/>
+			<xs:element ref="dd:Sender"/>
+			<xs:element ref="dd:Recipient" minOccurs="0"/>
+			<xs:element ref="dd:Priority" minOccurs="0"/>
+			<xs:element ref="dd:EnvelopeFormat"/>
+			<xs:element ref="dd:AdditionalMetaData" minOccurs="0"/>
+			<xs:element ref="dd:PrintParameter" minOccurs="0"/>
+			<xs:element ref="dd:DeliveryQuality"/>
+			<xs:element ref="ddgp:PostageRange"/>
+			<xs:element ref="dd:Payload" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Verrechnung">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Kostenstelle" type="xs:string" nillable="false"/>
+				<xs:element name="Seiten" type="xs:int" nillable="false"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Absender">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Bezeichnung" type="xs:string" nillable="false"/>
+				<xs:element name="VKZ" type="xs:string" nillable="false"/>
+				<xs:element name="Sachbearbeiter" type="xs:string" nillable="false"/>
+				<xs:element name="Tel" type="xs:string" nillable="false"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- <xs:complexType name="PayloadAttributes">
+		<xs:annotation>
+			<xs:documentation>Allgemeine Eigenschaften eines Zustellstücks</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Id" type="xs:ID">
+				<xs:annotation>
+					<xs:documentation>Eindeutige ID des Dokuments</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Dateiname</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContentType" type="xs:token">
+				<xs:annotation>
+					<xs:documentation>MIME Typ, z.B. application/pdf</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrintType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Art des Druckes  (DUP - Duplex, SIM - Simplex)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaperFormat" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Papierformat: A4, A3, Dynamic (Default=A4)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Size" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Größein bytes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Index" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Reihung (Sortierung der Dokumente)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>-->
+	<xs:complexType name="DualDeliveryPrintResponseType">
+		<xs:sequence>
+			<xs:element ref="dd:BulkId" minOccurs="0"/>
+			<xs:element ref="dd:AppDeliveryID" minOccurs="0"/>
+			<xs:element ref="dd:DualDeliveryID"/>
+			<xs:element name="JobID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Von der Druckstraße vergebene ID für den Druckjob</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="dd:AdditionalMetaData" minOccurs="0"/>
+			<xs:element name="PrintDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Datum des Ausdrucks</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalDeliveryDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Datum der Auflierfung beim Zustelldienst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pages" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Anzahl der gedruckten Seiten</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sheets" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Anzahl der Blätter</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Weight" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gewicht des gesamten Kuverts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

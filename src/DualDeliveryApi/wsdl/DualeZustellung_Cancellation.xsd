@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Arne Tauber (Technische Universität Graz) -->
+<xs:schema xmlns:dd="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ddb="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" xmlns:ddca="http://reference.e-government.gv.at/namespace/zustellung/dual_ca/20130121#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:p="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:egiz="uri:egiz.additional.params/20130121#" xmlns:zuse="http://reference.e-government.gv.at/namespace/zustellung/msg" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/dual_ca/20130121#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" schemaLocation="DualeZustellung.xsd"/>
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" schemaLocation="DualeZustellung_Bulk.xsd"/>
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/persondata/20130121#" schemaLocation="dual_mypersondata_en.xsd"/>
+	<xs:element name="DualDeliveryCancellationRequest">
+		<xs:annotation>
+			<xs:documentation>Dieser Request gilt sowohl für Standard als auch für Bulk und PreAdressing Geschäftsfälle die Verarbeitung wird soweit möglich abgebrochen</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ddca:DualDeliveryCancellationRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DualDeliveryCancellationResponse">
+		<xs:annotation>
+			<xs:documentation>Dieser Storno-Response, Bei Bulk-Sendungen wird der Status der einzelnen Nachrichten mittels der Notification-Message an den Sender übermittelt</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ddca:DualDeliveryCancellationResponseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DualDeliveryCancellationRequestType">
+		<xs:annotation>
+			<xs:documentation>Root Element des Storno-Requests, dieser Request gilt sowohl für Standard als auch für Bulk und PreAdressing Geschäftsfälle die Verarbeitung wird soweit möglich abgebrochen</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="dd:SenderProfile"/>
+			<xs:element ref="dd:ApplicationID"/>
+			<xs:element ref="dd:DualDeliveryID"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="DualDeliveryCancellationResponseType">
+		<xs:annotation>
+			<xs:documentation>Root Element des Storno-Response, Bei Bulk-Sendungen wird der Status der einzelnen Nachrichten mittels der Notification-Message an den Sender übermittelt</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="dd:DualDeliveryID"/>
+			<xs:element ref="dd:AppDeliveryID"/>
+			<xs:element ref="dd:Status"/>
+			<xs:element ref="ddb:BulkElements" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required"/>
+	</xs:complexType>
+</xs:schema>

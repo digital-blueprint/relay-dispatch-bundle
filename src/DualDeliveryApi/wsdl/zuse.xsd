@@ -1,0 +1,554 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:p="http://reference.e-government.gv.at/namespace/persondata/20020228#" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="http://reference.e-government.gv.at/namespace/zustellung/msg" xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion" targetNamespace="http://reference.e-government.gv.at/namespace/zustellung/msg" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.4.1">
+	<!--### Imports ###-->
+	<xs:import namespace="http://reference.e-government.gv.at/namespace/persondata/20020228#" schemaLocation="zuse_mypersondata_en.xsd"/>
+	<!--# for sake of simplvity, a slimmed down version of the persondata 2.0 will be used, namespace stys on persondata #-->
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="W3C-XMLDSig.xsd"/>
+	<xs:import namespace="urn:oasis:names:tc:SAML:1.0:assertion" schemaLocation="cs-sstc-schema-assertion-01.xsd"/>
+	<!--###  Nachrichten und Nachrichtenstrukturen ###-->
+	<!--###  Zustellstückanlieferung ###-->
+	<xs:element name="DeliveryRequest" type="DeliveryRequestType">
+		<xs:annotation>
+			<xs:documentation>Zustellstückanleiferung</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DeliveryRequestType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ZbPK" type="token255">
+					<xs:annotation>
+						<xs:documentation>Obsolet -> Verwendung von Identification Element</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="edID" type="token255">
+					<xs:annotation>
+						<xs:documentation>Obsolet -> Verwendung von Identification Element</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Identification">
+					<xs:annotation>
+						<xs:documentation>Identifikation basierend auf Type/Value</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Type" type="xs:string"/>
+							<xs:element name="Value" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="NotificationAddress">
+				<xs:annotation>
+					<xs:documentation>Wohin sollen Zustellungsbestätigungen oder Fehlermeldung weitergeleitet werden</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="WebserviceURL">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:anyURI">
+										<xs:attribute name="AlternativeEmail" type="xs:anyURI"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Email" type="p:InternetAddressType">
+							<xs:annotation>
+								<xs:documentation>Für Notfälle, wenn der Absemnder  weder übe einenr Webservice noch über ein eelektronisches Postfach verfügt.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:attribute name="Type" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Typ des Zustellnachweises, z.B. xml+pdf oder nur xml (default)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="Sender"/>
+			<xs:element ref="Receiver" minOccurs="0"/>
+			<xs:element name="MetaData">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Subject" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Zur Anzeige in der Mailbox, vgl. Subject von herkömml. E-mails</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="AppDeliveryID"/>
+						<xs:element ref="GZ" minOccurs="0"/>
+						<xs:element ref="MZSDeliveryID" minOccurs="0"/>
+						<xs:element name="DeliveryQuality" type="token255">
+							<xs:annotation>
+								<xs:documentation>RSa, non-RSa</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="DeliveryConfirmation" type="xs:boolean" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Gibt an ob eine Übergabebestätigung vom Zustelldienst als Antwort retourniert werden soll</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="DocumentClass" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Dokumentenklasse als String bzw. Namespace im Fall von XML-Dokumenten im Anhang, um auf Empfängerseite eine automatische Verarbeitung durch ein Workflowsystem realisieren zu können.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="References" minOccurs="0"/>
+						<xs:element name="StartNotificationBefore" type="xs:dateTime" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Zeitpunkt an dem die erste Benachrichtigung versandt sein muß</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="DeliverBefore" type="xs:dateTime" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Ende der Vorhaltefrist, min 3 Wochen ab Versenden der ersten Verständigung, default 3 Wochen</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="PrintParameter" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+								<xs:attribute name="profile" type="xs:anyURI" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DocumentReference" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Docuementlocation in case of Callback attachements</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="URL" type="xs:anyURI"/>
+						<xs:element name="MimeType" type="token255" minOccurs="0"/>
+						<xs:element name="FileName" type="string255" minOccurs="0"/>
+						<xs:element name="MD5Checksum" type="token255" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CustomNotificationIntervals" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RecipientNotification" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="NotificationMethod" type="token255">
+										<xs:annotation>
+											<xs:documentation>electronic or paperbased notification</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="TimeSinceDisposal" type="xs:duration">
+										<xs:annotation>
+											<xs:documentation>Verständigungsintervall, Zeit seit Übergabe an den Zusztellserver in Tagen oder Stunden</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version">
+			<xs:simpleType>
+				<xs:restriction base="token255"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="References" type="ReferencesType">
+		<xs:annotation>
+			<xs:documentation>Liste aller verfügbaren IDs jener Elektronischen Zustellung, auf die der Versender antworten will</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ReferencesType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="AppDeliveryID"/>
+			<xs:element ref="GZ"/>
+			<xs:element ref="MZSDeliveryID"/>
+			<xs:element ref="ZSDeliveryID"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="DeliveryRequestStatus">
+		<xs:annotation>
+			<xs:documentation>Webservice Response of ZSDeliveryRequest, also to used asynchronously </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="DeliveryRequestStatusType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DeliveryRequestStatusType">
+		<xs:choice>
+			<xs:element name="Success" type="DeliveryAnswerType">
+				<xs:annotation>
+					<xs:documentation>Zustellstück wurde erfolgreich übernommen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryConfirmation" type="DeliveryConfirmationType">
+				<xs:annotation>
+					<xs:documentation>Signierte Übergabebestätigung an den Zustelldienst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PartialSuccess" type="DeliveryAnswerType">
+				<xs:annotation>
+					<xs:documentation>Zustellstück wurde erfolgreich übernommen, attachment wird später geladen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Error">
+				<xs:annotation>
+					<xs:documentation>Zustellstück konnte nicht erfolgreich angenommen werden</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="DeliveryAnswerType">
+							<xs:sequence>
+								<xs:element name="ErrorInfo">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Code" type="xs:positiveInteger">
+												<xs:annotation>
+													<xs:documentation>Numerischer Fehlercode</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Text" type="string255">
+												<xs:annotation>
+													<xs:documentation>Fehlerbeschreibung</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="version">
+			<xs:simpleType>
+				<xs:restriction base="token255"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="DeliveryRequestStatusACK">
+		<xs:annotation>
+			<xs:documentation>Wenn DeliveryRequestStatus in asynchroner Koomunikation als Request benutz wird, ist DeliveryRequstStatusACK die Antwort</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="DeliveryRequestStatusACKType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DeliveryRequestStatusACKType">
+		<xs:sequence>
+			<xs:element ref="AppDeliveryID"/>
+			<xs:element ref="ZSDeliveryID"/>
+		</xs:sequence>
+		<xs:attribute name="version">
+			<xs:simpleType>
+				<xs:restriction base="token255"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>### Bestätigung über Zustellungs (Miß-) Erfolg   ###</xs:documentation>
+	</xs:annotation>
+	<xs:element name="DeliveryNotification">
+		<xs:annotation>
+			<xs:documentation>Benachrichtigung über die (nicht) erfolgte Zustellung</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="DeliveryNotificationType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DeliveryNotificationType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Success">
+					<xs:annotation>
+						<xs:documentation>Zustellstück wurde vom Empfänger angenommen</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DeliveryAnswerType">
+								<xs:sequence>
+									<xs:element ref="Sender"/>
+									<xs:element ref="Receiver"/>
+									<xs:element name="NotificationsPerformed">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="RecipientNotification" maxOccurs="unbounded">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="NotificationMethod">
+																<xs:annotation>
+																	<xs:documentation>electronic or paper</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:token">
+																		<xs:enumeration value="electronic"/>
+																		<xs:enumeration value="paperbased"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="Timestamp" type="xs:dateTime"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ConfirmationTimestamp" type="xs:dateTime">
+										<xs:annotation>
+											<xs:documentation>Timestamp of User Signature</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:choice>
+										<xs:element name="AuthBlock" type="saml:AssertionType">
+											<xs:annotation>
+												<xs:documentation>SAMLAssertion</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="BinaryConfirmation">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:base64Binary">
+														<xs:attribute name="Type" use="required"/>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+									<xs:element ref="dsig:Signature"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Error">
+					<xs:annotation>
+						<xs:documentation>Zustellstück wurde vom Empfänger nciht angenommen/abgeholt</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DeliveryAnswerType">
+								<xs:sequence>
+									<xs:element ref="Sender"/>
+									<xs:element ref="Receiver"/>
+									<xs:element name="NotificationsPerformed">
+										<xs:complexType>
+											<xs:sequence>
+												<!--Element RecipientNotification sollte in Zukunft zum Einsatu kommen-->
+												<xs:element name="RecipientNotification" minOccurs="0" maxOccurs="unbounded">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="NotificationMethod">
+																<xs:annotation>
+																	<xs:documentation>electronic or paper</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:token">
+																		<xs:enumeration value="electronic"/>
+																		<xs:enumeration value="paperbased"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="Timestamp" type="xs:dateTime"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<!--Element Notification für Abwärtskompatibilität-->
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ErrorInfo">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Code" type="xs:positiveInteger"/>
+												<xs:element name="Text" type="string255"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element ref="dsig:Signature"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="AdditionalFormat" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:base64Binary">
+							<xs:attribute name="Type" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version">
+			<xs:simpleType>
+				<xs:restriction base="token255"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="DeliveryNotificationACK">
+		<xs:annotation>
+			<xs:documentation>Webservice Response of ZSDeliveryNotification</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="DeliveryNotificationACKType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DeliveryNotificationACKType">
+		<xs:sequence>
+			<xs:element ref="AppDeliveryID"/>
+			<xs:element ref="ZSDeliveryID"/>
+		</xs:sequence>
+		<xs:attribute name="version">
+			<xs:simpleType>
+				<xs:restriction base="token255"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<!--### sonstige globale Elemente ###-->
+	<xs:element name="AppDeliveryID" type="token255">
+		<xs:annotation>
+			<xs:documentation>ID des Zustellstücke beim Absender</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="GZ" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Geschäftszahl</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ZSDeliveryID" type="token255">
+		<xs:annotation>
+			<xs:documentation>ID des Zustellstücke innerhalb des Zustellservers</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MZSDeliveryID" type="token255">
+		<xs:annotation>
+			<xs:documentation>ID des Zustellstücks des Mittlers</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Sender">
+		<xs:annotation>
+			<xs:documentation>Informationen zum Sender</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="Organisation">
+						<xs:annotation>
+							<xs:documentation>Behörde als PersonData Corporate Body. Im Falle eines behördlichen Absenders ist der Sender durch dieses Element zu formulieren.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="p:CorporateBodyType"/>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:choice>
+						<xs:element ref="p:PhysicalPerson"/>
+						<xs:element ref="p:CorporateBody"/>
+					</xs:choice>
+				</xs:choice>
+				<xs:element ref="MailBox" minOccurs="0"/>
+				<xs:element ref="p:Address" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DocumentClass">
+		<xs:annotation>
+			<xs:documentation>Enthält den Namespace des XML-Dokuments, um auf Empfängerseite eine automatische Verarbeitung durch ein Workflowsystem realisieren zu können.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attribute name="Namespace" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Namespace des XML-Files, dass als Dokument im Attachemt mitgeliefert wird.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Receiver">
+		<xs:annotation>
+			<xs:documentation>Informationen zum Empfänger</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="p:PhysicalPerson"/>
+					<xs:element ref="p:CorporateBody"/>
+				</xs:choice>
+				<xs:element ref="MailBox" minOccurs="0"/>
+				<xs:element ref="p:PostalAddress" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--### Hilfstypen ###-->
+	<xs:complexType name="DeliveryAnswerType">
+		<xs:annotation>
+			<xs:documentation>Abstrakter Antwort Typ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DeliveryService" type="string255"/>
+			<xs:element ref="AppDeliveryID"/>
+			<xs:element ref="GZ" minOccurs="0"/>
+			<xs:element ref="MZSDeliveryID" minOccurs="0"/>
+			<xs:element ref="ZSDeliveryID"/>
+			<xs:element name="RelayedViaERV" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gibt an ob das Zustellstück über den ERV zugestellt wurde</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="string255">
+		<xs:annotation>
+			<xs:documentation>String auf 255 Zeichen beschränkt.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="token255">
+		<xs:annotation>
+			<xs:documentation>Token auf 255 Zeichen beschränkt.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="MailBox">
+		<xs:annotation>
+			<xs:documentation>Spezielles Postfach des Empfängers, z.B. eine Filiale einer jur. Person</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="DeliveryConfirmationType">
+		<xs:complexContent>
+			<xs:extension base="DeliveryAnswerType">
+				<xs:sequence>
+					<xs:element ref="Sender"/>
+					<xs:element ref="Receiver"/>
+					<xs:element name="DeliveryTimestamp" type="xs:dateTime">
+						<xs:annotation>
+							<xs:documentation>Übergabezeitpunkt an den Zustelldienst</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="dsig:Signature"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DeliveryResponse" type="DeliveryRequestStatusType"/>
+</xs:schema>
