@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('database_url')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('sender_profile')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('cert_password')->end()
-            ->scalarNode('cert_p12')->end()
+            ->scalarNode('cert')->end()
             ->scalarNode('base_url')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('delivery_request_url_part')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('pre_addressing_request_url_part')->isRequired()->cannotBeEmpty()->end()
