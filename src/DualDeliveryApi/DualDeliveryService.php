@@ -314,7 +314,6 @@ class DualDeliveryService extends \SoapClient
         $this->activeQuirks = self::getQuirksForLocation($location);
 
         $wsdl_path = dirname(__FILE__).DIRECTORY_SEPARATOR.'wsdl'.DIRECTORY_SEPARATOR.'DualeZustellung.wsdl';
-        $wsdl_uri = 'file://'.implode('/', array_map('rawurlencode', explode('/', $wsdl_path)));
 
         $options = array_merge([
             'features' => SOAP_SINGLE_ELEMENT_ARRAYS,
@@ -334,7 +333,7 @@ class DualDeliveryService extends \SoapClient
             $options['passphrase'] = $cert[1];
         }
 
-        \SoapClient::__construct($wsdl_uri, $options);
+        \SoapClient::__construct($wsdl_path, $options);
     }
 
     private function setLocation(string $name)
