@@ -17,11 +17,14 @@ php bin/console doctrine:migrations:migrate --em=dbp_relay_dispatch_bundle
 ### Settings
 
 ```bash
-# base64 encode p12 cert
-base64 -w 0 < cert.p12 > cert.p12.base64
+# Convert p12 file to pem (pass -legacy if needed with openssl v3)
+openssl pkcs12 -in cert.p12 -out cert.pem -clcerts
+
+# base64 encode PEM
+base64 -w 0 < cert.pem > cert.pem.base64
 
 # set secret for the .env file
-php bin/console secrets:set DISPATCH_CERT_P12 cert.p12.base64
+php bin/console secrets:set DISPATCH_CERT cert.pem.base64
 ```
 
 TODO
