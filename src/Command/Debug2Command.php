@@ -46,8 +46,7 @@ class Debug2Command extends Command
         $certPassword = $config['cert_password'];
 
         $certFileName = Tools::getTempFileName('.pem');
-        $certData = base64_decode($cert, true);
-        file_put_contents($certFileName, $certData);
+        file_put_contents($certFileName, $cert);
 
         $service = new DualDeliveryService($baseUrl, [$certFileName, $certPassword]);
         $request = new StatusRequestType(new ApplicationID('foo', '1.0'), 'bla');

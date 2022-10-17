@@ -61,7 +61,7 @@ class DispatchService
     /**
      * @var string
      */
-    private $certBase64;
+    private $cert;
 
     /**
      * @var string
@@ -94,7 +94,7 @@ class DispatchService
     {
         $this->senderProfile = $config['sender_profile'] ?? '';
         $this->certPassword = $config['cert_password'] ?? '';
-        $this->certBase64 = $config['cert'] ?? '';
+        $this->cert = $config['cert'] ?? '';
         $this->deliveryRequestUrl = $config['base_url'].$config['delivery_request_url_part'];
         $this->preAddressingRequestUrl = $config['base_url'].$config['pre_addressing_request_url_part'];
         $this->statusRequestUrl = $config['base_url'].$config['status_request_url_part'];
@@ -516,7 +516,7 @@ class DispatchService
     {
         $client = new \GuzzleHttp\Client();
         $password = $this->certPassword;
-        $useCert = $this->certPassword !== '' && $this->certBase64 !== '';
+        $useCert = $this->certPassword !== '' && $this->cert !== '';
         $certFileName = '';
 //        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.clcerts.pem';
 //        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
@@ -526,13 +526,7 @@ class DispatchService
             // It's essential to use a file name with a .pem extension, otherwise the certificate will not be recognized by Guzzle
             $certFileName = Tools::getTempFileName('.pem');
 
-            $certData = base64_decode($this->certBase64, true);
-
-            if ($certData === false) {
-                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be decoded!', 'dispatch:base64-cert-error');
-            }
-
-            $byteWritten = file_put_contents($certFileName, $certData);
+            $byteWritten = file_put_contents($certFileName, $this->cert);
 
             if ($byteWritten === false) {
                 throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be written to file!', 'dispatch:write-cert-error');
@@ -596,7 +590,7 @@ class DispatchService
 //    {
 //        $client = new \GuzzleHttp\Client();
 //        $password = $this->certPassword;
-//        $useCert = $this->certPassword !== '' && $this->certBase64 !== '';
+//        $useCert = $this->certPassword !== '' && $this->cert !== '';
 //        $certFileName = '';
     ////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.clcerts.pem';
     ////        $certFileName = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
@@ -606,13 +600,7 @@ class DispatchService
 //            // It's essential to use a file name with a .pem extension, otherwise the certificate will not be recognized by Guzzle
 //            $certFileName = Tools::getTempFileName('pem');
 //
-//            $certData = base64_decode($this->certBase64, true);
-//
-//            if ($certData === false) {
-//                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be decoded!', 'dispatch:base64-cert-error');
-//            }
-//
-//            $byteWritten = file_put_contents($certFileName, $certData);
+//            $byteWritten = file_put_contents($certFileName, $this->cert);
 //
 //            if ($byteWritten === false) {
 //                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Cert data could not be written to file!', 'dispatch:write-cert-error');
