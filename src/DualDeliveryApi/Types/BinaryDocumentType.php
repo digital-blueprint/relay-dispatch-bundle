@@ -7,12 +7,12 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class BinaryDocumentType extends DocumentType
 {
     /**
-     * @var base64Binary
+     * @var string
      */
     protected $Content = null;
 
     /**
-     * @param base64Binary $Content
+     * @param string $Content
      */
     public function __construct($Content)
     {
@@ -20,7 +20,7 @@ class BinaryDocumentType extends DocumentType
     }
 
     /**
-     * @return base64Binary
+     * @return string
      */
     public function getContent()
     {
@@ -28,7 +28,7 @@ class BinaryDocumentType extends DocumentType
     }
 
     /**
-     * @param base64Binary $Content
+     * @param string $Content
      *
      * @return BinaryDocumentType
      */

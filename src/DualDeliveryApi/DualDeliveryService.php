@@ -114,7 +114,6 @@ class DualDeliveryService extends \SoapClient
       'DualDeliveryRequest' => '\\DualDeliveryRequest',
       'DualDeliveryResponse' => '\\DualDeliveryResponse',
       'DualDeliveryRequestType' => '\\DualDeliveryRequestType',
-      'MetaData' => '\\MetaData',
       'Payments' => '\\Payments',
       'Payment' => '\\Payment',
       'ProcessingProfile' => '\\ProcessingProfile',
@@ -256,13 +255,15 @@ class DualDeliveryService extends \SoapClient
     private const QUIRKS = [
         [
             'domains' => ['dual.vendo.at', 'dualtest.vendo.at'],
-            // TODO: We also have /mprs-core/services10/DDAddressingProcessor and
-            // /mprs-core/services10/DDWebServiceProcessor but unclear how to map them at this point
             'operation_path_mapping' => [
                 'dualStatusRequestOperation' => '/mprs-polling/services10/DDPollingServiceProcessor',
                 'dualDeliveryCancellationRequestOperation' => '/mprs-polling/services10/DDPollingServiceProcessor',
                 'dualNotificationRequestOperation' => '/mprs-polling/services10/DDPollingServiceProcessor',
-                // TODO: ???
+                'dualDeliveryRequestOperation' => '/mprs-core/services10/DDWebServiceProcessor',
+                'dualDeliveryPreAddressingRequestOperation' => '/mprs-core/services10/DDAddressingProcessor',
+                // Looks like the bulk APIs aren't supported
+                'dualNotificationBulkRequestOperation' => null,
+                'dualDeliveryBulkRequestOperation' => null,
             ],
             'stream_context_options' => [
                 'ssl' => [
@@ -286,11 +287,14 @@ class DualDeliveryService extends \SoapClient
         }
         foreach (self::QUIRKS as $quirk) {
             if (in_array($host, $quirk['domains'], true)) {
+                $quirk['host'] = $host;
+
                 return $quirk;
             }
         }
         // default no quirks
         return [
+            'host' => $host,
             'domains' => [],
             'operation_path_mapping' => [],
             'stream_context_options' => [],
@@ -339,9 +343,29 @@ class DualDeliveryService extends \SoapClient
     private function setLocation(string $name)
     {
         // This sets the location based on the SOAP function call name
-        $path = $this->activeQuirks['operation_path_mapping'][$name] ?? '';
+        $mapping = $this->activeQuirks['operation_path_mapping'];
+        $host = $this->activeQuirks['host'];
+        if (array_key_exists($name, $mapping)) {
+            $path = $mapping[$name];
+            // In case the mapping value is null, assume it's not supported
+            if ($path === null) {
+                throw new \SoapFault(null, $host." doesn't provide ".$name);
+            }
+        } else {
+            $path = '';
+        }
         $newLocation = rtrim($this->origLocation, '/').$path;
         $this->__setLocation($newLocation);
+    }
+
+    /*
+     * @return mixed
+     */
+    private function callInternal(string $name, array $args)
+    {
+        $this->setLocation($name);
+
+        return $this->__soapCall($name, $args);
     }
 
     /**
@@ -349,9 +373,7 @@ class DualDeliveryService extends \SoapClient
      */
     public function dualDeliveryRequestOperation(DualDeliveryRequest $DualDeliveryRequest)
     {
-        $this->setLocation('dualDeliveryRequestOperation');
-
-        return $this->__soapCall('dualDeliveryRequestOperation', [$DualDeliveryRequest]);
+        return $this->callInternal('dualDeliveryRequestOperation', [$DualDeliveryRequest]);
     }
 
     /**
@@ -359,9 +381,7 @@ class DualDeliveryService extends \SoapClient
      */
     public function dualNotificationRequestOperation(DualNotificationRequest $DualNotificationRequest)
     {
-        $this->setLocation('dualNotificationRequestOperation');
-
-        return $this->__soapCall('dualNotificationRequestOperation', [$DualNotificationRequest]);
+        return $this->callInternal('dualNotificationRequestOperation', [$DualNotificationRequest]);
     }
 
     /**
@@ -369,9 +389,7 @@ class DualDeliveryService extends \SoapClient
      */
     public function dualStatusRequestOperation(StatusRequestType $StatusRequest)
     {
-        $this->setLocation('dualStatusRequestOperation');
-
-        return $this->__soapCall('dualStatusRequestOperation', [$StatusRequest]);
+        return $this->callInternal('dualStatusRequestOperation', [$StatusRequest]);
     }
 
     /**
@@ -379,9 +397,7 @@ class DualDeliveryService extends \SoapClient
      */
     public function dualDeliveryBulkRequestOperation(DualDeliveryBulkRequestType $DualDeliveryBulkRequest)
     {
-        $this->setLocation('dualDeliveryBulkRequestOperation');
-
-        return $this->__soapCall('dualDeliveryBulkRequestOperation', [$DualDeliveryBulkRequest]);
+        return $this->callInternal('dualDeliveryBulkRequestOperation', [$DualDeliveryBulkRequest]);
     }
 
     /**
@@ -389,9 +405,7 @@ class DualDeliveryService extends \SoapClient
      */
     public function dualNotificationBulkRequestOperation(DualNotificationBulkRequestType $DualNotificationBulkRequest)
     {
-        $this->setLocation('dualNotificationBulkRequestOperation');
-
-        return $this->__soapCall('dualNotificationBulkRequestOperation', [$DualNotificationBulkRequest]);
+        return $this->callInternal('dualNotificationBulkRequestOperation', [$DualNotificationBulkRequest]);
     }
 
     /**
@@ -399,9 +413,7 @@ class DualDeliveryService extends \SoapClient
      */
     public function dualDeliveryPreAddressingRequestOperation(DualDeliveryPreAddressingRequestType $DualDeliveryPreAddressingRequest)
     {
-        $this->setLocation('dualDeliveryPreAddressingRequestOperation');
-
-        return $this->__soapCall('dualDeliveryPreAddressingRequestOperation', [$DualDeliveryPreAddressingRequest]);
+        return $this->callInternal('dualDeliveryPreAddressingRequestOperation', [$DualDeliveryPreAddressingRequest]);
     }
 
     /**
@@ -409,8 +421,6 @@ class DualDeliveryService extends \SoapClient
      */
     public function dualDeliveryCancellationRequestOperation(DualDeliveryCancellationRequest $DualDeliveryCancellationRequest)
     {
-        $this->setLocation('dualDeliveryCancellationRequestOperation');
-
-        return $this->__soapCall('dualDeliveryCancellationRequestOperation', [$DualDeliveryCancellationRequest]);
+        return $this->callInternal('dualDeliveryCancellationRequestOperation', [$DualDeliveryCancellationRequest]);
     }
 }

@@ -6,7 +6,4 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 
 class DualDeliveryCancellationRequest extends DualDeliveryCancellationRequestType
 {
-    public function __construct()
-    {
-    }
 }

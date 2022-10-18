@@ -2,19 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk;
+
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
 
 class MetaData
 {
     /**
-     * @var string
-     */
-    protected $AppDeliveryID = null;
-
-    /**
      * @var ApplicationID
      */
     protected $ApplicationID = null;
+
+    /**
+     * @var string
+     */
+    protected $GZ = null;
 
     /**
      * @var AdditionalMetaData
@@ -37,48 +41,21 @@ class MetaData
     protected $Asynchronous = null;
 
     /**
-     * @var bool
-     */
-    protected $PreCreateSendings = null;
-
-    /**
-     * @param string             $AppDeliveryID
      * @param ApplicationID      $ApplicationID
+     * @param string             $GZ
      * @param AdditionalMetaData $AdditionalMetaData
      * @param bool               $TestCase
      * @param ProcessingProfile  $ProcessingProfile
      * @param bool               $Asynchronous
-     * @param bool               $PreCreateSendings
      */
-    public function __construct($AppDeliveryID, $ApplicationID, $AdditionalMetaData, $TestCase, $ProcessingProfile, $Asynchronous, $PreCreateSendings)
+    public function __construct($ApplicationID, $GZ, $AdditionalMetaData, $TestCase, $ProcessingProfile, $Asynchronous)
     {
-        $this->AppDeliveryID = $AppDeliveryID;
         $this->ApplicationID = $ApplicationID;
+        $this->GZ = $GZ;
         $this->AdditionalMetaData = $AdditionalMetaData;
         $this->TestCase = $TestCase;
         $this->ProcessingProfile = $ProcessingProfile;
         $this->Asynchronous = $Asynchronous;
-        $this->PreCreateSendings = $PreCreateSendings;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAppDeliveryID()
-    {
-        return $this->AppDeliveryID;
-    }
-
-    /**
-     * @param string $AppDeliveryID
-     *
-     * @return MetaData
-     */
-    public function setAppDeliveryID($AppDeliveryID)
-    {
-        $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
     /**
@@ -97,6 +74,26 @@ class MetaData
     public function setApplicationID($ApplicationID)
     {
         $this->ApplicationID = $ApplicationID;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGZ()
+    {
+        return $this->GZ;
+    }
+
+    /**
+     * @param string $GZ
+     *
+     * @return MetaData
+     */
+    public function setGZ($GZ)
+    {
+        $this->GZ = $GZ;
 
         return $this;
     }
@@ -177,26 +174,6 @@ class MetaData
     public function setAsynchronous($Asynchronous)
     {
         $this->Asynchronous = $Asynchronous;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getPreCreateSendings()
-    {
-        return $this->PreCreateSendings;
-    }
-
-    /**
-     * @param bool $PreCreateSendings
-     *
-     * @return MetaData
-     */
-    public function setPreCreateSendings($PreCreateSendings)
-    {
-        $this->PreCreateSendings = $PreCreateSendings;
 
         return $this;
     }
