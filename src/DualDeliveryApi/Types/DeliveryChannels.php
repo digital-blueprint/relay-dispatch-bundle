@@ -14,7 +14,7 @@ class DeliveryChannels
     /**
      * @param DeliveryChannelSetType $DeliveryChannelSet
      */
-    public function __construct($DeliveryChannelSet)
+    public function __construct($DeliveryChannelSet = null)
     {
         $this->DeliveryChannelSet = $DeliveryChannelSet;
     }

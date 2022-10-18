@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 
-class SenderData
+class SenderData extends PersonDataType
 {
-    public function __construct()
-    {
-    }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 
-class SenderType extends PersonDataType
+class SenderType
 {
     /**
      * @var SenderProfile
@@ -22,15 +22,14 @@ class SenderType extends PersonDataType
     protected $Parameters = null;
 
     /**
-     * @param AbstractPersonType  $Person
-     * @param AbstractAddressType $Address
-     * @param SenderProfile       $SenderProfile
-     * @param ParametersType      $Parameters
+     * @param SenderProfile  $SenderProfile
+     * @param SenderData     $SenderData
+     * @param ParametersType $Parameters
      */
-    public function __construct($Person, $Address, $SenderProfile, $Parameters)
+    public function __construct($SenderProfile, $SenderData = null, $Parameters = null)
     {
-        parent::__construct($Person, $Address);
         $this->SenderProfile = $SenderProfile;
+        $this->SenderData = $SenderData;
         $this->Parameters = $Parameters;
     }
 

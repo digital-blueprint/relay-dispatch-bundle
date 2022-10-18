@@ -20,7 +20,7 @@ class AbstractPersonType
      * @param string $AbstractSimpleIdentification
      * @param string $Id
      */
-    public function __construct($AbstractSimpleIdentification, $Id)
+    public function __construct($AbstractSimpleIdentification = null, $Id = null)
     {
         $this->AbstractSimpleIdentification = $AbstractSimpleIdentification;
         $this->Id = $Id;

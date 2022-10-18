@@ -20,7 +20,7 @@ class PersonDataType
      * @param AbstractPersonType  $Person
      * @param AbstractAddressType $Address
      */
-    public function __construct($Person, $Address)
+    public function __construct($Person, $Address = null)
     {
         $this->Person = $Person;
         $this->Address = $Address;

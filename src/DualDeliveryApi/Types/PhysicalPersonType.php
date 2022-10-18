@@ -12,19 +12,17 @@ class PhysicalPersonType extends AbstractPersonType
     protected $Name = null;
 
     /**
-     * @var DateOfBirthType
+     * @var string
      */
     protected $DateOfBirth = null;
 
     /**
-     * @param string          $AbstractSimpleIdentification
-     * @param string          $Id
-     * @param PersonNameType  $Name
-     * @param DateOfBirthType $DateOfBirth
+     * @param PersonNameType $Name
+     * @param string         $DateOfBirth
      */
-    public function __construct($AbstractSimpleIdentification, $Id, $Name, $DateOfBirth)
+    public function __construct($Name, $DateOfBirth)
     {
-        parent::__construct($AbstractSimpleIdentification, $Id);
+        parent::__construct();
         $this->Name = $Name;
         $this->DateOfBirth = $DateOfBirth;
     }
@@ -50,7 +48,7 @@ class PhysicalPersonType extends AbstractPersonType
     }
 
     /**
-     * @return DateOfBirthType
+     * @return string
      */
     public function getDateOfBirth()
     {
@@ -58,7 +56,7 @@ class PhysicalPersonType extends AbstractPersonType
     }
 
     /**
-     * @param DateOfBirthType $DateOfBirth
+     * @param string $DateOfBirth
      *
      * @return PhysicalPersonType
      */

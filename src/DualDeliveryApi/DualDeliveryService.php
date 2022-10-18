@@ -18,6 +18,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusRequestType;
+use DOMDocument;
 
 class DualDeliveryService extends \SoapClient
 {
@@ -301,10 +302,30 @@ class DualDeliveryService extends \SoapClient
         ];
     }
 
+    public function getPrettyLastRequest(): string
+    {
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+        $dom->loadXML($this->__getLastRequest());
+
+        return $dom->saveXML();
+    }
+
+    public function getPrettyLastResponse(): string
+    {
+        $dom = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+        $dom->loadXML($this->__getLastResponse());
+
+        return $dom->saveXML();
+    }
+
     /**
      * @param array|string|null $cert either a path to a PEM file, or an array with a path and a password
      */
-    public function __construct(string $location, $cert = null)
+    public function __construct(string $location, $cert = null, $trace = false)
     {
         $options = [];
 
@@ -323,6 +344,7 @@ class DualDeliveryService extends \SoapClient
             'features' => SOAP_SINGLE_ELEMENT_ARRAYS,
             'cache_wsdl' => WSDL_CACHE_NONE,
             'location' => $location,
+            'trace' => $trace,
             'stream_context' => stream_context_create($this->activeQuirks['stream_context_options']),
         ], $options);
 

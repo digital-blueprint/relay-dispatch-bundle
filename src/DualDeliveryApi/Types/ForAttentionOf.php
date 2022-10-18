@@ -22,7 +22,7 @@ class ForAttentionOf
     protected $GivenName = null;
 
     /**
-     * @var FamilyName
+     * @var string
      */
     protected $FamilyName = null;
 
@@ -101,7 +101,7 @@ class ForAttentionOf
     }
 
     /**
-     * @return FamilyName
+     * @return string
      */
     public function getFamilyName()
     {
@@ -109,7 +109,7 @@ class ForAttentionOf
     }
 
     /**
-     * @param FamilyName $FamilyName
+     * @param string $FamilyName
      *
      * @return ForAttentionOf
      */

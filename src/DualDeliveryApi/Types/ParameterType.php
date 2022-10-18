@@ -24,9 +24,10 @@ class ParameterType
     /**
      * @param string $Property
      */
-    public function __construct($Property)
+    public function __construct($Property, $Value)
     {
         $this->Property = $Property;
+        $this->Value = $Value;
     }
 
     /**

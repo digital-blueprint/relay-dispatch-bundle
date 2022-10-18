@@ -27,8 +27,11 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadAttributesType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PrintParameter;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PropertyValueMetaDataSetType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
@@ -78,7 +81,33 @@ class Debug2Command extends Command
         $certFileName = Tools::getTempFileName('.pem');
         file_put_contents($certFileName, $cert);
 
-        $service = new DualDeliveryService($baseUrl, [$certFileName, $certPassword]);
+        $service = new DualDeliveryService($baseUrl, [$certFileName, $certPassword], true);
+
+        // Experiments
+        $senderProfile = new SenderProfile($profile, '1.0');
+        $sender = new SenderType($senderProfile);
+
+        $physicalPerson = new PhysicalPersonType(new PersonNameType('Max', 'Mustermann'), '1970-06-04');
+        $personData = new PersonDataType($physicalPerson);
+        $recipient = new RecipientType($personData);
+        $recipients = new Recipients([
+            new Recipient(null, $recipient), ]);
+
+        $meta = new PreMetaData(uniqid());
+        $meta->setAdditionalMetaData(
+            new AdditionalMetaData(
+                new PropertyValueMetaDataSetType(new ParameterType('CampaignId', 'DUMMY'))));
+        $meta->setTestCase(false);
+        $meta->setProcessingProfile(new ProcessingProfile('ZuseDD', '1.1'));
+        $meta->setAsynchronous(false);
+        $meta->setPreCreateSendings(true);
+        $applicationId = new ApplicationID($profile, '1.0');
+        $meta->setApplicationID($applicationId);
+        $request = new DualDeliveryPreAddressingRequestType($sender, $recipients, $meta, null, '1.0');
+        $response = $service->dualDeliveryPreAddressingRequestOperation($request);
+        var_dump($response);
+
+        print_r($service->getPrettyLastResponse());
 
         // ---------------------------
         // dualStatusRequestOperation
@@ -105,9 +134,9 @@ class Debug2Command extends Command
         // dualDeliveryRequestOperation
         $person = new AbstractPersonType('bla', 'id');
         $addr = new AbstractAddressType('id');
-        $profile = new SenderProfile($profile, '1.0');
-        $parameters = new ParametersType(new ParameterType('bla'));
-        $sender = new SenderType($person, $addr, $profile, $parameters);
+        $senderProfile = new SenderProfile($profile, '1.0');
+        $parameters = new ParametersType(new ParameterType('bla', 'foo'));
+        $sender = new SenderType($senderProfile);
         $person2 = new PersonDataType($person, $addr);
         $recipientType = new RecipientType($person2, $parameters);
         $addMeta = new AdditionalMetaData(new AdditionalMetaDataSetType());
@@ -124,7 +153,7 @@ class Debug2Command extends Command
 
         // ---------------------------
         // DualDeliveryPreAddressingRequestType
-        $recipients = new Recipients(new Recipient('id', $recipientType));
+        $recipients = new Recipients([new Recipient('id', $recipientType)]);
         $request = new DualDeliveryPreAddressingRequestType($sender, $recipients, new PreMetaData('id'), $channels, '1.0');
         $response = $service->dualDeliveryPreAddressingRequestOperation($request);
         var_dump($response);

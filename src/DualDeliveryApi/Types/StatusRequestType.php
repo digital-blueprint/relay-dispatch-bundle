@@ -24,11 +24,13 @@ class StatusRequestType
     /**
      * @param ApplicationID $ApplicationID
      * @param string        $AppDeliveryID
+     * @param string        $DualDeliveryID
      */
-    public function __construct($ApplicationID, $ApplicationDeliveryID)
+    public function __construct($ApplicationID = null, $ApplicationDeliveryID, $DualDeliveryID = null)
     {
         $this->ApplicationID = $ApplicationID;
         $this->ApplicationDeliveryID = $ApplicationDeliveryID;
+        $this->DualDeliveryID = $DualDeliveryID;
     }
 
     /**

@@ -20,7 +20,7 @@ class RecipientType
      * @param PersonDataType $RecipientData
      * @param ParametersType $Parameters
      */
-    public function __construct($RecipientData, $Parameters)
+    public function __construct($RecipientData, $Parameters = null)
     {
         $this->RecipientData = $RecipientData;
         $this->Parameters = $Parameters;

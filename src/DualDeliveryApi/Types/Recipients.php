@@ -7,12 +7,12 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class Recipients
 {
     /**
-     * @var Recipient
+     * @var Recipient[]
      */
     protected $Recipient = null;
 
     /**
-     * @param Recipient $Recipient
+     * @param Recipient[] $Recipient
      */
     public function __construct($Recipient)
     {
@@ -20,7 +20,7 @@ class Recipients
     }
 
     /**
-     * @return Recipient
+     * @return Recipient[]
      */
     public function getRecipient()
     {
@@ -28,14 +28,10 @@ class Recipients
     }
 
     /**
-     * @param Recipient $Recipient
-     *
-     * @return Recipients
+     * @param Recipient[] $Recipient
      */
     public function setRecipient($Recipient)
     {
         $this->Recipient = $Recipient;
-
-        return $this;
     }
 }

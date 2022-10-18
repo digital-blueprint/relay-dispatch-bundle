@@ -12,25 +12,18 @@ class PersonNameType
     protected $GivenName = null;
 
     /**
-     * @var FamilyName
+     * @var string
      */
     protected $FamilyName = null;
 
     /**
-     * @var Affix
+     * @param string $GivenName
+     * @param string $FamilyName
      */
-    protected $Affix = null;
-
-    /**
-     * @param string     $GivenName
-     * @param FamilyName $FamilyName
-     * @param Affix      $Affix
-     */
-    public function __construct($GivenName, $FamilyName, $Affix)
+    public function __construct($GivenName, $FamilyName)
     {
         $this->GivenName = $GivenName;
         $this->FamilyName = $FamilyName;
-        $this->Affix = $Affix;
     }
 
     /**
@@ -54,7 +47,7 @@ class PersonNameType
     }
 
     /**
-     * @return FamilyName
+     * @return string
      */
     public function getFamilyName()
     {
@@ -62,33 +55,13 @@ class PersonNameType
     }
 
     /**
-     * @param FamilyName $FamilyName
+     * @param string $FamilyName
      *
      * @return PersonNameType
      */
     public function setFamilyName($FamilyName)
     {
         $this->FamilyName = $FamilyName;
-
-        return $this;
-    }
-
-    /**
-     * @return Affix
-     */
-    public function getAffix()
-    {
-        return $this->Affix;
-    }
-
-    /**
-     * @param Affix $Affix
-     *
-     * @return PersonNameType
-     */
-    public function setAffix($Affix)
-    {
-        $this->Affix = $Affix;
 
         return $this;
     }
