@@ -42,6 +42,16 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->cannotBeEmpty()
                 ->end()
+                ->arrayNode('campus_online')
+                    ->children()
+                        ->scalarNode('api_url')
+                        ->end()
+                        ->scalarNode('api_token')
+                        ->end()
+                        ->scalarNode('org_root_id')
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
             ->end();
 

@@ -24,7 +24,19 @@ services:
     tags: ['api_platform.item_data_provider']
     autowire: true
 
+  Dbp\Relay\DispatchBundle\DataProvider\GroupItemDataProvider:
+    autowire: true
+    autoconfigure: true
+
+  Dbp\Relay\DispatchBundle\DataProvider\GroupCollectionDataProvider:
+    autowire: true
+    autoconfigure: true
+
   Dbp\Relay\DispatchBundle\Service\DispatchService:
+    autowire: true
+    autoconfigure: true
+
+  Dbp\Relay\DispatchBundle\Service\GroupService:
     autowire: true
     autoconfigure: true
 

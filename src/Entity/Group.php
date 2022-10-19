@@ -17,7 +17,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"},
  *                 "parameters" = {
- *                     {"name" = "search", "in" = "query", "description" = "Search filter (partial, case-insensitive text search on 'name' attribute)", "type" = "string", "required" = false},
  *                     {"name" = "lang", "in" = "query", "description" = "Language of result", "type" = "string", "enum" = {"de", "en"}, "example" = "de"},
  *                 }
  *             }
