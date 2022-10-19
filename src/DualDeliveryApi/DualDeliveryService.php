@@ -280,7 +280,7 @@ class DualDeliveryService extends \SoapClient
     private $activeQuirks;
     private $origLocation;
 
-    private static function getQuirksForLocation(string $location)
+    private static function getQuirksForLocation(string $location): array
     {
         $host = parse_url($location, PHP_URL_HOST);
         if ($host === false) {
