@@ -8,6 +8,7 @@ use Dbp\CampusonlineApi\LegacyWebService\Api;
 use Dbp\CampusonlineApi\LegacyWebService\ApiException;
 use Dbp\CampusonlineApi\LegacyWebService\Organization\OrganizationUnitApi;
 use Dbp\Relay\DispatchBundle\Entity\Group;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
@@ -18,15 +19,24 @@ class GroupService implements LoggerAwareInterface
 
     private $config;
     private $api;
+    private $cachePool;
+    private $cacheTTL;
 
     public function __construct()
     {
         $this->logger = new NullLogger();
+        $this->cacheTTL = 60;
     }
 
     public function setConfig(array $config)
     {
         $this->config = $config;
+    }
+
+    public function setCache(?CacheItemPoolInterface $cachePool, int $ttl)
+    {
+        $this->cachePool = $cachePool;
+        $this->cacheTTL = $ttl;
     }
 
     private function getApi(): OrganizationUnitApi
@@ -36,7 +46,7 @@ class GroupService implements LoggerAwareInterface
             $baseUrl = $this->config['api_url'] ?? '';
             $rootOrgUnitId = $this->config['org_root_id'] ?? '';
 
-            $api = new Api($baseUrl, $accessToken, $rootOrgUnitId, $this->logger);
+            $api = new Api($baseUrl, $accessToken, $rootOrgUnitId, $this->logger, $this->cachePool, $this->cacheTTL);
             $this->api = $api->OrganizationUnit();
         }
 
