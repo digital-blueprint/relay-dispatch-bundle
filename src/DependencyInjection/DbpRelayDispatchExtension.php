@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
+use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Command\Debug2Command;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Dbp\Relay\DispatchBundle\Service\GroupService;
@@ -58,6 +59,9 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         $definition = $container->getDefinition(GroupService::class);
         $definition->addMethodCall('setConfig', [$mergedConfig['campus_online'] ?? []]);
         $definition->addMethodCall('setCache', [$groupCache, 3600]);
+
+        $definition = $container->getDefinition(AuthorizationService::class);
+        $definition->addMethodCall('setConfig', [$mergedConfig['authorization'] ?? []]);
     }
 
     /**

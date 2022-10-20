@@ -7,6 +7,7 @@ namespace Dbp\Relay\DispatchBundle\Service;
 use Dbp\CampusonlineApi\LegacyWebService\Api;
 use Dbp\CampusonlineApi\LegacyWebService\ApiException;
 use Dbp\CampusonlineApi\LegacyWebService\Organization\OrganizationUnitApi;
+use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Group;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerAwareInterface;
@@ -21,11 +22,13 @@ class GroupService implements LoggerAwareInterface
     private $api;
     private $cachePool;
     private $cacheTTL;
+    private $auth;
 
-    public function __construct()
+    public function __construct(AuthorizationService $auth)
     {
         $this->logger = new NullLogger();
         $this->cacheTTL = 60;
+        $this->auth = $auth;
     }
 
     public function setConfig(array $config)
@@ -73,9 +76,10 @@ class GroupService implements LoggerAwareInterface
     public function getGroups(array $options = []): array
     {
         $api = $this->getApi();
-        $paginator = $api->getOrganizationUnits($options);
+        $userGroupIds = $this->auth->getGroups();
         $groups = [];
-        foreach ($paginator->getItems() as $data) {
+        foreach ($userGroupIds as $identifier) {
+            $data = $api->getOrganizationUnitById($identifier, $options);
             $group = new Group();
             $group->setIdentifier($data->getIdentifier());
             $group->setName($data->getName());
