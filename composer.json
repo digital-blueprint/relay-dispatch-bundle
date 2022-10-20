@@ -10,7 +10,7 @@
         "api-platform/core": "^2.6",
         "dbp/campusonline-api": "^0.2.9",
         "dbp/relay-base-person-bundle": "^0.2.1",
-        "dbp/relay-core-bundle": "^0.1.44",
+        "dbp/relay-core-bundle": "dev-main as 0.1.44",
         "guzzlehttp/guzzle": "^7.0",
         "symfony/framework-bundle": "^5.2",
         "symfony/orm-pack": "^2.2",
@@ -21,6 +21,7 @@
         "friendsofphp/php-cs-fixer": "^3.0",
         "phpstan/phpstan": "^1.0.0",
         "phpstan/phpstan-phpunit": "^1.0.0",
+        "phpstan/phpstan-symfony": "^1.2",
         "phpunit/phpunit": "^9",
         "symfony/phpunit-bridge": "^5.2",
         "vimeo/psalm": "^4.2.1"
