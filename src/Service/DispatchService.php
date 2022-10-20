@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Service;
 
+use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
@@ -330,7 +331,10 @@ class DispatchService
 
         $request->setIdentifier((string) Uuid::v4());
         $request->setPersonIdentifier($personId);
-        $request->setDateCreated(new \DateTime('now'));
+        try {
+            $request->setDateCreated(new \DateTime('now', new DateTimeZone('UTC')));
+        } catch (\Exception $e) {
+        }
 
         try {
             $this->em->persist($request);
@@ -365,7 +369,10 @@ class DispatchService
         $requestRecipient->setIdentifier((string) Uuid::v4());
         $requestRecipient->setRequest($request);
         $requestRecipient->setRecipientId('');
-        $requestRecipient->setDateCreated(new \DateTime('now'));
+        try {
+            $requestRecipient->setDateCreated(new \DateTime('now', new DateTimeZone('UTC')));
+        } catch (\Exception $e) {
+        }
 
         try {
             $this->em->persist($requestRecipient);
@@ -411,11 +418,14 @@ class DispatchService
         $requestFile->setRequest($request);
 
         $requestFile->setIdentifier((string) Uuid::v4());
-        $requestFile->setDateCreated(new \DateTime('now'));
         $requestFile->setName($uploadedFile->getClientOriginalName());
         $requestFile->setData($data);
         $requestFile->setFileFormat($uploadedFile->getClientMimeType());
         $requestFile->setContentSize($uploadedFile->getSize());
+        try {
+            $requestFile->setDateCreated(new \DateTime('now', new DateTimeZone('UTC')));
+        } catch (\Exception $e) {
+        }
 
         try {
             $this->em->persist($requestFile);
@@ -437,7 +447,11 @@ class DispatchService
         $requestStatusChange->setRequest($request);
 
         $requestStatusChange->setIdentifier((string) Uuid::v4());
-        $requestStatusChange->setDateCreated(new \DateTime('now'));
+        try {
+            $requestStatusChange->setDateCreated(new \DateTime('now', new DateTimeZone('UTC')));
+        } catch (\Exception $e) {
+        }
+
         $requestStatusChange->setStatusType($statusType);
         $requestStatusChange->setDescription($description);
 
@@ -464,7 +478,11 @@ class DispatchService
 
     public function submitRequest(Request $request)
     {
-        $request->setDateSubmitted(new \DateTime('now'));
+        try {
+            $request->setDateSubmitted(new \DateTime('now', new DateTimeZone('UTC')));
+        } catch (\Exception $e) {
+            $request->setDateSubmitted(new \DateTime('now'));
+        }
         $this->updateRequestForCurrentPerson($request);
 
         $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_SUBMITTED, 'Request submitted');
