@@ -172,12 +172,12 @@ class RequestFile
         $this->identifier = $identifier;
     }
 
-    public function getDateCreated(): \DateTime
+    public function getDateCreated(): \DateTimeInterface
     {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(\DateTime $dateCreated): void
+    public function setDateCreated(\DateTimeInterface $dateCreated): void
     {
         $this->dateCreated = $dateCreated;
     }
