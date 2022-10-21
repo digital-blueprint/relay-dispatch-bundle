@@ -274,7 +274,10 @@ class Request
 
     public function getDateCreated(): \DateTimeInterface
     {
-        return $this->dateCreated;
+        /** @var \DateTime $date */
+        $date = $this->dateCreated;
+
+        return $date->setTimezone(new \DateTimeZone('UTC'));
     }
 
     public function setDateCreated(\DateTimeInterface $dateCreated): void
@@ -329,7 +332,10 @@ class Request
 
     public function getDateSubmitted(): ?\DateTimeInterface
     {
-        return $this->dateSubmitted;
+        /** @var \DateTime $date */
+        $date = $this->dateSubmitted;
+
+        return $date === null ? null : $date->setTimezone(new \DateTimeZone('UTC'));
     }
 
     public function isSubmitted(): bool

@@ -110,7 +110,10 @@ class RequestStatusChange
 
     public function getDateCreated(): \DateTimeInterface
     {
-        return $this->dateCreated;
+        /** @var \DateTime $date */
+        $date = $this->dateCreated;
+
+        return $date->setTimezone(new \DateTimeZone('UTC'));
     }
 
     public function setDateCreated(\DateTimeInterface $dateCreated): void
