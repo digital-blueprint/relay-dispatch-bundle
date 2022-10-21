@@ -17,7 +17,6 @@ use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 //use Dbp\Relay\DispatchBundle\SoapClient\ApplicationID;
 //use Dbp\Relay\DispatchBundle\SoapClient\DDPollingWebService10_2Service;
 //use Dbp\Relay\DispatchBundle\SoapClient\StatusRequestType;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use GuzzleHttp\Exception\RequestException;
@@ -207,24 +206,6 @@ class DispatchService
     }
 
     /**
-     * Fetches all expired Request entities.
-     *
-     * @return Request[]
-     */
-    public function getExpiredRequests(): array
-    {
-        $expr = Criteria::expr();
-        $criteria = Criteria::create();
-        $criteria->where($expr->lt('validUntil', new \DateTime('now')));
-
-        $result = $this->em
-            ->getRepository(Request::class)
-            ->matching($criteria);
-
-        return $result->getValues();
-    }
-
-    /**
      * Fetches a Request for the current person.
      */
     public function getRequestByIdForCurrentPerson(string $identifier): Request
@@ -332,7 +313,7 @@ class DispatchService
         $request->setIdentifier((string) Uuid::v4());
         $request->setPersonIdentifier($personId);
         try {
-            $request->setDateCreated(new \DateTime('now', new DateTimeZone('UTC')));
+            $request->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {
         }
 
@@ -370,7 +351,7 @@ class DispatchService
         $requestRecipient->setRequest($request);
         $requestRecipient->setRecipientId('');
         try {
-            $requestRecipient->setDateCreated(new \DateTime('now', new DateTimeZone('UTC')));
+            $requestRecipient->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {
         }
 
@@ -423,7 +404,7 @@ class DispatchService
         $requestFile->setFileFormat($uploadedFile->getClientMimeType());
         $requestFile->setContentSize($uploadedFile->getSize());
         try {
-            $requestFile->setDateCreated(new \DateTime('now', new DateTimeZone('UTC')));
+            $requestFile->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {
         }
 
@@ -448,7 +429,7 @@ class DispatchService
 
         $requestStatusChange->setIdentifier((string) Uuid::v4());
         try {
-            $requestStatusChange->setDateCreated(new \DateTime('now', new DateTimeZone('UTC')));
+            $requestStatusChange->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {
         }
 
@@ -479,9 +460,9 @@ class DispatchService
     public function submitRequest(Request $request)
     {
         try {
-            $request->setDateSubmitted(new \DateTime('now', new DateTimeZone('UTC')));
+            $request->setDateSubmitted(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {
-            $request->setDateSubmitted(new \DateTime('now'));
+            $request->setDateSubmitted(new \DateTimeImmutable('now'));
         }
         $this->updateRequestForCurrentPerson($request);
 

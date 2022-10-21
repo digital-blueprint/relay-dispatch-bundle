@@ -98,7 +98,7 @@ class RequestRecipient
      * @ApiProperty(iri="https://schema.org/dateCreated")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     private $dateCreated;
 
@@ -226,7 +226,7 @@ class RequestRecipient
      * I could not find an Assert that doesn't cause an error to do proper checks
      * @Assert\NotBlank
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     private $birthDate;
 
@@ -240,12 +240,12 @@ class RequestRecipient
         $this->identifier = $identifier;
     }
 
-    public function getDateCreated(): \DateTime
+    public function getDateCreated(): \DateTimeInterface
     {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(\DateTime $dateCreated): void
+    public function setDateCreated(\DateTimeInterface $dateCreated): void
     {
         $this->dateCreated = $dateCreated;
     }
@@ -350,12 +350,12 @@ class RequestRecipient
         $this->buildingNumber = $buildingNumber;
     }
 
-    public function getBirthDate(): \DateTime
+    public function getBirthDate(): \DateTimeInterface
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTime $birthDate): void
+    public function setBirthDate(\DateTimeInterface $birthDate): void
     {
         $this->birthDate = $birthDate;
     }

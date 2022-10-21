@@ -97,7 +97,7 @@ class RequestFile
      * @ApiProperty(iri="https://schema.org/dateCreated")
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     private $dateCreated;
 

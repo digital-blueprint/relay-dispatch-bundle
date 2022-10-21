@@ -121,7 +121,7 @@ class Request
      * @ApiProperty(iri="https://schema.org/dateCreated")
      * @Groups({"DispatchRequest:output"})
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     private $dateCreated;
 
@@ -165,7 +165,7 @@ class Request
      * @ApiProperty
      * @Groups({"DispatchRequest:output"})
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     private $dateSubmitted;
 
@@ -272,12 +272,12 @@ class Request
         $this->identifier = $identifier;
     }
 
-    public function getDateCreated(): \DateTime
+    public function getDateCreated(): \DateTimeInterface
     {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(\DateTime $dateCreated): void
+    public function setDateCreated(\DateTimeInterface $dateCreated): void
     {
         $this->dateCreated = $dateCreated;
     }
@@ -327,7 +327,7 @@ class Request
         return $this->statusChanges;
     }
 
-    public function getDateSubmitted(): ?\DateTime
+    public function getDateSubmitted(): ?\DateTimeInterface
     {
         return $this->dateSubmitted;
     }
@@ -337,7 +337,7 @@ class Request
         return $this->dateSubmitted !== null;
     }
 
-    public function setDateSubmitted(\DateTime $dateSubmitted): void
+    public function setDateSubmitted(\DateTimeInterface $dateSubmitted): void
     {
         $this->dateSubmitted = $dateSubmitted;
     }

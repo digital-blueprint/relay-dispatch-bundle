@@ -57,7 +57,7 @@ class RequestStatusChange
      * @ApiProperty(iri="https://schema.org/dateCreated")
      * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     private $dateCreated;
 
@@ -108,12 +108,12 @@ class RequestStatusChange
         $this->identifier = $identifier;
     }
 
-    public function getDateCreated(): \DateTime
+    public function getDateCreated(): \DateTimeInterface
     {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(\DateTime $dateCreated): void
+    public function setDateCreated(\DateTimeInterface $dateCreated): void
     {
         $this->dateCreated = $dateCreated;
     }
