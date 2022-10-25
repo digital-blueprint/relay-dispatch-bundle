@@ -6,3 +6,4 @@
 /_coverage
 *.key
 *.p12
+*.pem

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Entity;
+date_default_timezone_set("UTC");
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -242,10 +243,7 @@ class RequestRecipient
 
     public function getDateCreated(): \DateTimeInterface
     {
-        /** @var \DateTime $date */
-        $date = $this->dateCreated;
-
-        return $date->setTimezone(new \DateTimeZone('UTC'));
+        return $this->dateCreated;
     }
 
     public function setDateCreated(\DateTimeInterface $dateCreated): void
