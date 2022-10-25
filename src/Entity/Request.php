@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Entity;
-date_default_timezone_set("UTC");
+
+date_default_timezone_set('UTC');
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
