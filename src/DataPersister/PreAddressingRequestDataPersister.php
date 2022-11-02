@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DataPersister;
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
-use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
 class PreAddressingRequestDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
