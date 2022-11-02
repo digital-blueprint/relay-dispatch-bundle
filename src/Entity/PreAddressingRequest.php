@@ -12,6 +12,32 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *     collectionOperations={
+ *         "post" = {
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "path" = "/dispatch/pre-addressing-requests",
+ *             "openapi_context" = {
+ *                 "tags" = {"Dispatch"}
+ *             },
+ *             "openapi_context" = {
+ *                 "tags" = {"Dispatch"},
+ *                 "requestBody" = {
+ *                     "content" = {
+ *                         "application/json" = {
+ *                             "schema" = {"type" = "object"},
+ *                             "example" = {
+ *                                 "requests": [
+ *                                     {
+ *                                       "givenName": "Max",
+ *                                       "familyName": "Mustermann",
+ *                                       "birthDate": "1980-01-01"
+ *                                     }
+ *                                 ]
+ *                             },
+ *                         }
+ *                     }
+ *                 },
+ *             }
+ *         },
  *         "get" = {
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
  *             "path" = "/dispatch/pre-addressing-requests",
@@ -56,7 +82,7 @@ class PreAddressingRequest
 
     public function __construct()
     {
-        $this->recipients = new ArrayCollection();
+//        $this->recipients = new ArrayCollection();
     }
 
     public function getIdentifier(): string
