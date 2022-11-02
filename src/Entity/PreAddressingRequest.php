@@ -25,12 +25,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                         "application/json" = {
  *                             "schema" = {"type" = "object"},
  *                             "example" = {
- *                                 "requests": [
- *                                     {
- *                                       "givenName": "Max",
- *                                       "familyName": "Mustermann",
- *                                       "birthDate": "1980-01-01"
- *                                     }
+ *                                 "requests" = [
+ *                                 {
+ *                                     "givenName" = "Max",
+ *                                     "familyName" = "Mustermann",
+ *                                     "birthDate" = "1980-01-01"
+ *                                 }
  *                                 ]
  *                             },
  *                         }
