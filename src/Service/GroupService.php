@@ -78,8 +78,8 @@ class GroupService implements LoggerAwareInterface
         $api = $this->getApi();
         $userGroupIds = $this->auth->getGroups();
         $groups = [];
-        foreach ($userGroupIds as $identifier) {
-            $data = $api->getOrganizationUnitById($identifier, $options);
+        $paginator = $api->getOrganizationUnitsById($userGroupIds, $options);
+        foreach($paginator->getItems() as $data) {
             $group = new Group();
             $group->setIdentifier($data->getIdentifier());
             $group->setName($data->getName());
