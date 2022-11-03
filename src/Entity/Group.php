@@ -15,10 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "path" = "/dispatch/groups",
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
  *             "openapi_context" = {
- *                 "tags" = {"Dispatch"},
- *                 "parameters" = {
- *                     {"name" = "lang", "in" = "query", "description" = "Language of result", "type" = "string", "enum" = {"de", "en"}, "example" = "de"},
- *                 }
+ *                 "tags" = {"Dispatch"}
  *             }
  *         }
  *     },
@@ -29,8 +26,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"},
  *                 "parameters" = {
- *                     {"name" = "identifier", "in" = "path", "description" = "Resource identifier", "required" = true, "type" = "string", "example" = "1190"},
- *                     {"name" = "lang", "in" = "query", "description" = "Language of result", "type" = "string", "enum" = {"de", "en"}, "example" = "de"},
+ *                     {"name" = "identifier", "in" = "path", "description" = "Resource identifier", "required" = true, "type" = "string", "example" = "1190"}
  *                 }
  *             }
  *         },

@@ -8,7 +8,6 @@ use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Command\Debug2Command;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
-use Dbp\Relay\DispatchBundle\Service\GroupService;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -50,15 +49,6 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
 
         $definition = $container->getDefinition(Debug2Command::class);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
-
-        $groupCache = $container->register('dbp.relay.cache.dispatch.groups', FilesystemAdapter::class);
-        $groupCache->setArguments(['dispatch-groups', 60, '%kernel.cache_dir%/dbp/dispatch-groups']);
-        $groupCache->setPublic(true);
-        $groupCache->addTag('cache.pool');
-
-        $definition = $container->getDefinition(GroupService::class);
-        $definition->addMethodCall('setConfig', [$mergedConfig['campus_online'] ?? []]);
-        $definition->addMethodCall('setCache', [$groupCache, 3600]);
 
         $definition = $container->getDefinition(AuthorizationService::class);
         $definition->addMethodCall('setConfig', [$mergedConfig['authorization'] ?? []]);

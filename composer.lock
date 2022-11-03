@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0714ec7b55c9525a126ad1637324c1f2",
+    "content-hash": "2479d80c160944cc427aa13aad3bc8b2",
     "packages": [
         {
             "name": "api-platform/core",
@@ -205,6 +205,55 @@
             "time": "2022-11-03T10:50:32+00:00"
         },
         {
+            "name": "dbp/relay-base-organization-bundle",
+            "version": "v0.1.10",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.tugraz.at/dbp/relay/dbp-relay-base-organization-bundle",
+                "reference": "96afa60670b4effcab975e79488640d5de47164c"
+            },
+            "require": {
+                "api-platform/core": "^2.6.3",
+                "dbp/relay-core-bundle": "^0.1.38",
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.0",
+                "nelmio/cors-bundle": "^2.1.0",
+                "php": ">=7.3",
+                "phpdocumentor/reflection-docblock": "^3.0 || ^4.0 || ^5.0",
+                "symfony/config": "^5.2",
+                "symfony/expression-language": "^5.2",
+                "symfony/framework-bundle": "^5.2",
+                "symfony/security-bundle": "^5.2",
+                "symfony/security-core": "^5.2",
+                "symfony/security-guard": "^5.2",
+                "symfony/twig-bundle": "^5.2",
+                "symfony/validator": "^5.2",
+                "symfony/yaml": "^5.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpstan/phpstan": "^1.0.0",
+                "phpstan/phpstan-phpunit": "^1.0.0",
+                "phpunit/phpunit": "^9",
+                "symfony/browser-kit": "^5.2",
+                "symfony/http-client": "^5.2",
+                "symfony/monolog-bundle": "^3.7",
+                "symfony/phpunit-bridge": "^5.2",
+                "vimeo/psalm": "^4.4"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Dbp\\Relay\\BaseOrganizationBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "time": "2022-10-27T09:36:22+00:00"
+        },
+        {
             "name": "dbp/relay-base-person-bundle",
             "version": "v0.2.4",
             "source": {
@@ -259,7 +308,7 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.tugraz.at/dbp/relay/dbp-relay-core-bundle",
-                "reference": "4ee2696ed3fb20b27e9659b650154e67d365d6f1"
+                "reference": "227239bebba7645338e4c445ae399ada21b92ee4"
             },
             "require": {
                 "api-platform/core": "^2.6.8 <2.7.0",
@@ -323,7 +372,7 @@
                 "AGPL-3.0-or-later"
             ],
             "description": "The core bundle of the Relay API gateway",
-            "time": "2022-10-20T13:14:29+00:00"
+            "time": "2022-11-02T09:57:39+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -11365,5 +11414,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }

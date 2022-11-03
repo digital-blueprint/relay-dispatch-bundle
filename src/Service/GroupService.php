@@ -4,56 +4,27 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Service;
 
-use Dbp\CampusonlineApi\LegacyWebService\Api;
 use Dbp\CampusonlineApi\LegacyWebService\ApiException;
-use Dbp\CampusonlineApi\LegacyWebService\Organization\OrganizationUnitApi;
+use Dbp\Relay\BaseOrganizationBundle\API\OrganizationProviderInterface;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Group;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\NullLogger;
 
 class GroupService implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    private $config;
-    private $api;
-    private $cachePool;
-    private $cacheTTL;
+    /** @var AuthorizationService */
     private $auth;
 
-    public function __construct(AuthorizationService $auth)
+    /** @var OrganizationProviderInterface */
+    private $organizationProvider;
+
+    public function __construct(AuthorizationService $auth, OrganizationProviderInterface $organizationProvider)
     {
-        $this->logger = new NullLogger();
-        $this->cacheTTL = 60;
         $this->auth = $auth;
-    }
-
-    public function setConfig(array $config)
-    {
-        $this->config = $config;
-    }
-
-    public function setCache(?CacheItemPoolInterface $cachePool, int $ttl)
-    {
-        $this->cachePool = $cachePool;
-        $this->cacheTTL = $ttl;
-    }
-
-    private function getApi(): OrganizationUnitApi
-    {
-        if ($this->api === null) {
-            $accessToken = $this->config['api_token'] ?? '';
-            $baseUrl = $this->config['api_url'] ?? '';
-            $rootOrgUnitId = $this->config['org_root_id'] ?? '';
-
-            $api = new Api($baseUrl, $accessToken, $rootOrgUnitId, $this->logger, $this->cachePool, $this->cacheTTL);
-            $this->api = $api->OrganizationUnit();
-        }
-
-        return $this->api;
+        $this->organizationProvider = $organizationProvider;
     }
 
     /**
@@ -61,11 +32,11 @@ class GroupService implements LoggerAwareInterface
      */
     public function getGroupById(string $identifier, array $options = []): Group
     {
-        $api = $this->getApi();
-        $data = $api->getOrganizationUnitById($identifier, $options);
+        $orgUnit = $this->organizationProvider->getOrganizationById($identifier, $options);
+
         $group = new Group();
-        $group->setIdentifier($data->getIdentifier());
-        $group->setName($data->getName());
+        $group->setIdentifier($orgUnit->getIdentifier());
+        $group->setName($orgUnit->getName());
 
         return $group;
     }
@@ -73,16 +44,17 @@ class GroupService implements LoggerAwareInterface
     /**
      * @throws ApiException
      */
-    public function getGroups(array $options = []): array
+    public function getGroups(int $currentPageNumber, int $maxNumItemsPerPage, array $options = []): array
     {
-        $api = $this->getApi();
-        $userGroupIds = $this->auth->getGroups();
+        $options['page'] = $currentPageNumber;
+        $options['perPage'] = $maxNumItemsPerPage;
+        $options['identifiers'] = $this->auth->getGroups();
+
         $groups = [];
-        $paginator = $api->getOrganizationUnitsById($userGroupIds, $options);
-        foreach($paginator->getItems() as $data) {
+        foreach ($this->organizationProvider->getOrganizations($options)->getItems() as $orgUnit) {
             $group = new Group();
-            $group->setIdentifier($data->getIdentifier());
-            $group->setName($data->getName());
+            $group->setIdentifier($orgUnit->getIdentifier());
+            $group->setName($orgUnit->getName());
             $groups[] = $group;
         }
 
