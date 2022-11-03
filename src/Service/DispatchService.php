@@ -8,6 +8,22 @@ use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AbstractAddressType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AbstractPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannels;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannelSetType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData as PreMetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParametersType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
+use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
@@ -66,6 +82,11 @@ class DispatchService
     /**
      * @var string
      */
+    private $baseUrl;
+
+    /**
+     * @var string
+     */
     private $deliveryRequestUrl;
 
     /**
@@ -77,6 +98,11 @@ class DispatchService
      * @var string
      */
     private $statusRequestUrl;
+
+    /**
+     * @var DualDeliveryService|null
+     */
+    private $dualDeliveryService = null;
 
     public function __construct(
         PersonProviderInterface $personProvider,
@@ -95,6 +121,7 @@ class DispatchService
         $this->senderProfile = $config['sender_profile'] ?? '';
         $this->certPassword = $config['cert_password'] ?? '';
         $this->cert = $config['cert'] ?? '';
+        $this->baseUrl = $config['base_url'];
         $this->deliveryRequestUrl = $config['base_url'].$config['delivery_request_url_part'];
         $this->preAddressingRequestUrl = $config['base_url'].$config['pre_addressing_request_url_part'];
         $this->statusRequestUrl = $config['base_url'].$config['status_request_url_part'];
@@ -912,5 +939,45 @@ class DispatchService
         $xml->appendChild($xml_soapenvEnvelope);
 
         return $xml->saveXML();
+    }
+
+    public function getDualDeliveryService(): DualDeliveryService
+    {
+        if ($this->dualDeliveryService instanceof DualDeliveryService) {
+            return $this->dualDeliveryService;
+        }
+
+        $certFileName = Tools::getTempFileName('.pem');
+        file_put_contents($certFileName, $this->cert);
+        $this->dualDeliveryService = new DualDeliveryService($this->baseUrl, [$certFileName, $this->certPassword], true);
+
+        return $this->dualDeliveryService;
+    }
+
+    public function doPreAddressingSoapRequest(PreAddressingRequest $request)
+    {
+        $service = $this->getDualDeliveryService();
+
+        $person = new AbstractPersonType('bla', 'id');
+        $addr = new AbstractAddressType($request->getIdentifier());
+        $senderProfile = new SenderProfile($this->senderProfile, '1.0');
+        $parameters = new ParametersType(new ParameterType('bla', 'foo'));
+        $sender = new SenderType($senderProfile);
+        $person2 = new PersonDataType($person, $addr);
+        $recipientType = new RecipientType($person2, $parameters);
+
+        $channels = new DeliveryChannels(new DeliveryChannelSetType());
+
+        $recipients = new Recipients([new Recipient('id', $recipientType)]);
+        $request = new DualDeliveryPreAddressingRequestType(
+            $sender,
+            $recipients,
+            new PreMetaData('id'),
+            $channels,
+            '1.0'
+        );
+        $response = $service->dualDeliveryPreAddressingRequestOperation($request);
+
+        dump($response);
     }
 }
