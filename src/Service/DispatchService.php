@@ -9,15 +9,17 @@ use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AbstractAddressType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AbstractPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannels;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannelSetType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData as PreMetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ErrorType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParametersType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
@@ -954,30 +956,55 @@ class DispatchService
         return $this->dualDeliveryService;
     }
 
-    public function doPreAddressingSoapRequest(PreAddressingRequest $request)
+    public function doPreAddressingSoapRequest(PreAddressingRequest &$preAddressingRequest)
     {
         $service = $this->getDualDeliveryService();
 
-        $person = new AbstractPersonType('bla', 'id');
-        $addr = new AbstractAddressType($request->getIdentifier());
+        $personName = new PersonNameType($preAddressingRequest->getGivenName(), $preAddressingRequest->getFamilyName());
+        $physicalPerson = new PhysicalPersonType($personName, $preAddressingRequest->getBirthDate()->format('Y-m-d'));
         $senderProfile = new SenderProfile($this->senderProfile, '1.0');
-        $parameters = new ParametersType(new ParameterType('bla', 'foo'));
         $sender = new SenderType($senderProfile);
-        $person2 = new PersonDataType($person, $addr);
-        $recipientType = new RecipientType($person2, $parameters);
+        $recipientData = new PersonDataType($physicalPerson);
+//        $parameters = new ParametersType(new ParameterType('bla', 'foo'));
+        $recipientType = new RecipientType($recipientData);
 
-        $channels = new DeliveryChannels(new DeliveryChannelSetType());
+//        $channels = new DeliveryChannels(new DeliveryChannelSetType());
+        $channels = null;
 
-        $recipients = new Recipients([new Recipient('id', $recipientType)]);
+        $recipients = new Recipients([new Recipient($preAddressingRequest->getIdentifier(), $recipientType)]);
+        $testCase = false;
+        $processingProfile = new ProcessingProfile('ZuseDD', '1.1');
         $request = new DualDeliveryPreAddressingRequestType(
             $sender,
             $recipients,
-            new PreMetaData('id'),
+            new MetaData(
+                $preAddressingRequest->getIdentifier(),
+                null,
+                null,
+                $testCase,
+                $processingProfile,
+                false,
+                true),
             $channels,
             '1.0'
         );
         $response = $service->dualDeliveryPreAddressingRequestOperation($request);
 
         dump($response);
+//        dump($service->__getLastRequest());
+
+        if ($response->getStatus()->getText() !== 'SUCCESS') {
+            $errors = $response->getErrors()->getError();
+            $errorTexts = [];
+
+            foreach ($errors as $error) {
+                /* @var ErrorType $error */
+                $errorTexts[] = $error->getInfo();
+            }
+
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'PreAddressing request failed!', 'dispatch:request-pre-addressing-failed', ['message' => implode(', ', $errorTexts)]);
+        }
+
+        $preAddressingRequest->setDualDeliveryID($response->getDualDeliveryID());
     }
 }

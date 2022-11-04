@@ -108,6 +108,13 @@ class PreAddressingRequest
      */
     private $birthDate;
 
+    /**
+     * @Groups({"DispatchPreAddressingRequest:output"})
+     *
+     * @var string
+     */
+    private $dualDeliveryID;
+
     public function __construct()
     {
 //        $this->recipients = new ArrayCollection();
@@ -151,5 +158,15 @@ class PreAddressingRequest
     public function setBirthDate(\DateTimeInterface $birthDate): void
     {
         $this->birthDate = $birthDate;
+    }
+
+    public function getDualDeliveryID(): string
+    {
+        return $this->dualDeliveryID;
+    }
+
+    public function setDualDeliveryID(string $dualDeliveryID): void
+    {
+        $this->dualDeliveryID = $dualDeliveryID;
     }
 }
