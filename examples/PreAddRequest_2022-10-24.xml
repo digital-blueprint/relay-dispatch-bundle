@@ -1,43 +1,50 @@
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-  <soapenv:Body>
+    <soapenv:Body>
 
-    <ns3:DualDeliveryPreAddressingRequest xmlns="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ns2="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:ns3="http://reference.e-government.gv.at/namespace/zustellung/dual_pa/20130121#" xmlns:ns4="http://www.w3.org/2000/09/xmldsig#" xmlns:ns5="http://www.ebinterface.at/schema/4p0/" xmlns:ns6="http://www.ebinterface.at/schema/4p0/extensions/sv" xmlns:ns7="http://www.ebinterface.at/schema/4p0/extensions/ext" xmlns:ns8="uri:general.additional.params/20130121#" version="1.1">
-      <Sender>
-        <SenderProfile version="1.0">TU_GRAZ</SenderProfile>
-      </Sender>
-      <ns3:Recipients>
-        <ns3:Recipient>
-          <RecipientID>1</RecipientID>
-          <Recipient>
-            <RecipientData>
-              <ns2:PhysicalPerson>
-                <ns2:Name>
-                  <ns2:GivenName>Wolfgang</ns2:GivenName>
-                  <ns2:FamilyName>Diebold</ns2:FamilyName>
-                </ns2:Name>
-                <ns2:DateOfBirth>1970-06-04</ns2:DateOfBirth>
-              </ns2:PhysicalPerson>
-            </RecipientData>
-          </Recipient>
-        </ns3:Recipient>
-      </ns3:Recipients>
-      <ns3:MetaData>
-        <AppDeliveryID>CPB_PreAddressing_${=java.util.UUID.randomUUID()}</AppDeliveryID>
-        <AdditionalMetaData>
-          <PropertyValueMetaDataSet>
-            <Parameter>
-              <Property>CampaignId2</Property>
-              <Value>Campaign 1</Value>
-            </Parameter>
-          </PropertyValueMetaDataSet>
-        </AdditionalMetaData>
-        <TestCase>true</TestCase>
-        <ProcessingProfile version="1.1">ZuseDD</ProcessingProfile>
-        <Asynchronous>false</Asynchronous>
-        <ns3:PreCreateSendings>true</ns3:PreCreateSendings>
-      </ns3:MetaData>
-    </ns3:DualDeliveryPreAddressingRequest>
+        <ns3:DualDeliveryPreAddressingRequest
+                xmlns="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#"
+                xmlns:ns2="http://reference.e-government.gv.at/namespace/persondata/20130121#"
+                xmlns:ns3="http://reference.e-government.gv.at/namespace/zustellung/dual_pa/20130121#"
+                xmlns:ns4="http://www.w3.org/2000/09/xmldsig#" xmlns:ns5="http://www.ebinterface.at/schema/4p0/"
+                xmlns:ns6="http://www.ebinterface.at/schema/4p0/extensions/sv"
+                xmlns:ns7="http://www.ebinterface.at/schema/4p0/extensions/ext"
+                xmlns:ns8="uri:general.additional.params/20130121#" version="1.1">
+            <Sender>
+                <SenderProfile version="1.0">TU_GRAZ</SenderProfile>
+            </Sender>
+            <ns3:Recipients>
+                <ns3:Recipient>
+                    <RecipientID>1</RecipientID>
+                    <Recipient>
+                        <RecipientData>
+                            <ns2:PhysicalPerson>
+                                <ns2:Name>
+                                    <ns2:GivenName>Wolfgang</ns2:GivenName>
+                                    <ns2:FamilyName>Diebold</ns2:FamilyName>
+                                </ns2:Name>
+                                <ns2:DateOfBirth>1970-06-04</ns2:DateOfBirth>
+                            </ns2:PhysicalPerson>
+                        </RecipientData>
+                    </Recipient>
+                </ns3:Recipient>
+            </ns3:Recipients>
+            <ns3:MetaData>
+                <AppDeliveryID>CPB_PreAddressing_${=java.util.UUID.randomUUID()}</AppDeliveryID>
+                <AdditionalMetaData>
+                    <PropertyValueMetaDataSet>
+                        <Parameter>
+                            <Property>CampaignId2</Property>
+                            <Value>Campaign 1</Value>
+                        </Parameter>
+                    </PropertyValueMetaDataSet>
+                </AdditionalMetaData>
+                <TestCase>true</TestCase>
+                <ProcessingProfile version="1.1">ZuseDD</ProcessingProfile>
+                <Asynchronous>false</Asynchronous>
+                <ns3:PreCreateSendings>true</ns3:PreCreateSendings>
+            </ns3:MetaData>
+        </ns3:DualDeliveryPreAddressingRequest>
 
 
-  </soapenv:Body>
+    </soapenv:Body>
 </soapenv:Envelope>
