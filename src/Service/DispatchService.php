@@ -1006,5 +1006,7 @@ class DispatchService
         }
 
         $preAddressingRequest->setDualDeliveryID($response->getDualDeliveryID());
+
+        // TODO: Do status request to get result?
     }
 }
