@@ -7,20 +7,20 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class ErrorsType
 {
     /**
-     * @var ErrorType
+     * @var ErrorType[]
      */
     protected $Error = null;
 
     /**
-     * @param ErrorType $Error
+     * @param ErrorType[] $Error
      */
     public function __construct($Error)
     {
-        $this->Error = $Error;
+        $this->Error[] = $Error;
     }
 
     /**
-     * @return ErrorType
+     * @return ErrorType[]
      */
     public function getError()
     {
@@ -28,7 +28,7 @@ class ErrorsType
     }
 
     /**
-     * @param ErrorType $Error
+     * @param ErrorType[] $Error
      *
      * @return ErrorsType
      */
