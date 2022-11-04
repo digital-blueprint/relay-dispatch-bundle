@@ -994,11 +994,11 @@ class DispatchService
 //        dump($service->__getLastRequest());
 
         if ($response->getStatus()->getText() !== 'SUCCESS') {
+            /* @var ErrorType[] $errors */
             $errors = $response->getErrors()->getError();
             $errorTexts = [];
 
             foreach ($errors as $error) {
-                /* @var ErrorType $error */
                 $errorTexts[] = $error->getInfo();
             }
 
