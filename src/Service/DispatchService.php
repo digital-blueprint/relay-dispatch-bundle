@@ -990,8 +990,9 @@ class DispatchService
         );
         $response = $service->dualDeliveryPreAddressingRequestOperation($request);
 
-        dump($response);
-//        dump($service->__getLastRequest());
+//        dump($response);
+//        dump($service->getPrettyLastRequest());
+//        dump($service->getPrettyLastResponse());
 
         if ($response->getStatus()->getText() !== 'SUCCESS') {
             /* @var ErrorType[] $errors */
@@ -1005,8 +1006,11 @@ class DispatchService
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'PreAddressing request failed!', 'dispatch:request-pre-addressing-failed', ['message' => implode(', ', $errorTexts)]);
         }
 
-        $preAddressingRequest->setDualDeliveryID($response->getDualDeliveryID());
+        // TODO: Respond in another way?
+        if ($response->getAddressingResults()->getAddressingResult() === null) {
+            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'Person was not found!', 'dispatch:request-pre-addressing-not-found', ['message' => 'No addressing results found!']);
+        }
 
-        // TODO: Do status request to get result?
+        $preAddressingRequest->setDualDeliveryID($response->getAddressingResults()->getAddressingResult()[0]->getDualDeliveryID());
     }
 }
