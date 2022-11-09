@@ -14,7 +14,7 @@ class DualDeliveryRequestType
     protected $Sender = null;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $RecipientID = null;
 
@@ -29,7 +29,7 @@ class DualDeliveryRequestType
     protected $MetaData = null;
 
     /**
-     * @var DeliveryChannels
+     * @var DeliveryChannels|null
      */
     protected $DeliveryChannels = null;
 
@@ -45,10 +45,10 @@ class DualDeliveryRequestType
 
     /**
      * @param SenderType       $Sender
-     * @param string           $RecipientID
+     * @param string|null           $RecipientID
      * @param RecipientType    $Recipient
      * @param MetaData         $MetaData
-     * @param DeliveryChannels $DeliveryChannels
+     * @param DeliveryChannels|null $DeliveryChannels
      * @param PayloadType      $Payload
      * @param string           $version
      */
@@ -84,7 +84,7 @@ class DualDeliveryRequestType
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRecipientID()
     {
@@ -92,7 +92,7 @@ class DualDeliveryRequestType
     }
 
     /**
-     * @param string $RecipientID
+     * @param string|null $RecipientID
      *
      * @return DualDeliveryRequestType
      */

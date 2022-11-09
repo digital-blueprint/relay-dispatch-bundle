@@ -59,11 +59,11 @@ class DebugCommand extends Command
             case 'do-api-dualdelivery-request':
                 $output->writeln('Do API request...');
                 $request = $this->dispatchService->getRequestById($identifier);
-                $xmlString = $this->dispatchService->generateRequestAPIXML($request);
 
-//                echo $xmlString;
+                $response = $this->dispatchService->doDualDeliveryRequestSoapRequest($request);
 
-                $response = $this->dispatchService->doDualDeliveryRequestAPIRequest($xmlString);
+//                $xmlString = $this->dispatchService->generateRequestAPIXML($request);
+//                $response = $this->dispatchService->doDualDeliveryRequestAPIRequest($xmlString);
 
                 var_dump($response);
 

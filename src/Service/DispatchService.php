@@ -9,17 +9,28 @@ use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaDataSetType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannels;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannelSetType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as DualDeliveryMetadata;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ErrorType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParametersType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadAttributesType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PrintParameter;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PropertyValueMetaDataSetType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
@@ -977,7 +988,7 @@ class DispatchService
         $request = new DualDeliveryPreAddressingRequestType(
             $sender,
             $recipients,
-            new MetaData(
+            new PreMetaData(
                 $preAddressingRequest->getIdentifier(),
                 null,
                 null,
@@ -993,6 +1004,85 @@ class DispatchService
 //        dump($response);
 //        dump($service->getPrettyLastRequest());
 //        dump($service->getPrettyLastResponse());
+
+        if ($response->getStatus()->getText() !== 'SUCCESS') {
+            /* @var ErrorType[] $errors */
+            $errors = $response->getErrors()->getError();
+            $errorTexts = [];
+
+            foreach ($errors as $error) {
+                $errorTexts[] = $error->getInfo();
+            }
+
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'PreAddressing request failed!', 'dispatch:request-pre-addressing-failed', ['message' => implode(', ', $errorTexts)]);
+        }
+
+        // TODO: Respond in another way?
+        if ($response->getAddressingResults()->getAddressingResult() === null) {
+            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'Person was not found!', 'dispatch:request-pre-addressing-not-found', ['message' => 'No addressing results found!']);
+        }
+
+        $preAddressingRequest->setDualDeliveryID($response->getAddressingResults()->getAddressingResult()[0]->getDualDeliveryID());
+    }
+
+    public function doDualDeliveryRequestSoapRequest(Request &$dualDeliveryRequest)
+    {
+        $service = $this->getDualDeliveryService();
+
+        $dualDeliveryRecipients = [];
+
+        /** @var RequestRecipient $recipient */
+        foreach($dualDeliveryRequest->getRecipients() as $recipient) {
+            $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
+            $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
+            $personData = new PersonDataType($physicalPerson);
+            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
+            // TODO: remove
+        }
+
+        /** @var RequestFile[] $files */
+        $files = $dualDeliveryRequest->getFiles();
+        foreach ($files as $file) {
+        }
+
+//        $recipients = new Recipients($recipients);
+//        $applicationId = new ApplicationID($profile, '1.0');
+//        $meta->setApplicationID($applicationId);
+        $senderProfile = new SenderProfile($this->senderProfile, '1.0');
+        $sender = new SenderType($senderProfile);
+
+        // TODO: Allow to set this via config/request?
+        $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
+        // TODO: Allow to set this via config/request?
+        $deliveryQuality = 'Rsa';
+        // TODO: Where does this come from?
+        $gz = 'GZ';
+        $meta = new DualDeliveryMetaData(
+            $dualDeliveryRequest->getIdentifier(),
+            null,
+            $deliveryQuality,
+            'Zustellung ' . $dualDeliveryRequest->getIdentifier(),
+            $gz,
+            null,
+            null,
+            false,
+            $processingProfile
+        );
+        $print = new PrintParameter('bla', new AnyURI('ok'));
+        $parameters = new ParametersType(new ParameterType('bla', 'foo'));
+        $payloadAttrs = new PayloadAttributesType('foo', 'bar', $parameters, $print);
+        $doc = new BinaryDocumentType('content');
+        $payload = new PayloadType($payloadAttrs, $doc);
+//        dump($dualDeliveryRecipients[0]);
+        // TODO: null would be better
+        $recipientId = '';
+        // TODO: Allow more than one recipient and file
+        $request = new DualDeliveryRequest($sender, $recipientId, $dualDeliveryRecipients[0], $meta, null, $payload, '1.0');
+        $response = $service->dualDeliveryRequestOperation($request);
+
+        dump($response);
+        dump($service->getPrettyLastRequest());
+        dump($service->getPrettyLastResponse());
 
         if ($response->getStatus()->getText() !== 'SUCCESS') {
             /* @var ErrorType[] $errors */
