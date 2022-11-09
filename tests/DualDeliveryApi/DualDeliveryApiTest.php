@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\Tests;
+namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
 use PHPUnit\Framework\TestCase;

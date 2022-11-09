@@ -24,7 +24,7 @@ class AddressingResults
      */
     public function getAddressingResult()
     {
-        return $this->AddressingResult;
+        return $this->AddressingResult ?? [];
     }
 
     /**

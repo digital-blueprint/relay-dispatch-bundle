@@ -34,13 +34,12 @@ class DualDeliveryPreAddressingRequestType
     protected $version = null;
 
     /**
-     * @param SenderType       $Sender
-     * @param Recipients       $Recipients
-     * @param MetaData         $MetaData
-     * @param DeliveryChannels $DeliveryChannels
-     * @param string           $version
+     * @param SenderType $Sender
+     * @param Recipients $Recipients
+     * @param MetaData   $MetaData
+     * @param string     $version
      */
-    public function __construct($Sender, $Recipients, $MetaData, $DeliveryChannels = null, $version)
+    public function __construct($Sender, $Recipients, $MetaData, ?DeliveryChannels $DeliveryChannels, $version)
     {
         $this->Sender = $Sender;
         $this->Recipients = $Recipients;
