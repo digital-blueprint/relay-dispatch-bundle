@@ -7,7 +7,7 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class AddressingResult
 {
     /**
-     * @var UsedDeliveryChannelType
+     * @var UsedDeliveryChannelType[]
      */
     protected $DeliveryChannelAddressingResult = null;
 
@@ -22,9 +22,9 @@ class AddressingResult
     protected $RecipientID = null;
 
     /**
-     * @param UsedDeliveryChannelType $DeliveryChannelAddressingResult
-     * @param string                  $DualDeliveryID
-     * @param string                  $RecipientID
+     * @param UsedDeliveryChannelType[] $DeliveryChannelAddressingResult
+     * @param string                    $DualDeliveryID
+     * @param string                    $RecipientID
      */
     public function __construct($DeliveryChannelAddressingResult, $DualDeliveryID, $RecipientID)
     {
@@ -34,15 +34,15 @@ class AddressingResult
     }
 
     /**
-     * @return UsedDeliveryChannelType
+     * @return UsedDeliveryChannelType[]
      */
     public function getDeliveryChannelAddressingResult()
     {
-        return $this->DeliveryChannelAddressingResult;
+        return $this->DeliveryChannelAddressingResult ?? [];
     }
 
     /**
-     * @param UsedDeliveryChannelType $DeliveryChannelAddressingResult
+     * @param UsedDeliveryChannelType[] $DeliveryChannelAddressingResult
      *
      * @return AddressingResult
      */

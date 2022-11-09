@@ -37,6 +37,33 @@ class PreAddrTest extends TestCase
   </soap:Body>
 </soap:Envelope>';
 
+    private static $SUCCESS_RESPONSE_RESULT = '<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns4:DualDeliveryPreAddressingResponse xmlns="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ns2="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:ns3="http://reference.postserver.at/namespace/persondata/20170308#" xmlns:ns4="http://reference.e-government.gv.at/namespace/zustellung/dual_pa/20130121#" xmlns:ns5="uri:general.additional.params/20130121#" xmlns:ns6="http://www.w3.org/2000/09/xmldsig#" xmlns:ns7="http://www.ebinterface.at/schema/4p0/" xmlns:ns8="http://www.ebinterface.at/schema/4p0/extensions/sv" xmlns:ns9="http://www.ebinterface.at/schema/4p0/extensions/ext" xmlns:ns10="http://www.e-zustellung.at/namespaces/zuse_20090922" xmlns:ns11="http://reference.e-government.gv.at/namespace/zustellung/msg" xmlns:ns12="http://reference.e-government.gv.at/namespace/persondata/20020228#" xmlns:ns13="urn:oasis:names:tc:SAML:1.0:assertion" xmlns:ns14="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" xmlns:ns15="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" version="1.0">
+      <AppDeliveryID>636bbfb63e8a4</AppDeliveryID>
+      <Status>
+        <Code>0</Code>
+        <Text>SUCCESS</Text>
+      </Status>
+      <DualDeliveryID>132268</DualDeliveryID>
+      <ns4:AddressingResults>
+        <ns4:AddressingResult>
+          <ns4:DeliveryChannelAddressingResult>
+            <Name>TNVZAddressing_1.0</Name>
+            <Status>
+              <Code>4</Code>
+              <Text>ADDRESSABLE</Text>
+            </Status>
+          </ns4:DeliveryChannelAddressingResult>
+          <DualDeliveryID>132269</DualDeliveryID>
+          <RecipientID>1</RecipientID>
+        </ns4:AddressingResult>
+      </ns4:AddressingResults>
+    </ns4:DualDeliveryPreAddressingResponse>
+  </soap:Body>
+</soap:Envelope>';
+
     /**
      * @return DualDeliveryService
      */
@@ -73,5 +100,44 @@ class PreAddrTest extends TestCase
         $this->assertSame('0', $response->getStatus()->getCode());
         $this->assertSame('SUCCESS', $response->getStatus()->getText());
         $this->assertEmpty($response->getAddressingResults()->getAddressingResult());
+    }
+
+    public function testPreAddressingRequestOperationWithResults()
+    {
+        $service = $this->getMockService(self::$SUCCESS_RESPONSE_RESULT);
+
+        $senderProfile = new SenderProfile('TU_GRAZ', '1.0');
+        $sender = new SenderType($senderProfile);
+        $physicalPerson = new PhysicalPersonType(new PersonNameType('Manuel', 'Mustermann'), '1970-06-04');
+        $personData = new PersonDataType($physicalPerson);
+        $recipient = new RecipientType($personData);
+        $recipients = new Recipients([new Recipient('1', $recipient)]);
+        $meta = new PreMetaData('636bbfb63e8a4');
+        $meta->setProcessingProfile(new ProcessingProfile(VendoProcessingProfile::ZUSE_DD, VendoProcessingProfile::VERSION_PRE_ADDRESSING));
+        $meta->setAsynchronous(false);
+        $request = new DualDeliveryPreAddressingRequestType($sender, $recipients, $meta, null, '1.0');
+        $response = $service->dualDeliveryPreAddressingRequestOperation($request);
+
+        // response
+        $this->assertTrue($response instanceof DualDeliveryPreAddressingResponseType);
+        $this->assertSame('132268', $response->getDualDeliveryID());
+        $this->assertSame('636bbfb63e8a4', $response->getAppDeliveryID());
+        $this->assertSame('0', $response->getStatus()->getCode());
+        $this->assertSame('SUCCESS', $response->getStatus()->getText());
+        $results = $response->getAddressingResults()->getAddressingResult();
+        $this->assertCount(1, $results);
+        $result = $results[0];
+
+        // result
+        $this->assertSame('132269', $result->getDualDeliveryID());
+        $this->assertSame('1', $result->getRecipientID());
+        $channelResults = $result->getDeliveryChannelAddressingResult();
+        $this->assertCount(1, $channelResults);
+        $channelResult = $channelResults[0];
+
+        // channel result
+        $this->assertSame('TNVZAddressing_1.0', $channelResult->getName());
+        $this->assertSame('4', $channelResult->getStatus()->getCode());
+        $this->assertSame('ADDRESSABLE', $channelResult->getStatus()->getText());
     }
 }
