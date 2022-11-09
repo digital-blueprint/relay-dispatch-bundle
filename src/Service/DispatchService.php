@@ -9,8 +9,6 @@ use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaDataSetType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
@@ -30,7 +28,6 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PrintParameter;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PropertyValueMetaDataSetType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
@@ -1032,7 +1029,7 @@ class DispatchService
         $dualDeliveryRecipients = [];
 
         /** @var RequestRecipient $recipient */
-        foreach($dualDeliveryRequest->getRecipients() as $recipient) {
+        foreach ($dualDeliveryRequest->getRecipients() as $recipient) {
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
             $personData = new PersonDataType($physicalPerson);
@@ -1061,7 +1058,7 @@ class DispatchService
             $dualDeliveryRequest->getIdentifier(),
             null,
             $deliveryQuality,
-            'Zustellung ' . $dualDeliveryRequest->getIdentifier(),
+            'Zustellung '.$dualDeliveryRequest->getIdentifier(),
             $gz,
             null,
             null,

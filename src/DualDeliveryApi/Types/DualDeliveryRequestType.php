@@ -44,13 +44,13 @@ class DualDeliveryRequestType
     protected $version = null;
 
     /**
-     * @param SenderType       $Sender
+     * @param SenderType            $Sender
      * @param string|null           $RecipientID
-     * @param RecipientType    $Recipient
-     * @param MetaData         $MetaData
+     * @param RecipientType         $Recipient
+     * @param MetaData              $MetaData
      * @param DeliveryChannels|null $DeliveryChannels
-     * @param PayloadType      $Payload
-     * @param string           $version
+     * @param PayloadType           $Payload
+     * @param string                $version
      */
     public function __construct($Sender, $RecipientID, $Recipient, $MetaData, $DeliveryChannels, $Payload, $version)
     {
