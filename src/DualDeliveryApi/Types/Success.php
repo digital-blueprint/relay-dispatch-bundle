@@ -60,60 +60,36 @@ class Success
         $this->Signature = $Signature;
     }
 
-    /**
-     * @return Sender
-     */
-    public function getSender()
+    public function getSender(): Sender
     {
         return $this->Sender;
     }
 
-    /**
-     * @param Sender $Sender
-     *
-     * @return Success
-     */
-    public function setSender($Sender)
+    public function setSender(Sender $Sender): self
     {
         $this->Sender = $Sender;
 
         return $this;
     }
 
-    /**
-     * @return Receiver
-     */
-    public function getReceiver()
+    public function getReceiver(): Receiver
     {
         return $this->Receiver;
     }
 
-    /**
-     * @param Receiver $Receiver
-     *
-     * @return Success
-     */
-    public function setReceiver($Receiver)
+    public function setReceiver(Receiver $Receiver): self
     {
         $this->Receiver = $Receiver;
 
         return $this;
     }
 
-    /**
-     * @return NotificationsPerformed
-     */
-    public function getNotificationsPerformed()
+    public function getNotificationsPerformed(): NotificationsPerformed
     {
         return $this->NotificationsPerformed;
     }
 
-    /**
-     * @param NotificationsPerformed $NotificationsPerformed
-     *
-     * @return Success
-     */
-    public function setNotificationsPerformed($NotificationsPerformed)
+    public function setNotificationsPerformed(NotificationsPerformed $NotificationsPerformed): self
     {
         $this->NotificationsPerformed = $NotificationsPerformed;
 
@@ -136,70 +112,43 @@ class Success
         }
     }
 
-    /**
-     * @return Success
-     */
-    public function setConfirmationTimestamp(\DateTime $ConfirmationTimestamp)
+    public function setConfirmationTimestamp(\DateTime $ConfirmationTimestamp): self
     {
         $this->ConfirmationTimestamp = $ConfirmationTimestamp->format(\DateTime::ATOM);
 
         return $this;
     }
 
-    /**
-     * @return AssertionType
-     */
-    public function getAuthBlock()
+    public function getAuthBlock(): AssertionType
     {
         return $this->AuthBlock;
     }
 
-    /**
-     * @param AssertionType $AuthBlock
-     *
-     * @return Success
-     */
-    public function setAuthBlock($AuthBlock)
+    public function setAuthBlock(AssertionType $AuthBlock): self
     {
         $this->AuthBlock = $AuthBlock;
 
         return $this;
     }
 
-    /**
-     * @return BinaryConfirmation
-     */
-    public function getBinaryConfirmation()
+    public function getBinaryConfirmation(): BinaryConfirmation
     {
         return $this->BinaryConfirmation;
     }
 
-    /**
-     * @param BinaryConfirmation $BinaryConfirmation
-     *
-     * @return Success
-     */
-    public function setBinaryConfirmation($BinaryConfirmation)
+    public function setBinaryConfirmation(BinaryConfirmation $BinaryConfirmation): self
     {
         $this->BinaryConfirmation = $BinaryConfirmation;
 
         return $this;
     }
 
-    /**
-     * @return SignatureType
-     */
-    public function getSignature()
+    public function getSignature(): SignatureType
     {
         return $this->Signature;
     }
 
-    /**
-     * @param SignatureType $Signature
-     *
-     * @return Success
-     */
-    public function setSignature($Signature)
+    public function setSignature(SignatureType $Signature): self
     {
         $this->Signature = $Signature;
 

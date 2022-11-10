@@ -26,40 +26,24 @@ class Result
         $this->Error = $Error;
     }
 
-    /**
-     * @return NotificationChannel
-     */
-    public function getNotificationChannel()
+    public function getNotificationChannel(): NotificationChannel
     {
         return $this->NotificationChannel;
     }
 
-    /**
-     * @param NotificationChannel $NotificationChannel
-     *
-     * @return Result
-     */
-    public function setNotificationChannel($NotificationChannel)
+    public function setNotificationChannel(NotificationChannel $NotificationChannel): self
     {
         $this->NotificationChannel = $NotificationChannel;
 
         return $this;
     }
 
-    /**
-     * @return ErrorType
-     */
-    public function getError()
+    public function getError(): ErrorType
     {
         return $this->Error;
     }
 
-    /**
-     * @param ErrorType $Error
-     *
-     * @return Result
-     */
-    public function setError($Error)
+    public function setError(ErrorType $Error): self
     {
         $this->Error = $Error;
 

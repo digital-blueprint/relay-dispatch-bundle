@@ -26,40 +26,24 @@ class InvoiceRecipientExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return InvoiceRecipientExtensionType
-     */
-    public function getInvoiceRecipientExtension()
+    public function getInvoiceRecipientExtension(): InvoiceRecipientExtensionType
     {
         return $this->InvoiceRecipientExtension;
     }
 
-    /**
-     * @param InvoiceRecipientExtensionType $InvoiceRecipientExtension
-     *
-     * @return InvoiceRecipientExtensionType
-     */
-    public function setInvoiceRecipientExtension($InvoiceRecipientExtension)
+    public function setInvoiceRecipientExtension(InvoiceRecipientExtensionType $InvoiceRecipientExtension): self
     {
         $this->InvoiceRecipientExtension = $InvoiceRecipientExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return InvoiceRecipientExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

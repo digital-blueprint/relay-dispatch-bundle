@@ -33,60 +33,36 @@ class Payment
         $this->Printout = $Printout;
     }
 
-    /**
-     * @return PaymentForm
-     */
-    public function getPaymentForm()
+    public function getPaymentForm(): PaymentForm
     {
         return $this->PaymentForm;
     }
 
-    /**
-     * @param PaymentForm $PaymentForm
-     *
-     * @return Payment
-     */
-    public function setPaymentForm($PaymentForm)
+    public function setPaymentForm(PaymentForm $PaymentForm): self
     {
         $this->PaymentForm = $PaymentForm;
 
         return $this;
     }
 
-    /**
-     * @return InvoiceType
-     */
-    public function getInvoice()
+    public function getInvoice(): InvoiceType
     {
         return $this->Invoice;
     }
 
-    /**
-     * @param InvoiceType $Invoice
-     *
-     * @return Payment
-     */
-    public function setInvoice($Invoice)
+    public function setInvoice(InvoiceType $Invoice): self
     {
         $this->Invoice = $Invoice;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getPrintout()
+    public function getPrintout(): bool
     {
         return $this->Printout;
     }
 
-    /**
-     * @param bool $Printout
-     *
-     * @return Payment
-     */
-    public function setPrintout($Printout)
+    public function setPrintout(bool $Printout): self
     {
         $this->Printout = $Printout;
 

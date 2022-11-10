@@ -33,60 +33,36 @@ class SenderType
         $this->Parameters = $Parameters;
     }
 
-    /**
-     * @return SenderProfile
-     */
-    public function getSenderProfile()
+    public function getSenderProfile(): SenderProfile
     {
         return $this->SenderProfile;
     }
 
-    /**
-     * @param SenderProfile $SenderProfile
-     *
-     * @return SenderType
-     */
-    public function setSenderProfile($SenderProfile)
+    public function setSenderProfile(SenderProfile $SenderProfile): self
     {
         $this->SenderProfile = $SenderProfile;
 
         return $this;
     }
 
-    /**
-     * @return SenderData
-     */
-    public function getSenderData()
+    public function getSenderData(): SenderData
     {
         return $this->SenderData;
     }
 
-    /**
-     * @param SenderData $SenderData
-     *
-     * @return SenderType
-     */
-    public function setSenderData($SenderData)
+    public function setSenderData(SenderData $SenderData): self
     {
         $this->SenderData = $SenderData;
 
         return $this;
     }
 
-    /**
-     * @return ParametersType
-     */
-    public function getParameters()
+    public function getParameters(): ParametersType
     {
         return $this->Parameters;
     }
 
-    /**
-     * @param ParametersType $Parameters
-     *
-     * @return SenderType
-     */
-    public function setParameters($Parameters)
+    public function setParameters(ParametersType $Parameters): self
     {
         $this->Parameters = $Parameters;
 

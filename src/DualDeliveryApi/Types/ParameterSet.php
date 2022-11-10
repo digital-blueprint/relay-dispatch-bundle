@@ -19,20 +19,12 @@ class ParameterSet
         $this->Parameter = $Parameter;
     }
 
-    /**
-     * @return ParameterType
-     */
-    public function getParameter()
+    public function getParameter(): ParameterType
     {
         return $this->Parameter;
     }
 
-    /**
-     * @param ParameterType $Parameter
-     *
-     * @return ParameterSet
-     */
-    public function setParameter($Parameter)
+    public function setParameter(ParameterType $Parameter): self
     {
         $this->Parameter = $Parameter;
 

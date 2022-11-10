@@ -19,20 +19,12 @@ class DeliveryChannels
         $this->DeliveryChannelSet = $DeliveryChannelSet;
     }
 
-    /**
-     * @return DeliveryChannelSetType
-     */
-    public function getDeliveryChannelSet()
+    public function getDeliveryChannelSet(): DeliveryChannelSetType
     {
         return $this->DeliveryChannelSet;
     }
 
-    /**
-     * @param DeliveryChannelSetType $DeliveryChannelSet
-     *
-     * @return DeliveryChannels
-     */
-    public function setDeliveryChannelSet($DeliveryChannelSet)
+    public function setDeliveryChannelSet(DeliveryChannelSetType $DeliveryChannelSet): self
     {
         $this->DeliveryChannelSet = $DeliveryChannelSet;
 

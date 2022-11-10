@@ -61,20 +61,12 @@ class InvoiceRecipientType
         $this->InvoiceRecipientExtension = $InvoiceRecipientExtension;
     }
 
-    /**
-     * @return string
-     */
-    public function getVATIdentificationNumber()
+    public function getVATIdentificationNumber(): string
     {
         return $this->VATIdentificationNumber;
     }
 
-    /**
-     * @param string $VATIdentificationNumber
-     *
-     * @return InvoiceRecipientType
-     */
-    public function setVATIdentificationNumber($VATIdentificationNumber)
+    public function setVATIdentificationNumber(string $VATIdentificationNumber): self
     {
         $this->VATIdentificationNumber = $VATIdentificationNumber;
 
@@ -91,10 +83,8 @@ class InvoiceRecipientType
 
     /**
      * @param AlphaNumIDType $BillersInvoiceRecipientID
-     *
-     * @return InvoiceRecipientType
      */
-    public function setBillersInvoiceRecipientID($BillersInvoiceRecipientID)
+    public function setBillersInvoiceRecipientID($BillersInvoiceRecipientID): self
     {
         $this->BillersInvoiceRecipientID = $BillersInvoiceRecipientID;
 
@@ -111,90 +101,56 @@ class InvoiceRecipientType
 
     /**
      * @param AccountingAreaType $AccountingArea
-     *
-     * @return InvoiceRecipientType
      */
-    public function setAccountingArea($AccountingArea)
+    public function setAccountingArea($AccountingArea): self
     {
         $this->AccountingArea = $AccountingArea;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSubOrganizationID()
+    public function getSubOrganizationID(): string
     {
         return $this->SubOrganizationID;
     }
 
-    /**
-     * @param string $SubOrganizationID
-     *
-     * @return InvoiceRecipientType
-     */
-    public function setSubOrganizationID($SubOrganizationID)
+    public function setSubOrganizationID(string $SubOrganizationID): self
     {
         $this->SubOrganizationID = $SubOrganizationID;
 
         return $this;
     }
 
-    /**
-     * @return OrderReferenceType
-     */
-    public function getOrderReference()
+    public function getOrderReference(): OrderReferenceType
     {
         return $this->OrderReference;
     }
 
-    /**
-     * @param OrderReferenceType $OrderReference
-     *
-     * @return InvoiceRecipientType
-     */
-    public function setOrderReference($OrderReference)
+    public function setOrderReference(OrderReferenceType $OrderReference): self
     {
         $this->OrderReference = $OrderReference;
 
         return $this;
     }
 
-    /**
-     * @return AddressType
-     */
-    public function getAddress()
+    public function getAddress(): AddressType
     {
         return $this->Address;
     }
 
-    /**
-     * @param AddressType $Address
-     *
-     * @return InvoiceRecipientType
-     */
-    public function setAddress($Address)
+    public function setAddress(AddressType $Address): self
     {
         $this->Address = $Address;
 
         return $this;
     }
 
-    /**
-     * @return InvoiceRecipientExtensionType
-     */
-    public function getInvoiceRecipientExtension()
+    public function getInvoiceRecipientExtension(): InvoiceRecipientExtensionType
     {
         return $this->InvoiceRecipientExtension;
     }
 
-    /**
-     * @param InvoiceRecipientExtensionType $InvoiceRecipientExtension
-     *
-     * @return InvoiceRecipientType
-     */
-    public function setInvoiceRecipientExtension($InvoiceRecipientExtension)
+    public function setInvoiceRecipientExtension(InvoiceRecipientExtensionType $InvoiceRecipientExtension): self
     {
         $this->InvoiceRecipientExtension = $InvoiceRecipientExtension;
 

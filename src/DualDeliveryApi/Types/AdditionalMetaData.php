@@ -19,20 +19,12 @@ class AdditionalMetaData
         $this->AdditionalMetaDataSet = $AdditionalMetaDataSet;
     }
 
-    /**
-     * @return AdditionalMetaDataSetType
-     */
-    public function getAdditionalMetaDataSet()
+    public function getAdditionalMetaDataSet(): AdditionalMetaDataSetType
     {
         return $this->AdditionalMetaDataSet;
     }
 
-    /**
-     * @param AdditionalMetaDataSetType $AdditionalMetaDataSet
-     *
-     * @return AdditionalMetaData
-     */
-    public function setAdditionalMetaDataSet($AdditionalMetaDataSet)
+    public function setAdditionalMetaDataSet(AdditionalMetaDataSetType $AdditionalMetaDataSet): self
     {
         $this->AdditionalMetaDataSet = $AdditionalMetaDataSet;
 

@@ -54,40 +54,24 @@ class ReferenceType
         $this->Type = $Type;
     }
 
-    /**
-     * @return TransformsType
-     */
-    public function getTransforms()
+    public function getTransforms(): TransformsType
     {
         return $this->Transforms;
     }
 
-    /**
-     * @param TransformsType $Transforms
-     *
-     * @return ReferenceType
-     */
-    public function setTransforms($Transforms)
+    public function setTransforms(TransformsType $Transforms): self
     {
         $this->Transforms = $Transforms;
 
         return $this;
     }
 
-    /**
-     * @return DigestMethodType
-     */
-    public function getDigestMethod()
+    public function getDigestMethod(): DigestMethodType
     {
         return $this->DigestMethod;
     }
 
-    /**
-     * @param DigestMethodType $DigestMethod
-     *
-     * @return ReferenceType
-     */
-    public function setDigestMethod($DigestMethod)
+    public function setDigestMethod(DigestMethodType $DigestMethod): self
     {
         $this->DigestMethod = $DigestMethod;
 
@@ -104,70 +88,44 @@ class ReferenceType
 
     /**
      * @param DigestValueType $DigestValue
-     *
-     * @return ReferenceType
      */
-    public function setDigestValue($DigestValue)
+    public function setDigestValue($DigestValue): self
     {
         $this->DigestValue = $DigestValue;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return ReferenceType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getURI()
+    public function getURI(): AnyURI
     {
         return $this->URI;
     }
 
-    /**
-     * @param AnyURI $URI
-     *
-     * @return ReferenceType
-     */
-    public function setURI($URI)
+    public function setURI(AnyURI $URI): self
     {
         $this->URI = $URI;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getType()
+    public function getType(): AnyURI
     {
         return $this->Type;
     }
 
-    /**
-     * @param AnyURI $Type
-     *
-     * @return ReferenceType
-     */
-    public function setType($Type)
+    public function setType(AnyURI $Type): self
     {
         $this->Type = $Type;
 

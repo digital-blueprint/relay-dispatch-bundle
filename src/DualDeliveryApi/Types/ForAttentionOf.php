@@ -48,72 +48,43 @@ class ForAttentionOf
         return $this->Identification;
     }
 
-    /**
-     * @param IdentificationType $Identification
-     *
-     * @return ForAttentionOf
-     */
-    public function setIdentification($Identification)
+    public function setIdentification(IdentificationType $Identification): self
     {
         $this->Identification = $Identification;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDepartment()
+    public function getDepartment(): string
     {
         return $this->Department;
     }
 
-    /**
-     * @param string $Department
-     *
-     * @return ForAttentionOf
-     */
-    public function setDepartment($Department)
+    public function setDepartment(string $Department): self
     {
         $this->Department = $Department;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getGivenName()
+    public function getGivenName(): string
     {
         return $this->GivenName;
     }
 
-    /**
-     * @param string $GivenName
-     *
-     * @return ForAttentionOf
-     */
-    public function setGivenName($GivenName)
+    public function setGivenName(string $GivenName): self
     {
         $this->GivenName = $GivenName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFamilyName()
+    public function getFamilyName(): string
     {
         return $this->FamilyName;
     }
 
-    /**
-     * @param string $FamilyName
-     *
-     * @return ForAttentionOf
-     */
-    public function setFamilyName($FamilyName)
+    public function setFamilyName(string $FamilyName): self
     {
         $this->FamilyName = $FamilyName;
 

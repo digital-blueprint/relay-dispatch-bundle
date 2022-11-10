@@ -19,20 +19,12 @@ class AdditionalPrintParameter
         $this->AdditionalPrintParameterSet = $AdditionalPrintParameterSet;
     }
 
-    /**
-     * @return AdditionalPrintParameterSetType
-     */
-    public function getAdditionalPrintParameterSet()
+    public function getAdditionalPrintParameterSet(): AdditionalPrintParameterSetType
     {
         return $this->AdditionalPrintParameterSet;
     }
 
-    /**
-     * @param AdditionalPrintParameterSetType $AdditionalPrintParameterSet
-     *
-     * @return AdditionalPrintParameter
-     */
-    public function setAdditionalPrintParameterSet($AdditionalPrintParameterSet)
+    public function setAdditionalPrintParameterSet(AdditionalPrintParameterSetType $AdditionalPrintParameterSet): self
     {
         $this->AdditionalPrintParameterSet = $AdditionalPrintParameterSet;
 

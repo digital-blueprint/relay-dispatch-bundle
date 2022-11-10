@@ -40,80 +40,48 @@ class ObjectType
         $this->Encoding = $Encoding;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return ObjectType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return ObjectType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->MimeType;
     }
 
-    /**
-     * @param string $MimeType
-     *
-     * @return ObjectType
-     */
-    public function setMimeType($MimeType)
+    public function setMimeType(string $MimeType): self
     {
         $this->MimeType = $MimeType;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getEncoding()
+    public function getEncoding(): AnyURI
     {
         return $this->Encoding;
     }
 
-    /**
-     * @param AnyURI $Encoding
-     *
-     * @return ObjectType
-     */
-    public function setEncoding($Encoding)
+    public function setEncoding(AnyURI $Encoding): self
     {
         $this->Encoding = $Encoding;
 

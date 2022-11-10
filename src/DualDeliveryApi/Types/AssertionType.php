@@ -102,200 +102,120 @@ class AssertionType
         $this->IssueInstant = $IssueInstant->format(\DateTime::ATOM);
     }
 
-    /**
-     * @return ConditionsType
-     */
-    public function getConditions()
+    public function getConditions(): ConditionsType
     {
         return $this->Conditions;
     }
 
-    /**
-     * @param ConditionsType $Conditions
-     *
-     * @return AssertionType
-     */
-    public function setConditions($Conditions)
+    public function setConditions(ConditionsType $Conditions): self
     {
         $this->Conditions = $Conditions;
 
         return $this;
     }
 
-    /**
-     * @return AdviceType
-     */
-    public function getAdvice()
+    public function getAdvice(): AdviceType
     {
         return $this->Advice;
     }
 
-    /**
-     * @param AdviceType $Advice
-     *
-     * @return AssertionType
-     */
-    public function setAdvice($Advice)
+    public function setAdvice(AdviceType $Advice): self
     {
         $this->Advice = $Advice;
 
         return $this;
     }
 
-    /**
-     * @return StatementAbstractType
-     */
-    public function getStatement()
+    public function getStatement(): StatementAbstractType
     {
         return $this->Statement;
     }
 
-    /**
-     * @param StatementAbstractType $Statement
-     *
-     * @return AssertionType
-     */
-    public function setStatement($Statement)
+    public function setStatement(StatementAbstractType $Statement): self
     {
         $this->Statement = $Statement;
 
         return $this;
     }
 
-    /**
-     * @return SubjectStatementAbstractType
-     */
-    public function getSubjectStatement()
+    public function getSubjectStatement(): SubjectStatementAbstractType
     {
         return $this->SubjectStatement;
     }
 
-    /**
-     * @param SubjectStatementAbstractType $SubjectStatement
-     *
-     * @return AssertionType
-     */
-    public function setSubjectStatement($SubjectStatement)
+    public function setSubjectStatement(SubjectStatementAbstractType $SubjectStatement): self
     {
         $this->SubjectStatement = $SubjectStatement;
 
         return $this;
     }
 
-    /**
-     * @return AuthenticationStatementType
-     */
-    public function getAuthenticationStatement()
+    public function getAuthenticationStatement(): AuthenticationStatementType
     {
         return $this->AuthenticationStatement;
     }
 
-    /**
-     * @param AuthenticationStatementType $AuthenticationStatement
-     *
-     * @return AssertionType
-     */
-    public function setAuthenticationStatement($AuthenticationStatement)
+    public function setAuthenticationStatement(AuthenticationStatementType $AuthenticationStatement): self
     {
         $this->AuthenticationStatement = $AuthenticationStatement;
 
         return $this;
     }
 
-    /**
-     * @return AuthorizationDecisionStatementType
-     */
-    public function getAuthorizationDecisionStatement()
+    public function getAuthorizationDecisionStatement(): AuthorizationDecisionStatementType
     {
         return $this->AuthorizationDecisionStatement;
     }
 
-    /**
-     * @param AuthorizationDecisionStatementType $AuthorizationDecisionStatement
-     *
-     * @return AssertionType
-     */
-    public function setAuthorizationDecisionStatement($AuthorizationDecisionStatement)
+    public function setAuthorizationDecisionStatement(AuthorizationDecisionStatementType $AuthorizationDecisionStatement): self
     {
         $this->AuthorizationDecisionStatement = $AuthorizationDecisionStatement;
 
         return $this;
     }
 
-    /**
-     * @return AttributeStatementType
-     */
-    public function getAttributeStatement()
+    public function getAttributeStatement(): AttributeStatementType
     {
         return $this->AttributeStatement;
     }
 
-    /**
-     * @param AttributeStatementType $AttributeStatement
-     *
-     * @return AssertionType
-     */
-    public function setAttributeStatement($AttributeStatement)
+    public function setAttributeStatement(AttributeStatementType $AttributeStatement): self
     {
         $this->AttributeStatement = $AttributeStatement;
 
         return $this;
     }
 
-    /**
-     * @return SignatureType
-     */
-    public function getSignature()
+    public function getSignature(): SignatureType
     {
         return $this->Signature;
     }
 
-    /**
-     * @param SignatureType $Signature
-     *
-     * @return AssertionType
-     */
-    public function setSignature($Signature)
+    public function setSignature(SignatureType $Signature): self
     {
         $this->Signature = $Signature;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getMajorVersion()
+    public function getMajorVersion(): int
     {
         return $this->MajorVersion;
     }
 
-    /**
-     * @param int $MajorVersion
-     *
-     * @return AssertionType
-     */
-    public function setMajorVersion($MajorVersion)
+    public function setMajorVersion(int $MajorVersion): self
     {
         $this->MajorVersion = $MajorVersion;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getMinorVersion()
+    public function getMinorVersion(): int
     {
         return $this->MinorVersion;
     }
 
-    /**
-     * @param int $MinorVersion
-     *
-     * @return AssertionType
-     */
-    public function setMinorVersion($MinorVersion)
+    public function setMinorVersion(int $MinorVersion): self
     {
         $this->MinorVersion = $MinorVersion;
 
@@ -312,30 +232,20 @@ class AssertionType
 
     /**
      * @param IDType $AssertionID
-     *
-     * @return AssertionType
      */
-    public function setAssertionID($AssertionID)
+    public function setAssertionID($AssertionID): self
     {
         $this->AssertionID = $AssertionID;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIssuer()
+    public function getIssuer(): string
     {
         return $this->Issuer;
     }
 
-    /**
-     * @param string $Issuer
-     *
-     * @return AssertionType
-     */
-    public function setIssuer($Issuer)
+    public function setIssuer(string $Issuer): self
     {
         $this->Issuer = $Issuer;
 
@@ -358,10 +268,7 @@ class AssertionType
         }
     }
 
-    /**
-     * @return AssertionType
-     */
-    public function setIssueInstant(\DateTime $IssueInstant)
+    public function setIssueInstant(\DateTime $IssueInstant): self
     {
         $this->IssueInstant = $IssueInstant->format(\DateTime::ATOM);
 

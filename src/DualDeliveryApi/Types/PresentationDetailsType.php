@@ -47,40 +47,24 @@ class PresentationDetailsType
         $this->PresentationDetailsExtension = $PresentationDetailsExtension;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getURL()
+    public function getURL(): AnyURI
     {
         return $this->URL;
     }
 
-    /**
-     * @param AnyURI $URL
-     *
-     * @return PresentationDetailsType
-     */
-    public function setURL($URL)
+    public function setURL(AnyURI $URL): self
     {
         $this->URL = $URL;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getLogoURL()
+    public function getLogoURL(): AnyURI
     {
         return $this->LogoURL;
     }
 
-    /**
-     * @param AnyURI $LogoURL
-     *
-     * @return PresentationDetailsType
-     */
-    public function setLogoURL($LogoURL)
+    public function setLogoURL(AnyURI $LogoURL): self
     {
         $this->LogoURL = $LogoURL;
 
@@ -97,50 +81,32 @@ class PresentationDetailsType
 
     /**
      * @param AlphaNumIDType $LayoutID
-     *
-     * @return PresentationDetailsType
      */
-    public function setLayoutID($LayoutID)
+    public function setLayoutID($LayoutID): self
     {
         $this->LayoutID = $LayoutID;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getSuppressZero()
+    public function getSuppressZero(): bool
     {
         return $this->SuppressZero;
     }
 
-    /**
-     * @param bool $SuppressZero
-     *
-     * @return PresentationDetailsType
-     */
-    public function setSuppressZero($SuppressZero)
+    public function setSuppressZero(bool $SuppressZero): self
     {
         $this->SuppressZero = $SuppressZero;
 
         return $this;
     }
 
-    /**
-     * @return PresentationDetailsExtensionType
-     */
-    public function getPresentationDetailsExtension()
+    public function getPresentationDetailsExtension(): PresentationDetailsExtensionType
     {
         return $this->PresentationDetailsExtension;
     }
 
-    /**
-     * @param PresentationDetailsExtensionType $PresentationDetailsExtension
-     *
-     * @return PresentationDetailsType
-     */
-    public function setPresentationDetailsExtension($PresentationDetailsExtension)
+    public function setPresentationDetailsExtension(PresentationDetailsExtensionType $PresentationDetailsExtension): self
     {
         $this->PresentationDetailsExtension = $PresentationDetailsExtension;
 

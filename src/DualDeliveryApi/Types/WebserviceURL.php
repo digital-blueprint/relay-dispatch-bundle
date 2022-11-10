@@ -26,40 +26,24 @@ class WebserviceURL
         $this->AlternativeEmail = $AlternativeEmail;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function get_()
+    public function get_(): AnyURI
     {
         return $this->_;
     }
 
-    /**
-     * @param AnyURI $_
-     *
-     * @return WebserviceURL
-     */
-    public function set_($_)
+    public function set_(AnyURI $_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getAlternativeEmail()
+    public function getAlternativeEmail(): AnyURI
     {
         return $this->AlternativeEmail;
     }
 
-    /**
-     * @param AnyURI $AlternativeEmail
-     *
-     * @return WebserviceURL
-     */
-    public function setAlternativeEmail($AlternativeEmail)
+    public function setAlternativeEmail(AnyURI $AlternativeEmail): self
     {
         $this->AlternativeEmail = $AlternativeEmail;
 

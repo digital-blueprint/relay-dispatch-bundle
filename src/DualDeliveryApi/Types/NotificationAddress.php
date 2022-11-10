@@ -33,60 +33,36 @@ class NotificationAddress
         $this->Type = $Type;
     }
 
-    /**
-     * @return WebserviceURL
-     */
-    public function getWebserviceURL()
+    public function getWebserviceURL(): WebserviceURL
     {
         return $this->WebserviceURL;
     }
 
-    /**
-     * @param WebserviceURL $WebserviceURL
-     *
-     * @return NotificationAddress
-     */
-    public function setWebserviceURL($WebserviceURL)
+    public function setWebserviceURL(WebserviceURL $WebserviceURL): self
     {
         $this->WebserviceURL = $WebserviceURL;
 
         return $this;
     }
 
-    /**
-     * @return InternetAddressType
-     */
-    public function getEmail()
+    public function getEmail(): InternetAddressType
     {
         return $this->Email;
     }
 
-    /**
-     * @param InternetAddressType $Email
-     *
-     * @return NotificationAddress
-     */
-    public function setEmail($Email)
+    public function setEmail(InternetAddressType $Email): self
     {
         $this->Email = $Email;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->Type;
     }
 
-    /**
-     * @param string $Type
-     *
-     * @return NotificationAddress
-     */
-    public function setType($Type)
+    public function setType(string $Type): self
     {
         $this->Type = $Type;
 

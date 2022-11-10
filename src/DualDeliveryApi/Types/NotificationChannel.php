@@ -19,20 +19,12 @@ class NotificationChannel
         $this->NotificationChannelSet = $NotificationChannelSet;
     }
 
-    /**
-     * @return NotificationChannelSetType
-     */
-    public function getNotificationChannelSet()
+    public function getNotificationChannelSet(): NotificationChannelSetType
     {
         return $this->NotificationChannelSet;
     }
 
-    /**
-     * @param NotificationChannelSetType $NotificationChannelSet
-     *
-     * @return NotificationChannel
-     */
-    public function setNotificationChannelSet($NotificationChannelSet)
+    public function setNotificationChannelSet(NotificationChannelSetType $NotificationChannelSet): self
     {
         $this->NotificationChannelSet = $NotificationChannelSet;
 

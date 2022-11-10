@@ -26,40 +26,24 @@ class PaymentMethodExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return PaymentMethodExtensionType
-     */
-    public function getPaymentMethodExtension()
+    public function getPaymentMethodExtension(): PaymentMethodExtensionType
     {
         return $this->PaymentMethodExtension;
     }
 
-    /**
-     * @param PaymentMethodExtensionType $PaymentMethodExtension
-     *
-     * @return PaymentMethodExtensionType
-     */
-    public function setPaymentMethodExtension($PaymentMethodExtension)
+    public function setPaymentMethodExtension(PaymentMethodExtensionType $PaymentMethodExtension): self
     {
         $this->PaymentMethodExtension = $PaymentMethodExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return PaymentMethodExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

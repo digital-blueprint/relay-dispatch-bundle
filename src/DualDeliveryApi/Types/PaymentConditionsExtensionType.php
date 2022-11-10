@@ -26,40 +26,24 @@ class PaymentConditionsExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return PaymentConditionsExtensionType
-     */
-    public function getPaymentConditionsExtension()
+    public function getPaymentConditionsExtension(): PaymentConditionsExtensionType
     {
         return $this->PaymentConditionsExtension;
     }
 
-    /**
-     * @param PaymentConditionsExtensionType $PaymentConditionsExtension
-     *
-     * @return PaymentConditionsExtensionType
-     */
-    public function setPaymentConditionsExtension($PaymentConditionsExtension)
+    public function setPaymentConditionsExtension(PaymentConditionsExtensionType $PaymentConditionsExtension): self
     {
         $this->PaymentConditionsExtension = $PaymentConditionsExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return PaymentConditionsExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

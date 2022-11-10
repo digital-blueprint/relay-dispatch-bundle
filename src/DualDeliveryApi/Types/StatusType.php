@@ -29,40 +29,24 @@ class StatusType
         $this->Code = $Code;
     }
 
-    /**
-     * @return string
-     */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->Code;
     }
 
-    /**
-     * @param string $Code
-     *
-     * @return StatusType
-     */
-    public function setCode($Code)
+    public function setCode(string $Code): self
     {
         $this->Code = $Code;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->Text;
     }
 
-    /**
-     * @param string $Text
-     *
-     * @return StatusType
-     */
-    public function setText($Text)
+    public function setText(string $Text): self
     {
         $this->Text = $Text;
 
@@ -87,10 +71,8 @@ class StatusType
 
     /**
      * @param \DateTime $Timestamp
-     *
-     * @return StatusType
      */
-    public function setTimestamp(\DateTime $Timestamp = null)
+    public function setTimestamp(\DateTime $Timestamp = null): self
     {
         if ($Timestamp === null) {
             $this->Timestamp = null;

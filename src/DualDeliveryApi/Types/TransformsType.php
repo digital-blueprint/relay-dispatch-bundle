@@ -19,20 +19,12 @@ class TransformsType
         $this->Transform = $Transform;
     }
 
-    /**
-     * @return TransformType
-     */
-    public function getTransform()
+    public function getTransform(): TransformType
     {
         return $this->Transform;
     }
 
-    /**
-     * @param TransformType $Transform
-     *
-     * @return TransformsType
-     */
-    public function setTransform($Transform)
+    public function setTransform(TransformType $Transform): self
     {
         $this->Transform = $Transform;
 

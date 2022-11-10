@@ -34,32 +34,19 @@ class EvidenceType
         return $this->AssertionIDReference;
     }
 
-    /**
-     * @param IDReferenceType $AssertionIDReference
-     *
-     * @return EvidenceType
-     */
-    public function setAssertionIDReference($AssertionIDReference)
+    public function setAssertionIDReference(IDReferenceType $AssertionIDReference): self
     {
         $this->AssertionIDReference = $AssertionIDReference;
 
         return $this;
     }
 
-    /**
-     * @return AssertionType
-     */
-    public function getAssertion()
+    public function getAssertion(): AssertionType
     {
         return $this->Assertion;
     }
 
-    /**
-     * @param AssertionType $Assertion
-     *
-     * @return EvidenceType
-     */
-    public function setAssertion($Assertion)
+    public function setAssertion(AssertionType $Assertion): self
     {
         $this->Assertion = $Assertion;
 

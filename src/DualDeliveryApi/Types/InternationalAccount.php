@@ -36,10 +36,8 @@ class InternationalAccount
 
     /**
      * @param BIC $BIC
-     *
-     * @return InternationalAccount
      */
-    public function setBIC($BIC)
+    public function setBIC($BIC): self
     {
         $this->BIC = $BIC;
 
@@ -56,10 +54,8 @@ class InternationalAccount
 
     /**
      * @param IBAN $IBAN
-     *
-     * @return InternationalAccount
      */
-    public function setIBAN($IBAN)
+    public function setIBAN($IBAN): self
     {
         $this->IBAN = $IBAN;
 

@@ -26,40 +26,24 @@ class PayloadType
         $this->Document = $Document;
     }
 
-    /**
-     * @return PayloadAttributesType
-     */
-    public function getPayloadAttributes()
+    public function getPayloadAttributes(): PayloadAttributesType
     {
         return $this->PayloadAttributes;
     }
 
-    /**
-     * @param PayloadAttributesType $PayloadAttributes
-     *
-     * @return PayloadType
-     */
-    public function setPayloadAttributes($PayloadAttributes)
+    public function setPayloadAttributes(PayloadAttributesType $PayloadAttributes): self
     {
         $this->PayloadAttributes = $PayloadAttributes;
 
         return $this;
     }
 
-    /**
-     * @return DocumentType
-     */
-    public function getDocument()
+    public function getDocument(): DocumentType
     {
         return $this->Document;
     }
 
-    /**
-     * @param DocumentType $Document
-     *
-     * @return PayloadType
-     */
-    public function setDocument($Document)
+    public function setDocument(DocumentType $Document): self
     {
         $this->Document = $Document;
 

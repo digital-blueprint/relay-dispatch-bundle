@@ -26,20 +26,12 @@ class ErrorInfo
         $this->Text = $Text;
     }
 
-    /**
-     * @return int
-     */
-    public function getCode()
+    public function getCode(): int
     {
         return $this->Code;
     }
 
-    /**
-     * @param int $Code
-     *
-     * @return ErrorInfo
-     */
-    public function setCode($Code)
+    public function setCode(int $Code): self
     {
         $this->Code = $Code;
 
@@ -56,10 +48,8 @@ class ErrorInfo
 
     /**
      * @param string255 $Text
-     *
-     * @return ErrorInfo
      */
-    public function setText($Text)
+    public function setText($Text): self
     {
         $this->Text = $Text;
 

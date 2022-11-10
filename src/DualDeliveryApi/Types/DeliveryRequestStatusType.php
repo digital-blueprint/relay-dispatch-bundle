@@ -53,60 +53,36 @@ class DeliveryRequestStatusType extends DeliveryAnswerType
         $this->version = $version;
     }
 
-    /**
-     * @return DeliveryAnswerType
-     */
-    public function getSuccess()
+    public function getSuccess(): DeliveryAnswerType
     {
         return $this->Success;
     }
 
-    /**
-     * @param DeliveryAnswerType $Success
-     *
-     * @return DeliveryRequestStatusType
-     */
-    public function setSuccess($Success)
+    public function setSuccess(DeliveryAnswerType $Success): self
     {
         $this->Success = $Success;
 
         return $this;
     }
 
-    /**
-     * @return DeliveryConfirmationType
-     */
-    public function getDeliveryConfirmation()
+    public function getDeliveryConfirmation(): DeliveryConfirmationType
     {
         return $this->DeliveryConfirmation;
     }
 
-    /**
-     * @param DeliveryConfirmationType $DeliveryConfirmation
-     *
-     * @return DeliveryRequestStatusType
-     */
-    public function setDeliveryConfirmation($DeliveryConfirmation)
+    public function setDeliveryConfirmation(DeliveryConfirmationType $DeliveryConfirmation): self
     {
         $this->DeliveryConfirmation = $DeliveryConfirmation;
 
         return $this;
     }
 
-    /**
-     * @return DeliveryAnswerType
-     */
-    public function getPartialSuccess()
+    public function getPartialSuccess(): DeliveryAnswerType
     {
         return $this->PartialSuccess;
     }
 
-    /**
-     * @param DeliveryAnswerType $PartialSuccess
-     *
-     * @return DeliveryRequestStatusType
-     */
-    public function setPartialSuccess($PartialSuccess)
+    public function setPartialSuccess(DeliveryAnswerType $PartialSuccess): self
     {
         $this->PartialSuccess = $PartialSuccess;
 
@@ -121,12 +97,7 @@ class DeliveryRequestStatusType extends DeliveryAnswerType
         return $this->Error;
     }
 
-    /**
-     * @param Error $Error
-     *
-     * @return DeliveryRequestStatusType
-     */
-    public function setError($Error)
+    public function setError(\Error $Error): self
     {
         $this->Error = $Error;
 
@@ -143,10 +114,8 @@ class DeliveryRequestStatusType extends DeliveryAnswerType
 
     /**
      * @param anonymous273 $version
-     *
-     * @return DeliveryRequestStatusType
      */
-    public function setVersion($version)
+    public function setVersion($version): self
     {
         $this->version = $version;
 

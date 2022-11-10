@@ -43,10 +43,8 @@ class DeliveryRequestStatusACKType
 
     /**
      * @param token255 $AppDeliveryID
-     *
-     * @return DeliveryRequestStatusACKType
      */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID($AppDeliveryID): self
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
@@ -63,10 +61,8 @@ class DeliveryRequestStatusACKType
 
     /**
      * @param token255 $ZSDeliveryID
-     *
-     * @return DeliveryRequestStatusACKType
      */
-    public function setZSDeliveryID($ZSDeliveryID)
+    public function setZSDeliveryID($ZSDeliveryID): self
     {
         $this->ZSDeliveryID = $ZSDeliveryID;
 
@@ -83,10 +79,8 @@ class DeliveryRequestStatusACKType
 
     /**
      * @param anonymous276 $version
-     *
-     * @return DeliveryRequestStatusACKType
      */
-    public function setVersion($version)
+    public function setVersion($version): self
     {
         $this->version = $version;
 

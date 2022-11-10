@@ -57,140 +57,84 @@ class DSAKeyValueType
         $this->PgenCounter = $PgenCounter;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getP()
+    public function getP(): CryptoBinary
     {
         return $this->P;
     }
 
-    /**
-     * @param CryptoBinary $P
-     *
-     * @return DSAKeyValueType
-     */
-    public function setP($P)
+    public function setP(CryptoBinary $P): self
     {
         $this->P = $P;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getQ()
+    public function getQ(): CryptoBinary
     {
         return $this->Q;
     }
 
-    /**
-     * @param CryptoBinary $Q
-     *
-     * @return DSAKeyValueType
-     */
-    public function setQ($Q)
+    public function setQ(CryptoBinary $Q): self
     {
         $this->Q = $Q;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getJ()
+    public function getJ(): CryptoBinary
     {
         return $this->J;
     }
 
-    /**
-     * @param CryptoBinary $J
-     *
-     * @return DSAKeyValueType
-     */
-    public function setJ($J)
+    public function setJ(CryptoBinary $J): self
     {
         $this->J = $J;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getG()
+    public function getG(): CryptoBinary
     {
         return $this->G;
     }
 
-    /**
-     * @param CryptoBinary $G
-     *
-     * @return DSAKeyValueType
-     */
-    public function setG($G)
+    public function setG(CryptoBinary $G): self
     {
         $this->G = $G;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getY()
+    public function getY(): CryptoBinary
     {
         return $this->Y;
     }
 
-    /**
-     * @param CryptoBinary $Y
-     *
-     * @return DSAKeyValueType
-     */
-    public function setY($Y)
+    public function setY(CryptoBinary $Y): self
     {
         $this->Y = $Y;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getSeed()
+    public function getSeed(): CryptoBinary
     {
         return $this->Seed;
     }
 
-    /**
-     * @param CryptoBinary $Seed
-     *
-     * @return DSAKeyValueType
-     */
-    public function setSeed($Seed)
+    public function setSeed(CryptoBinary $Seed): self
     {
         $this->Seed = $Seed;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getPgenCounter()
+    public function getPgenCounter(): CryptoBinary
     {
         return $this->PgenCounter;
     }
 
-    /**
-     * @param CryptoBinary $PgenCounter
-     *
-     * @return DSAKeyValueType
-     */
-    public function setPgenCounter($PgenCounter)
+    public function setPgenCounter(CryptoBinary $PgenCounter): self
     {
         $this->PgenCounter = $PgenCounter;
 

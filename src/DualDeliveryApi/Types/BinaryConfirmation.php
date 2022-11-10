@@ -36,10 +36,8 @@ class BinaryConfirmation
 
     /**
      * @param base64Binary $_
-     *
-     * @return BinaryConfirmation
      */
-    public function set_($_)
+    public function set_($_): self
     {
         $this->_ = $_;
 
@@ -56,10 +54,8 @@ class BinaryConfirmation
 
     /**
      * @param UNKNOWN $Type
-     *
-     * @return BinaryConfirmation
      */
-    public function setType($Type)
+    public function setType($Type): self
     {
         $this->Type = $Type;
 

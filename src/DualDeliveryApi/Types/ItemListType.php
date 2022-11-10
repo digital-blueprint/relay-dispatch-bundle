@@ -33,60 +33,36 @@ class ItemListType
         $this->FooterDescription = $FooterDescription;
     }
 
-    /**
-     * @return string
-     */
-    public function getHeaderDescription()
+    public function getHeaderDescription(): string
     {
         return $this->HeaderDescription;
     }
 
-    /**
-     * @param string $HeaderDescription
-     *
-     * @return ItemListType
-     */
-    public function setHeaderDescription($HeaderDescription)
+    public function setHeaderDescription(string $HeaderDescription): self
     {
         $this->HeaderDescription = $HeaderDescription;
 
         return $this;
     }
 
-    /**
-     * @return ListLineItemType
-     */
-    public function getListLineItem()
+    public function getListLineItem(): ListLineItemType
     {
         return $this->ListLineItem;
     }
 
-    /**
-     * @param ListLineItemType $ListLineItem
-     *
-     * @return ItemListType
-     */
-    public function setListLineItem($ListLineItem)
+    public function setListLineItem(ListLineItemType $ListLineItem): self
     {
         $this->ListLineItem = $ListLineItem;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFooterDescription()
+    public function getFooterDescription(): string
     {
         return $this->FooterDescription;
     }
 
-    /**
-     * @param string $FooterDescription
-     *
-     * @return ItemListType
-     */
-    public function setFooterDescription($FooterDescription)
+    public function setFooterDescription(string $FooterDescription): self
     {
         $this->FooterDescription = $FooterDescription;
 

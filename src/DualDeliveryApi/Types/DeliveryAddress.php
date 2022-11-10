@@ -40,80 +40,48 @@ class DeliveryAddress
         $this->DoorNumber = $DoorNumber;
     }
 
-    /**
-     * @return string
-     */
-    public function getStreetName()
+    public function getStreetName(): string
     {
         return $this->StreetName;
     }
 
-    /**
-     * @param string $StreetName
-     *
-     * @return DeliveryAddress
-     */
-    public function setStreetName($StreetName)
+    public function setStreetName(string $StreetName): self
     {
         $this->StreetName = $StreetName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBuildingNumber()
+    public function getBuildingNumber(): string
     {
         return $this->BuildingNumber;
     }
 
-    /**
-     * @param string $BuildingNumber
-     *
-     * @return DeliveryAddress
-     */
-    public function setBuildingNumber($BuildingNumber)
+    public function setBuildingNumber(string $BuildingNumber): self
     {
         $this->BuildingNumber = $BuildingNumber;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUnit()
+    public function getUnit(): string
     {
         return $this->Unit;
     }
 
-    /**
-     * @param string $Unit
-     *
-     * @return DeliveryAddress
-     */
-    public function setUnit($Unit)
+    public function setUnit(string $Unit): self
     {
         $this->Unit = $Unit;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDoorNumber()
+    public function getDoorNumber(): string
     {
         return $this->DoorNumber;
     }
 
-    /**
-     * @param string $DoorNumber
-     *
-     * @return DeliveryAddress
-     */
-    public function setDoorNumber($DoorNumber)
+    public function setDoorNumber(string $DoorNumber): self
     {
         $this->DoorNumber = $DoorNumber;
 

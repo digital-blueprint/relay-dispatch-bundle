@@ -31,60 +31,36 @@ class ErrorType
         $this->Code = $Code;
     }
 
-    /**
-     * @return string
-     */
-    public function getInfo()
+    public function getInfo(): string
     {
         return $this->Info;
     }
 
-    /**
-     * @param string $Info
-     *
-     * @return ErrorType
-     */
-    public function setInfo($Info)
+    public function setInfo(string $Info): self
     {
         $this->Info = $Info;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->Code;
     }
 
-    /**
-     * @param string $Code
-     *
-     * @return ErrorType
-     */
-    public function setCode($Code)
+    public function setCode(string $Code): self
     {
         $this->Code = $Code;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSeverity()
+    public function getSeverity(): string
     {
         return $this->Severity;
     }
 
-    /**
-     * @param string $Severity
-     *
-     * @return ErrorType
-     */
-    public function setSeverity($Severity)
+    public function setSeverity(string $Severity): self
     {
         $this->Severity = $Severity;
 

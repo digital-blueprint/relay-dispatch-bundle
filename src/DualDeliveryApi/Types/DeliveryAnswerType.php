@@ -62,10 +62,8 @@ class DeliveryAnswerType
 
     /**
      * @param string255 $DeliveryService
-     *
-     * @return DeliveryAnswerType
      */
-    public function setDeliveryService($DeliveryService)
+    public function setDeliveryService($DeliveryService): self
     {
         $this->DeliveryService = $DeliveryService;
 
@@ -82,30 +80,20 @@ class DeliveryAnswerType
 
     /**
      * @param token255 $AppDeliveryID
-     *
-     * @return DeliveryAnswerType
      */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID($AppDeliveryID): self
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getGZ()
+    public function getGZ(): string
     {
         return $this->GZ;
     }
 
-    /**
-     * @param string $GZ
-     *
-     * @return DeliveryAnswerType
-     */
-    public function setGZ($GZ)
+    public function setGZ(string $GZ): self
     {
         $this->GZ = $GZ;
 
@@ -122,10 +110,8 @@ class DeliveryAnswerType
 
     /**
      * @param token255 $MZSDeliveryID
-     *
-     * @return DeliveryAnswerType
      */
-    public function setMZSDeliveryID($MZSDeliveryID)
+    public function setMZSDeliveryID($MZSDeliveryID): self
     {
         $this->MZSDeliveryID = $MZSDeliveryID;
 
@@ -142,30 +128,20 @@ class DeliveryAnswerType
 
     /**
      * @param token255 $ZSDeliveryID
-     *
-     * @return DeliveryAnswerType
      */
-    public function setZSDeliveryID($ZSDeliveryID)
+    public function setZSDeliveryID($ZSDeliveryID): self
     {
         $this->ZSDeliveryID = $ZSDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getRelayedViaERV()
+    public function getRelayedViaERV(): bool
     {
         return $this->RelayedViaERV;
     }
 
-    /**
-     * @param bool $RelayedViaERV
-     *
-     * @return DeliveryAnswerType
-     */
-    public function setRelayedViaERV($RelayedViaERV)
+    public function setRelayedViaERV(bool $RelayedViaERV): self
     {
         $this->RelayedViaERV = $RelayedViaERV;
 

@@ -29,10 +29,8 @@ class BinaryDocument
 
     /**
      * @param UNKNOWN $MIMEType
-     *
-     * @return BinaryDocument
      */
-    public function setMIMEType($MIMEType)
+    public function setMIMEType($MIMEType): self
     {
         $this->MIMEType = $MIMEType;
 

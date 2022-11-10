@@ -89,10 +89,8 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param Pages $Pages
-     *
-     * @return PostalNotificationType
      */
-    public function setPages($Pages)
+    public function setPages($Pages): self
     {
         $this->Pages = $Pages;
 
@@ -117,10 +115,8 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param \DateTime $Printtime
-     *
-     * @return PostalNotificationType
      */
-    public function setPrinttime(\DateTime $Printtime = null)
+    public function setPrinttime(\DateTime $Printtime = null): self
     {
         if ($Printtime === null) {
             $this->Printtime = null;
@@ -141,10 +137,8 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param PrintType $PrintType
-     *
-     * @return PostalNotificationType
      */
-    public function setPrintType($PrintType)
+    public function setPrintType($PrintType): self
     {
         $this->PrintType = $PrintType;
 
@@ -161,10 +155,8 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param Weight $Weight
-     *
-     * @return PostalNotificationType
      */
-    public function setWeight($Weight)
+    public function setWeight($Weight): self
     {
         $this->Weight = $Weight;
 
@@ -181,10 +173,8 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param EnvelopeType $EnvelopeType
-     *
-     * @return PostalNotificationType
      */
-    public function setEnvelopeType($EnvelopeType)
+    public function setEnvelopeType($EnvelopeType): self
     {
         $this->EnvelopeType = $EnvelopeType;
 
@@ -209,10 +199,8 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param \DateTime $PostalDeliveryTime
-     *
-     * @return PostalNotificationType
      */
-    public function setPostalDeliveryTime(\DateTime $PostalDeliveryTime = null)
+    public function setPostalDeliveryTime(\DateTime $PostalDeliveryTime = null): self
     {
         if ($PostalDeliveryTime === null) {
             $this->PostalDeliveryTime = null;
@@ -241,10 +229,8 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param \DateTime $ServiceDeliveryTime
-     *
-     * @return PostalNotificationType
      */
-    public function setServiceDeliveryTime(\DateTime $ServiceDeliveryTime = null)
+    public function setServiceDeliveryTime(\DateTime $ServiceDeliveryTime = null): self
     {
         if ($ServiceDeliveryTime === null) {
             $this->ServiceDeliveryTime = null;
@@ -265,10 +251,8 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param Sheets $Sheets
-     *
-     * @return PostalNotificationType
      */
-    public function setSheets($Sheets)
+    public function setSheets($Sheets): self
     {
         $this->Sheets = $Sheets;
 
@@ -285,90 +269,56 @@ class PostalNotificationType extends NotificationChannelSetType
 
     /**
      * @param PaymentForms $PaymentForms
-     *
-     * @return PostalNotificationType
      */
-    public function setPaymentForms($PaymentForms)
+    public function setPaymentForms($PaymentForms): self
     {
         $this->PaymentForms = $PaymentForms;
 
         return $this;
     }
 
-    /**
-     * @return Costs
-     */
-    public function getCosts()
+    public function getCosts(): Costs
     {
         return $this->Costs;
     }
 
-    /**
-     * @param Costs $Costs
-     *
-     * @return PostalNotificationType
-     */
-    public function setCosts($Costs)
+    public function setCosts(Costs $Costs): self
     {
         $this->Costs = $Costs;
 
         return $this;
     }
 
-    /**
-     * @return AdditonalPrintResults
-     */
-    public function getAdditonalPrintResults()
+    public function getAdditonalPrintResults(): AdditonalPrintResults
     {
         return $this->AdditonalPrintResults;
     }
 
-    /**
-     * @param AdditonalPrintResults $AdditonalPrintResults
-     *
-     * @return PostalNotificationType
-     */
-    public function setAdditonalPrintResults($AdditonalPrintResults)
+    public function setAdditonalPrintResults(AdditonalPrintResults $AdditonalPrintResults): self
     {
         $this->AdditonalPrintResults = $AdditonalPrintResults;
 
         return $this;
     }
 
-    /**
-     * @return DelivererInformation
-     */
-    public function getDelivererInformation()
+    public function getDelivererInformation(): DelivererInformation
     {
         return $this->DelivererInformation;
     }
 
-    /**
-     * @param DelivererInformation $DelivererInformation
-     *
-     * @return PostalNotificationType
-     */
-    public function setDelivererInformation($DelivererInformation)
+    public function setDelivererInformation(DelivererInformation $DelivererInformation): self
     {
         $this->DelivererInformation = $DelivererInformation;
 
         return $this;
     }
 
-    /**
-     * @return ScannedData
-     */
-    public function getScannedData()
+    public function getScannedData(): ScannedData
     {
         return $this->ScannedData;
     }
 
-    /**
-     * @param ScannedData $ScannedData
-     *
-     * @return PostalNotificationType
-     */
-    public function setScannedData($ScannedData)
+    public function setScannedData(ScannedData $ScannedData): self
     {
         $this->ScannedData = $ScannedData;
 

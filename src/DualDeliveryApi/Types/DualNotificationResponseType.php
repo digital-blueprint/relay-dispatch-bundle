@@ -33,60 +33,36 @@ class DualNotificationResponseType
         $this->version = $version;
     }
 
-    /**
-     * @return Success
-     */
-    public function getSuccess()
+    public function getSuccess(): Success
     {
         return $this->Success;
     }
 
-    /**
-     * @param Success $Success
-     *
-     * @return DualNotificationResponseType
-     */
-    public function setSuccess($Success)
+    public function setSuccess(Success $Success): self
     {
         $this->Success = $Success;
 
         return $this;
     }
 
-    /**
-     * @return ErrorType
-     */
-    public function getError()
+    public function getError(): ErrorType
     {
         return $this->Error;
     }
 
-    /**
-     * @param ErrorType $Error
-     *
-     * @return DualNotificationResponseType
-     */
-    public function setError($Error)
+    public function setError(ErrorType $Error): self
     {
         $this->Error = $Error;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     *
-     * @return DualNotificationResponseType
-     */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
         $this->version = $version;
 

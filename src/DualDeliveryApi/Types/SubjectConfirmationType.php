@@ -33,20 +33,12 @@ class SubjectConfirmationType
         $this->KeyInfo = $KeyInfo;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getConfirmationMethod()
+    public function getConfirmationMethod(): AnyURI
     {
         return $this->ConfirmationMethod;
     }
 
-    /**
-     * @param AnyURI $ConfirmationMethod
-     *
-     * @return SubjectConfirmationType
-     */
-    public function setConfirmationMethod($ConfirmationMethod)
+    public function setConfirmationMethod(AnyURI $ConfirmationMethod): self
     {
         $this->ConfirmationMethod = $ConfirmationMethod;
 
@@ -63,30 +55,20 @@ class SubjectConfirmationType
 
     /**
      * @param mixed $SubjectConfirmationData
-     *
-     * @return SubjectConfirmationType
      */
-    public function setSubjectConfirmationData($SubjectConfirmationData)
+    public function setSubjectConfirmationData($SubjectConfirmationData): self
     {
         $this->SubjectConfirmationData = $SubjectConfirmationData;
 
         return $this;
     }
 
-    /**
-     * @return KeyInfoType
-     */
-    public function getKeyInfo()
+    public function getKeyInfo(): KeyInfoType
     {
         return $this->KeyInfo;
     }
 
-    /**
-     * @param KeyInfoType $KeyInfo
-     *
-     * @return SubjectConfirmationType
-     */
-    public function setKeyInfo($KeyInfo)
+    public function setKeyInfo(KeyInfoType $KeyInfo): self
     {
         $this->KeyInfo = $KeyInfo;
 

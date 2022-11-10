@@ -47,100 +47,60 @@ class ErrorCustom
         $this->Signature = $Signature;
     }
 
-    /**
-     * @return Sender
-     */
-    public function getSender()
+    public function getSender(): Sender
     {
         return $this->Sender;
     }
 
-    /**
-     * @param Sender $Sender
-     *
-     * @return ErrorCustom
-     */
-    public function setSender($Sender)
+    public function setSender(Sender $Sender): self
     {
         $this->Sender = $Sender;
 
         return $this;
     }
 
-    /**
-     * @return Receiver
-     */
-    public function getReceiver()
+    public function getReceiver(): Receiver
     {
         return $this->Receiver;
     }
 
-    /**
-     * @param Receiver $Receiver
-     *
-     * @return ErrorCustom
-     */
-    public function setReceiver($Receiver)
+    public function setReceiver(Receiver $Receiver): self
     {
         $this->Receiver = $Receiver;
 
         return $this;
     }
 
-    /**
-     * @return NotificationsPerformed
-     */
-    public function getNotificationsPerformed()
+    public function getNotificationsPerformed(): NotificationsPerformed
     {
         return $this->NotificationsPerformed;
     }
 
-    /**
-     * @param NotificationsPerformed $NotificationsPerformed
-     *
-     * @return ErrorCustom
-     */
-    public function setNotificationsPerformed($NotificationsPerformed)
+    public function setNotificationsPerformed(NotificationsPerformed $NotificationsPerformed): self
     {
         $this->NotificationsPerformed = $NotificationsPerformed;
 
         return $this;
     }
 
-    /**
-     * @return ErrorInfo
-     */
-    public function getErrorInfo()
+    public function getErrorInfo(): ErrorInfo
     {
         return $this->ErrorInfo;
     }
 
-    /**
-     * @param ErrorInfo $ErrorInfo
-     *
-     * @return ErrorCustom
-     */
-    public function setErrorInfo($ErrorInfo)
+    public function setErrorInfo(ErrorInfo $ErrorInfo): self
     {
         $this->ErrorInfo = $ErrorInfo;
 
         return $this;
     }
 
-    /**
-     * @return SignatureType
-     */
-    public function getSignature()
+    public function getSignature(): SignatureType
     {
         return $this->Signature;
     }
 
-    /**
-     * @param SignatureType $Signature
-     *
-     * @return ErrorCustom
-     */
-    public function setSignature($Signature)
+    public function setSignature(SignatureType $Signature): self
     {
         $this->Signature = $Signature;
 

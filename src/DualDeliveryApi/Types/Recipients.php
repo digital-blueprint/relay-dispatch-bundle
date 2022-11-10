@@ -22,7 +22,7 @@ class Recipients
     /**
      * @return Recipient[]
      */
-    public function getRecipient()
+    public function getRecipient(): array
     {
         return $this->Recipient;
     }
@@ -30,7 +30,7 @@ class Recipients
     /**
      * @param Recipient[] $Recipient
      */
-    public function setRecipient($Recipient)
+    public function setRecipient(array $Recipient): void
     {
         $this->Recipient = $Recipient;
     }

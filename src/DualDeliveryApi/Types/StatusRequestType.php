@@ -33,60 +33,36 @@ class StatusRequestType
         $this->DualDeliveryID = $DualDeliveryID;
     }
 
-    /**
-     * @return ApplicationID
-     */
-    public function getApplicationID()
+    public function getApplicationID(): ApplicationID
     {
         return $this->ApplicationID;
     }
 
-    /**
-     * @param ApplicationID $ApplicationID
-     *
-     * @return StatusRequestType
-     */
-    public function setApplicationID($ApplicationID)
+    public function setApplicationID(ApplicationID $ApplicationID): self
     {
         $this->ApplicationID = $ApplicationID;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getApplicationDeliveryID()
+    public function getApplicationDeliveryID(): string
     {
         return $this->ApplicationDeliveryID;
     }
 
-    /**
-     * @param string $ApplicationDeliveryID
-     *
-     * @return StatusRequestType
-     */
-    public function setApplicationDeliveryID($ApplicationDeliveryID)
+    public function setApplicationDeliveryID(string $ApplicationDeliveryID): self
     {
         $this->ApplicationDeliveryID = $ApplicationDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDualDeliveryID()
+    public function getDualDeliveryID(): string
     {
         return $this->DualDeliveryID;
     }
 
-    /**
-     * @param string $DualDeliveryID
-     *
-     * @return StatusRequestType
-     */
-    public function setDualDeliveryID($DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID): self
     {
         $this->DualDeliveryID = $DualDeliveryID;
 

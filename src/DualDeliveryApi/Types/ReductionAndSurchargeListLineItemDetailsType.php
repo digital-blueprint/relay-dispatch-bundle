@@ -26,40 +26,24 @@ class ReductionAndSurchargeListLineItemDetailsType
         $this->SurchargeListLineItem = $SurchargeListLineItem;
     }
 
-    /**
-     * @return ReductionAndSurchargeBaseType
-     */
-    public function getReductionListLineItem()
+    public function getReductionListLineItem(): ReductionAndSurchargeBaseType
     {
         return $this->ReductionListLineItem;
     }
 
-    /**
-     * @param ReductionAndSurchargeBaseType $ReductionListLineItem
-     *
-     * @return ReductionAndSurchargeListLineItemDetailsType
-     */
-    public function setReductionListLineItem($ReductionListLineItem)
+    public function setReductionListLineItem(ReductionAndSurchargeBaseType $ReductionListLineItem): self
     {
         $this->ReductionListLineItem = $ReductionListLineItem;
 
         return $this;
     }
 
-    /**
-     * @return ReductionAndSurchargeBaseType
-     */
-    public function getSurchargeListLineItem()
+    public function getSurchargeListLineItem(): ReductionAndSurchargeBaseType
     {
         return $this->SurchargeListLineItem;
     }
 
-    /**
-     * @param ReductionAndSurchargeBaseType $SurchargeListLineItem
-     *
-     * @return ReductionAndSurchargeListLineItemDetailsType
-     */
-    public function setSurchargeListLineItem($SurchargeListLineItem)
+    public function setSurchargeListLineItem(ReductionAndSurchargeBaseType $SurchargeListLineItem): self
     {
         $this->SurchargeListLineItem = $SurchargeListLineItem;
 

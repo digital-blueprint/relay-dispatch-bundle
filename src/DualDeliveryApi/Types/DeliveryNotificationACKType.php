@@ -43,10 +43,8 @@ class DeliveryNotificationACKType
 
     /**
      * @param token255 $AppDeliveryID
-     *
-     * @return DeliveryNotificationACKType
      */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID($AppDeliveryID): self
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
@@ -63,10 +61,8 @@ class DeliveryNotificationACKType
 
     /**
      * @param token255 $ZSDeliveryID
-     *
-     * @return DeliveryNotificationACKType
      */
-    public function setZSDeliveryID($ZSDeliveryID)
+    public function setZSDeliveryID($ZSDeliveryID): self
     {
         $this->ZSDeliveryID = $ZSDeliveryID;
 
@@ -83,10 +79,8 @@ class DeliveryNotificationACKType
 
     /**
      * @param anonymous293 $version
-     *
-     * @return DeliveryNotificationACKType
      */
-    public function setVersion($version)
+    public function setVersion($version): self
     {
         $this->version = $version;
 

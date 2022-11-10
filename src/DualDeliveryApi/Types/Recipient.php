@@ -27,7 +27,7 @@ class Recipient
         return $this->RecipientID;
     }
 
-    public function setRecipientID(string $RecipientID)
+    public function setRecipientID(string $RecipientID): void
     {
         $this->RecipientID = $RecipientID;
     }
@@ -37,7 +37,7 @@ class Recipient
         return $this->Recipient;
     }
 
-    public function setRecipient(RecipientType $Recipient)
+    public function setRecipient(RecipientType $Recipient): void
     {
         $this->Recipient = $Recipient;
     }

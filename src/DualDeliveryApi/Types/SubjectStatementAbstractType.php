@@ -19,20 +19,12 @@ abstract class SubjectStatementAbstractType extends StatementAbstractType
         $this->Subject = $Subject;
     }
 
-    /**
-     * @return SubjectType
-     */
-    public function getSubject()
+    public function getSubject(): SubjectType
     {
         return $this->Subject;
     }
 
-    /**
-     * @param SubjectType $Subject
-     *
-     * @return SubjectStatementAbstractType
-     */
-    public function setSubject($Subject)
+    public function setSubject(SubjectType $Subject): self
     {
         $this->Subject = $Subject;
 

@@ -26,20 +26,12 @@ class OtherTaxType
         $this->Amount = $Amount;
     }
 
-    /**
-     * @return string
-     */
-    public function getComment()
+    public function getComment(): string
     {
         return $this->Comment;
     }
 
-    /**
-     * @param string $Comment
-     *
-     * @return OtherTaxType
-     */
-    public function setComment($Comment)
+    public function setComment(string $Comment): self
     {
         $this->Comment = $Comment;
 
@@ -56,10 +48,8 @@ class OtherTaxType
 
     /**
      * @param Decimal2Type $Amount
-     *
-     * @return OtherTaxType
      */
-    public function setAmount($Amount)
+    public function setAmount($Amount): self
     {
         $this->Amount = $Amount;
 

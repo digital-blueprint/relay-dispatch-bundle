@@ -38,40 +38,24 @@ class ConditionsType
         $this->NotOnOrAfter = $NotOnOrAfter->format(\DateTime::ATOM);
     }
 
-    /**
-     * @return AudienceRestrictionConditionType
-     */
-    public function getAudienceRestrictionCondition()
+    public function getAudienceRestrictionCondition(): AudienceRestrictionConditionType
     {
         return $this->AudienceRestrictionCondition;
     }
 
-    /**
-     * @param AudienceRestrictionConditionType $AudienceRestrictionCondition
-     *
-     * @return ConditionsType
-     */
-    public function setAudienceRestrictionCondition($AudienceRestrictionCondition)
+    public function setAudienceRestrictionCondition(AudienceRestrictionConditionType $AudienceRestrictionCondition): self
     {
         $this->AudienceRestrictionCondition = $AudienceRestrictionCondition;
 
         return $this;
     }
 
-    /**
-     * @return ConditionAbstractType
-     */
-    public function getCondition()
+    public function getCondition(): ConditionAbstractType
     {
         return $this->Condition;
     }
 
-    /**
-     * @param ConditionAbstractType $Condition
-     *
-     * @return ConditionsType
-     */
-    public function setCondition($Condition)
+    public function setCondition(ConditionAbstractType $Condition): self
     {
         $this->Condition = $Condition;
 
@@ -94,10 +78,7 @@ class ConditionsType
         }
     }
 
-    /**
-     * @return ConditionsType
-     */
-    public function setNotBefore(\DateTime $NotBefore)
+    public function setNotBefore(\DateTime $NotBefore): self
     {
         $this->NotBefore = $NotBefore->format(\DateTime::ATOM);
 
@@ -120,10 +101,7 @@ class ConditionsType
         }
     }
 
-    /**
-     * @return ConditionsType
-     */
-    public function setNotOnOrAfter(\DateTime $NotOnOrAfter)
+    public function setNotOnOrAfter(\DateTime $NotOnOrAfter): self
     {
         $this->NotOnOrAfter = $NotOnOrAfter->format(\DateTime::ATOM);
 

@@ -41,60 +41,36 @@ class AuthenticationStatementType extends SubjectStatementAbstractType
         $this->AuthenticationInstant = $AuthenticationInstant->format(\DateTime::ATOM);
     }
 
-    /**
-     * @return SubjectLocalityType
-     */
-    public function getSubjectLocality()
+    public function getSubjectLocality(): SubjectLocalityType
     {
         return $this->SubjectLocality;
     }
 
-    /**
-     * @param SubjectLocalityType $SubjectLocality
-     *
-     * @return AuthenticationStatementType
-     */
-    public function setSubjectLocality($SubjectLocality)
+    public function setSubjectLocality(SubjectLocalityType $SubjectLocality): self
     {
         $this->SubjectLocality = $SubjectLocality;
 
         return $this;
     }
 
-    /**
-     * @return AuthorityBindingType
-     */
-    public function getAuthorityBinding()
+    public function getAuthorityBinding(): AuthorityBindingType
     {
         return $this->AuthorityBinding;
     }
 
-    /**
-     * @param AuthorityBindingType $AuthorityBinding
-     *
-     * @return AuthenticationStatementType
-     */
-    public function setAuthorityBinding($AuthorityBinding)
+    public function setAuthorityBinding(AuthorityBindingType $AuthorityBinding): self
     {
         $this->AuthorityBinding = $AuthorityBinding;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getAuthenticationMethod()
+    public function getAuthenticationMethod(): AnyURI
     {
         return $this->AuthenticationMethod;
     }
 
-    /**
-     * @param AnyURI $AuthenticationMethod
-     *
-     * @return AuthenticationStatementType
-     */
-    public function setAuthenticationMethod($AuthenticationMethod)
+    public function setAuthenticationMethod(AnyURI $AuthenticationMethod): self
     {
         $this->AuthenticationMethod = $AuthenticationMethod;
 
@@ -117,10 +93,7 @@ class AuthenticationStatementType extends SubjectStatementAbstractType
         }
     }
 
-    /**
-     * @return AuthenticationStatementType
-     */
-    public function setAuthenticationInstant(\DateTime $AuthenticationInstant)
+    public function setAuthenticationInstant(\DateTime $AuthenticationInstant): self
     {
         $this->AuthenticationInstant = $AuthenticationInstant->format(\DateTime::ATOM);
 

@@ -91,20 +91,12 @@ class MetaData
         $this->PrintParameter = $PrintParameter;
     }
 
-    /**
-     * @return string
-     */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->Subject;
     }
 
-    /**
-     * @param string $Subject
-     *
-     * @return MetaData
-     */
-    public function setSubject($Subject)
+    public function setSubject(string $Subject): self
     {
         $this->Subject = $Subject;
 
@@ -121,30 +113,20 @@ class MetaData
 
     /**
      * @param token255 $AppDeliveryID
-     *
-     * @return MetaData
      */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID($AppDeliveryID): self
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getGZ()
+    public function getGZ(): string
     {
         return $this->GZ;
     }
 
-    /**
-     * @param string $GZ
-     *
-     * @return MetaData
-     */
-    public function setGZ($GZ)
+    public function setGZ(string $GZ): self
     {
         $this->GZ = $GZ;
 
@@ -161,10 +143,8 @@ class MetaData
 
     /**
      * @param token255 $MZSDeliveryID
-     *
-     * @return MetaData
      */
-    public function setMZSDeliveryID($MZSDeliveryID)
+    public function setMZSDeliveryID($MZSDeliveryID): self
     {
         $this->MZSDeliveryID = $MZSDeliveryID;
 
@@ -181,70 +161,44 @@ class MetaData
 
     /**
      * @param token255 $DeliveryQuality
-     *
-     * @return MetaData
      */
-    public function setDeliveryQuality($DeliveryQuality)
+    public function setDeliveryQuality($DeliveryQuality): self
     {
         $this->DeliveryQuality = $DeliveryQuality;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getDeliveryConfirmation()
+    public function getDeliveryConfirmation(): bool
     {
         return $this->DeliveryConfirmation;
     }
 
-    /**
-     * @param bool $DeliveryConfirmation
-     *
-     * @return MetaData
-     */
-    public function setDeliveryConfirmation($DeliveryConfirmation)
+    public function setDeliveryConfirmation(bool $DeliveryConfirmation): self
     {
         $this->DeliveryConfirmation = $DeliveryConfirmation;
 
         return $this;
     }
 
-    /**
-     * @return DocumentClass
-     */
-    public function getDocumentClass()
+    public function getDocumentClass(): DocumentClass
     {
         return $this->DocumentClass;
     }
 
-    /**
-     * @param DocumentClass $DocumentClass
-     *
-     * @return MetaData
-     */
-    public function setDocumentClass($DocumentClass)
+    public function setDocumentClass(DocumentClass $DocumentClass): self
     {
         $this->DocumentClass = $DocumentClass;
 
         return $this;
     }
 
-    /**
-     * @return ReferencesType
-     */
-    public function getReferences()
+    public function getReferences(): ReferencesType
     {
         return $this->References;
     }
 
-    /**
-     * @param ReferencesType $References
-     *
-     * @return MetaData
-     */
-    public function setReferences($References)
+    public function setReferences(ReferencesType $References): self
     {
         $this->References = $References;
 
@@ -267,10 +221,7 @@ class MetaData
         }
     }
 
-    /**
-     * @return MetaData
-     */
-    public function setStartNotificationBefore(\DateTime $StartNotificationBefore)
+    public function setStartNotificationBefore(\DateTime $StartNotificationBefore): self
     {
         $this->StartNotificationBefore = $StartNotificationBefore->format(\DateTime::ATOM);
 
@@ -293,30 +244,19 @@ class MetaData
         }
     }
 
-    /**
-     * @return MetaData
-     */
-    public function setDeliverBefore(\DateTime $DeliverBefore)
+    public function setDeliverBefore(\DateTime $DeliverBefore): self
     {
         $this->DeliverBefore = $DeliverBefore->format(\DateTime::ATOM);
 
         return $this;
     }
 
-    /**
-     * @return PrintParameter
-     */
-    public function getPrintParameter()
+    public function getPrintParameter(): PrintParameter
     {
         return $this->PrintParameter;
     }
 
-    /**
-     * @param PrintParameter $PrintParameter
-     *
-     * @return MetaData
-     */
-    public function setPrintParameter($PrintParameter)
+    public function setPrintParameter(PrintParameter $PrintParameter): self
     {
         $this->PrintParameter = $PrintParameter;
 

@@ -26,40 +26,24 @@ class ActionType
         $this->Namespace = $Namespace;
     }
 
-    /**
-     * @return string
-     */
-    public function get_()
+    public function get_(): string
     {
         return $this->_;
     }
 
-    /**
-     * @param string $_
-     *
-     * @return ActionType
-     */
-    public function set_($_)
+    public function set_(string $_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getNamespace()
+    public function getNamespace(): AnyURI
     {
         return $this->Namespace;
     }
 
-    /**
-     * @param AnyURI $Namespace
-     *
-     * @return ActionType
-     */
-    public function setNamespace($Namespace)
+    public function setNamespace(AnyURI $Namespace): self
     {
         $this->Namespace = $Namespace;
 

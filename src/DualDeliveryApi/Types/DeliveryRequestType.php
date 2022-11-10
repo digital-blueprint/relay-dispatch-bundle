@@ -88,10 +88,8 @@ class DeliveryRequestType
 
     /**
      * @param token255 $ZbPK
-     *
-     * @return DeliveryRequestType
      */
-    public function setZbPK($ZbPK)
+    public function setZbPK($ZbPK): self
     {
         $this->ZbPK = $ZbPK;
 
@@ -108,10 +106,8 @@ class DeliveryRequestType
 
     /**
      * @param token255 $edID
-     *
-     * @return DeliveryRequestType
      */
-    public function setEdID($edID)
+    public function setEdID($edID): self
     {
         $this->edID = $edID;
 
@@ -126,72 +122,43 @@ class DeliveryRequestType
         return $this->Identification;
     }
 
-    /**
-     * @param Identification $Identification
-     *
-     * @return DeliveryRequestType
-     */
-    public function setIdentification($Identification)
+    public function setIdentification(Identification $Identification): self
     {
         $this->Identification = $Identification;
 
         return $this;
     }
 
-    /**
-     * @return NotificationAddress
-     */
-    public function getNotificationAddress()
+    public function getNotificationAddress(): NotificationAddress
     {
         return $this->NotificationAddress;
     }
 
-    /**
-     * @param NotificationAddress $NotificationAddress
-     *
-     * @return DeliveryRequestType
-     */
-    public function setNotificationAddress($NotificationAddress)
+    public function setNotificationAddress(NotificationAddress $NotificationAddress): self
     {
         $this->NotificationAddress = $NotificationAddress;
 
         return $this;
     }
 
-    /**
-     * @return Sender
-     */
-    public function getSender()
+    public function getSender(): Sender
     {
         return $this->Sender;
     }
 
-    /**
-     * @param Sender $Sender
-     *
-     * @return DeliveryRequestType
-     */
-    public function setSender($Sender)
+    public function setSender(Sender $Sender): self
     {
         $this->Sender = $Sender;
 
         return $this;
     }
 
-    /**
-     * @return Receiver
-     */
-    public function getReceiver()
+    public function getReceiver(): Receiver
     {
         return $this->Receiver;
     }
 
-    /**
-     * @param Receiver $Receiver
-     *
-     * @return DeliveryRequestType
-     */
-    public function setReceiver($Receiver)
+    public function setReceiver(Receiver $Receiver): self
     {
         $this->Receiver = $Receiver;
 
@@ -208,50 +175,32 @@ class DeliveryRequestType
 
     /**
      * @param MetaData $MetaData
-     *
-     * @return DeliveryRequestType
      */
-    public function setMetaData($MetaData)
+    public function setMetaData($MetaData): self
     {
         $this->MetaData = $MetaData;
 
         return $this;
     }
 
-    /**
-     * @return DocumentReference
-     */
-    public function getDocumentReference()
+    public function getDocumentReference(): DocumentReference
     {
         return $this->DocumentReference;
     }
 
-    /**
-     * @param DocumentReference $DocumentReference
-     *
-     * @return DeliveryRequestType
-     */
-    public function setDocumentReference($DocumentReference)
+    public function setDocumentReference(DocumentReference $DocumentReference): self
     {
         $this->DocumentReference = $DocumentReference;
 
         return $this;
     }
 
-    /**
-     * @return CustomNotificationIntervals
-     */
-    public function getCustomNotificationIntervals()
+    public function getCustomNotificationIntervals(): CustomNotificationIntervals
     {
         return $this->CustomNotificationIntervals;
     }
 
-    /**
-     * @param CustomNotificationIntervals $CustomNotificationIntervals
-     *
-     * @return DeliveryRequestType
-     */
-    public function setCustomNotificationIntervals($CustomNotificationIntervals)
+    public function setCustomNotificationIntervals(CustomNotificationIntervals $CustomNotificationIntervals): self
     {
         $this->CustomNotificationIntervals = $CustomNotificationIntervals;
 
@@ -268,10 +217,8 @@ class DeliveryRequestType
 
     /**
      * @param anonymous267 $version
-     *
-     * @return DeliveryRequestType
      */
-    public function setVersion($version)
+    public function setVersion($version): self
     {
         $this->version = $version;
 

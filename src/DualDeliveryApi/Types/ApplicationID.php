@@ -26,40 +26,24 @@ class ApplicationID
         $this->version = $version;
     }
 
-    /**
-     * @return string
-     */
-    public function get_()
+    public function get_(): string
     {
         return $this->_;
     }
 
-    /**
-     * @param string $_
-     *
-     * @return ApplicationID
-     */
-    public function set_($_)
+    public function set_(string $_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     *
-     * @return ApplicationID
-     */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
         $this->version = $version;
 

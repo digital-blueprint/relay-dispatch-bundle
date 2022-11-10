@@ -26,40 +26,24 @@ class AttributeDesignatorType
         $this->AttributeNamespace = $AttributeNamespace;
     }
 
-    /**
-     * @return string
-     */
-    public function getAttributeName()
+    public function getAttributeName(): string
     {
         return $this->AttributeName;
     }
 
-    /**
-     * @param string $AttributeName
-     *
-     * @return AttributeDesignatorType
-     */
-    public function setAttributeName($AttributeName)
+    public function setAttributeName(string $AttributeName): self
     {
         $this->AttributeName = $AttributeName;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getAttributeNamespace()
+    public function getAttributeNamespace(): AnyURI
     {
         return $this->AttributeNamespace;
     }
 
-    /**
-     * @param AnyURI $AttributeNamespace
-     *
-     * @return AttributeDesignatorType
-     */
-    public function setAttributeNamespace($AttributeNamespace)
+    public function setAttributeNamespace(AnyURI $AttributeNamespace): self
     {
         $this->AttributeNamespace = $AttributeNamespace;
 

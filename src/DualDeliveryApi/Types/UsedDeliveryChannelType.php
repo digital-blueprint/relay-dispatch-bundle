@@ -40,80 +40,48 @@ class UsedDeliveryChannelType
         $this->Errors = $Errors;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->Name;
     }
 
-    /**
-     * @param string $Name
-     *
-     * @return UsedDeliveryChannelType
-     */
-    public function setName($Name)
+    public function setName(string $Name): self
     {
         $this->Name = $Name;
 
         return $this;
     }
 
-    /**
-     * @return StatusType
-     */
-    public function getStatus()
+    public function getStatus(): StatusType
     {
         return $this->Status;
     }
 
-    /**
-     * @param StatusType $Status
-     *
-     * @return UsedDeliveryChannelType
-     */
-    public function setStatus($Status)
+    public function setStatus(StatusType $Status): self
     {
         $this->Status = $Status;
 
         return $this;
     }
 
-    /**
-     * @return ParametersType
-     */
-    public function getParameters()
+    public function getParameters(): ParametersType
     {
         return $this->Parameters;
     }
 
-    /**
-     * @param ParametersType $Parameters
-     *
-     * @return UsedDeliveryChannelType
-     */
-    public function setParameters($Parameters)
+    public function setParameters(ParametersType $Parameters): self
     {
         $this->Parameters = $Parameters;
 
         return $this;
     }
 
-    /**
-     * @return ErrorsType
-     */
-    public function getErrors()
+    public function getErrors(): ErrorsType
     {
         return $this->Errors;
     }
 
-    /**
-     * @param ErrorsType $Errors
-     *
-     * @return UsedDeliveryChannelType
-     */
-    public function setErrors($Errors)
+    public function setErrors(ErrorsType $Errors): self
     {
         $this->Errors = $Errors;
 

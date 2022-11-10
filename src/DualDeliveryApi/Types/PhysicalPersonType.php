@@ -27,40 +27,24 @@ class PhysicalPersonType extends AbstractPersonType
         $this->DateOfBirth = $DateOfBirth;
     }
 
-    /**
-     * @return PersonNameType
-     */
-    public function getName()
+    public function getName(): PersonNameType
     {
         return $this->Name;
     }
 
-    /**
-     * @param PersonNameType $Name
-     *
-     * @return PhysicalPersonType
-     */
-    public function setName($Name)
+    public function setName(PersonNameType $Name): self
     {
         $this->Name = $Name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDateOfBirth()
+    public function getDateOfBirth(): string
     {
         return $this->DateOfBirth;
     }
 
-    /**
-     * @param string $DateOfBirth
-     *
-     * @return PhysicalPersonType
-     */
-    public function setDateOfBirth($DateOfBirth)
+    public function setDateOfBirth(string $DateOfBirth): self
     {
         $this->DateOfBirth = $DateOfBirth;
 

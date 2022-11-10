@@ -65,180 +65,108 @@ class PayloadAttributesType
         $this->PrintParameter = $PrintParameter;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return PayloadAttributesType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->FileName;
     }
 
-    /**
-     * @param string $FileName
-     *
-     * @return PayloadAttributesType
-     */
-    public function setFileName($FileName)
+    public function setFileName(string $FileName): self
     {
         $this->FileName = $FileName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMIMEType()
+    public function getMIMEType(): string
     {
         return $this->MIMEType;
     }
 
-    /**
-     * @param string $MIMEType
-     *
-     * @return PayloadAttributesType
-     */
-    public function setMIMEType($MIMEType)
+    public function setMIMEType(string $MIMEType): self
     {
         $this->MIMEType = $MIMEType;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->Size;
     }
 
-    /**
-     * @param int $Size
-     *
-     * @return PayloadAttributesType
-     */
-    public function setSize($Size)
+    public function setSize(int $Size): self
     {
         $this->Size = $Size;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPageCount()
+    public function getPageCount(): int
     {
         return $this->PageCount;
     }
 
-    /**
-     * @param int $PageCount
-     *
-     * @return PayloadAttributesType
-     */
-    public function setPageCount($PageCount)
+    public function setPageCount(int $PageCount): self
     {
         $this->PageCount = $PageCount;
 
         return $this;
     }
 
-    /**
-     * @return Checksum
-     */
-    public function getChecksum()
+    public function getChecksum(): Checksum
     {
         return $this->Checksum;
     }
 
-    /**
-     * @param Checksum $Checksum
-     *
-     * @return PayloadAttributesType
-     */
-    public function setChecksum($Checksum)
+    public function setChecksum(Checksum $Checksum): self
     {
         $this->Checksum = $Checksum;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getIndex()
+    public function getIndex(): int
     {
         return $this->Index;
     }
 
-    /**
-     * @param int $Index
-     *
-     * @return PayloadAttributesType
-     */
-    public function setIndex($Index)
+    public function setIndex(int $Index): self
     {
         $this->Index = $Index;
 
         return $this;
     }
 
-    /**
-     * @return ParametersType
-     */
-    public function getParameters()
+    public function getParameters(): ParametersType
     {
         return $this->Parameters;
     }
 
-    /**
-     * @param ParametersType $Parameters
-     *
-     * @return PayloadAttributesType
-     */
-    public function setParameters($Parameters)
+    public function setParameters(ParametersType $Parameters): self
     {
         $this->Parameters = $Parameters;
 
         return $this;
     }
 
-    /**
-     * @return PrintParameter
-     */
-    public function getPrintParameter()
+    public function getPrintParameter(): PrintParameter
     {
         return $this->PrintParameter;
     }
 
-    /**
-     * @param PrintParameter $PrintParameter
-     *
-     * @return PayloadAttributesType
-     */
-    public function setPrintParameter($PrintParameter)
+    public function setPrintParameter(PrintParameter $PrintParameter): self
     {
         $this->PrintParameter = $PrintParameter;
 

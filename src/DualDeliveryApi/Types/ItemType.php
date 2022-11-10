@@ -43,30 +43,20 @@ class ItemType
 
     /**
      * @param Decimal2Type $TaxedAmount
-     *
-     * @return ItemType
      */
-    public function setTaxedAmount($TaxedAmount)
+    public function setTaxedAmount($TaxedAmount): self
     {
         $this->TaxedAmount = $TaxedAmount;
 
         return $this;
     }
 
-    /**
-     * @return TaxRateType
-     */
-    public function getTaxRate()
+    public function getTaxRate(): TaxRateType
     {
         return $this->TaxRate;
     }
 
-    /**
-     * @param TaxRateType $TaxRate
-     *
-     * @return ItemType
-     */
-    public function setTaxRate($TaxRate)
+    public function setTaxRate(TaxRateType $TaxRate): self
     {
         $this->TaxRate = $TaxRate;
 
@@ -83,10 +73,8 @@ class ItemType
 
     /**
      * @param Decimal2Type $Amount
-     *
-     * @return ItemType
      */
-    public function setAmount($Amount)
+    public function setAmount($Amount): self
     {
         $this->Amount = $Amount;
 

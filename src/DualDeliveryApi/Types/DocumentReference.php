@@ -40,20 +40,12 @@ class DocumentReference
         $this->MD5Checksum = $MD5Checksum;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getURL()
+    public function getURL(): AnyURI
     {
         return $this->URL;
     }
 
-    /**
-     * @param AnyURI $URL
-     *
-     * @return DocumentReference
-     */
-    public function setURL($URL)
+    public function setURL(AnyURI $URL): self
     {
         $this->URL = $URL;
 
@@ -70,10 +62,8 @@ class DocumentReference
 
     /**
      * @param token255 $MimeType
-     *
-     * @return DocumentReference
      */
-    public function setMimeType($MimeType)
+    public function setMimeType($MimeType): self
     {
         $this->MimeType = $MimeType;
 
@@ -90,10 +80,8 @@ class DocumentReference
 
     /**
      * @param string255 $FileName
-     *
-     * @return DocumentReference
      */
-    public function setFileName($FileName)
+    public function setFileName($FileName): self
     {
         $this->FileName = $FileName;
 
@@ -110,10 +98,8 @@ class DocumentReference
 
     /**
      * @param token255 $MD5Checksum
-     *
-     * @return DocumentReference
      */
-    public function setMD5Checksum($MD5Checksum)
+    public function setMD5Checksum($MD5Checksum): self
     {
         $this->MD5Checksum = $MD5Checksum;
 

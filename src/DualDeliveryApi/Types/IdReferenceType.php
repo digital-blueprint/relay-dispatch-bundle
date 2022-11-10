@@ -19,20 +19,15 @@ class IdReferenceType extends DocumentType
         $this->Id = $Id;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
     /**
-     * @param string $Id
-     *
      * @return stringReferenceType
      */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

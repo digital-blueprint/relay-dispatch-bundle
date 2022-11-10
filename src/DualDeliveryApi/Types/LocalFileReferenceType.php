@@ -19,20 +19,12 @@ class LocalFileReferenceType extends DocumentType
         $this->File = $File;
     }
 
-    /**
-     * @return string
-     */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->File;
     }
 
-    /**
-     * @param string $File
-     *
-     * @return LocalFileReferenceType
-     */
-    public function setFile($File)
+    public function setFile(string $File): self
     {
         $this->File = $File;
 

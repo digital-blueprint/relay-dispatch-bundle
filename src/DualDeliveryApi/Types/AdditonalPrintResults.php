@@ -19,20 +19,12 @@ class AdditonalPrintResults
         $this->AdditionalPrintResultSet = $AdditionalPrintResultSet;
     }
 
-    /**
-     * @return AdditionalPrintResultSetType
-     */
-    public function getAdditionalPrintResultSet()
+    public function getAdditionalPrintResultSet(): AdditionalPrintResultSetType
     {
         return $this->AdditionalPrintResultSet;
     }
 
-    /**
-     * @param AdditionalPrintResultSetType $AdditionalPrintResultSet
-     *
-     * @return AdditonalPrintResults
-     */
-    public function setAdditionalPrintResultSet($AdditionalPrintResultSet)
+    public function setAdditionalPrintResultSet(AdditionalPrintResultSetType $AdditionalPrintResultSet): self
     {
         $this->AdditionalPrintResultSet = $AdditionalPrintResultSet;
 

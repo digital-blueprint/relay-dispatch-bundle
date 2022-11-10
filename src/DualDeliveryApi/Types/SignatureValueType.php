@@ -26,40 +26,24 @@ class SignatureValueType
         $this->Id = $Id;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function get_()
+    public function get_(): CryptoBinary
     {
         return $this->_;
     }
 
-    /**
-     * @param CryptoBinary $_
-     *
-     * @return SignatureValueType
-     */
-    public function set_($_)
+    public function set_(CryptoBinary $_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return SignatureValueType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

@@ -56,120 +56,72 @@ class DualDeliveryBulkRequestType
         $this->version = $version;
     }
 
-    /**
-     * @return Sender
-     */
-    public function getSender()
+    public function getSender(): Sender
     {
         return $this->Sender;
     }
 
-    /**
-     * @param Sender $Sender
-     *
-     * @return DualDeliveryBulkRequestType
-     */
-    public function setSender($Sender)
+    public function setSender(Sender $Sender): self
     {
         $this->Sender = $Sender;
 
         return $this;
     }
 
-    /**
-     * @return MetaData
-     */
-    public function getMetaData()
+    public function getMetaData(): MetaData
     {
         return $this->MetaData;
     }
 
-    /**
-     * @param MetaData $MetaData
-     *
-     * @return DualDeliveryBulkRequestType
-     */
-    public function setMetaData($MetaData)
+    public function setMetaData(MetaData $MetaData): self
     {
         $this->MetaData = $MetaData;
 
         return $this;
     }
 
-    /**
-     * @return PayloadType
-     */
-    public function getPayload()
+    public function getPayload(): PayloadType
     {
         return $this->Payload;
     }
 
-    /**
-     * @param PayloadType $Payload
-     *
-     * @return DualDeliveryBulkRequestType
-     */
-    public function setPayload($Payload)
+    public function setPayload(PayloadType $Payload): self
     {
         $this->Payload = $Payload;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getStartBulk()
+    public function getStartBulk(): bool
     {
         return $this->StartBulk;
     }
 
-    /**
-     * @param bool $StartBulk
-     *
-     * @return DualDeliveryBulkRequestType
-     */
-    public function setStartBulk($StartBulk)
+    public function setStartBulk(bool $StartBulk): self
     {
         $this->StartBulk = $StartBulk;
 
         return $this;
     }
 
-    /**
-     * @return FinishBulk
-     */
-    public function getFinishBulk()
+    public function getFinishBulk(): FinishBulk
     {
         return $this->FinishBulk;
     }
 
-    /**
-     * @param FinishBulk $FinishBulk
-     *
-     * @return DualDeliveryBulkRequestType
-     */
-    public function setFinishBulk($FinishBulk)
+    public function setFinishBulk(FinishBulk $FinishBulk): self
     {
         $this->FinishBulk = $FinishBulk;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     *
-     * @return DualDeliveryBulkRequestType
-     */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
         $this->version = $version;
 

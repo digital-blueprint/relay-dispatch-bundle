@@ -33,20 +33,12 @@ class Affix
         $this->position = $position;
     }
 
-    /**
-     * @return string
-     */
-    public function get_()
+    public function get_(): string
     {
         return $this->_;
     }
 
-    /**
-     * @param string $_
-     *
-     * @return Affix
-     */
-    public function set_($_)
+    public function set_(string $_): self
     {
         $this->_ = $_;
 
@@ -63,10 +55,8 @@ class Affix
 
     /**
      * @param anonymous217 $type
-     *
-     * @return Affix
      */
-    public function setType($type)
+    public function setType($type): self
     {
         $this->type = $type;
 
@@ -83,10 +73,8 @@ class Affix
 
     /**
      * @param anonymous218 $position
-     *
-     * @return Affix
      */
-    public function setPosition($position)
+    public function setPosition($position): self
     {
         $this->position = $position;
 

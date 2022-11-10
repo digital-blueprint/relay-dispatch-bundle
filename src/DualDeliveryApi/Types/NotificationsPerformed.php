@@ -19,20 +19,12 @@ class NotificationsPerformed
         $this->RecipientNotification = $RecipientNotification;
     }
 
-    /**
-     * @return RecipientNotification
-     */
-    public function getRecipientNotification()
+    public function getRecipientNotification(): RecipientNotification
     {
         return $this->RecipientNotification;
     }
 
-    /**
-     * @param RecipientNotification $RecipientNotification
-     *
-     * @return NotificationsPerformed
-     */
-    public function setRecipientNotification($RecipientNotification)
+    public function setRecipientNotification(RecipientNotification $RecipientNotification): self
     {
         $this->RecipientNotification = $RecipientNotification;
 

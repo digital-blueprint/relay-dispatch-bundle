@@ -166,20 +166,12 @@ class InvoiceType
         $this->Language = $Language;
     }
 
-    /**
-     * @return SignatureType
-     */
-    public function getSignature()
+    public function getSignature(): SignatureType
     {
         return $this->Signature;
     }
 
-    /**
-     * @param SignatureType $Signature
-     *
-     * @return InvoiceType
-     */
-    public function setSignature($Signature)
+    public function setSignature(SignatureType $Signature): self
     {
         $this->Signature = $Signature;
 
@@ -196,10 +188,8 @@ class InvoiceType
 
     /**
      * @param AlphaNumIDType $InvoiceNumber
-     *
-     * @return InvoiceType
      */
-    public function setInvoiceNumber($InvoiceNumber)
+    public function setInvoiceNumber($InvoiceNumber): self
     {
         $this->InvoiceNumber = $InvoiceNumber;
 
@@ -216,150 +206,92 @@ class InvoiceType
 
     /**
      * @param date $InvoiceDate
-     *
-     * @return InvoiceType
      */
-    public function setInvoiceDate($InvoiceDate)
+    public function setInvoiceDate($InvoiceDate): self
     {
         $this->InvoiceDate = $InvoiceDate;
 
         return $this;
     }
 
-    /**
-     * @return DeliveryType
-     */
-    public function getDelivery()
+    public function getDelivery(): DeliveryType
     {
         return $this->Delivery;
     }
 
-    /**
-     * @param DeliveryType $Delivery
-     *
-     * @return InvoiceType
-     */
-    public function setDelivery($Delivery)
+    public function setDelivery(DeliveryType $Delivery): self
     {
         $this->Delivery = $Delivery;
 
         return $this;
     }
 
-    /**
-     * @return BillerType
-     */
-    public function getBiller()
+    public function getBiller(): BillerType
     {
         return $this->Biller;
     }
 
-    /**
-     * @param BillerType $Biller
-     *
-     * @return InvoiceType
-     */
-    public function setBiller($Biller)
+    public function setBiller(BillerType $Biller): self
     {
         $this->Biller = $Biller;
 
         return $this;
     }
 
-    /**
-     * @return InvoiceRecipientType
-     */
-    public function getInvoiceRecipient()
+    public function getInvoiceRecipient(): InvoiceRecipientType
     {
         return $this->InvoiceRecipient;
     }
 
-    /**
-     * @param InvoiceRecipientType $InvoiceRecipient
-     *
-     * @return InvoiceType
-     */
-    public function setInvoiceRecipient($InvoiceRecipient)
+    public function setInvoiceRecipient(InvoiceRecipientType $InvoiceRecipient): self
     {
         $this->InvoiceRecipient = $InvoiceRecipient;
 
         return $this;
     }
 
-    /**
-     * @return OrderingPartyType
-     */
-    public function getOrderingParty()
+    public function getOrderingParty(): OrderingPartyType
     {
         return $this->OrderingParty;
     }
 
-    /**
-     * @param OrderingPartyType $OrderingParty
-     *
-     * @return InvoiceType
-     */
-    public function setOrderingParty($OrderingParty)
+    public function setOrderingParty(OrderingPartyType $OrderingParty): self
     {
         $this->OrderingParty = $OrderingParty;
 
         return $this;
     }
 
-    /**
-     * @return DetailsType
-     */
-    public function getDetails()
+    public function getDetails(): DetailsType
     {
         return $this->Details;
     }
 
-    /**
-     * @param DetailsType $Details
-     *
-     * @return InvoiceType
-     */
-    public function setDetails($Details)
+    public function setDetails(DetailsType $Details): self
     {
         $this->Details = $Details;
 
         return $this;
     }
 
-    /**
-     * @return ReductionAndSurchargeDetailsType
-     */
-    public function getReductionAndSurchargeDetails()
+    public function getReductionAndSurchargeDetails(): ReductionAndSurchargeDetailsType
     {
         return $this->ReductionAndSurchargeDetails;
     }
 
-    /**
-     * @param ReductionAndSurchargeDetailsType $ReductionAndSurchargeDetails
-     *
-     * @return InvoiceType
-     */
-    public function setReductionAndSurchargeDetails($ReductionAndSurchargeDetails)
+    public function setReductionAndSurchargeDetails(ReductionAndSurchargeDetailsType $ReductionAndSurchargeDetails): self
     {
         $this->ReductionAndSurchargeDetails = $ReductionAndSurchargeDetails;
 
         return $this;
     }
 
-    /**
-     * @return TaxType
-     */
-    public function getTax()
+    public function getTax(): TaxType
     {
         return $this->Tax;
     }
 
-    /**
-     * @param TaxType $Tax
-     *
-     * @return InvoiceType
-     */
-    public function setTax($Tax)
+    public function setTax(TaxType $Tax): self
     {
         $this->Tax = $Tax;
 
@@ -376,110 +308,68 @@ class InvoiceType
 
     /**
      * @param Decimal2Type $TotalGrossAmount
-     *
-     * @return InvoiceType
      */
-    public function setTotalGrossAmount($TotalGrossAmount)
+    public function setTotalGrossAmount($TotalGrossAmount): self
     {
         $this->TotalGrossAmount = $TotalGrossAmount;
 
         return $this;
     }
 
-    /**
-     * @return PaymentMethodType
-     */
-    public function getPaymentMethod()
+    public function getPaymentMethod(): PaymentMethodType
     {
         return $this->PaymentMethod;
     }
 
-    /**
-     * @param PaymentMethodType $PaymentMethod
-     *
-     * @return InvoiceType
-     */
-    public function setPaymentMethod($PaymentMethod)
+    public function setPaymentMethod(PaymentMethodType $PaymentMethod): self
     {
         $this->PaymentMethod = $PaymentMethod;
 
         return $this;
     }
 
-    /**
-     * @return PaymentConditionsType
-     */
-    public function getPaymentConditions()
+    public function getPaymentConditions(): PaymentConditionsType
     {
         return $this->PaymentConditions;
     }
 
-    /**
-     * @param PaymentConditionsType $PaymentConditions
-     *
-     * @return InvoiceType
-     */
-    public function setPaymentConditions($PaymentConditions)
+    public function setPaymentConditions(PaymentConditionsType $PaymentConditions): self
     {
         $this->PaymentConditions = $PaymentConditions;
 
         return $this;
     }
 
-    /**
-     * @return PresentationDetailsType
-     */
-    public function getPresentationDetails()
+    public function getPresentationDetails(): PresentationDetailsType
     {
         return $this->PresentationDetails;
     }
 
-    /**
-     * @param PresentationDetailsType $PresentationDetails
-     *
-     * @return InvoiceType
-     */
-    public function setPresentationDetails($PresentationDetails)
+    public function setPresentationDetails(PresentationDetailsType $PresentationDetails): self
     {
         $this->PresentationDetails = $PresentationDetails;
 
         return $this;
     }
 
-    /**
-     * @return InvoiceRootExtensionType
-     */
-    public function getInvoiceRootExtension()
+    public function getInvoiceRootExtension(): InvoiceRootExtensionType
     {
         return $this->InvoiceRootExtension;
     }
 
-    /**
-     * @param InvoiceRootExtensionType $InvoiceRootExtension
-     *
-     * @return InvoiceType
-     */
-    public function setInvoiceRootExtension($InvoiceRootExtension)
+    public function setInvoiceRootExtension(InvoiceRootExtensionType $InvoiceRootExtension): self
     {
         $this->InvoiceRootExtension = $InvoiceRootExtension;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getGeneratingSystem()
+    public function getGeneratingSystem(): string
     {
         return $this->GeneratingSystem;
     }
 
-    /**
-     * @param string $GeneratingSystem
-     *
-     * @return InvoiceType
-     */
-    public function setGeneratingSystem($GeneratingSystem)
+    public function setGeneratingSystem(string $GeneratingSystem): self
     {
         $this->GeneratingSystem = $GeneratingSystem;
 
@@ -496,110 +386,68 @@ class InvoiceType
 
     /**
      * @param AlphaNumIDType $CancelledOriginalDocument
-     *
-     * @return InvoiceType
      */
-    public function setCancelledOriginalDocument($CancelledOriginalDocument)
+    public function setCancelledOriginalDocument($CancelledOriginalDocument): self
     {
         $this->CancelledOriginalDocument = $CancelledOriginalDocument;
 
         return $this;
     }
 
-    /**
-     * @return DocumentTypeType
-     */
-    public function getDocumentType()
+    public function getDocumentType(): DocumentTypeType
     {
         return $this->DocumentType;
     }
 
-    /**
-     * @param DocumentTypeType $DocumentType
-     *
-     * @return InvoiceType
-     */
-    public function setDocumentType($DocumentType)
+    public function setDocumentType(DocumentTypeType $DocumentType): self
     {
         $this->DocumentType = $DocumentType;
 
         return $this;
     }
 
-    /**
-     * @return CurrencyType
-     */
-    public function getInvoiceCurrency()
+    public function getInvoiceCurrency(): CurrencyType
     {
         return $this->InvoiceCurrency;
     }
 
-    /**
-     * @param CurrencyType $InvoiceCurrency
-     *
-     * @return InvoiceType
-     */
-    public function setInvoiceCurrency($InvoiceCurrency)
+    public function setInvoiceCurrency(CurrencyType $InvoiceCurrency): self
     {
         $this->InvoiceCurrency = $InvoiceCurrency;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getManualProcessing()
+    public function getManualProcessing(): bool
     {
         return $this->ManualProcessing;
     }
 
-    /**
-     * @param bool $ManualProcessing
-     *
-     * @return InvoiceType
-     */
-    public function setManualProcessing($ManualProcessing)
+    public function setManualProcessing(bool $ManualProcessing): self
     {
         $this->ManualProcessing = $ManualProcessing;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDocumentTitle()
+    public function getDocumentTitle(): string
     {
         return $this->DocumentTitle;
     }
 
-    /**
-     * @param string $DocumentTitle
-     *
-     * @return InvoiceType
-     */
-    public function setDocumentTitle($DocumentTitle)
+    public function setDocumentTitle(string $DocumentTitle): self
     {
         $this->DocumentTitle = $DocumentTitle;
 
         return $this;
     }
 
-    /**
-     * @return LanguageType
-     */
-    public function getLanguage()
+    public function getLanguage(): LanguageType
     {
         return $this->Language;
     }
 
-    /**
-     * @param LanguageType $Language
-     *
-     * @return InvoiceType
-     */
-    public function setLanguage($Language)
+    public function setLanguage(LanguageType $Language): self
     {
         $this->Language = $Language;
 

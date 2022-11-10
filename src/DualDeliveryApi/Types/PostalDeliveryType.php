@@ -63,30 +63,20 @@ class PostalDeliveryType extends DeliveryChannelSetType
 
     /**
      * @param Priority $Priority
-     *
-     * @return PostalDeliveryType
      */
-    public function setPriority($Priority)
+    public function setPriority($Priority): self
     {
         $this->Priority = $Priority;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEnvelopeFormat()
+    public function getEnvelopeFormat(): string
     {
         return $this->EnvelopeFormat;
     }
 
-    /**
-     * @param string $EnvelopeFormat
-     *
-     * @return PostalDeliveryType
-     */
-    public function setEnvelopeFormat($EnvelopeFormat)
+    public function setEnvelopeFormat(string $EnvelopeFormat): self
     {
         $this->EnvelopeFormat = $EnvelopeFormat;
 
@@ -103,90 +93,56 @@ class PostalDeliveryType extends DeliveryChannelSetType
 
     /**
      * @param PrintType $PrintType
-     *
-     * @return PostalDeliveryType
      */
-    public function setPrintType($PrintType)
+    public function setPrintType($PrintType): self
     {
         $this->PrintType = $PrintType;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaperFormat()
+    public function getPaperFormat(): string
     {
         return $this->PaperFormat;
     }
 
-    /**
-     * @param string $PaperFormat
-     *
-     * @return PostalDeliveryType
-     */
-    public function setPaperFormat($PaperFormat)
+    public function setPaperFormat(string $PaperFormat): self
     {
         $this->PaperFormat = $PaperFormat;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getColor()
+    public function getColor(): bool
     {
         return $this->Color;
     }
 
-    /**
-     * @param bool $Color
-     *
-     * @return PostalDeliveryType
-     */
-    public function setColor($Color)
+    public function setColor(bool $Color): self
     {
         $this->Color = $Color;
 
         return $this;
     }
 
-    /**
-     * @return PrintedEnvelope
-     */
-    public function getPrintedEnvelope()
+    public function getPrintedEnvelope(): PrintedEnvelope
     {
         return $this->PrintedEnvelope;
     }
 
-    /**
-     * @param PrintedEnvelope $PrintedEnvelope
-     *
-     * @return PostalDeliveryType
-     */
-    public function setPrintedEnvelope($PrintedEnvelope)
+    public function setPrintedEnvelope(PrintedEnvelope $PrintedEnvelope): self
     {
         $this->PrintedEnvelope = $PrintedEnvelope;
 
         return $this;
     }
 
-    /**
-     * @return AdditionalPrintParameter
-     */
-    public function getAdditionalPrintParameter()
+    public function getAdditionalPrintParameter(): AdditionalPrintParameter
     {
         return $this->AdditionalPrintParameter;
     }
 
-    /**
-     * @param AdditionalPrintParameter $AdditionalPrintParameter
-     *
-     * @return PostalDeliveryType
-     */
-    public function setAdditionalPrintParameter($AdditionalPrintParameter)
+    public function setAdditionalPrintParameter(AdditionalPrintParameter $AdditionalPrintParameter): self
     {
         $this->AdditionalPrintParameter = $AdditionalPrintParameter;
 

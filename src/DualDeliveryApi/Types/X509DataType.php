@@ -54,120 +54,72 @@ class X509DataType
         $this->any = $any;
     }
 
-    /**
-     * @return X509IssuerSerialType
-     */
-    public function getX509IssuerSerial()
+    public function getX509IssuerSerial(): X509IssuerSerialType
     {
         return $this->X509IssuerSerial;
     }
 
-    /**
-     * @param X509IssuerSerialType $X509IssuerSerial
-     *
-     * @return X509DataType
-     */
-    public function setX509IssuerSerial($X509IssuerSerial)
+    public function setX509IssuerSerial(X509IssuerSerialType $X509IssuerSerial): self
     {
         $this->X509IssuerSerial = $X509IssuerSerial;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getX509SKI()
+    public function getX509SKI(): CryptoBinary
     {
         return $this->X509SKI;
     }
 
-    /**
-     * @param CryptoBinary $X509SKI
-     *
-     * @return X509DataType
-     */
-    public function setX509SKI($X509SKI)
+    public function setX509SKI(CryptoBinary $X509SKI): self
     {
         $this->X509SKI = $X509SKI;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getX509SubjectName()
+    public function getX509SubjectName(): string
     {
         return $this->X509SubjectName;
     }
 
-    /**
-     * @param string $X509SubjectName
-     *
-     * @return X509DataType
-     */
-    public function setX509SubjectName($X509SubjectName)
+    public function setX509SubjectName(string $X509SubjectName): self
     {
         $this->X509SubjectName = $X509SubjectName;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getX509Certificate()
+    public function getX509Certificate(): CryptoBinary
     {
         return $this->X509Certificate;
     }
 
-    /**
-     * @param CryptoBinary $X509Certificate
-     *
-     * @return X509DataType
-     */
-    public function setX509Certificate($X509Certificate)
+    public function setX509Certificate(CryptoBinary $X509Certificate): self
     {
         $this->X509Certificate = $X509Certificate;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getX509CRL()
+    public function getX509CRL(): CryptoBinary
     {
         return $this->X509CRL;
     }
 
-    /**
-     * @param CryptoBinary $X509CRL
-     *
-     * @return X509DataType
-     */
-    public function setX509CRL($X509CRL)
+    public function setX509CRL(CryptoBinary $X509CRL): self
     {
         $this->X509CRL = $X509CRL;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return X509DataType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 

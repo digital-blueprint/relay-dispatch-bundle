@@ -362,7 +362,7 @@ class DualDeliveryService extends \SoapClient
         \SoapClient::__construct($wsdl_path, $options);
     }
 
-    private function setLocation(string $name)
+    private function setLocation(string $name): void
     {
         // This sets the location based on the SOAP function call name
         $mapping = $this->activeQuirks['operation_path_mapping'];
@@ -390,58 +390,37 @@ class DualDeliveryService extends \SoapClient
         return $this->__soapCall($name, $args);
     }
 
-    /**
-     * @return DualDeliveryResponse
-     */
-    public function dualDeliveryRequestOperation(DualDeliveryRequest $DualDeliveryRequest)
+    public function dualDeliveryRequestOperation(DualDeliveryRequest $DualDeliveryRequest): DualDeliveryResponse
     {
         return $this->callInternal('dualDeliveryRequestOperation', [$DualDeliveryRequest]);
     }
 
-    /**
-     * @return DualNotificationResponseType
-     */
-    public function dualNotificationRequestOperation(DualNotificationRequest $DualNotificationRequest)
+    public function dualNotificationRequestOperation(DualNotificationRequest $DualNotificationRequest): DualNotificationResponseType
     {
         return $this->callInternal('dualNotificationRequestOperation', [$DualNotificationRequest]);
     }
 
-    /**
-     * @return DualNotificationRequestType
-     */
-    public function dualStatusRequestOperation(StatusRequestType $StatusRequest)
+    public function dualStatusRequestOperation(StatusRequestType $StatusRequest): DualNotificationRequestType
     {
         return $this->callInternal('dualStatusRequestOperation', [$StatusRequest]);
     }
 
-    /**
-     * @return DualDeliveryBulkResponseType
-     */
-    public function dualDeliveryBulkRequestOperation(DualDeliveryBulkRequestType $DualDeliveryBulkRequest)
+    public function dualDeliveryBulkRequestOperation(DualDeliveryBulkRequestType $DualDeliveryBulkRequest): DualDeliveryBulkResponseType
     {
         return $this->callInternal('dualDeliveryBulkRequestOperation', [$DualDeliveryBulkRequest]);
     }
 
-    /**
-     * @return DualNotificationBulkResponseType
-     */
-    public function dualNotificationBulkRequestOperation(DualNotificationBulkRequestType $DualNotificationBulkRequest)
+    public function dualNotificationBulkRequestOperation(DualNotificationBulkRequestType $DualNotificationBulkRequest): DualNotificationBulkResponseType
     {
         return $this->callInternal('dualNotificationBulkRequestOperation', [$DualNotificationBulkRequest]);
     }
 
-    /**
-     * @return DualDeliveryPreAddressingResponseType
-     */
-    public function dualDeliveryPreAddressingRequestOperation(DualDeliveryPreAddressingRequestType $DualDeliveryPreAddressingRequest)
+    public function dualDeliveryPreAddressingRequestOperation(DualDeliveryPreAddressingRequestType $DualDeliveryPreAddressingRequest): DualDeliveryPreAddressingResponseType
     {
         return $this->callInternal('dualDeliveryPreAddressingRequestOperation', [$DualDeliveryPreAddressingRequest]);
     }
 
-    /**
-     * @return DualDeliveryCancellationResponse
-     */
-    public function dualDeliveryCancellationRequestOperation(DualDeliveryCancellationRequest $DualDeliveryCancellationRequest)
+    public function dualDeliveryCancellationRequestOperation(DualDeliveryCancellationRequest $DualDeliveryCancellationRequest): DualDeliveryCancellationResponse
     {
         return $this->callInternal('dualDeliveryCancellationRequestOperation', [$DualDeliveryCancellationRequest]);
     }

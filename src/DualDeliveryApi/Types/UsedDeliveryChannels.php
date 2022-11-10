@@ -19,20 +19,12 @@ class UsedDeliveryChannels
         $this->UsedDeliveryChannel = $UsedDeliveryChannel;
     }
 
-    /**
-     * @return UsedDeliveryChannelType
-     */
-    public function getUsedDeliveryChannel()
+    public function getUsedDeliveryChannel(): UsedDeliveryChannelType
     {
         return $this->UsedDeliveryChannel;
     }
 
-    /**
-     * @param UsedDeliveryChannelType $UsedDeliveryChannel
-     *
-     * @return UsedDeliveryChannels
-     */
-    public function setUsedDeliveryChannel($UsedDeliveryChannel)
+    public function setUsedDeliveryChannel(UsedDeliveryChannelType $UsedDeliveryChannel): self
     {
         $this->UsedDeliveryChannel = $UsedDeliveryChannel;
 

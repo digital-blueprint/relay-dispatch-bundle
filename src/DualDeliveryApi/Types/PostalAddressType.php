@@ -54,100 +54,60 @@ class PostalAddressType extends AbstractAddressType
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
-    public function getCountryCode()
+    public function getCountryCode(): string
     {
         return $this->CountryCode;
     }
 
-    /**
-     * @param string $CountryCode
-     *
-     * @return PostalAddressType
-     */
-    public function setCountryCode($CountryCode)
+    public function setCountryCode(string $CountryCode): self
     {
         $this->CountryCode = $CountryCode;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPostalCode()
+    public function getPostalCode(): string
     {
         return $this->PostalCode;
     }
 
-    /**
-     * @param string $PostalCode
-     *
-     * @return PostalAddressType
-     */
-    public function setPostalCode($PostalCode)
+    public function setPostalCode(string $PostalCode): self
     {
         $this->PostalCode = $PostalCode;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMunicipality()
+    public function getMunicipality(): string
     {
         return $this->Municipality;
     }
 
-    /**
-     * @param string $Municipality
-     *
-     * @return PostalAddressType
-     */
-    public function setMunicipality($Municipality)
+    public function setMunicipality(string $Municipality): self
     {
         $this->Municipality = $Municipality;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMunicipalityNumber()
+    public function getMunicipalityNumber(): string
     {
         return $this->MunicipalityNumber;
     }
 
-    /**
-     * @param string $MunicipalityNumber
-     *
-     * @return PostalAddressType
-     */
-    public function setMunicipalityNumber($MunicipalityNumber)
+    public function setMunicipalityNumber(string $MunicipalityNumber): self
     {
         $this->MunicipalityNumber = $MunicipalityNumber;
 
         return $this;
     }
 
-    /**
-     * @return DeliveryAddress
-     */
-    public function getDeliveryAddress()
+    public function getDeliveryAddress(): DeliveryAddress
     {
         return $this->DeliveryAddress;
     }
 
-    /**
-     * @param DeliveryAddress $DeliveryAddress
-     *
-     * @return PostalAddressType
-     */
-    public function setDeliveryAddress($DeliveryAddress)
+    public function setDeliveryAddress(DeliveryAddress $DeliveryAddress): self
     {
         $this->DeliveryAddress = $DeliveryAddress;
 
@@ -164,10 +124,8 @@ class PostalAddressType extends AbstractAddressType
 
     /**
      * @param anonymous223 $type
-     *
-     * @return PostalAddressType
      */
-    public function setType($type)
+    public function setType($type): self
     {
         $this->type = $type;
 

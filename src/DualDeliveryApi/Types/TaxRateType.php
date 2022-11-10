@@ -36,10 +36,8 @@ class TaxRateType
 
     /**
      * @param PercentageType $_
-     *
-     * @return TaxRateType
      */
-    public function set_($_)
+    public function set_($_): self
     {
         $this->_ = $_;
 
@@ -56,10 +54,8 @@ class TaxRateType
 
     /**
      * @param TaxCodeType $TaxCode
-     *
-     * @return TaxRateType
      */
-    public function setTaxCode($TaxCode)
+    public function setTaxCode($TaxCode): self
     {
         $this->TaxCode = $TaxCode;
 

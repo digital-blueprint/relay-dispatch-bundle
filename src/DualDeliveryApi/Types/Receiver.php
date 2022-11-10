@@ -40,40 +40,24 @@ class Receiver
         $this->PostalAddress = $PostalAddress;
     }
 
-    /**
-     * @return PhysicalPersonType
-     */
-    public function getPhysicalPerson()
+    public function getPhysicalPerson(): PhysicalPersonType
     {
         return $this->PhysicalPerson;
     }
 
-    /**
-     * @param PhysicalPersonType $PhysicalPerson
-     *
-     * @return Receiver
-     */
-    public function setPhysicalPerson($PhysicalPerson)
+    public function setPhysicalPerson(PhysicalPersonType $PhysicalPerson): self
     {
         $this->PhysicalPerson = $PhysicalPerson;
 
         return $this;
     }
 
-    /**
-     * @return CorporateBodyType
-     */
-    public function getCorporateBody()
+    public function getCorporateBody(): CorporateBodyType
     {
         return $this->CorporateBody;
     }
 
-    /**
-     * @param CorporateBodyType $CorporateBody
-     *
-     * @return Receiver
-     */
-    public function setCorporateBody($CorporateBody)
+    public function setCorporateBody(CorporateBodyType $CorporateBody): self
     {
         $this->CorporateBody = $CorporateBody;
 
@@ -90,30 +74,20 @@ class Receiver
 
     /**
      * @param mixed $MailBox
-     *
-     * @return Receiver
      */
-    public function setMailBox($MailBox)
+    public function setMailBox($MailBox): self
     {
         $this->MailBox = $MailBox;
 
         return $this;
     }
 
-    /**
-     * @return PostalAddressType
-     */
-    public function getPostalAddress()
+    public function getPostalAddress(): PostalAddressType
     {
         return $this->PostalAddress;
     }
 
-    /**
-     * @param PostalAddressType $PostalAddress
-     *
-     * @return Receiver
-     */
-    public function setPostalAddress($PostalAddress)
+    public function setPostalAddress(PostalAddressType $PostalAddress): self
     {
         $this->PostalAddress = $PostalAddress;
 

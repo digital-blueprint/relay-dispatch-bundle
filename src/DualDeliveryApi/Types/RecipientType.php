@@ -26,40 +26,24 @@ class RecipientType
         $this->Parameters = $Parameters;
     }
 
-    /**
-     * @return PersonDataType
-     */
-    public function getRecipientData()
+    public function getRecipientData(): PersonDataType
     {
         return $this->RecipientData;
     }
 
-    /**
-     * @param PersonDataType $RecipientData
-     *
-     * @return RecipientType
-     */
-    public function setRecipientData($RecipientData)
+    public function setRecipientData(PersonDataType $RecipientData): self
     {
         $this->RecipientData = $RecipientData;
 
         return $this;
     }
 
-    /**
-     * @return ParametersType
-     */
-    public function getParameters()
+    public function getParameters(): ParametersType
     {
         return $this->Parameters;
     }
 
-    /**
-     * @param ParametersType $Parameters
-     *
-     * @return RecipientType
-     */
-    public function setParameters($Parameters)
+    public function setParameters(ParametersType $Parameters): self
     {
         $this->Parameters = $Parameters;
 

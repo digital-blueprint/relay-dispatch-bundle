@@ -57,30 +57,20 @@ class PaymentConditionsType
 
     /**
      * @param date $DueDate
-     *
-     * @return PaymentConditionsType
      */
-    public function setDueDate($DueDate)
+    public function setDueDate($DueDate): self
     {
         $this->DueDate = $DueDate;
 
         return $this;
     }
 
-    /**
-     * @return DiscountType
-     */
-    public function getDiscount()
+    public function getDiscount(): DiscountType
     {
         return $this->Discount;
     }
 
-    /**
-     * @param DiscountType $Discount
-     *
-     * @return PaymentConditionsType
-     */
-    public function setDiscount($Discount)
+    public function setDiscount(DiscountType $Discount): self
     {
         $this->Discount = $Discount;
 
@@ -97,50 +87,32 @@ class PaymentConditionsType
 
     /**
      * @param Decimal2Type $MinimumPayment
-     *
-     * @return PaymentConditionsType
      */
-    public function setMinimumPayment($MinimumPayment)
+    public function setMinimumPayment($MinimumPayment): self
     {
         $this->MinimumPayment = $MinimumPayment;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getComment()
+    public function getComment(): string
     {
         return $this->Comment;
     }
 
-    /**
-     * @param string $Comment
-     *
-     * @return PaymentConditionsType
-     */
-    public function setComment($Comment)
+    public function setComment(string $Comment): self
     {
         $this->Comment = $Comment;
 
         return $this;
     }
 
-    /**
-     * @return PaymentConditionsExtensionType
-     */
-    public function getPaymentConditionsExtension()
+    public function getPaymentConditionsExtension(): PaymentConditionsExtensionType
     {
         return $this->PaymentConditionsExtension;
     }
 
-    /**
-     * @param PaymentConditionsExtensionType $PaymentConditionsExtension
-     *
-     * @return PaymentConditionsType
-     */
-    public function setPaymentConditionsExtension($PaymentConditionsExtension)
+    public function setPaymentConditionsExtension(PaymentConditionsExtensionType $PaymentConditionsExtension): self
     {
         $this->PaymentConditionsExtension = $PaymentConditionsExtension;
 

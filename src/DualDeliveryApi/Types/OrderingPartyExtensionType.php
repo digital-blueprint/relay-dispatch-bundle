@@ -26,40 +26,24 @@ class OrderingPartyExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return OrderingPartyExtensionType
-     */
-    public function getOrderingPartyExtension()
+    public function getOrderingPartyExtension(): OrderingPartyExtensionType
     {
         return $this->OrderingPartyExtension;
     }
 
-    /**
-     * @param OrderingPartyExtensionType $OrderingPartyExtension
-     *
-     * @return OrderingPartyExtensionType
-     */
-    public function setOrderingPartyExtension($OrderingPartyExtension)
+    public function setOrderingPartyExtension(OrderingPartyExtensionType $OrderingPartyExtension): self
     {
         $this->OrderingPartyExtension = $OrderingPartyExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return OrderingPartyExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

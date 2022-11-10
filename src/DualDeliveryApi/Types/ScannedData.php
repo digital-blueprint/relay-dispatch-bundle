@@ -26,40 +26,24 @@ class ScannedData
         $this->ExtractedMetaData = $ExtractedMetaData;
     }
 
-    /**
-     * @return BinaryDocument
-     */
-    public function getBinaryDocument()
+    public function getBinaryDocument(): BinaryDocument
     {
         return $this->BinaryDocument;
     }
 
-    /**
-     * @param BinaryDocument $BinaryDocument
-     *
-     * @return ScannedData
-     */
-    public function setBinaryDocument($BinaryDocument)
+    public function setBinaryDocument(BinaryDocument $BinaryDocument): self
     {
         $this->BinaryDocument = $BinaryDocument;
 
         return $this;
     }
 
-    /**
-     * @return ExtensionPointType
-     */
-    public function getExtractedMetaData()
+    public function getExtractedMetaData(): ExtensionPointType
     {
         return $this->ExtractedMetaData;
     }
 
-    /**
-     * @param ExtensionPointType $ExtractedMetaData
-     *
-     * @return ScannedData
-     */
-    public function setExtractedMetaData($ExtractedMetaData)
+    public function setExtractedMetaData(ExtensionPointType $ExtractedMetaData): self
     {
         $this->ExtractedMetaData = $ExtractedMetaData;
 

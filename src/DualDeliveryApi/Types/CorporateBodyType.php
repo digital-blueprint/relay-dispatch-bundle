@@ -27,40 +27,24 @@ class CorporateBodyType extends AbstractPersonType
         $this->FullName = $FullName;
     }
 
-    /**
-     * @return string
-     */
-    public function getFullName()
+    public function getFullName(): string
     {
         return $this->FullName;
     }
 
-    /**
-     * @param string $FullName
-     *
-     * @return CorporateBodyType
-     */
-    public function setFullName($FullName)
+    public function setFullName(string $FullName): self
     {
         $this->FullName = $FullName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrganization()
+    public function getOrganization(): string
     {
         return $this->Organization;
     }
 
-    /**
-     * @param string $Organization
-     *
-     * @return CorporateBodyType
-     */
-    public function setOrganization($Organization)
+    public function setOrganization(string $Organization): self
     {
         $this->Organization = $Organization;
 

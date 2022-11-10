@@ -19,20 +19,12 @@ class Payments
         $this->Payment = $Payment;
     }
 
-    /**
-     * @return Payment
-     */
-    public function getPayment()
+    public function getPayment(): Payment
     {
         return $this->Payment;
     }
 
-    /**
-     * @param Payment $Payment
-     *
-     * @return Payments
-     */
-    public function setPayment($Payment)
+    public function setPayment(Payment $Payment): self
     {
         $this->Payment = $Payment;
 

@@ -23,20 +23,12 @@ class ReductionAndSurchargeType extends ReductionAndSurchargeBaseType
         $this->TaxRate = $TaxRate;
     }
 
-    /**
-     * @return TaxRateType
-     */
-    public function getTaxRate()
+    public function getTaxRate(): TaxRateType
     {
         return $this->TaxRate;
     }
 
-    /**
-     * @param TaxRateType $TaxRate
-     *
-     * @return ReductionAndSurchargeType
-     */
-    public function setTaxRate($TaxRate)
+    public function setTaxRate(TaxRateType $TaxRate): self
     {
         $this->TaxRate = $TaxRate;
 

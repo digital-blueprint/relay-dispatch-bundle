@@ -26,40 +26,24 @@ class PresentationDetailsExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return PresentationDetailsExtensionType
-     */
-    public function getPresentationDetailsExtension()
+    public function getPresentationDetailsExtension(): PresentationDetailsExtensionType
     {
         return $this->PresentationDetailsExtension;
     }
 
-    /**
-     * @param PresentationDetailsExtensionType $PresentationDetailsExtension
-     *
-     * @return PresentationDetailsExtensionType
-     */
-    public function setPresentationDetailsExtension($PresentationDetailsExtension)
+    public function setPresentationDetailsExtension(PresentationDetailsExtensionType $PresentationDetailsExtension): self
     {
         $this->PresentationDetailsExtension = $PresentationDetailsExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return PresentationDetailsExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

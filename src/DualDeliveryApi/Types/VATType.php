@@ -26,40 +26,24 @@ class VATType
         $this->Item = $Item;
     }
 
-    /**
-     * @return string
-     */
-    public function getTaxExemption()
+    public function getTaxExemption(): string
     {
         return $this->TaxExemption;
     }
 
-    /**
-     * @param string $TaxExemption
-     *
-     * @return VATType
-     */
-    public function setTaxExemption($TaxExemption)
+    public function setTaxExemption(string $TaxExemption): self
     {
         $this->TaxExemption = $TaxExemption;
 
         return $this;
     }
 
-    /**
-     * @return ItemType
-     */
-    public function getItem()
+    public function getItem(): ItemType
     {
         return $this->Item;
     }
 
-    /**
-     * @param ItemType $Item
-     *
-     * @return VATType
-     */
-    public function setItem($Item)
+    public function setItem(ItemType $Item): self
     {
         $this->Item = $Item;
 

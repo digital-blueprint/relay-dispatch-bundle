@@ -49,11 +49,9 @@ class DualDeliveryCancellationRequestType
     }
 
     /**
-     * @param SenderProfile $SenderProfile
-     *
      * @return DualDeliveryCancellationRequestType
      */
-    public function setSenderProfile($SenderProfile)
+    public function setSenderProfile(SenderProfile $SenderProfile)
     {
         $this->SenderProfile = $SenderProfile;
 
@@ -69,11 +67,9 @@ class DualDeliveryCancellationRequestType
     }
 
     /**
-     * @param ApplicationID $ApplicationID
-     *
      * @return DualDeliveryCancellationRequestType
      */
-    public function setApplicationID($ApplicationID)
+    public function setApplicationID(ApplicationID $ApplicationID)
     {
         $this->ApplicationID = $ApplicationID;
 
@@ -89,11 +85,9 @@ class DualDeliveryCancellationRequestType
     }
 
     /**
-     * @param string $DualDeliveryID
-     *
      * @return DualDeliveryCancellationRequestType
      */
-    public function setDualDeliveryID($DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID)
     {
         $this->DualDeliveryID = $DualDeliveryID;
 
@@ -109,11 +103,9 @@ class DualDeliveryCancellationRequestType
     }
 
     /**
-     * @param string $version
-     *
      * @return DualDeliveryCancellationRequestType
      */
-    public function setVersion($version)
+    public function setVersion(string $version)
     {
         $this->version = $version;
 

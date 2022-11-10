@@ -26,40 +26,24 @@ class BankCodeCType
         $this->BankCodeType = $BankCodeType;
     }
 
-    /**
-     * @return int
-     */
-    public function get_()
+    public function get_(): int
     {
         return $this->_;
     }
 
-    /**
-     * @param int $_
-     *
-     * @return BankCodeCType
-     */
-    public function set_($_)
+    public function set_(int $_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return CountryCodeType
-     */
-    public function getBankCodeType()
+    public function getBankCodeType(): CountryCodeType
     {
         return $this->BankCodeType;
     }
 
-    /**
-     * @param CountryCodeType $BankCodeType
-     *
-     * @return BankCodeCType
-     */
-    public function setBankCodeType($BankCodeType)
+    public function setBankCodeType(CountryCodeType $BankCodeType): self
     {
         $this->BankCodeType = $BankCodeType;
 

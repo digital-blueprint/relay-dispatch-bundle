@@ -65,140 +65,84 @@ class MetaData
         $this->PreCreateSendings = $PreCreateSendings;
     }
 
-    /**
-     * @return string
-     */
-    public function getAppDeliveryID()
+    public function getAppDeliveryID(): string
     {
         return $this->AppDeliveryID;
     }
 
-    /**
-     * @param string $AppDeliveryID
-     *
-     * @return MetaData
-     */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID(string $AppDeliveryID): self
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return ApplicationID
-     */
-    public function getApplicationID()
+    public function getApplicationID(): ApplicationID
     {
         return $this->ApplicationID;
     }
 
-    /**
-     * @param ApplicationID $ApplicationID
-     *
-     * @return MetaData
-     */
-    public function setApplicationID($ApplicationID)
+    public function setApplicationID(ApplicationID $ApplicationID): self
     {
         $this->ApplicationID = $ApplicationID;
 
         return $this;
     }
 
-    /**
-     * @return AdditionalMetaData
-     */
-    public function getAdditionalMetaData()
+    public function getAdditionalMetaData(): AdditionalMetaData
     {
         return $this->AdditionalMetaData;
     }
 
-    /**
-     * @param AdditionalMetaData $AdditionalMetaData
-     *
-     * @return MetaData
-     */
-    public function setAdditionalMetaData($AdditionalMetaData)
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): self
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getTestCase()
+    public function getTestCase(): bool
     {
         return $this->TestCase;
     }
 
-    /**
-     * @param bool $TestCase
-     *
-     * @return MetaData
-     */
-    public function setTestCase($TestCase)
+    public function setTestCase(bool $TestCase): self
     {
         $this->TestCase = $TestCase;
 
         return $this;
     }
 
-    /**
-     * @return ProcessingProfile
-     */
-    public function getProcessingProfile()
+    public function getProcessingProfile(): ProcessingProfile
     {
         return $this->ProcessingProfile;
     }
 
-    /**
-     * @param ProcessingProfile $ProcessingProfile
-     *
-     * @return MetaData
-     */
-    public function setProcessingProfile($ProcessingProfile)
+    public function setProcessingProfile(ProcessingProfile $ProcessingProfile): self
     {
         $this->ProcessingProfile = $ProcessingProfile;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getAsynchronous()
+    public function getAsynchronous(): bool
     {
         return $this->Asynchronous;
     }
 
-    /**
-     * @param bool $Asynchronous
-     *
-     * @return MetaData
-     */
-    public function setAsynchronous($Asynchronous)
+    public function setAsynchronous(bool $Asynchronous): self
     {
         $this->Asynchronous = $Asynchronous;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getPreCreateSendings()
+    public function getPreCreateSendings(): bool
     {
         return $this->PreCreateSendings;
     }
 
-    /**
-     * @param bool $PreCreateSendings
-     *
-     * @return MetaData
-     */
-    public function setPreCreateSendings($PreCreateSendings)
+    public function setPreCreateSendings(bool $PreCreateSendings): self
     {
         $this->PreCreateSendings = $PreCreateSendings;
 

@@ -36,57 +36,39 @@ class AddressingResult
     /**
      * @return UsedDeliveryChannelType[]
      */
-    public function getDeliveryChannelAddressingResult()
+    public function getDeliveryChannelAddressingResult(): array
     {
         return $this->DeliveryChannelAddressingResult ?? [];
     }
 
     /**
      * @param UsedDeliveryChannelType[] $DeliveryChannelAddressingResult
-     *
-     * @return AddressingResult
      */
-    public function setDeliveryChannelAddressingResult($DeliveryChannelAddressingResult)
+    public function setDeliveryChannelAddressingResult(array $DeliveryChannelAddressingResult): self
     {
         $this->DeliveryChannelAddressingResult = $DeliveryChannelAddressingResult;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDualDeliveryID()
+    public function getDualDeliveryID(): string
     {
         return $this->DualDeliveryID;
     }
 
-    /**
-     * @param string $DualDeliveryID
-     *
-     * @return AddressingResult
-     */
-    public function setDualDeliveryID($DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID): self
     {
         $this->DualDeliveryID = $DualDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getRecipientID()
+    public function getRecipientID(): string
     {
         return $this->RecipientID;
     }
 
-    /**
-     * @param string $RecipientID
-     *
-     * @return AddressingResult
-     */
-    public function setRecipientID($RecipientID)
+    public function setRecipientID(string $RecipientID): self
     {
         $this->RecipientID = $RecipientID;
 

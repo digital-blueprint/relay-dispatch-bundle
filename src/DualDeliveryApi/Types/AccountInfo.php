@@ -26,40 +26,24 @@ class AccountInfo
         $this->Depositor = $Depositor;
     }
 
-    /**
-     * @return Receiver
-     */
-    public function getReceiver()
+    public function getReceiver(): Receiver
     {
         return $this->Receiver;
     }
 
-    /**
-     * @param Receiver $Receiver
-     *
-     * @return AccountInfo
-     */
-    public function setReceiver($Receiver)
+    public function setReceiver(Receiver $Receiver): self
     {
         $this->Receiver = $Receiver;
 
         return $this;
     }
 
-    /**
-     * @return Depositor
-     */
-    public function getDepositor()
+    public function getDepositor(): Depositor
     {
         return $this->Depositor;
     }
 
-    /**
-     * @param Depositor $Depositor
-     *
-     * @return AccountInfo
-     */
-    public function setDepositor($Depositor)
+    public function setDepositor(Depositor $Depositor): self
     {
         $this->Depositor = $Depositor;
 

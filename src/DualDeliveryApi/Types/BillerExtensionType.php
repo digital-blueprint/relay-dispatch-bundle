@@ -26,40 +26,24 @@ class BillerExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return BillerExtensionType
-     */
-    public function getBillerExtension()
+    public function getBillerExtension(): BillerExtensionType
     {
         return $this->BillerExtension;
     }
 
-    /**
-     * @param BillerExtensionType $BillerExtension
-     *
-     * @return BillerExtensionType
-     */
-    public function setBillerExtension($BillerExtension)
+    public function setBillerExtension(BillerExtensionType $BillerExtension): self
     {
         $this->BillerExtension = $BillerExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return BillerExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

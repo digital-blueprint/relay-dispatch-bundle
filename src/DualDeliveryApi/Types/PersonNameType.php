@@ -26,40 +26,24 @@ class PersonNameType
         $this->FamilyName = $FamilyName;
     }
 
-    /**
-     * @return string
-     */
-    public function getGivenName()
+    public function getGivenName(): string
     {
         return $this->GivenName;
     }
 
-    /**
-     * @param string $GivenName
-     *
-     * @return PersonNameType
-     */
-    public function setGivenName($GivenName)
+    public function setGivenName(string $GivenName): self
     {
         $this->GivenName = $GivenName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFamilyName()
+    public function getFamilyName(): string
     {
         return $this->FamilyName;
     }
 
-    /**
-     * @param string $FamilyName
-     *
-     * @return PersonNameType
-     */
-    public function setFamilyName($FamilyName)
+    public function setFamilyName(string $FamilyName): self
     {
         $this->FamilyName = $FamilyName;
 

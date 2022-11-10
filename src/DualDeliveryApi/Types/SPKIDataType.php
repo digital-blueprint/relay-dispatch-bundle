@@ -26,40 +26,24 @@ class SPKIDataType
         $this->any = $any;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getSPKISexp()
+    public function getSPKISexp(): CryptoBinary
     {
         return $this->SPKISexp;
     }
 
-    /**
-     * @param CryptoBinary $SPKISexp
-     *
-     * @return SPKIDataType
-     */
-    public function setSPKISexp($SPKISexp)
+    public function setSPKISexp(CryptoBinary $SPKISexp): self
     {
         $this->SPKISexp = $SPKISexp;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return SPKIDataType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 

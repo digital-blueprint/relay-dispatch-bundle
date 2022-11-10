@@ -25,60 +25,36 @@ class ElectronicDeliveryType extends DeliveryChannelSetType
     {
     }
 
-    /**
-     * @return bool
-     */
-    public function getRequiresEncryption()
+    public function getRequiresEncryption(): bool
     {
         return $this->RequiresEncryption;
     }
 
-    /**
-     * @param bool $RequiresEncryption
-     *
-     * @return ElectronicDeliveryType
-     */
-    public function setRequiresEncryption($RequiresEncryption)
+    public function setRequiresEncryption(bool $RequiresEncryption): self
     {
         $this->RequiresEncryption = $RequiresEncryption;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getDeliveryConfirmation()
+    public function getDeliveryConfirmation(): bool
     {
         return $this->DeliveryConfirmation;
     }
 
-    /**
-     * @param bool $DeliveryConfirmation
-     *
-     * @return ElectronicDeliveryType
-     */
-    public function setDeliveryConfirmation($DeliveryConfirmation)
+    public function setDeliveryConfirmation(bool $DeliveryConfirmation): self
     {
         $this->DeliveryConfirmation = $DeliveryConfirmation;
 
         return $this;
     }
 
-    /**
-     * @return CustomNotificationIntervals
-     */
-    public function getCustomNotificationIntervals()
+    public function getCustomNotificationIntervals(): CustomNotificationIntervals
     {
         return $this->CustomNotificationIntervals;
     }
 
-    /**
-     * @param CustomNotificationIntervals $CustomNotificationIntervals
-     *
-     * @return ElectronicDeliveryType
-     */
-    public function setCustomNotificationIntervals($CustomNotificationIntervals)
+    public function setCustomNotificationIntervals(CustomNotificationIntervals $CustomNotificationIntervals): self
     {
         $this->CustomNotificationIntervals = $CustomNotificationIntervals;
 

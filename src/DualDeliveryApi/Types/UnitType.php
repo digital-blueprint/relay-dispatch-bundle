@@ -36,30 +36,20 @@ class UnitType
 
     /**
      * @param Decimal4Type $_
-     *
-     * @return UnitType
      */
-    public function set_($_)
+    public function set_($_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUnit()
+    public function getUnit(): string
     {
         return $this->Unit;
     }
 
-    /**
-     * @param string $Unit
-     *
-     * @return UnitType
-     */
-    public function setUnit($Unit)
+    public function setUnit(string $Unit): self
     {
         $this->Unit = $Unit;
 

@@ -33,60 +33,36 @@ class ReductionAndSurchargeDetailsType
         $this->ReductionAndSurchargeDetailsExtension = $ReductionAndSurchargeDetailsExtension;
     }
 
-    /**
-     * @return ReductionAndSurchargeType
-     */
-    public function getReduction()
+    public function getReduction(): ReductionAndSurchargeType
     {
         return $this->Reduction;
     }
 
-    /**
-     * @param ReductionAndSurchargeType $Reduction
-     *
-     * @return ReductionAndSurchargeDetailsType
-     */
-    public function setReduction($Reduction)
+    public function setReduction(ReductionAndSurchargeType $Reduction): self
     {
         $this->Reduction = $Reduction;
 
         return $this;
     }
 
-    /**
-     * @return ReductionAndSurchargeType
-     */
-    public function getSurcharge()
+    public function getSurcharge(): ReductionAndSurchargeType
     {
         return $this->Surcharge;
     }
 
-    /**
-     * @param ReductionAndSurchargeType $Surcharge
-     *
-     * @return ReductionAndSurchargeDetailsType
-     */
-    public function setSurcharge($Surcharge)
+    public function setSurcharge(ReductionAndSurchargeType $Surcharge): self
     {
         $this->Surcharge = $Surcharge;
 
         return $this;
     }
 
-    /**
-     * @return ReductionAndSurchargeDetailsExtensionType
-     */
-    public function getReductionAndSurchargeDetailsExtension()
+    public function getReductionAndSurchargeDetailsExtension(): ReductionAndSurchargeDetailsExtensionType
     {
         return $this->ReductionAndSurchargeDetailsExtension;
     }
 
-    /**
-     * @param ReductionAndSurchargeDetailsExtensionType $ReductionAndSurchargeDetailsExtension
-     *
-     * @return ReductionAndSurchargeDetailsType
-     */
-    public function setReductionAndSurchargeDetailsExtension($ReductionAndSurchargeDetailsExtension)
+    public function setReductionAndSurchargeDetailsExtension(ReductionAndSurchargeDetailsExtensionType $ReductionAndSurchargeDetailsExtension): self
     {
         $this->ReductionAndSurchargeDetailsExtension = $ReductionAndSurchargeDetailsExtension;
 

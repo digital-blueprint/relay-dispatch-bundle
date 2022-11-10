@@ -21,20 +21,12 @@ class AttributeStatementType extends SubjectStatementAbstractType
         $this->Attribute = $Attribute;
     }
 
-    /**
-     * @return AttributeType
-     */
-    public function getAttribute()
+    public function getAttribute(): AttributeType
     {
         return $this->Attribute;
     }
 
-    /**
-     * @param AttributeType $Attribute
-     *
-     * @return AttributeStatementType
-     */
-    public function setAttribute($Attribute)
+    public function setAttribute(AttributeType $Attribute): self
     {
         $this->Attribute = $Attribute;
 

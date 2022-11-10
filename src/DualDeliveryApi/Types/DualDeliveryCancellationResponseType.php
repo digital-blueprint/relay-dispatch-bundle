@@ -56,11 +56,9 @@ class DualDeliveryCancellationResponseType
     }
 
     /**
-     * @param string $DualDeliveryID
-     *
      * @return DualDeliveryCancellationResponseType
      */
-    public function setDualDeliveryID($DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID)
     {
         $this->DualDeliveryID = $DualDeliveryID;
 
@@ -76,11 +74,9 @@ class DualDeliveryCancellationResponseType
     }
 
     /**
-     * @param string $AppDeliveryID
-     *
      * @return DualDeliveryCancellationResponseType
      */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID(string $AppDeliveryID)
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
@@ -96,11 +92,9 @@ class DualDeliveryCancellationResponseType
     }
 
     /**
-     * @param StatusType $Status
-     *
      * @return DualDeliveryCancellationResponseType
      */
-    public function setStatus($Status)
+    public function setStatus(StatusType $Status)
     {
         $this->Status = $Status;
 
@@ -116,11 +110,9 @@ class DualDeliveryCancellationResponseType
     }
 
     /**
-     * @param BulkElements $BulkElements
-     *
      * @return DualDeliveryCancellationResponseType
      */
-    public function setBulkElements($BulkElements)
+    public function setBulkElements(BulkElements $BulkElements)
     {
         $this->BulkElements = $BulkElements;
 
@@ -136,11 +128,9 @@ class DualDeliveryCancellationResponseType
     }
 
     /**
-     * @param string $version
-     *
      * @return DualDeliveryCancellationResponseType
      */
-    public function setVersion($version)
+    public function setVersion(string $version)
     {
         $this->version = $version;
 

@@ -19,20 +19,12 @@ class AdditionalResults
         $this->AdditonalResultSet = $AdditonalResultSet;
     }
 
-    /**
-     * @return AdditonalResultSetType
-     */
-    public function getAdditonalResultSet()
+    public function getAdditonalResultSet(): AdditonalResultSetType
     {
         return $this->AdditonalResultSet;
     }
 
-    /**
-     * @param AdditonalResultSetType $AdditonalResultSet
-     *
-     * @return AdditionalResults
-     */
-    public function setAdditonalResultSet($AdditonalResultSet)
+    public function setAdditonalResultSet(AdditonalResultSetType $AdditonalResultSet): self
     {
         $this->AdditonalResultSet = $AdditonalResultSet;
 

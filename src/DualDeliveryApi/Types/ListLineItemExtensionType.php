@@ -26,40 +26,24 @@ class ListLineItemExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return ListLineItemExtensionType
-     */
-    public function getListLineItemExtension()
+    public function getListLineItemExtension(): ListLineItemExtensionType
     {
         return $this->ListLineItemExtension;
     }
 
-    /**
-     * @param ListLineItemExtensionType $ListLineItemExtension
-     *
-     * @return ListLineItemExtensionType
-     */
-    public function setListLineItemExtension($ListLineItemExtension)
+    public function setListLineItemExtension(ListLineItemExtensionType $ListLineItemExtension): self
     {
         $this->ListLineItemExtension = $ListLineItemExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return ListLineItemExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

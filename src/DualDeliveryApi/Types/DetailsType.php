@@ -33,60 +33,36 @@ class DetailsType
         $this->FooterDescription = $FooterDescription;
     }
 
-    /**
-     * @return string
-     */
-    public function getHeaderDescription()
+    public function getHeaderDescription(): string
     {
         return $this->HeaderDescription;
     }
 
-    /**
-     * @param string $HeaderDescription
-     *
-     * @return DetailsType
-     */
-    public function setHeaderDescription($HeaderDescription)
+    public function setHeaderDescription(string $HeaderDescription): self
     {
         $this->HeaderDescription = $HeaderDescription;
 
         return $this;
     }
 
-    /**
-     * @return ItemListType
-     */
-    public function getItemList()
+    public function getItemList(): ItemListType
     {
         return $this->ItemList;
     }
 
-    /**
-     * @param ItemListType $ItemList
-     *
-     * @return DetailsType
-     */
-    public function setItemList($ItemList)
+    public function setItemList(ItemListType $ItemList): self
     {
         $this->ItemList = $ItemList;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFooterDescription()
+    public function getFooterDescription(): string
     {
         return $this->FooterDescription;
     }
 
-    /**
-     * @param string $FooterDescription
-     *
-     * @return DetailsType
-     */
-    public function setFooterDescription($FooterDescription)
+    public function setFooterDescription(string $FooterDescription): self
     {
         $this->FooterDescription = $FooterDescription;
 

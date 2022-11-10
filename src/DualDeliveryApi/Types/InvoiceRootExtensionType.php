@@ -26,40 +26,24 @@ class InvoiceRootExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return InvoiceRootExtensionType
-     */
-    public function getInvoiceRootExtension()
+    public function getInvoiceRootExtension(): InvoiceRootExtensionType
     {
         return $this->InvoiceRootExtension;
     }
 
-    /**
-     * @param InvoiceRootExtensionType $InvoiceRootExtension
-     *
-     * @return InvoiceRootExtensionType
-     */
-    public function setInvoiceRootExtension($InvoiceRootExtension)
+    public function setInvoiceRootExtension(InvoiceRootExtensionType $InvoiceRootExtension): self
     {
         $this->InvoiceRootExtension = $InvoiceRootExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return InvoiceRootExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

@@ -52,120 +52,72 @@ class DualNotificationBulkRequestType
         $this->version = $version;
     }
 
-    /**
-     * @return string
-     */
-    public function getApplicationDeliveryID()
+    public function getApplicationDeliveryID(): string
     {
         return $this->ApplicationDeliveryID;
     }
 
-    /**
-     * @param string $ApplicationDeliveryID
-     *
-     * @return DualNotificationBulkRequestType
-     */
-    public function setApplicationDeliveryID($ApplicationDeliveryID)
+    public function setApplicationDeliveryID(string $ApplicationDeliveryID): self
     {
         $this->ApplicationDeliveryID = $ApplicationDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getDualZSID()
+    public function getDualZSID(): int
     {
         return $this->DualZSID;
     }
 
-    /**
-     * @param int $DualZSID
-     *
-     * @return DualNotificationBulkRequestType
-     */
-    public function setDualZSID($DualZSID)
+    public function setDualZSID(int $DualZSID): self
     {
         $this->DualZSID = $DualZSID;
 
         return $this;
     }
 
-    /**
-     * @return BulkElements
-     */
-    public function getBulkElements()
+    public function getBulkElements(): BulkElements
     {
         return $this->BulkElements;
     }
 
-    /**
-     * @param BulkElements $BulkElements
-     *
-     * @return DualNotificationBulkRequestType
-     */
-    public function setBulkElements($BulkElements)
+    public function setBulkElements(BulkElements $BulkElements): self
     {
         $this->BulkElements = $BulkElements;
 
         return $this;
     }
 
-    /**
-     * @return StatusType
-     */
-    public function getStatus()
+    public function getStatus(): StatusType
     {
         return $this->Status;
     }
 
-    /**
-     * @param StatusType $Status
-     *
-     * @return DualNotificationBulkRequestType
-     */
-    public function setStatus($Status)
+    public function setStatus(StatusType $Status): self
     {
         $this->Status = $Status;
 
         return $this;
     }
 
-    /**
-     * @return ErrorsType
-     */
-    public function getErrors()
+    public function getErrors(): ErrorsType
     {
         return $this->Errors;
     }
 
-    /**
-     * @param ErrorsType $Errors
-     *
-     * @return DualNotificationBulkRequestType
-     */
-    public function setErrors($Errors)
+    public function setErrors(ErrorsType $Errors): self
     {
         $this->Errors = $Errors;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     *
-     * @return DualNotificationBulkRequestType
-     */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
         $this->version = $version;
 

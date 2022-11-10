@@ -26,40 +26,24 @@ class X509IssuerSerialType
         $this->X509SerialNumber = $X509SerialNumber;
     }
 
-    /**
-     * @return string
-     */
-    public function getX509IssuerName()
+    public function getX509IssuerName(): string
     {
         return $this->X509IssuerName;
     }
 
-    /**
-     * @param string $X509IssuerName
-     *
-     * @return X509IssuerSerialType
-     */
-    public function setX509IssuerName($X509IssuerName)
+    public function setX509IssuerName(string $X509IssuerName): self
     {
         $this->X509IssuerName = $X509IssuerName;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getX509SerialNumber()
+    public function getX509SerialNumber(): int
     {
         return $this->X509SerialNumber;
     }
 
-    /**
-     * @param int $X509SerialNumber
-     *
-     * @return X509IssuerSerialType
-     */
-    public function setX509SerialNumber($X509SerialNumber)
+    public function setX509SerialNumber(int $X509SerialNumber): self
     {
         $this->X509SerialNumber = $X509SerialNumber;
 

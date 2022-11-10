@@ -33,60 +33,36 @@ class TaxType
         $this->TaxExtension = $TaxExtension;
     }
 
-    /**
-     * @return VATType
-     */
-    public function getVAT()
+    public function getVAT(): VATType
     {
         return $this->VAT;
     }
 
-    /**
-     * @param VATType $VAT
-     *
-     * @return TaxType
-     */
-    public function setVAT($VAT)
+    public function setVAT(VATType $VAT): self
     {
         $this->VAT = $VAT;
 
         return $this;
     }
 
-    /**
-     * @return OtherTaxType
-     */
-    public function getOtherTax()
+    public function getOtherTax(): OtherTaxType
     {
         return $this->OtherTax;
     }
 
-    /**
-     * @param OtherTaxType $OtherTax
-     *
-     * @return TaxType
-     */
-    public function setOtherTax($OtherTax)
+    public function setOtherTax(OtherTaxType $OtherTax): self
     {
         $this->OtherTax = $OtherTax;
 
         return $this;
     }
 
-    /**
-     * @return TaxExtensionType
-     */
-    public function getTaxExtension()
+    public function getTaxExtension(): TaxExtensionType
     {
         return $this->TaxExtension;
     }
 
-    /**
-     * @param TaxExtensionType $TaxExtension
-     *
-     * @return TaxType
-     */
-    public function setTaxExtension($TaxExtension)
+    public function setTaxExtension(TaxExtensionType $TaxExtension): self
     {
         $this->TaxExtension = $TaxExtension;
 

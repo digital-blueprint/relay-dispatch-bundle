@@ -44,20 +44,12 @@ class DeliveryNotificationType extends DeliveryAnswerType
         $this->version = $version;
     }
 
-    /**
-     * @return Success
-     */
-    public function getSuccess()
+    public function getSuccess(): Success
     {
         return $this->Success;
     }
 
-    /**
-     * @param Success $Success
-     *
-     * @return DeliveryNotificationType
-     */
-    public function setSuccess($Success)
+    public function setSuccess(Success $Success): self
     {
         $this->Success = $Success;
 
@@ -72,12 +64,7 @@ class DeliveryNotificationType extends DeliveryAnswerType
         return $this->Error;
     }
 
-    /**
-     * @param Error $Error
-     *
-     * @return DeliveryNotificationType
-     */
-    public function setError($Error)
+    public function setError(\Error $Error): self
     {
         $this->Error = $Error;
 
@@ -87,17 +74,15 @@ class DeliveryNotificationType extends DeliveryAnswerType
     /**
      * @return AdditionalFormat[]
      */
-    public function getAdditionalFormat()
+    public function getAdditionalFormat(): array
     {
         return $this->AdditionalFormat;
     }
 
     /**
      * @param AdditionalFormat[] $AdditionalFormat
-     *
-     * @return DeliveryNotificationType
      */
-    public function setAdditionalFormat(array $AdditionalFormat = null)
+    public function setAdditionalFormat(array $AdditionalFormat = null): self
     {
         $this->AdditionalFormat = $AdditionalFormat;
 
@@ -114,10 +99,8 @@ class DeliveryNotificationType extends DeliveryAnswerType
 
     /**
      * @param anonymous290 $version
-     *
-     * @return DeliveryNotificationType
      */
-    public function setVersion($version)
+    public function setVersion($version): self
     {
         $this->version = $version;
 

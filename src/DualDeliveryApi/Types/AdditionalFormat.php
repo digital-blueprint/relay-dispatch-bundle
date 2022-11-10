@@ -36,10 +36,8 @@ class AdditionalFormat
 
     /**
      * @param base64Binary $_
-     *
-     * @return AdditionalFormat
      */
-    public function set_($_)
+    public function set_($_): self
     {
         $this->_ = $_;
 
@@ -56,10 +54,8 @@ class AdditionalFormat
 
     /**
      * @param UNKNOWN $Type
-     *
-     * @return AdditionalFormat
      */
-    public function setType($Type)
+    public function setType($Type): self
     {
         $this->Type = $Type;
 

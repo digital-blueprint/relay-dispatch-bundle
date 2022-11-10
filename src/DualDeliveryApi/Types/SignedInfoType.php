@@ -40,80 +40,48 @@ class SignedInfoType
         $this->Id = $Id;
     }
 
-    /**
-     * @return CanonicalizationMethodType
-     */
-    public function getCanonicalizationMethod()
+    public function getCanonicalizationMethod(): CanonicalizationMethodType
     {
         return $this->CanonicalizationMethod;
     }
 
-    /**
-     * @param CanonicalizationMethodType $CanonicalizationMethod
-     *
-     * @return SignedInfoType
-     */
-    public function setCanonicalizationMethod($CanonicalizationMethod)
+    public function setCanonicalizationMethod(CanonicalizationMethodType $CanonicalizationMethod): self
     {
         $this->CanonicalizationMethod = $CanonicalizationMethod;
 
         return $this;
     }
 
-    /**
-     * @return SignatureMethodType
-     */
-    public function getSignatureMethod()
+    public function getSignatureMethod(): SignatureMethodType
     {
         return $this->SignatureMethod;
     }
 
-    /**
-     * @param SignatureMethodType $SignatureMethod
-     *
-     * @return SignedInfoType
-     */
-    public function setSignatureMethod($SignatureMethod)
+    public function setSignatureMethod(SignatureMethodType $SignatureMethod): self
     {
         $this->SignatureMethod = $SignatureMethod;
 
         return $this;
     }
 
-    /**
-     * @return ReferenceType
-     */
-    public function getReference()
+    public function getReference(): ReferenceType
     {
         return $this->Reference;
     }
 
-    /**
-     * @param ReferenceType $Reference
-     *
-     * @return SignedInfoType
-     */
-    public function setReference($Reference)
+    public function setReference(ReferenceType $Reference): self
     {
         $this->Reference = $Reference;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return SignedInfoType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

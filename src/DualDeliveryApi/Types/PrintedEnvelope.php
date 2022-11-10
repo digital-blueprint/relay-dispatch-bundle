@@ -78,10 +78,8 @@ class PrintedEnvelope
 
     /**
      * @param RsID $RsID
-     *
-     * @return PrintedEnvelope
      */
-    public function setRsID($RsID)
+    public function setRsID($RsID): self
     {
         $this->RsID = $RsID;
 
@@ -98,10 +96,8 @@ class PrintedEnvelope
 
     /**
      * @param Spec_Info_Adr $Spec_Info_Adr
-     *
-     * @return PrintedEnvelope
      */
-    public function setSpec_Info_Adr($Spec_Info_Adr)
+    public function setSpec_Info_Adr($Spec_Info_Adr): self
     {
         $this->Spec_Info_Adr = $Spec_Info_Adr;
 
@@ -118,10 +114,8 @@ class PrintedEnvelope
 
     /**
      * @param Spec_Info_Top $Spec_Info_Top
-     *
-     * @return PrintedEnvelope
      */
-    public function setSpec_Info_Top($Spec_Info_Top)
+    public function setSpec_Info_Top($Spec_Info_Top): self
     {
         $this->Spec_Info_Top = $Spec_Info_Top;
 
@@ -138,10 +132,8 @@ class PrintedEnvelope
 
     /**
      * @param Spec_Info_Center $Spec_Info_Center
-     *
-     * @return PrintedEnvelope
      */
-    public function setSpec_Info_Center($Spec_Info_Center)
+    public function setSpec_Info_Center($Spec_Info_Center): self
     {
         $this->Spec_Info_Center = $Spec_Info_Center;
 
@@ -158,10 +150,8 @@ class PrintedEnvelope
 
     /**
      * @param Spec_Info_Bottom $Spec_Info_Bottom
-     *
-     * @return PrintedEnvelope
      */
-    public function setSpec_Info_Bottom($Spec_Info_Bottom)
+    public function setSpec_Info_Bottom($Spec_Info_Bottom): self
     {
         $this->Spec_Info_Bottom = $Spec_Info_Bottom;
 
@@ -178,50 +168,32 @@ class PrintedEnvelope
 
     /**
      * @param Name_Row $Name_Row
-     *
-     * @return PrintedEnvelope
      */
-    public function setName_Row($Name_Row)
+    public function setName_Row($Name_Row): self
     {
         $this->Name_Row = $Name_Row;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getZustellverfuegung()
+    public function getZustellverfuegung(): string
     {
         return $this->Zustellverfuegung;
     }
 
-    /**
-     * @param string $Zustellverfuegung
-     *
-     * @return PrintedEnvelope
-     */
-    public function setZustellverfuegung($Zustellverfuegung)
+    public function setZustellverfuegung(string $Zustellverfuegung): self
     {
         $this->Zustellverfuegung = $Zustellverfuegung;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getZustellverfuegungErgaenzung()
+    public function getZustellverfuegungErgaenzung(): string
     {
         return $this->ZustellverfuegungErgaenzung;
     }
 
-    /**
-     * @param string $ZustellverfuegungErgaenzung
-     *
-     * @return PrintedEnvelope
-     */
-    public function setZustellverfuegungErgaenzung($ZustellverfuegungErgaenzung)
+    public function setZustellverfuegungErgaenzung(string $ZustellverfuegungErgaenzung): self
     {
         $this->ZustellverfuegungErgaenzung = $ZustellverfuegungErgaenzung;
 

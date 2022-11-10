@@ -31,60 +31,36 @@ class RetrievalMethodType
         $this->Type = $Type;
     }
 
-    /**
-     * @return TransformsType
-     */
-    public function getTransforms()
+    public function getTransforms(): TransformsType
     {
         return $this->Transforms;
     }
 
-    /**
-     * @param TransformsType $Transforms
-     *
-     * @return RetrievalMethodType
-     */
-    public function setTransforms($Transforms)
+    public function setTransforms(TransformsType $Transforms): self
     {
         $this->Transforms = $Transforms;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getURI()
+    public function getURI(): AnyURI
     {
         return $this->URI;
     }
 
-    /**
-     * @param AnyURI $URI
-     *
-     * @return RetrievalMethodType
-     */
-    public function setURI($URI)
+    public function setURI(AnyURI $URI): self
     {
         $this->URI = $URI;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getType()
+    public function getType(): AnyURI
     {
         return $this->Type;
     }
 
-    /**
-     * @param AnyURI $Type
-     *
-     * @return RetrievalMethodType
-     */
-    public function setType($Type)
+    public function setType(AnyURI $Type): self
     {
         $this->Type = $Type;
 

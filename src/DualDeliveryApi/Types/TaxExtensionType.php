@@ -26,40 +26,24 @@ class TaxExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return TaxExtensionType
-     */
-    public function getTaxExtension()
+    public function getTaxExtension(): TaxExtensionType
     {
         return $this->TaxExtension;
     }
 
-    /**
-     * @param TaxExtensionType $TaxExtension
-     *
-     * @return TaxExtensionType
-     */
-    public function setTaxExtension($TaxExtension)
+    public function setTaxExtension(TaxExtensionType $TaxExtension): self
     {
         $this->TaxExtension = $TaxExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return TaxExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

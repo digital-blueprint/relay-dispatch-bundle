@@ -33,60 +33,36 @@ class NameIdentifierType
         $this->Format = $Format;
     }
 
-    /**
-     * @return string
-     */
-    public function get_()
+    public function get_(): string
     {
         return $this->_;
     }
 
-    /**
-     * @param string $_
-     *
-     * @return NameIdentifierType
-     */
-    public function set_($_)
+    public function set_(string $_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getNameQualifier()
+    public function getNameQualifier(): string
     {
         return $this->NameQualifier;
     }
 
-    /**
-     * @param string $NameQualifier
-     *
-     * @return NameIdentifierType
-     */
-    public function setNameQualifier($NameQualifier)
+    public function setNameQualifier(string $NameQualifier): self
     {
         $this->NameQualifier = $NameQualifier;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getFormat()
+    public function getFormat(): AnyURI
     {
         return $this->Format;
     }
 
-    /**
-     * @param AnyURI $Format
-     *
-     * @return NameIdentifierType
-     */
-    public function setFormat($Format)
+    public function setFormat(AnyURI $Format): self
     {
         $this->Format = $Format;
 

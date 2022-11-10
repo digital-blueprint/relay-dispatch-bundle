@@ -33,60 +33,36 @@ class SignaturePropertyType
         $this->Id = $Id;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return SignaturePropertyType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getTarget()
+    public function getTarget(): AnyURI
     {
         return $this->Target;
     }
 
-    /**
-     * @param AnyURI $Target
-     *
-     * @return SignaturePropertyType
-     */
-    public function setTarget($Target)
+    public function setTarget(AnyURI $Target): self
     {
         $this->Target = $Target;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return SignaturePropertyType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

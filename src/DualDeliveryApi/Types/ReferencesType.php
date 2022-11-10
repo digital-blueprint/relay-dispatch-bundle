@@ -50,30 +50,20 @@ class ReferencesType
 
     /**
      * @param token255 $AppDeliveryID
-     *
-     * @return ReferencesType
      */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID($AppDeliveryID): self
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getGZ()
+    public function getGZ(): string
     {
         return $this->GZ;
     }
 
-    /**
-     * @param string $GZ
-     *
-     * @return ReferencesType
-     */
-    public function setGZ($GZ)
+    public function setGZ(string $GZ): self
     {
         $this->GZ = $GZ;
 
@@ -90,10 +80,8 @@ class ReferencesType
 
     /**
      * @param token255 $MZSDeliveryID
-     *
-     * @return ReferencesType
      */
-    public function setMZSDeliveryID($MZSDeliveryID)
+    public function setMZSDeliveryID($MZSDeliveryID): self
     {
         $this->MZSDeliveryID = $MZSDeliveryID;
 
@@ -110,10 +98,8 @@ class ReferencesType
 
     /**
      * @param token255 $ZSDeliveryID
-     *
-     * @return ReferencesType
      */
-    public function setZSDeliveryID($ZSDeliveryID)
+    public function setZSDeliveryID($ZSDeliveryID): self
     {
         $this->ZSDeliveryID = $ZSDeliveryID;
 

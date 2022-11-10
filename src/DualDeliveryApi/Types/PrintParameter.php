@@ -26,40 +26,24 @@ class PrintParameter
         $this->profile = $profile;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return PrintParameter
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getProfile()
+    public function getProfile(): AnyURI
     {
         return $this->profile;
     }
 
-    /**
-     * @param AnyURI $profile
-     *
-     * @return PrintParameter
-     */
-    public function setProfile($profile)
+    public function setProfile(AnyURI $profile): self
     {
         $this->profile = $profile;
 

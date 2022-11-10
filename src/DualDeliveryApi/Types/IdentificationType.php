@@ -47,100 +47,75 @@ class IdentificationType
         $this->Id = $Id;
     }
 
-    /**
-     * @return Value
-     */
-    public function getValue()
+    public function getValue(): Value
     {
         return $this->Value;
     }
 
     /**
-     * @param Value $Value
-     *
      * @return stringentificationType
      */
-    public function setValue($Value)
+    public function setValue(Value $Value): self
     {
         $this->Value = $Value;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getType()
+    public function getType(): AnyURI
     {
         return $this->Type;
     }
 
     /**
-     * @param AnyURI $Type
-     *
      * @return stringentificationType
      */
-    public function setType($Type)
+    public function setType(AnyURI $Type): self
     {
         $this->Type = $Type;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getAuthority()
+    public function getAuthority(): AnyURI
     {
         return $this->Authority;
     }
 
     /**
-     * @param AnyURI $Authority
-     *
      * @return stringentificationType
      */
-    public function setAuthority($Authority)
+    public function setAuthority(AnyURI $Authority): self
     {
         $this->Authority = $Authority;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
     /**
-     * @param string $any
-     *
      * @return stringentificationType
      */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
     /**
-     * @param string $Id
-     *
      * @return stringentificationType
      */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

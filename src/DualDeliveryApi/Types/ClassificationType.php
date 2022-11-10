@@ -26,40 +26,24 @@ class ClassificationType
         $this->ClassificationSchema = $ClassificationSchema;
     }
 
-    /**
-     * @return string
-     */
-    public function get_()
+    public function get_(): string
     {
         return $this->_;
     }
 
-    /**
-     * @param string $_
-     *
-     * @return ClassificationType
-     */
-    public function set_($_)
+    public function set_(string $_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getClassificationSchema()
+    public function getClassificationSchema(): string
     {
         return $this->ClassificationSchema;
     }
 
-    /**
-     * @param string $ClassificationSchema
-     *
-     * @return ClassificationType
-     */
-    public function setClassificationSchema($ClassificationSchema)
+    public function setClassificationSchema(string $ClassificationSchema): self
     {
         $this->ClassificationSchema = $ClassificationSchema;
 

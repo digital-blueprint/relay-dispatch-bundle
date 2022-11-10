@@ -43,50 +43,32 @@ class AuthorityBindingType
 
     /**
      * @param QName $AuthorityKind
-     *
-     * @return AuthorityBindingType
      */
-    public function setAuthorityKind($AuthorityKind)
+    public function setAuthorityKind($AuthorityKind): self
     {
         $this->AuthorityKind = $AuthorityKind;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getLocation()
+    public function getLocation(): AnyURI
     {
         return $this->Location;
     }
 
-    /**
-     * @param AnyURI $Location
-     *
-     * @return AuthorityBindingType
-     */
-    public function setLocation($Location)
+    public function setLocation(AnyURI $Location): self
     {
         $this->Location = $Location;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getBinding()
+    public function getBinding(): AnyURI
     {
         return $this->Binding;
     }
 
-    /**
-     * @param AnyURI $Binding
-     *
-     * @return AuthorityBindingType
-     */
-    public function setBinding($Binding)
+    public function setBinding(AnyURI $Binding): self
     {
         $this->Binding = $Binding;
 

@@ -22,17 +22,15 @@ class ErrorsType
     /**
      * @return ErrorType[]
      */
-    public function getError()
+    public function getError(): array
     {
         return $this->Error;
     }
 
     /**
      * @param ErrorType[] $Error
-     *
-     * @return ErrorsType
      */
-    public function setError($Error)
+    public function setError(array $Error): self
     {
         $this->Error = $Error;
 

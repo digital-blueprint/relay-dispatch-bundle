@@ -26,40 +26,24 @@ class RSAKeyValueType
         $this->Exponent = $Exponent;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getModulus()
+    public function getModulus(): CryptoBinary
     {
         return $this->Modulus;
     }
 
-    /**
-     * @param CryptoBinary $Modulus
-     *
-     * @return RSAKeyValueType
-     */
-    public function setModulus($Modulus)
+    public function setModulus(CryptoBinary $Modulus): self
     {
         $this->Modulus = $Modulus;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getExponent()
+    public function getExponent(): CryptoBinary
     {
         return $this->Exponent;
     }
 
-    /**
-     * @param CryptoBinary $Exponent
-     *
-     * @return RSAKeyValueType
-     */
-    public function setExponent($Exponent)
+    public function setExponent(CryptoBinary $Exponent): self
     {
         $this->Exponent = $Exponent;
 

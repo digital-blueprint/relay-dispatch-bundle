@@ -34,80 +34,48 @@ class GeneralAditionalPrintParameterType extends AdditionalPrintParameterSetType
         $this->PostageRange = $PostageRange;
     }
 
-    /**
-     * @return string
-     */
-    public function getPostageRange()
+    public function getPostageRange(): string
     {
         return $this->PostageRange;
     }
 
-    /**
-     * @param string $PostageRange
-     *
-     * @return GeneralAditionalPrintParameterType
-     */
-    public function setPostageRange($PostageRange)
+    public function setPostageRange(string $PostageRange): self
     {
         $this->PostageRange = $PostageRange;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrinterName()
+    public function getPrinterName(): string
     {
         return $this->PrinterName;
     }
 
-    /**
-     * @param string $PrinterName
-     *
-     * @return GeneralAditionalPrintParameterType
-     */
-    public function setPrinterName($PrinterName)
+    public function setPrinterName(string $PrinterName): self
     {
         $this->PrinterName = $PrinterName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuflieferort()
+    public function getAuflieferort(): string
     {
         return $this->Auflieferort;
     }
 
-    /**
-     * @param string $Auflieferort
-     *
-     * @return GeneralAditionalPrintParameterType
-     */
-    public function setAuflieferort($Auflieferort)
+    public function setAuflieferort(string $Auflieferort): self
     {
         $this->Auflieferort = $Auflieferort;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuflieferdatum()
+    public function getAuflieferdatum(): string
     {
         return $this->Auflieferdatum;
     }
 
-    /**
-     * @param string $Auflieferdatum
-     *
-     * @return GeneralAditionalPrintParameterType
-     */
-    public function setAuflieferdatum($Auflieferdatum)
+    public function setAuflieferdatum(string $Auflieferdatum): self
     {
         $this->Auflieferdatum = $Auflieferdatum;
 

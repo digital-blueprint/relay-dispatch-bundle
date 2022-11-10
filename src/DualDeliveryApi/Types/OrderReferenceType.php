@@ -43,10 +43,8 @@ class OrderReferenceType
 
     /**
      * @param AlphaNumIDType $OrderID
-     *
-     * @return OrderReferenceType
      */
-    public function setOrderID($OrderID)
+    public function setOrderID($OrderID): self
     {
         $this->OrderID = $OrderID;
 
@@ -63,30 +61,20 @@ class OrderReferenceType
 
     /**
      * @param date $ReferenceDate
-     *
-     * @return OrderReferenceType
      */
-    public function setReferenceDate($ReferenceDate)
+    public function setReferenceDate($ReferenceDate): self
     {
         $this->ReferenceDate = $ReferenceDate;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->Description;
     }
 
-    /**
-     * @param string $Description
-     *
-     * @return OrderReferenceType
-     */
-    public function setDescription($Description)
+    public function setDescription(string $Description): self
     {
         $this->Description = $Description;
 

@@ -30,60 +30,36 @@ class ParameterType
         $this->Value = $Value;
     }
 
-    /**
-     * @return string
-     */
-    public function getProperty()
+    public function getProperty(): string
     {
         return $this->Property;
     }
 
-    /**
-     * @param string $Property
-     *
-     * @return ParameterType
-     */
-    public function setProperty($Property)
+    public function setProperty(string $Property): self
     {
         $this->Property = $Property;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->Value;
     }
 
-    /**
-     * @param string $Value
-     *
-     * @return ParameterType
-     */
-    public function setValue($Value)
+    public function setValue(string $Value): self
     {
         $this->Value = $Value;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->Type;
     }
 
-    /**
-     * @param string $Type
-     *
-     * @return ParameterType
-     */
-    public function setType($Type)
+    public function setType(string $Type): self
     {
         $this->Type = $Type;
 

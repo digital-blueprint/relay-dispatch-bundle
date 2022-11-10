@@ -88,20 +88,12 @@ class PaymentForm
         $this->ParameterSet = $ParameterSet;
     }
 
-    /**
-     * @return Receiver
-     */
-    public function getReceiver()
+    public function getReceiver(): Receiver
     {
         return $this->Receiver;
     }
 
-    /**
-     * @param Receiver $Receiver
-     *
-     * @return PaymentForm
-     */
-    public function setReceiver($Receiver)
+    public function setReceiver(Receiver $Receiver): self
     {
         $this->Receiver = $Receiver;
 
@@ -118,10 +110,8 @@ class PaymentForm
 
     /**
      * @param ReceiverBank $ReceiverBank
-     *
-     * @return PaymentForm
      */
-    public function setReceiverBank($ReceiverBank)
+    public function setReceiverBank($ReceiverBank): self
     {
         $this->ReceiverBank = $ReceiverBank;
 
@@ -138,10 +128,8 @@ class PaymentForm
 
     /**
      * @param Amount $Amount
-     *
-     * @return PaymentForm
      */
-    public function setAmount($Amount)
+    public function setAmount($Amount): self
     {
         $this->Amount = $Amount;
 
@@ -158,30 +146,20 @@ class PaymentForm
 
     /**
      * @param Purpose $Purpose
-     *
-     * @return PaymentForm
      */
-    public function setPurpose($Purpose)
+    public function setPurpose($Purpose): self
     {
         $this->Purpose = $Purpose;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCustomerData()
+    public function getCustomerData(): string
     {
         return $this->CustomerData;
     }
 
-    /**
-     * @param string $CustomerData
-     *
-     * @return PaymentForm
-     */
-    public function setCustomerData($CustomerData)
+    public function setCustomerData(string $CustomerData): self
     {
         $this->CustomerData = $CustomerData;
 
@@ -198,10 +176,8 @@ class PaymentForm
 
     /**
      * @param ReadingArea $ReadingArea
-     *
-     * @return PaymentForm
      */
-    public function setReadingArea($ReadingArea)
+    public function setReadingArea($ReadingArea): self
     {
         $this->ReadingArea = $ReadingArea;
 
@@ -218,30 +194,20 @@ class PaymentForm
 
     /**
      * @param Currency $Currency
-     *
-     * @return PaymentForm
      */
-    public function setCurrency($Currency)
+    public function setCurrency($Currency): self
     {
         $this->Currency = $Currency;
 
         return $this;
     }
 
-    /**
-     * @return AccountInfo
-     */
-    public function getAccountInfo()
+    public function getAccountInfo(): AccountInfo
     {
         return $this->AccountInfo;
     }
 
-    /**
-     * @param AccountInfo $AccountInfo
-     *
-     * @return PaymentForm
-     */
-    public function setAccountInfo($AccountInfo)
+    public function setAccountInfo(AccountInfo $AccountInfo): self
     {
         $this->AccountInfo = $AccountInfo;
 
@@ -264,50 +230,31 @@ class PaymentForm
         }
     }
 
-    /**
-     * @return PaymentForm
-     */
-    public function setDueDate(\DateTime $DueDate)
+    public function setDueDate(\DateTime $DueDate): self
     {
         $this->DueDate = $DueDate->format(\DateTime::ATOM);
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getDirectDebit()
+    public function getDirectDebit(): bool
     {
         return $this->DirectDebit;
     }
 
-    /**
-     * @param bool $DirectDebit
-     *
-     * @return PaymentForm
-     */
-    public function setDirectDebit($DirectDebit)
+    public function setDirectDebit(bool $DirectDebit): self
     {
         $this->DirectDebit = $DirectDebit;
 
         return $this;
     }
 
-    /**
-     * @return ParameterSet
-     */
-    public function getParameterSet()
+    public function getParameterSet(): ParameterSet
     {
         return $this->ParameterSet;
     }
 
-    /**
-     * @param ParameterSet $ParameterSet
-     *
-     * @return PaymentForm
-     */
-    public function setParameterSet($ParameterSet)
+    public function setParameterSet(ParameterSet $ParameterSet): self
     {
         $this->ParameterSet = $ParameterSet;
 

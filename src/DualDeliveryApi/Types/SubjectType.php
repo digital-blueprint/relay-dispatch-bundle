@@ -26,40 +26,24 @@ class SubjectType
         $this->SubjectConfirmation = $SubjectConfirmation;
     }
 
-    /**
-     * @return NameIdentifierType
-     */
-    public function getNameIdentifier()
+    public function getNameIdentifier(): NameIdentifierType
     {
         return $this->NameIdentifier;
     }
 
-    /**
-     * @param NameIdentifierType $NameIdentifier
-     *
-     * @return SubjectType
-     */
-    public function setNameIdentifier($NameIdentifier)
+    public function setNameIdentifier(NameIdentifierType $NameIdentifier): self
     {
         $this->NameIdentifier = $NameIdentifier;
 
         return $this;
     }
 
-    /**
-     * @return SubjectConfirmationType
-     */
-    public function getSubjectConfirmation()
+    public function getSubjectConfirmation(): SubjectConfirmationType
     {
         return $this->SubjectConfirmation;
     }
 
-    /**
-     * @param SubjectConfirmationType $SubjectConfirmation
-     *
-     * @return SubjectType
-     */
-    public function setSubjectConfirmation($SubjectConfirmation)
+    public function setSubjectConfirmation(SubjectConfirmationType $SubjectConfirmation): self
     {
         $this->SubjectConfirmation = $SubjectConfirmation;
 

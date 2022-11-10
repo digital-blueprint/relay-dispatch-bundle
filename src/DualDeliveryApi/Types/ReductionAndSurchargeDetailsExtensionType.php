@@ -26,40 +26,24 @@ class ReductionAndSurchargeDetailsExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return ReductionAndSurchargeDetailsExtensionType
-     */
-    public function getReductionAndSurchargeDetailsExtension()
+    public function getReductionAndSurchargeDetailsExtension(): ReductionAndSurchargeDetailsExtensionType
     {
         return $this->ReductionAndSurchargeDetailsExtension;
     }
 
-    /**
-     * @param ReductionAndSurchargeDetailsExtensionType $ReductionAndSurchargeDetailsExtension
-     *
-     * @return ReductionAndSurchargeDetailsExtensionType
-     */
-    public function setReductionAndSurchargeDetailsExtension($ReductionAndSurchargeDetailsExtension)
+    public function setReductionAndSurchargeDetailsExtension(ReductionAndSurchargeDetailsExtensionType $ReductionAndSurchargeDetailsExtension): self
     {
         $this->ReductionAndSurchargeDetailsExtension = $ReductionAndSurchargeDetailsExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return ReductionAndSurchargeDetailsExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

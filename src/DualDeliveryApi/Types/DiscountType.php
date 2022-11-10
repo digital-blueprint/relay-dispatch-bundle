@@ -50,10 +50,8 @@ class DiscountType
 
     /**
      * @param date $PaymentDate
-     *
-     * @return DiscountType
      */
-    public function setPaymentDate($PaymentDate)
+    public function setPaymentDate($PaymentDate): self
     {
         $this->PaymentDate = $PaymentDate;
 
@@ -70,10 +68,8 @@ class DiscountType
 
     /**
      * @param Decimal2Type $BaseAmount
-     *
-     * @return DiscountType
      */
-    public function setBaseAmount($BaseAmount)
+    public function setBaseAmount($BaseAmount): self
     {
         $this->BaseAmount = $BaseAmount;
 
@@ -90,10 +86,8 @@ class DiscountType
 
     /**
      * @param PercentageType $Percentage
-     *
-     * @return DiscountType
      */
-    public function setPercentage($Percentage)
+    public function setPercentage($Percentage): self
     {
         $this->Percentage = $Percentage;
 
@@ -110,10 +104,8 @@ class DiscountType
 
     /**
      * @param Decimal2Type $Amount
-     *
-     * @return DiscountType
      */
-    public function setAmount($Amount)
+    public function setAmount($Amount): self
     {
         $this->Amount = $Amount;
 

@@ -26,40 +26,24 @@ class ExtensionPointType
         $this->namespace = $namespace;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return ExtensionPointType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getNamespace()
+    public function getNamespace(): AnyURI
     {
         return $this->namespace;
     }
 
-    /**
-     * @param AnyURI $namespace
-     *
-     * @return ExtensionPointType
-     */
-    public function setNamespace($namespace)
+    public function setNamespace(AnyURI $namespace): self
     {
         $this->namespace = $namespace;
 

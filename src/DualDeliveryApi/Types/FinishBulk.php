@@ -19,20 +19,12 @@ class FinishBulk
         $this->BulkId = $BulkId;
     }
 
-    /**
-     * @return int
-     */
-    public function getBulkId()
+    public function getBulkId(): int
     {
         return $this->BulkId;
     }
 
-    /**
-     * @param int $BulkId
-     *
-     * @return FinishBulk
-     */
-    public function setBulkId($BulkId)
+    public function setBulkId(int $BulkId): self
     {
         $this->BulkId = $BulkId;
 

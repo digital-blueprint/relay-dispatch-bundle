@@ -26,40 +26,24 @@ class PersonDataType
         $this->Address = $Address;
     }
 
-    /**
-     * @return AbstractPersonType
-     */
-    public function getPerson()
+    public function getPerson(): AbstractPersonType
     {
         return $this->Person;
     }
 
-    /**
-     * @param AbstractPersonType $Person
-     *
-     * @return PersonDataType
-     */
-    public function setPerson($Person)
+    public function setPerson(AbstractPersonType $Person): self
     {
         $this->Person = $Person;
 
         return $this;
     }
 
-    /**
-     * @return AbstractAddressType
-     */
-    public function getAddress()
+    public function getAddress(): AbstractAddressType
     {
         return $this->Address;
     }
 
-    /**
-     * @param AbstractAddressType $Address
-     *
-     * @return PersonDataType
-     */
-    public function setAddress($Address)
+    public function setAddress(AbstractAddressType $Address): self
     {
         $this->Address = $Address;
 

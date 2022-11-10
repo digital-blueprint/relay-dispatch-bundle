@@ -19,20 +19,12 @@ class OtherNotificationType extends NotificationChannelSetType
         $this->NotificationInformation = $NotificationInformation;
     }
 
-    /**
-     * @return ExtensionPointType
-     */
-    public function getNotificationInformation()
+    public function getNotificationInformation(): ExtensionPointType
     {
         return $this->NotificationInformation;
     }
 
-    /**
-     * @param ExtensionPointType $NotificationInformation
-     *
-     * @return OtherNotificationType
-     */
-    public function setNotificationInformation($NotificationInformation)
+    public function setNotificationInformation(ExtensionPointType $NotificationInformation): self
     {
         $this->NotificationInformation = $NotificationInformation;
 

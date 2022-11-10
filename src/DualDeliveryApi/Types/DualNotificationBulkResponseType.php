@@ -29,37 +29,27 @@ class DualNotificationBulkResponseType
     /**
      * @return DualNotificationResponses[]
      */
-    public function getDualNotificationResponses()
+    public function getDualNotificationResponses(): array
     {
         return $this->DualNotificationResponses;
     }
 
     /**
      * @param DualNotificationResponses[] $DualNotificationResponses
-     *
-     * @return DualNotificationBulkResponseType
      */
-    public function setDualNotificationResponses(array $DualNotificationResponses)
+    public function setDualNotificationResponses(array $DualNotificationResponses): self
     {
         $this->DualNotificationResponses = $DualNotificationResponses;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     *
-     * @return DualNotificationBulkResponseType
-     */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
         $this->version = $version;
 

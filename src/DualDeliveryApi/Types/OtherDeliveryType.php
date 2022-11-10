@@ -19,20 +19,12 @@ class OtherDeliveryType extends DeliveryChannelSetType
         $this->DeliveryInformation = $DeliveryInformation;
     }
 
-    /**
-     * @return ExtensionPointType
-     */
-    public function getDeliveryInformation()
+    public function getDeliveryInformation(): ExtensionPointType
     {
         return $this->DeliveryInformation;
     }
 
-    /**
-     * @param ExtensionPointType $DeliveryInformation
-     *
-     * @return OtherDeliveryType
-     */
-    public function setDeliveryInformation($DeliveryInformation)
+    public function setDeliveryInformation(ExtensionPointType $DeliveryInformation): self
     {
         $this->DeliveryInformation = $DeliveryInformation;
 

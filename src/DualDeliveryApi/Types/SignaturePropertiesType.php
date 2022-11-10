@@ -26,40 +26,24 @@ class SignaturePropertiesType
         $this->Id = $Id;
     }
 
-    /**
-     * @return SignaturePropertyType
-     */
-    public function getSignatureProperty()
+    public function getSignatureProperty(): SignaturePropertyType
     {
         return $this->SignatureProperty;
     }
 
-    /**
-     * @param SignaturePropertyType $SignatureProperty
-     *
-     * @return SignaturePropertiesType
-     */
-    public function setSignatureProperty($SignatureProperty)
+    public function setSignatureProperty(SignaturePropertyType $SignatureProperty): self
     {
         $this->SignatureProperty = $SignatureProperty;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return SignaturePropertiesType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

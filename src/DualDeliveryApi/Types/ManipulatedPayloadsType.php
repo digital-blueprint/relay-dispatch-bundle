@@ -22,17 +22,15 @@ class ManipulatedPayloadsType
     /**
      * @return PayloadType[]
      */
-    public function getManipulatedPayload()
+    public function getManipulatedPayload(): array
     {
         return $this->ManipulatedPayload;
     }
 
     /**
      * @param PayloadType[] $ManipulatedPayload
-     *
-     * @return ManipulatedPayloadsType
      */
-    public function setManipulatedPayload(array $ManipulatedPayload)
+    public function setManipulatedPayload(array $ManipulatedPayload): self
     {
         $this->ManipulatedPayload = $ManipulatedPayload;
 

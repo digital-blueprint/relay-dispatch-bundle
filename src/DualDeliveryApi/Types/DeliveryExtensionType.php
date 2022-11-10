@@ -26,40 +26,24 @@ class DeliveryExtensionType
         $this->Custom = $Custom;
     }
 
-    /**
-     * @return DeliveryExtensionType
-     */
-    public function getDeliveryExtension()
+    public function getDeliveryExtension(): DeliveryExtensionType
     {
         return $this->DeliveryExtension;
     }
 
-    /**
-     * @param DeliveryExtensionType $DeliveryExtension
-     *
-     * @return DeliveryExtensionType
-     */
-    public function setDeliveryExtension($DeliveryExtension)
+    public function setDeliveryExtension(DeliveryExtensionType $DeliveryExtension): self
     {
         $this->DeliveryExtension = $DeliveryExtension;
 
         return $this;
     }
 
-    /**
-     * @return CustomType
-     */
-    public function getCustom()
+    public function getCustom(): CustomType
     {
         return $this->Custom;
     }
 
-    /**
-     * @param CustomType $Custom
-     *
-     * @return DeliveryExtensionType
-     */
-    public function setCustom($Custom)
+    public function setCustom(CustomType $Custom): self
     {
         $this->Custom = $Custom;
 

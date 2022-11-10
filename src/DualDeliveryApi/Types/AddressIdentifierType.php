@@ -19,20 +19,12 @@ class AddressIdentifierType
         $this->AddressIdentifierType = $AddressIdentifierType;
     }
 
-    /**
-     * @return AddressIdentifierTypeType
-     */
-    public function getAddressIdentifierType()
+    public function getAddressIdentifierType(): AddressIdentifierTypeType
     {
         return $this->AddressIdentifierType;
     }
 
-    /**
-     * @param AddressIdentifierTypeType $AddressIdentifierType
-     *
-     * @return AddressIdentifierType
-     */
-    public function setAddressIdentifierType($AddressIdentifierType)
+    public function setAddressIdentifierType(AddressIdentifierTypeType $AddressIdentifierType): self
     {
         $this->AddressIdentifierType = $AddressIdentifierType;
 

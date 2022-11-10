@@ -73,11 +73,9 @@ class DualDeliveryResponseType
     }
 
     /**
-     * @param string $AppDeliveryID
-     *
      * @return DualDeliveryResponseType
      */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID(string $AppDeliveryID)
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
@@ -93,11 +91,9 @@ class DualDeliveryResponseType
     }
 
     /**
-     * @param StatusType $Status
-     *
      * @return DualDeliveryResponseType
      */
-    public function setStatus($Status)
+    public function setStatus(StatusType $Status)
     {
         $this->Status = $Status;
 
@@ -113,11 +109,9 @@ class DualDeliveryResponseType
     }
 
     /**
-     * @param string $DualDeliveryID
-     *
      * @return DualDeliveryResponseType
      */
-    public function setDualDeliveryID($DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID)
     {
         $this->DualDeliveryID = $DualDeliveryID;
 
@@ -133,11 +127,9 @@ class DualDeliveryResponseType
     }
 
     /**
-     * @param AdditionalMetaData $AdditionalMetaData
-     *
      * @return DualDeliveryResponseType
      */
-    public function setAdditionalMetaData($AdditionalMetaData)
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData)
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
 
@@ -153,11 +145,9 @@ class DualDeliveryResponseType
     }
 
     /**
-     * @param UsedDeliveryChannels $UsedDeliveryChannels
-     *
      * @return DualDeliveryResponseType
      */
-    public function setUsedDeliveryChannels($UsedDeliveryChannels)
+    public function setUsedDeliveryChannels(UsedDeliveryChannels $UsedDeliveryChannels)
     {
         $this->UsedDeliveryChannels = $UsedDeliveryChannels;
 
@@ -173,11 +163,9 @@ class DualDeliveryResponseType
     }
 
     /**
-     * @param ManipulatedPayloadsType $ManipulatedPayloads
-     *
      * @return DualDeliveryResponseType
      */
-    public function setManipulatedPayloads($ManipulatedPayloads)
+    public function setManipulatedPayloads(ManipulatedPayloadsType $ManipulatedPayloads)
     {
         $this->ManipulatedPayloads = $ManipulatedPayloads;
 
@@ -193,11 +181,9 @@ class DualDeliveryResponseType
     }
 
     /**
-     * @param ErrorsType $Errors
-     *
      * @return DualDeliveryResponseType
      */
-    public function setErrors($Errors)
+    public function setErrors(ErrorsType $Errors)
     {
         $this->Errors = $Errors;
 
@@ -213,11 +199,9 @@ class DualDeliveryResponseType
     }
 
     /**
-     * @param string $version
-     *
      * @return DualDeliveryResponseType
      */
-    public function setVersion($version)
+    public function setVersion(string $version)
     {
         $this->version = $version;
 

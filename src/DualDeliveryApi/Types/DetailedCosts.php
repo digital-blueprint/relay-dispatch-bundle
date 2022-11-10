@@ -33,60 +33,36 @@ class DetailedCosts
         $this->PostageCosts = $PostageCosts;
     }
 
-    /**
-     * @return float
-     */
-    public function getPrintingCosts()
+    public function getPrintingCosts(): float
     {
         return $this->PrintingCosts;
     }
 
-    /**
-     * @param float $PrintingCosts
-     *
-     * @return DetailedCosts
-     */
-    public function setPrintingCosts($PrintingCosts)
+    public function setPrintingCosts(float $PrintingCosts): self
     {
         $this->PrintingCosts = $PrintingCosts;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getHandlingCosts()
+    public function getHandlingCosts(): float
     {
         return $this->HandlingCosts;
     }
 
-    /**
-     * @param float $HandlingCosts
-     *
-     * @return DetailedCosts
-     */
-    public function setHandlingCosts($HandlingCosts)
+    public function setHandlingCosts(float $HandlingCosts): self
     {
         $this->HandlingCosts = $HandlingCosts;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getPostageCosts()
+    public function getPostageCosts(): float
     {
         return $this->PostageCosts;
     }
 
-    /**
-     * @param float $PostageCosts
-     *
-     * @return DetailedCosts
-     */
-    public function setPostageCosts($PostageCosts)
+    public function setPostageCosts(float $PostageCosts): self
     {
         $this->PostageCosts = $PostageCosts;
 

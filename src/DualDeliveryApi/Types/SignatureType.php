@@ -47,100 +47,60 @@ class SignatureType
         $this->Id = $Id;
     }
 
-    /**
-     * @return SignedInfoType
-     */
-    public function getSignedInfo()
+    public function getSignedInfo(): SignedInfoType
     {
         return $this->SignedInfo;
     }
 
-    /**
-     * @param SignedInfoType $SignedInfo
-     *
-     * @return SignatureType
-     */
-    public function setSignedInfo($SignedInfo)
+    public function setSignedInfo(SignedInfoType $SignedInfo): self
     {
         $this->SignedInfo = $SignedInfo;
 
         return $this;
     }
 
-    /**
-     * @return SignatureValueType
-     */
-    public function getSignatureValue()
+    public function getSignatureValue(): SignatureValueType
     {
         return $this->SignatureValue;
     }
 
-    /**
-     * @param SignatureValueType $SignatureValue
-     *
-     * @return SignatureType
-     */
-    public function setSignatureValue($SignatureValue)
+    public function setSignatureValue(SignatureValueType $SignatureValue): self
     {
         $this->SignatureValue = $SignatureValue;
 
         return $this;
     }
 
-    /**
-     * @return KeyInfoType
-     */
-    public function getKeyInfo()
+    public function getKeyInfo(): KeyInfoType
     {
         return $this->KeyInfo;
     }
 
-    /**
-     * @param KeyInfoType $KeyInfo
-     *
-     * @return SignatureType
-     */
-    public function setKeyInfo($KeyInfo)
+    public function setKeyInfo(KeyInfoType $KeyInfo): self
     {
         $this->KeyInfo = $KeyInfo;
 
         return $this;
     }
 
-    /**
-     * @return ObjectType
-     */
-    public function getObject()
+    public function getObject(): ObjectType
     {
         return $this->Object;
     }
 
-    /**
-     * @param ObjectType $Object
-     *
-     * @return SignatureType
-     */
-    public function setObject($Object)
+    public function setObject(ObjectType $Object): self
     {
         $this->Object = $Object;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return SignatureType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

@@ -110,80 +110,48 @@ class ListLineItemType
         $this->ListLineItemExtension = $ListLineItemExtension;
     }
 
-    /**
-     * @return int
-     */
-    public function getPositionNumber()
+    public function getPositionNumber(): int
     {
         return $this->PositionNumber;
     }
 
-    /**
-     * @param int $PositionNumber
-     *
-     * @return ListLineItemType
-     */
-    public function setPositionNumber($PositionNumber)
+    public function setPositionNumber(int $PositionNumber): self
     {
         $this->PositionNumber = $PositionNumber;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->Description;
     }
 
-    /**
-     * @param string $Description
-     *
-     * @return ListLineItemType
-     */
-    public function setDescription($Description)
+    public function setDescription(string $Description): self
     {
         $this->Description = $Description;
 
         return $this;
     }
 
-    /**
-     * @return ArticleNumberType
-     */
-    public function getArticleNumber()
+    public function getArticleNumber(): ArticleNumberType
     {
         return $this->ArticleNumber;
     }
 
-    /**
-     * @param ArticleNumberType $ArticleNumber
-     *
-     * @return ListLineItemType
-     */
-    public function setArticleNumber($ArticleNumber)
+    public function setArticleNumber(ArticleNumberType $ArticleNumber): self
     {
         $this->ArticleNumber = $ArticleNumber;
 
         return $this;
     }
 
-    /**
-     * @return UnitType
-     */
-    public function getQuantity()
+    public function getQuantity(): UnitType
     {
         return $this->Quantity;
     }
 
-    /**
-     * @param UnitType $Quantity
-     *
-     * @return ListLineItemType
-     */
-    public function setQuantity($Quantity)
+    public function setQuantity(UnitType $Quantity): self
     {
         $this->Quantity = $Quantity;
 
@@ -200,150 +168,92 @@ class ListLineItemType
 
     /**
      * @param Decimal4Type $UnitPrice
-     *
-     * @return ListLineItemType
      */
-    public function setUnitPrice($UnitPrice)
+    public function setUnitPrice($UnitPrice): self
     {
         $this->UnitPrice = $UnitPrice;
 
         return $this;
     }
 
-    /**
-     * @return TaxRateType
-     */
-    public function getTaxRate()
+    public function getTaxRate(): TaxRateType
     {
         return $this->TaxRate;
     }
 
-    /**
-     * @param TaxRateType $TaxRate
-     *
-     * @return ListLineItemType
-     */
-    public function setTaxRate($TaxRate)
+    public function setTaxRate(TaxRateType $TaxRate): self
     {
         $this->TaxRate = $TaxRate;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getDiscountFlag()
+    public function getDiscountFlag(): bool
     {
         return $this->DiscountFlag;
     }
 
-    /**
-     * @param bool $DiscountFlag
-     *
-     * @return ListLineItemType
-     */
-    public function setDiscountFlag($DiscountFlag)
+    public function setDiscountFlag(bool $DiscountFlag): self
     {
         $this->DiscountFlag = $DiscountFlag;
 
         return $this;
     }
 
-    /**
-     * @return ReductionAndSurchargeListLineItemDetailsType
-     */
-    public function getReductionAndSurchargeListLineItemDetails()
+    public function getReductionAndSurchargeListLineItemDetails(): ReductionAndSurchargeListLineItemDetailsType
     {
         return $this->ReductionAndSurchargeListLineItemDetails;
     }
 
-    /**
-     * @param ReductionAndSurchargeListLineItemDetailsType $ReductionAndSurchargeListLineItemDetails
-     *
-     * @return ListLineItemType
-     */
-    public function setReductionAndSurchargeListLineItemDetails($ReductionAndSurchargeListLineItemDetails)
+    public function setReductionAndSurchargeListLineItemDetails(ReductionAndSurchargeListLineItemDetailsType $ReductionAndSurchargeListLineItemDetails): self
     {
         $this->ReductionAndSurchargeListLineItemDetails = $ReductionAndSurchargeListLineItemDetails;
 
         return $this;
     }
 
-    /**
-     * @return DeliveryType
-     */
-    public function getDelivery()
+    public function getDelivery(): DeliveryType
     {
         return $this->Delivery;
     }
 
-    /**
-     * @param DeliveryType $Delivery
-     *
-     * @return ListLineItemType
-     */
-    public function setDelivery($Delivery)
+    public function setDelivery(DeliveryType $Delivery): self
     {
         $this->Delivery = $Delivery;
 
         return $this;
     }
 
-    /**
-     * @return OrderReferenceDetailType
-     */
-    public function getBillersOrderReference()
+    public function getBillersOrderReference(): OrderReferenceDetailType
     {
         return $this->BillersOrderReference;
     }
 
-    /**
-     * @param OrderReferenceDetailType $BillersOrderReference
-     *
-     * @return ListLineItemType
-     */
-    public function setBillersOrderReference($BillersOrderReference)
+    public function setBillersOrderReference(OrderReferenceDetailType $BillersOrderReference): self
     {
         $this->BillersOrderReference = $BillersOrderReference;
 
         return $this;
     }
 
-    /**
-     * @return OrderReferenceDetailType
-     */
-    public function getInvoiceRecipientsOrderReference()
+    public function getInvoiceRecipientsOrderReference(): OrderReferenceDetailType
     {
         return $this->InvoiceRecipientsOrderReference;
     }
 
-    /**
-     * @param OrderReferenceDetailType $InvoiceRecipientsOrderReference
-     *
-     * @return ListLineItemType
-     */
-    public function setInvoiceRecipientsOrderReference($InvoiceRecipientsOrderReference)
+    public function setInvoiceRecipientsOrderReference(OrderReferenceDetailType $InvoiceRecipientsOrderReference): self
     {
         $this->InvoiceRecipientsOrderReference = $InvoiceRecipientsOrderReference;
 
         return $this;
     }
 
-    /**
-     * @return AdditionalInformationType
-     */
-    public function getAdditionalInformation()
+    public function getAdditionalInformation(): AdditionalInformationType
     {
         return $this->AdditionalInformation;
     }
 
-    /**
-     * @param AdditionalInformationType $AdditionalInformation
-     *
-     * @return ListLineItemType
-     */
-    public function setAdditionalInformation($AdditionalInformation)
+    public function setAdditionalInformation(AdditionalInformationType $AdditionalInformation): self
     {
         $this->AdditionalInformation = $AdditionalInformation;
 
@@ -360,30 +270,20 @@ class ListLineItemType
 
     /**
      * @param Decimal2Type $LineItemAmount
-     *
-     * @return ListLineItemType
      */
-    public function setLineItemAmount($LineItemAmount)
+    public function setLineItemAmount($LineItemAmount): self
     {
         $this->LineItemAmount = $LineItemAmount;
 
         return $this;
     }
 
-    /**
-     * @return ListLineItemExtensionType
-     */
-    public function getListLineItemExtension()
+    public function getListLineItemExtension(): ListLineItemExtensionType
     {
         return $this->ListLineItemExtension;
     }
 
-    /**
-     * @param ListLineItemExtensionType $ListLineItemExtension
-     *
-     * @return ListLineItemType
-     */
-    public function setListLineItemExtension($ListLineItemExtension)
+    public function setListLineItemExtension(ListLineItemExtensionType $ListLineItemExtension): self
     {
         $this->ListLineItemExtension = $ListLineItemExtension;
 

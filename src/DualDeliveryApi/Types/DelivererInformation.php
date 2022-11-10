@@ -26,40 +26,24 @@ class DelivererInformation
         $this->DelivererReference = $DelivererReference;
     }
 
-    /**
-     * @return string
-     */
-    public function getDeliverer()
+    public function getDeliverer(): string
     {
         return $this->Deliverer;
     }
 
-    /**
-     * @param string $Deliverer
-     *
-     * @return DelivererInformation
-     */
-    public function setDeliverer($Deliverer)
+    public function setDeliverer(string $Deliverer): self
     {
         $this->Deliverer = $Deliverer;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDelivererReference()
+    public function getDelivererReference(): string
     {
         return $this->DelivererReference;
     }
 
-    /**
-     * @param string $DelivererReference
-     *
-     * @return DelivererInformation
-     */
-    public function setDelivererReference($DelivererReference)
+    public function setDelivererReference(string $DelivererReference): self
     {
         $this->DelivererReference = $DelivererReference;
 

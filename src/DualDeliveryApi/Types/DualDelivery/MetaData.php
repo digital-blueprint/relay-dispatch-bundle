@@ -115,280 +115,168 @@ class MetaData
         $this->BillingToken = $BillingToken;
     }
 
-    /**
-     * @return string
-     */
-    public function getAppDeliveryID()
+    public function getAppDeliveryID(): string
     {
         return $this->AppDeliveryID;
     }
 
-    /**
-     * @param string $AppDeliveryID
-     *
-     * @return MetaData
-     */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID(string $AppDeliveryID): self
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return ApplicationID
-     */
-    public function getApplicationID()
+    public function getApplicationID(): ApplicationID
     {
         return $this->ApplicationID;
     }
 
-    /**
-     * @param ApplicationID $ApplicationID
-     *
-     * @return MetaData
-     */
-    public function setApplicationID($ApplicationID)
+    public function setApplicationID(ApplicationID $ApplicationID): self
     {
         $this->ApplicationID = $ApplicationID;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDeliveryQuality()
+    public function getDeliveryQuality(): string
     {
         return $this->DeliveryQuality;
     }
 
-    /**
-     * @param string $DeliveryQuality
-     *
-     * @return MetaData
-     */
-    public function setDeliveryQuality($DeliveryQuality)
+    public function setDeliveryQuality(string $DeliveryQuality): self
     {
         $this->DeliveryQuality = $DeliveryQuality;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->Subject;
     }
 
-    /**
-     * @param string $Subject
-     *
-     * @return MetaData
-     */
-    public function setSubject($Subject)
+    public function setSubject(string $Subject): self
     {
         $this->Subject = $Subject;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getGZ()
+    public function getGZ(): string
     {
         return $this->GZ;
     }
 
-    /**
-     * @param string $GZ
-     *
-     * @return MetaData
-     */
-    public function setGZ($GZ)
+    public function setGZ(string $GZ): self
     {
         $this->GZ = $GZ;
 
         return $this;
     }
 
-    /**
-     * @return Payments
-     */
-    public function getPayments()
+    public function getPayments(): Payments
     {
         return $this->Payments;
     }
 
-    /**
-     * @param Payments $Payments
-     *
-     * @return MetaData
-     */
-    public function setPayments($Payments)
+    public function setPayments(Payments $Payments): self
     {
         $this->Payments = $Payments;
 
         return $this;
     }
 
-    /**
-     * @return AdditionalMetaData
-     */
-    public function getAdditionalMetaData()
+    public function getAdditionalMetaData(): AdditionalMetaData
     {
         return $this->AdditionalMetaData;
     }
 
-    /**
-     * @param AdditionalMetaData $AdditionalMetaData
-     *
-     * @return MetaData
-     */
-    public function setAdditionalMetaData($AdditionalMetaData)
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): self
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getTestCase()
+    public function getTestCase(): bool
     {
         return $this->TestCase;
     }
 
-    /**
-     * @param bool $TestCase
-     *
-     * @return MetaData
-     */
-    public function setTestCase($TestCase)
+    public function setTestCase(bool $TestCase): self
     {
         $this->TestCase = $TestCase;
 
         return $this;
     }
 
-    /**
-     * @return ProcessingProfile
-     */
-    public function getProcessingProfile()
+    public function getProcessingProfile(): ProcessingProfile
     {
         return $this->ProcessingProfile;
     }
 
-    /**
-     * @param ProcessingProfile $ProcessingProfile
-     *
-     * @return MetaData
-     */
-    public function setProcessingProfile($ProcessingProfile)
+    public function setProcessingProfile(ProcessingProfile $ProcessingProfile): self
     {
         $this->ProcessingProfile = $ProcessingProfile;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDocumentClass()
+    public function getDocumentClass(): string
     {
         return $this->DocumentClass;
     }
 
-    /**
-     * @param string $DocumentClass
-     *
-     * @return MetaData
-     */
-    public function setDocumentClass($DocumentClass)
+    public function setDocumentClass(string $DocumentClass): self
     {
         $this->DocumentClass = $DocumentClass;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getAsynchronous()
+    public function getAsynchronous(): bool
     {
         return $this->Asynchronous;
     }
 
-    /**
-     * @param bool $Asynchronous
-     *
-     * @return MetaData
-     */
-    public function setAsynchronous($Asynchronous)
+    public function setAsynchronous(bool $Asynchronous): self
     {
         $this->Asynchronous = $Asynchronous;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getBulkId()
+    public function getBulkId(): int
     {
         return $this->BulkId;
     }
 
-    /**
-     * @param int $BulkId
-     *
-     * @return MetaData
-     */
-    public function setBulkId($BulkId)
+    public function setBulkId(int $BulkId): self
     {
         $this->BulkId = $BulkId;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUser()
+    public function getUser(): string
     {
         return $this->User;
     }
 
-    /**
-     * @param string $User
-     *
-     * @return MetaData
-     */
-    public function setUser($User)
+    public function setUser(string $User): self
     {
         $this->User = $User;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBillingToken()
+    public function getBillingToken(): string
     {
         return $this->BillingToken;
     }
 
-    /**
-     * @param string $BillingToken
-     *
-     * @return MetaData
-     */
-    public function setBillingToken($BillingToken)
+    public function setBillingToken(string $BillingToken): self
     {
         $this->BillingToken = $BillingToken;
 

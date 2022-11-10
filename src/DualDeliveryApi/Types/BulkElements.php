@@ -19,20 +19,12 @@ class BulkElements
         $this->DualNotificationRequest = $DualNotificationRequest;
     }
 
-    /**
-     * @return DualNotificationRequest
-     */
-    public function getDualNotificationRequest()
+    public function getDualNotificationRequest(): DualNotificationRequest
     {
         return $this->DualNotificationRequest;
     }
 
-    /**
-     * @param DualNotificationRequest $DualNotificationRequest
-     *
-     * @return BulkElements
-     */
-    public function setDualNotificationRequest($DualNotificationRequest)
+    public function setDualNotificationRequest(DualNotificationRequest $DualNotificationRequest): self
     {
         $this->DualNotificationRequest = $DualNotificationRequest;
 

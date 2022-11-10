@@ -33,60 +33,36 @@ class TransformType
         $this->Algorithm = $Algorithm;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return TransformType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getXPath()
+    public function getXPath(): string
     {
         return $this->XPath;
     }
 
-    /**
-     * @param string $XPath
-     *
-     * @return TransformType
-     */
-    public function setXPath($XPath)
+    public function setXPath(string $XPath): self
     {
         $this->XPath = $XPath;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getAlgorithm()
+    public function getAlgorithm(): AnyURI
     {
         return $this->Algorithm;
     }
 
-    /**
-     * @param AnyURI $Algorithm
-     *
-     * @return TransformType
-     */
-    public function setAlgorithm($Algorithm)
+    public function setAlgorithm(AnyURI $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
 

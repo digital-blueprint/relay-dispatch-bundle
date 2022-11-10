@@ -36,10 +36,8 @@ class PaymentReferenceType
 
     /**
      * @param Digit12Type $_
-     *
-     * @return PaymentReferenceType
      */
-    public function set_($_)
+    public function set_($_): self
     {
         $this->_ = $_;
 
@@ -56,10 +54,8 @@ class PaymentReferenceType
 
     /**
      * @param CheckSumType $CheckSum
-     *
-     * @return PaymentReferenceType
      */
-    public function setCheckSum($CheckSum)
+    public function setCheckSum($CheckSum): self
     {
         $this->CheckSum = $CheckSum;
 

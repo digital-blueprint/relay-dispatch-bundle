@@ -26,40 +26,30 @@ class Identification
         $this->Value = $Value;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->Type;
     }
 
     /**
-     * @param string $Type
-     *
      * @return stringentification
      */
-    public function setType($Type)
+    public function setType(string $Type): self
     {
         $this->Type = $Type;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->Value;
     }
 
     /**
-     * @param string $Value
-     *
      * @return stringentification
      */
-    public function setValue($Value)
+    public function setValue(string $Value): self
     {
         $this->Value = $Value;
 

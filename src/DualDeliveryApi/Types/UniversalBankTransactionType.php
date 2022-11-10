@@ -36,60 +36,36 @@ class UniversalBankTransactionType extends PaymentMethodType
         $this->ConsolidatorPayable = $ConsolidatorPayable;
     }
 
-    /**
-     * @return AccountType
-     */
-    public function getBeneficiaryAccount()
+    public function getBeneficiaryAccount(): AccountType
     {
         return $this->BeneficiaryAccount;
     }
 
-    /**
-     * @param AccountType $BeneficiaryAccount
-     *
-     * @return UniversalBankTransactionType
-     */
-    public function setBeneficiaryAccount($BeneficiaryAccount)
+    public function setBeneficiaryAccount(AccountType $BeneficiaryAccount): self
     {
         $this->BeneficiaryAccount = $BeneficiaryAccount;
 
         return $this;
     }
 
-    /**
-     * @return PaymentReferenceType
-     */
-    public function getPaymentReference()
+    public function getPaymentReference(): PaymentReferenceType
     {
         return $this->PaymentReference;
     }
 
-    /**
-     * @param PaymentReferenceType $PaymentReference
-     *
-     * @return UniversalBankTransactionType
-     */
-    public function setPaymentReference($PaymentReference)
+    public function setPaymentReference(PaymentReferenceType $PaymentReference): self
     {
         $this->PaymentReference = $PaymentReference;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getConsolidatorPayable()
+    public function getConsolidatorPayable(): bool
     {
         return $this->ConsolidatorPayable;
     }
 
-    /**
-     * @param bool $ConsolidatorPayable
-     *
-     * @return UniversalBankTransactionType
-     */
-    public function setConsolidatorPayable($ConsolidatorPayable)
+    public function setConsolidatorPayable(bool $ConsolidatorPayable): self
     {
         $this->ConsolidatorPayable = $ConsolidatorPayable;
 

@@ -66,11 +66,9 @@ class DualNotificationRequestType
     }
 
     /**
-     * @param string $AppDeliveryID
-     *
      * @return DualNotificationRequestType
      */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID(string $AppDeliveryID)
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
@@ -86,11 +84,9 @@ class DualNotificationRequestType
     }
 
     /**
-     * @param string $DualDeliveryID
-     *
      * @return DualNotificationRequestType
      */
-    public function setDualDeliveryID($DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID)
     {
         $this->DualDeliveryID = $DualDeliveryID;
 
@@ -106,11 +102,9 @@ class DualNotificationRequestType
     }
 
     /**
-     * @param Result $Result
-     *
      * @return DualNotificationRequestType
      */
-    public function setResult($Result)
+    public function setResult(Result $Result)
     {
         $this->Result = $Result;
 
@@ -126,11 +120,9 @@ class DualNotificationRequestType
     }
 
     /**
-     * @param AdditionalResults $AdditionalResults
-     *
      * @return DualNotificationRequestType
      */
-    public function setAdditionalResults($AdditionalResults)
+    public function setAdditionalResults(AdditionalResults $AdditionalResults)
     {
         $this->AdditionalResults = $AdditionalResults;
 
@@ -146,11 +138,9 @@ class DualNotificationRequestType
     }
 
     /**
-     * @param ManipulatedPayloadsType $ManipulatedPayloads
-     *
      * @return DualNotificationRequestType
      */
-    public function setManipulatedPayloads($ManipulatedPayloads)
+    public function setManipulatedPayloads(ManipulatedPayloadsType $ManipulatedPayloads)
     {
         $this->ManipulatedPayloads = $ManipulatedPayloads;
 
@@ -166,11 +156,9 @@ class DualNotificationRequestType
     }
 
     /**
-     * @param StatusType $Status
-     *
      * @return DualNotificationRequestType
      */
-    public function setStatus($Status)
+    public function setStatus(StatusType $Status)
     {
         $this->Status = $Status;
 
@@ -186,11 +174,9 @@ class DualNotificationRequestType
     }
 
     /**
-     * @param string $version
-     *
      * @return DualNotificationRequestType
      */
-    public function setVersion($version)
+    public function setVersion(string $version)
     {
         $this->version = $version;
 

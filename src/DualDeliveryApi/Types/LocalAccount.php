@@ -36,10 +36,8 @@ class LocalAccount
 
     /**
      * @param BLZ $BLZ
-     *
-     * @return LocalAccount
      */
-    public function setBLZ($BLZ)
+    public function setBLZ($BLZ): self
     {
         $this->BLZ = $BLZ;
 
@@ -56,10 +54,8 @@ class LocalAccount
 
     /**
      * @param AccountNr $AccountNr
-     *
-     * @return LocalAccount
      */
-    public function setAccountNr($AccountNr)
+    public function setAccountNr($AccountNr): self
     {
         $this->AccountNr = $AccountNr;
 

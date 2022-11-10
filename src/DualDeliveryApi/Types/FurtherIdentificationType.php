@@ -36,30 +36,20 @@ class FurtherIdentificationType
 
     /**
      * @param AlphaNumIDType $_
-     *
-     * @return FurtherIdentificationType
      */
-    public function set_($_)
+    public function set_($_): self
     {
         $this->_ = $_;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentificationType()
+    public function getIdentificationType(): string
     {
         return $this->IdentificationType;
     }
 
-    /**
-     * @param string $IdentificationType
-     *
-     * @return FurtherIdentificationType
-     */
-    public function setIdentificationType($IdentificationType)
+    public function setIdentificationType(string $IdentificationType): self
     {
         $this->IdentificationType = $IdentificationType;
 

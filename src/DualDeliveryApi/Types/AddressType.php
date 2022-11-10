@@ -96,240 +96,144 @@ class AddressType
         $this->AddressExtension = $AddressExtension;
     }
 
-    /**
-     * @return AddressIdentifierType
-     */
-    public function getAddressIdentifier()
+    public function getAddressIdentifier(): AddressIdentifierType
     {
         return $this->AddressIdentifier;
     }
 
-    /**
-     * @param AddressIdentifierType $AddressIdentifier
-     *
-     * @return AddressType
-     */
-    public function setAddressIdentifier($AddressIdentifier)
+    public function setAddressIdentifier(AddressIdentifierType $AddressIdentifier): self
     {
         $this->AddressIdentifier = $AddressIdentifier;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSalutation()
+    public function getSalutation(): string
     {
         return $this->Salutation;
     }
 
-    /**
-     * @param string $Salutation
-     *
-     * @return AddressType
-     */
-    public function setSalutation($Salutation)
+    public function setSalutation(string $Salutation): self
     {
         $this->Salutation = $Salutation;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->Name;
     }
 
-    /**
-     * @param string $Name
-     *
-     * @return AddressType
-     */
-    public function setName($Name)
+    public function setName(string $Name): self
     {
         $this->Name = $Name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->Street;
     }
 
-    /**
-     * @param string $Street
-     *
-     * @return AddressType
-     */
-    public function setStreet($Street)
+    public function setStreet(string $Street): self
     {
         $this->Street = $Street;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPOBox()
+    public function getPOBox(): string
     {
         return $this->POBox;
     }
 
-    /**
-     * @param string $POBox
-     *
-     * @return AddressType
-     */
-    public function setPOBox($POBox)
+    public function setPOBox(string $POBox): self
     {
         $this->POBox = $POBox;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTown()
+    public function getTown(): string
     {
         return $this->Town;
     }
 
-    /**
-     * @param string $Town
-     *
-     * @return AddressType
-     */
-    public function setTown($Town)
+    public function setTown(string $Town): self
     {
         $this->Town = $Town;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getZIP()
+    public function getZIP(): string
     {
         return $this->ZIP;
     }
 
-    /**
-     * @param string $ZIP
-     *
-     * @return AddressType
-     */
-    public function setZIP($ZIP)
+    public function setZIP(string $ZIP): self
     {
         $this->ZIP = $ZIP;
 
         return $this;
     }
 
-    /**
-     * @return CountryType
-     */
-    public function getCountry()
+    public function getCountry(): CountryType
     {
         return $this->Country;
     }
 
-    /**
-     * @param CountryType $Country
-     *
-     * @return AddressType
-     */
-    public function setCountry($Country)
+    public function setCountry(CountryType $Country): self
     {
         $this->Country = $Country;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->Phone;
     }
 
-    /**
-     * @param string $Phone
-     *
-     * @return AddressType
-     */
-    public function setPhone($Phone)
+    public function setPhone(string $Phone): self
     {
         $this->Phone = $Phone;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->Email;
     }
 
-    /**
-     * @param string $Email
-     *
-     * @return AddressType
-     */
-    public function setEmail($Email)
+    public function setEmail(string $Email): self
     {
         $this->Email = $Email;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getContact()
+    public function getContact(): string
     {
         return $this->Contact;
     }
 
-    /**
-     * @param string $Contact
-     *
-     * @return AddressType
-     */
-    public function setContact($Contact)
+    public function setContact(string $Contact): self
     {
         $this->Contact = $Contact;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddressExtension()
+    public function getAddressExtension(): string
     {
         return $this->AddressExtension;
     }
 
-    /**
-     * @param string $AddressExtension
-     *
-     * @return AddressType
-     */
-    public function setAddressExtension($AddressExtension)
+    public function setAddressExtension(string $AddressExtension): self
     {
         $this->AddressExtension = $AddressExtension;
 

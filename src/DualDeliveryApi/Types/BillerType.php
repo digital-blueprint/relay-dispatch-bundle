@@ -61,40 +61,24 @@ class BillerType
         $this->BillerExtension = $BillerExtension;
     }
 
-    /**
-     * @return string
-     */
-    public function getVATIdentificationNumber()
+    public function getVATIdentificationNumber(): string
     {
         return $this->VATIdentificationNumber;
     }
 
-    /**
-     * @param string $VATIdentificationNumber
-     *
-     * @return BillerType
-     */
-    public function setVATIdentificationNumber($VATIdentificationNumber)
+    public function setVATIdentificationNumber(string $VATIdentificationNumber): self
     {
         $this->VATIdentificationNumber = $VATIdentificationNumber;
 
         return $this;
     }
 
-    /**
-     * @return FurtherIdentificationType
-     */
-    public function getFurtherIdentification()
+    public function getFurtherIdentification(): FurtherIdentificationType
     {
         return $this->FurtherIdentification;
     }
 
-    /**
-     * @param FurtherIdentificationType $FurtherIdentification
-     *
-     * @return BillerType
-     */
-    public function setFurtherIdentification($FurtherIdentification)
+    public function setFurtherIdentification(FurtherIdentificationType $FurtherIdentification): self
     {
         $this->FurtherIdentification = $FurtherIdentification;
 
@@ -111,10 +95,8 @@ class BillerType
 
     /**
      * @param AlphaNumIDType $ConsolidatorsBillerID
-     *
-     * @return BillerType
      */
-    public function setConsolidatorsBillerID($ConsolidatorsBillerID)
+    public function setConsolidatorsBillerID($ConsolidatorsBillerID): self
     {
         $this->ConsolidatorsBillerID = $ConsolidatorsBillerID;
 
@@ -131,70 +113,44 @@ class BillerType
 
     /**
      * @param AlphaNumIDType $InvoiceRecipientsBillerID
-     *
-     * @return BillerType
      */
-    public function setInvoiceRecipientsBillerID($InvoiceRecipientsBillerID)
+    public function setInvoiceRecipientsBillerID($InvoiceRecipientsBillerID): self
     {
         $this->InvoiceRecipientsBillerID = $InvoiceRecipientsBillerID;
 
         return $this;
     }
 
-    /**
-     * @return OrderReferenceType
-     */
-    public function getOrderReference()
+    public function getOrderReference(): OrderReferenceType
     {
         return $this->OrderReference;
     }
 
-    /**
-     * @param OrderReferenceType $OrderReference
-     *
-     * @return BillerType
-     */
-    public function setOrderReference($OrderReference)
+    public function setOrderReference(OrderReferenceType $OrderReference): self
     {
         $this->OrderReference = $OrderReference;
 
         return $this;
     }
 
-    /**
-     * @return AddressType
-     */
-    public function getAddress()
+    public function getAddress(): AddressType
     {
         return $this->Address;
     }
 
-    /**
-     * @param AddressType $Address
-     *
-     * @return BillerType
-     */
-    public function setAddress($Address)
+    public function setAddress(AddressType $Address): self
     {
         $this->Address = $Address;
 
         return $this;
     }
 
-    /**
-     * @return BillerExtensionType
-     */
-    public function getBillerExtension()
+    public function getBillerExtension(): BillerExtensionType
     {
         return $this->BillerExtension;
     }
 
-    /**
-     * @param BillerExtensionType $BillerExtension
-     *
-     * @return BillerType
-     */
-    public function setBillerExtension($BillerExtension)
+    public function setBillerExtension(BillerExtensionType $BillerExtension): self
     {
         $this->BillerExtension = $BillerExtension;
 

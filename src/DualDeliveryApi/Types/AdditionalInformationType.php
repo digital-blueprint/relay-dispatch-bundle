@@ -78,10 +78,8 @@ class AdditionalInformationType
 
     /**
      * @param AlphaNumType $SerialNumber
-     *
-     * @return AdditionalInformationType
      */
-    public function setSerialNumber($SerialNumber)
+    public function setSerialNumber($SerialNumber): self
     {
         $this->SerialNumber = $SerialNumber;
 
@@ -98,50 +96,32 @@ class AdditionalInformationType
 
     /**
      * @param AlphaNumType $ChargeNumber
-     *
-     * @return AdditionalInformationType
      */
-    public function setChargeNumber($ChargeNumber)
+    public function setChargeNumber($ChargeNumber): self
     {
         $this->ChargeNumber = $ChargeNumber;
 
         return $this;
     }
 
-    /**
-     * @return ClassificationType
-     */
-    public function getClassification()
+    public function getClassification(): ClassificationType
     {
         return $this->Classification;
     }
 
-    /**
-     * @param ClassificationType $Classification
-     *
-     * @return AdditionalInformationType
-     */
-    public function setClassification($Classification)
+    public function setClassification(ClassificationType $Classification): self
     {
         $this->Classification = $Classification;
 
         return $this;
     }
 
-    /**
-     * @return UnitType
-     */
-    public function getAlternativeQuantity()
+    public function getAlternativeQuantity(): UnitType
     {
         return $this->AlternativeQuantity;
     }
 
-    /**
-     * @param UnitType $AlternativeQuantity
-     *
-     * @return AdditionalInformationType
-     */
-    public function setAlternativeQuantity($AlternativeQuantity)
+    public function setAlternativeQuantity(UnitType $AlternativeQuantity): self
     {
         $this->AlternativeQuantity = $AlternativeQuantity;
 
@@ -158,70 +138,44 @@ class AdditionalInformationType
 
     /**
      * @param AlphaNumType $Size
-     *
-     * @return AdditionalInformationType
      */
-    public function setSize($Size)
+    public function setSize($Size): self
     {
         $this->Size = $Size;
 
         return $this;
     }
 
-    /**
-     * @return UnitType
-     */
-    public function getWeight()
+    public function getWeight(): UnitType
     {
         return $this->Weight;
     }
 
-    /**
-     * @param UnitType $Weight
-     *
-     * @return AdditionalInformationType
-     */
-    public function setWeight($Weight)
+    public function setWeight(UnitType $Weight): self
     {
         $this->Weight = $Weight;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getBoxes()
+    public function getBoxes(): int
     {
         return $this->Boxes;
     }
 
-    /**
-     * @param int $Boxes
-     *
-     * @return AdditionalInformationType
-     */
-    public function setBoxes($Boxes)
+    public function setBoxes(int $Boxes): self
     {
         $this->Boxes = $Boxes;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getColor()
+    public function getColor(): string
     {
         return $this->Color;
     }
 
-    /**
-     * @param string $Color
-     *
-     * @return AdditionalInformationType
-     */
-    public function setColor($Color)
+    public function setColor(string $Color): self
     {
         $this->Color = $Color;
 

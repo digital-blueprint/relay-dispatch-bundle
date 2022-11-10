@@ -26,40 +26,24 @@ class AbstractPersonType
         $this->Id = $Id;
     }
 
-    /**
-     * @return string
-     */
-    public function getAbstractSimpleIdentification()
+    public function getAbstractSimpleIdentification(): string
     {
         return $this->AbstractSimpleIdentification;
     }
 
-    /**
-     * @param string $AbstractSimpleIdentification
-     *
-     * @return AbstractPersonType
-     */
-    public function setAbstractSimpleIdentification($AbstractSimpleIdentification)
+    public function setAbstractSimpleIdentification(string $AbstractSimpleIdentification): self
     {
         $this->AbstractSimpleIdentification = $AbstractSimpleIdentification;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return AbstractPersonType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

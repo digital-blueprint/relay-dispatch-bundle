@@ -26,40 +26,24 @@ class Depositor
         $this->LocalAccount = $LocalAccount;
     }
 
-    /**
-     * @return InternationalAccount
-     */
-    public function getInternationalAccount()
+    public function getInternationalAccount(): InternationalAccount
     {
         return $this->InternationalAccount;
     }
 
-    /**
-     * @param InternationalAccount $InternationalAccount
-     *
-     * @return Depositor
-     */
-    public function setInternationalAccount($InternationalAccount)
+    public function setInternationalAccount(InternationalAccount $InternationalAccount): self
     {
         $this->InternationalAccount = $InternationalAccount;
 
         return $this;
     }
 
-    /**
-     * @return LocalAccount
-     */
-    public function getLocalAccount()
+    public function getLocalAccount(): LocalAccount
     {
         return $this->LocalAccount;
     }
 
-    /**
-     * @param LocalAccount $LocalAccount
-     *
-     * @return Depositor
-     */
-    public function setLocalAccount($LocalAccount)
+    public function setLocalAccount(LocalAccount $LocalAccount): self
     {
         $this->LocalAccount = $LocalAccount;
 

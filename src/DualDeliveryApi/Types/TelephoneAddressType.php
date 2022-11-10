@@ -21,20 +21,12 @@ class TelephoneAddressType extends AbstractAddressType
         $this->Number = $Number;
     }
 
-    /**
-     * @return TelcomNumberType
-     */
-    public function getNumber()
+    public function getNumber(): TelcomNumberType
     {
         return $this->Number;
     }
 
-    /**
-     * @param TelcomNumberType $Number
-     *
-     * @return TelephoneAddressType
-     */
-    public function setNumber($Number)
+    public function setNumber(TelcomNumberType $Number): self
     {
         $this->Number = $Number;
 

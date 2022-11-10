@@ -36,10 +36,8 @@ class OrderReferenceDetailType
 
     /**
      * @param AlphaNumIDType $OrderID
-     *
-     * @return OrderReferenceDetailType
      */
-    public function setOrderID($OrderID)
+    public function setOrderID($OrderID): self
     {
         $this->OrderID = $OrderID;
 
@@ -56,10 +54,8 @@ class OrderReferenceDetailType
 
     /**
      * @param AlphaNumType $OrderPositionNumber
-     *
-     * @return OrderReferenceDetailType
      */
-    public function setOrderPositionNumber($OrderPositionNumber)
+    public function setOrderPositionNumber($OrderPositionNumber): self
     {
         $this->OrderPositionNumber = $OrderPositionNumber;
 

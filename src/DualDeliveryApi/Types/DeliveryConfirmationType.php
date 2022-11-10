@@ -45,40 +45,24 @@ class DeliveryConfirmationType extends DeliveryAnswerType
         $this->Signature = $Signature;
     }
 
-    /**
-     * @return Sender
-     */
-    public function getSender()
+    public function getSender(): Sender
     {
         return $this->Sender;
     }
 
-    /**
-     * @param Sender $Sender
-     *
-     * @return DeliveryConfirmationType
-     */
-    public function setSender($Sender)
+    public function setSender(Sender $Sender): self
     {
         $this->Sender = $Sender;
 
         return $this;
     }
 
-    /**
-     * @return Receiver
-     */
-    public function getReceiver()
+    public function getReceiver(): Receiver
     {
         return $this->Receiver;
     }
 
-    /**
-     * @param Receiver $Receiver
-     *
-     * @return DeliveryConfirmationType
-     */
-    public function setReceiver($Receiver)
+    public function setReceiver(Receiver $Receiver): self
     {
         $this->Receiver = $Receiver;
 
@@ -101,30 +85,19 @@ class DeliveryConfirmationType extends DeliveryAnswerType
         }
     }
 
-    /**
-     * @return DeliveryConfirmationType
-     */
-    public function setDeliveryTimestamp(\DateTime $DeliveryTimestamp)
+    public function setDeliveryTimestamp(\DateTime $DeliveryTimestamp): self
     {
         $this->DeliveryTimestamp = $DeliveryTimestamp->format(\DateTime::ATOM);
 
         return $this;
     }
 
-    /**
-     * @return SignatureType
-     */
-    public function getSignature()
+    public function getSignature(): SignatureType
     {
         return $this->Signature;
     }
 
-    /**
-     * @param SignatureType $Signature
-     *
-     * @return DeliveryConfirmationType
-     */
-    public function setSignature($Signature)
+    public function setSignature(SignatureType $Signature): self
     {
         $this->Signature = $Signature;
 

@@ -43,10 +43,8 @@ class ReductionAndSurchargeBaseType
 
     /**
      * @param Decimal2Type $BaseAmount
-     *
-     * @return ReductionAndSurchargeBaseType
      */
-    public function setBaseAmount($BaseAmount)
+    public function setBaseAmount($BaseAmount): self
     {
         $this->BaseAmount = $BaseAmount;
 
@@ -63,10 +61,8 @@ class ReductionAndSurchargeBaseType
 
     /**
      * @param PercentageType $Percentage
-     *
-     * @return ReductionAndSurchargeBaseType
      */
-    public function setPercentage($Percentage)
+    public function setPercentage($Percentage): self
     {
         $this->Percentage = $Percentage;
 
@@ -83,10 +79,8 @@ class ReductionAndSurchargeBaseType
 
     /**
      * @param Decimal2Type $Amount
-     *
-     * @return ReductionAndSurchargeBaseType
      */
-    public function setAmount($Amount)
+    public function setAmount($Amount): self
     {
         $this->Amount = $Amount;
 

@@ -26,40 +26,24 @@ class SubjectLocalityType
         $this->DNSAddress = $DNSAddress;
     }
 
-    /**
-     * @return string
-     */
-    public function getIPAddress()
+    public function getIPAddress(): string
     {
         return $this->IPAddress;
     }
 
-    /**
-     * @param string $IPAddress
-     *
-     * @return SubjectLocalityType
-     */
-    public function setIPAddress($IPAddress)
+    public function setIPAddress(string $IPAddress): self
     {
         $this->IPAddress = $IPAddress;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDNSAddress()
+    public function getDNSAddress(): string
     {
         return $this->DNSAddress;
     }
 
-    /**
-     * @param string $DNSAddress
-     *
-     * @return SubjectLocalityType
-     */
-    public function setDNSAddress($DNSAddress)
+    public function setDNSAddress(string $DNSAddress): self
     {
         $this->DNSAddress = $DNSAddress;
 

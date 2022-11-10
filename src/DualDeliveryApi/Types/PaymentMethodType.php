@@ -26,40 +26,24 @@ class PaymentMethodType
         $this->PaymentMethodExtension = $PaymentMethodExtension;
     }
 
-    /**
-     * @return string
-     */
-    public function getComment()
+    public function getComment(): string
     {
         return $this->Comment;
     }
 
-    /**
-     * @param string $Comment
-     *
-     * @return PaymentMethodType
-     */
-    public function setComment($Comment)
+    public function setComment(string $Comment): self
     {
         $this->Comment = $Comment;
 
         return $this;
     }
 
-    /**
-     * @return PaymentMethodExtensionType
-     */
-    public function getPaymentMethodExtension()
+    public function getPaymentMethodExtension(): PaymentMethodExtensionType
     {
         return $this->PaymentMethodExtension;
     }
 
-    /**
-     * @param PaymentMethodExtensionType $PaymentMethodExtension
-     *
-     * @return PaymentMethodType
-     */
-    public function setPaymentMethodExtension($PaymentMethodExtension)
+    public function setPaymentMethodExtension(PaymentMethodExtensionType $PaymentMethodExtension): self
     {
         $this->PaymentMethodExtension = $PaymentMethodExtension;
 

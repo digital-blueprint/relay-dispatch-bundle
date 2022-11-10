@@ -36,10 +36,8 @@ class PeriodType
 
     /**
      * @param date $FromDate
-     *
-     * @return PeriodType
      */
-    public function setFromDate($FromDate)
+    public function setFromDate($FromDate): self
     {
         $this->FromDate = $FromDate;
 
@@ -56,10 +54,8 @@ class PeriodType
 
     /**
      * @param date $ToDate
-     *
-     * @return PeriodType
      */
-    public function setToDate($ToDate)
+    public function setToDate($ToDate): self
     {
         $this->ToDate = $ToDate;
 

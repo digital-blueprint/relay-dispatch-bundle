@@ -31,60 +31,36 @@ class PGPDataType
         $this->any = $any;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getPGPKeyID()
+    public function getPGPKeyID(): CryptoBinary
     {
         return $this->PGPKeyID;
     }
 
-    /**
-     * @param CryptoBinary $PGPKeyID
-     *
-     * @return PGPDataType
-     */
-    public function setPGPKeyID($PGPKeyID)
+    public function setPGPKeyID(CryptoBinary $PGPKeyID): self
     {
         $this->PGPKeyID = $PGPKeyID;
 
         return $this;
     }
 
-    /**
-     * @return CryptoBinary
-     */
-    public function getPGPKeyPacket()
+    public function getPGPKeyPacket(): CryptoBinary
     {
         return $this->PGPKeyPacket;
     }
 
-    /**
-     * @param CryptoBinary $PGPKeyPacket
-     *
-     * @return PGPDataType
-     */
-    public function setPGPKeyPacket($PGPKeyPacket)
+    public function setPGPKeyPacket(CryptoBinary $PGPKeyPacket): self
     {
         $this->PGPKeyPacket = $PGPKeyPacket;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return PGPDataType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 

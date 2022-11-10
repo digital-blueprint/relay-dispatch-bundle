@@ -19,20 +19,12 @@ class DocumentClass
         $this->Namespace = $Namespace;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getNamespace()
+    public function getNamespace(): AnyURI
     {
         return $this->Namespace;
     }
 
-    /**
-     * @param AnyURI $Namespace
-     *
-     * @return DocumentClass
-     */
-    public function setNamespace($Namespace)
+    public function setNamespace(AnyURI $Namespace): self
     {
         $this->Namespace = $Namespace;
 

@@ -19,20 +19,12 @@ class TelcomNumberType
         $this->FormattedNumber = $FormattedNumber;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormattedNumber()
+    public function getFormattedNumber(): string
     {
         return $this->FormattedNumber;
     }
 
-    /**
-     * @param string $FormattedNumber
-     *
-     * @return TelcomNumberType
-     */
-    public function setFormattedNumber($FormattedNumber)
+    public function setFormattedNumber(string $FormattedNumber): self
     {
         $this->FormattedNumber = $FormattedNumber;
 

@@ -52,120 +52,72 @@ class DualDeliveryPreAddressingResponseType
         $this->version = $version;
     }
 
-    /**
-     * @return string
-     */
-    public function getAppDeliveryID()
+    public function getAppDeliveryID(): string
     {
         return $this->AppDeliveryID;
     }
 
-    /**
-     * @param string $AppDeliveryID
-     *
-     * @return DualDeliveryPreAddressingResponseType
-     */
-    public function setAppDeliveryID($AppDeliveryID)
+    public function setAppDeliveryID(string $AppDeliveryID): self
     {
         $this->AppDeliveryID = $AppDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return StatusType
-     */
-    public function getStatus()
+    public function getStatus(): StatusType
     {
         return $this->Status;
     }
 
-    /**
-     * @param StatusType $Status
-     *
-     * @return DualDeliveryPreAddressingResponseType
-     */
-    public function setStatus($Status)
+    public function setStatus(StatusType $Status): self
     {
         $this->Status = $Status;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDualDeliveryID()
+    public function getDualDeliveryID(): string
     {
         return $this->DualDeliveryID;
     }
 
-    /**
-     * @param string $DualDeliveryID
-     *
-     * @return DualDeliveryPreAddressingResponseType
-     */
-    public function setDualDeliveryID($DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID): self
     {
         $this->DualDeliveryID = $DualDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return AddressingResults
-     */
-    public function getAddressingResults()
+    public function getAddressingResults(): AddressingResults
     {
         return $this->AddressingResults;
     }
 
-    /**
-     * @param AddressingResults $AddressingResults
-     *
-     * @return DualDeliveryPreAddressingResponseType
-     */
-    public function setAddressingResults($AddressingResults)
+    public function setAddressingResults(AddressingResults $AddressingResults): self
     {
         $this->AddressingResults = $AddressingResults;
 
         return $this;
     }
 
-    /**
-     * @return ErrorsType
-     */
-    public function getErrors()
+    public function getErrors(): ErrorsType
     {
         return $this->Errors;
     }
 
-    /**
-     * @param ErrorsType $Errors
-     *
-     * @return DualDeliveryPreAddressingResponseType
-     */
-    public function setErrors($Errors)
+    public function setErrors(ErrorsType $Errors): self
     {
         $this->Errors = $Errors;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     *
-     * @return DualDeliveryPreAddressingResponseType
-     */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
         $this->version = $version;
 

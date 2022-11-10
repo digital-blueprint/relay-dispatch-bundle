@@ -42,80 +42,48 @@ class AuthorizationDecisionStatementType extends SubjectStatementAbstractType
         $this->Decision = $Decision;
     }
 
-    /**
-     * @return ActionType
-     */
-    public function getAction()
+    public function getAction(): ActionType
     {
         return $this->Action;
     }
 
-    /**
-     * @param ActionType $Action
-     *
-     * @return AuthorizationDecisionStatementType
-     */
-    public function setAction($Action)
+    public function setAction(ActionType $Action): self
     {
         $this->Action = $Action;
 
         return $this;
     }
 
-    /**
-     * @return EvidenceType
-     */
-    public function getEvidence()
+    public function getEvidence(): EvidenceType
     {
         return $this->Evidence;
     }
 
-    /**
-     * @param EvidenceType $Evidence
-     *
-     * @return AuthorizationDecisionStatementType
-     */
-    public function setEvidence($Evidence)
+    public function setEvidence(EvidenceType $Evidence): self
     {
         $this->Evidence = $Evidence;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getResource()
+    public function getResource(): AnyURI
     {
         return $this->Resource;
     }
 
-    /**
-     * @param AnyURI $Resource
-     *
-     * @return AuthorizationDecisionStatementType
-     */
-    public function setResource($Resource)
+    public function setResource(AnyURI $Resource): self
     {
         $this->Resource = $Resource;
 
         return $this;
     }
 
-    /**
-     * @return DecisionType
-     */
-    public function getDecision()
+    public function getDecision(): DecisionType
     {
         return $this->Decision;
     }
 
-    /**
-     * @param DecisionType $Decision
-     *
-     * @return AuthorizationDecisionStatementType
-     */
-    public function setDecision($Decision)
+    public function setDecision(DecisionType $Decision): self
     {
         $this->Decision = $Decision;
 

@@ -35,10 +35,8 @@ class RecipientNotification
 
     /**
      * @param NotificationMethod $NotificationMethod
-     *
-     * @return RecipientNotification
      */
-    public function setNotificationMethod($NotificationMethod)
+    public function setNotificationMethod($NotificationMethod): self
     {
         $this->NotificationMethod = $NotificationMethod;
 
@@ -61,10 +59,7 @@ class RecipientNotification
         }
     }
 
-    /**
-     * @return RecipientNotification
-     */
-    public function setTimestamp(\DateTime $Timestamp)
+    public function setTimestamp(\DateTime $Timestamp): self
     {
         $this->Timestamp = $Timestamp->format(\DateTime::ATOM);
 

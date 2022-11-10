@@ -64,30 +64,20 @@ class AccountType
 
     /**
      * @param BankNameType $BankName
-     *
-     * @return AccountType
      */
-    public function setBankName($BankName)
+    public function setBankName($BankName): self
     {
         $this->BankName = $BankName;
 
         return $this;
     }
 
-    /**
-     * @return BankCodeCType
-     */
-    public function getBankCode()
+    public function getBankCode(): BankCodeCType
     {
         return $this->BankCode;
     }
 
-    /**
-     * @param BankCodeCType $BankCode
-     *
-     * @return AccountType
-     */
-    public function setBankCode($BankCode)
+    public function setBankCode(BankCodeCType $BankCode): self
     {
         $this->BankCode = $BankCode;
 
@@ -104,30 +94,20 @@ class AccountType
 
     /**
      * @param BICType $BIC
-     *
-     * @return AccountType
      */
-    public function setBIC($BIC)
+    public function setBIC($BIC): self
     {
         $this->BIC = $BIC;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBankAccountNr()
+    public function getBankAccountNr(): string
     {
         return $this->BankAccountNr;
     }
 
-    /**
-     * @param string $BankAccountNr
-     *
-     * @return AccountType
-     */
-    public function setBankAccountNr($BankAccountNr)
+    public function setBankAccountNr(string $BankAccountNr): self
     {
         $this->BankAccountNr = $BankAccountNr;
 
@@ -144,10 +124,8 @@ class AccountType
 
     /**
      * @param IBANType $IBAN
-     *
-     * @return AccountType
      */
-    public function setIBAN($IBAN)
+    public function setIBAN($IBAN): self
     {
         $this->IBAN = $IBAN;
 
@@ -164,10 +142,8 @@ class AccountType
 
     /**
      * @param BankAccountOwnerType $BankAccountOwner
-     *
-     * @return AccountType
      */
-    public function setBankAccountOwner($BankAccountOwner)
+    public function setBankAccountOwner($BankAccountOwner): self
     {
         $this->BankAccountOwner = $BankAccountOwner;
 

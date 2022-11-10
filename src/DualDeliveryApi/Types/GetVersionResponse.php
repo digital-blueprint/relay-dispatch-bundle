@@ -29,10 +29,8 @@ class GetVersionResponse
 
     /**
      * @param versionNumberType $Version
-     *
-     * @return GetVersionResponse
      */
-    public function setVersion($Version)
+    public function setVersion($Version): self
     {
         $this->Version = $Version;
 

@@ -22,17 +22,15 @@ class AddressingResults
     /**
      * @return AddressingResult[]
      */
-    public function getAddressingResult()
+    public function getAddressingResult(): array
     {
         return $this->AddressingResult ?? [];
     }
 
     /**
      * @param AddressingResult[] $AddressingResult
-     *
-     * @return AddressingResults
      */
-    public function setAddressingResult($AddressingResult)
+    public function setAddressingResult(array $AddressingResult): self
     {
         $this->AddressingResult = $AddressingResult;
 

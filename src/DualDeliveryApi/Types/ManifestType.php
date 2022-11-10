@@ -26,40 +26,24 @@ class ManifestType
         $this->Id = $Id;
     }
 
-    /**
-     * @return ReferenceType
-     */
-    public function getReference()
+    public function getReference(): ReferenceType
     {
         return $this->Reference;
     }
 
-    /**
-     * @param ReferenceType $Reference
-     *
-     * @return ManifestType
-     */
-    public function setReference($Reference)
+    public function setReference(ReferenceType $Reference): self
     {
         $this->Reference = $Reference;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return ManifestType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

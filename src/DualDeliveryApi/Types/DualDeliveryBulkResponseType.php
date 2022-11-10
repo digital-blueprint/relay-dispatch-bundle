@@ -47,100 +47,60 @@ class DualDeliveryBulkResponseType
         $this->version = $version;
     }
 
-    /**
-     * @return StatusType
-     */
-    public function getStatus()
+    public function getStatus(): StatusType
     {
         return $this->Status;
     }
 
-    /**
-     * @param StatusType $Status
-     *
-     * @return DualDeliveryBulkResponseType
-     */
-    public function setStatus($Status)
+    public function setStatus(StatusType $Status): self
     {
         $this->Status = $Status;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getBulkId()
+    public function getBulkId(): int
     {
         return $this->BulkId;
     }
 
-    /**
-     * @param int $BulkId
-     *
-     * @return DualDeliveryBulkResponseType
-     */
-    public function setBulkId($BulkId)
+    public function setBulkId(int $BulkId): self
     {
         $this->BulkId = $BulkId;
 
         return $this;
     }
 
-    /**
-     * @return AdditionalMetaData
-     */
-    public function getAdditionalMetaData()
+    public function getAdditionalMetaData(): AdditionalMetaData
     {
         return $this->AdditionalMetaData;
     }
 
-    /**
-     * @param AdditionalMetaData $AdditionalMetaData
-     *
-     * @return DualDeliveryBulkResponseType
-     */
-    public function setAdditionalMetaData($AdditionalMetaData)
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): self
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
 
         return $this;
     }
 
-    /**
-     * @return ErrorsType
-     */
-    public function getErrors()
+    public function getErrors(): ErrorsType
     {
         return $this->Errors;
     }
 
-    /**
-     * @param ErrorsType $Errors
-     *
-     * @return DualDeliveryBulkResponseType
-     */
-    public function setErrors($Errors)
+    public function setErrors(ErrorsType $Errors): self
     {
         $this->Errors = $Errors;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     *
-     * @return DualDeliveryBulkResponseType
-     */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
         $this->version = $version;
 

@@ -33,60 +33,36 @@ class DualNotificationResponses
         $this->DualZSID = $DualZSID;
     }
 
-    /**
-     * @return DualNotificationResponseType
-     */
-    public function getDualNotificationResponse()
+    public function getDualNotificationResponse(): DualNotificationResponseType
     {
         return $this->DualNotificationResponse;
     }
 
-    /**
-     * @param DualNotificationResponseType $DualNotificationResponse
-     *
-     * @return DualNotificationResponses
-     */
-    public function setDualNotificationResponse($DualNotificationResponse)
+    public function setDualNotificationResponse(DualNotificationResponseType $DualNotificationResponse): self
     {
         $this->DualNotificationResponse = $DualNotificationResponse;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getApplicationDeliveryID()
+    public function getApplicationDeliveryID(): string
     {
         return $this->ApplicationDeliveryID;
     }
 
-    /**
-     * @param string $ApplicationDeliveryID
-     *
-     * @return DualNotificationResponses
-     */
-    public function setApplicationDeliveryID($ApplicationDeliveryID)
+    public function setApplicationDeliveryID(string $ApplicationDeliveryID): self
     {
         $this->ApplicationDeliveryID = $ApplicationDeliveryID;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getDualZSID()
+    public function getDualZSID(): int
     {
         return $this->DualZSID;
     }
 
-    /**
-     * @param int $DualZSID
-     *
-     * @return DualNotificationResponses
-     */
-    public function setDualZSID($DualZSID)
+    public function setDualZSID(int $DualZSID): self
     {
         $this->DualZSID = $DualZSID;
 

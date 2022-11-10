@@ -19,20 +19,12 @@ class AudienceRestrictionConditionType extends ConditionAbstractType
         $this->Audience = $Audience;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getAudience()
+    public function getAudience(): AnyURI
     {
         return $this->Audience;
     }
 
-    /**
-     * @param AnyURI $Audience
-     *
-     * @return AudienceRestrictionConditionType
-     */
-    public function setAudience($Audience)
+    public function setAudience(AnyURI $Audience): self
     {
         $this->Audience = $Audience;
 

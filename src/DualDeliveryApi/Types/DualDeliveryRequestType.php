@@ -63,140 +63,84 @@ class DualDeliveryRequestType
         $this->version = $version;
     }
 
-    /**
-     * @return SenderType
-     */
-    public function getSender()
+    public function getSender(): SenderType
     {
         return $this->Sender;
     }
 
-    /**
-     * @param SenderType $Sender
-     *
-     * @return DualDeliveryRequestType
-     */
-    public function setSender($Sender)
+    public function setSender(SenderType $Sender): self
     {
         $this->Sender = $Sender;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRecipientID()
+    public function getRecipientID(): ?string
     {
         return $this->RecipientID;
     }
 
-    /**
-     * @param string|null $RecipientID
-     *
-     * @return DualDeliveryRequestType
-     */
-    public function setRecipientID($RecipientID)
+    public function setRecipientID(?string $RecipientID): self
     {
         $this->RecipientID = $RecipientID;
 
         return $this;
     }
 
-    /**
-     * @return RecipientType
-     */
-    public function getRecipient()
+    public function getRecipient(): RecipientType
     {
         return $this->Recipient;
     }
 
-    /**
-     * @param RecipientType $Recipient
-     *
-     * @return DualDeliveryRequestType
-     */
-    public function setRecipient($Recipient)
+    public function setRecipient(RecipientType $Recipient): self
     {
         $this->Recipient = $Recipient;
 
         return $this;
     }
 
-    /**
-     * @return MetaData
-     */
-    public function getMetaData()
+    public function getMetaData(): MetaData
     {
         return $this->MetaData;
     }
 
-    /**
-     * @param MetaData $MetaData
-     *
-     * @return DualDeliveryRequestType
-     */
-    public function setMetaData($MetaData)
+    public function setMetaData(MetaData $MetaData): self
     {
         $this->MetaData = $MetaData;
 
         return $this;
     }
 
-    /**
-     * @return DeliveryChannels
-     */
-    public function getDeliveryChannels()
+    public function getDeliveryChannels(): ?DeliveryChannels
     {
         return $this->DeliveryChannels;
     }
 
-    /**
-     * @param DeliveryChannels $DeliveryChannels
-     *
-     * @return DualDeliveryRequestType
-     */
-    public function setDeliveryChannels($DeliveryChannels)
+    public function setDeliveryChannels(DeliveryChannels $DeliveryChannels): self
     {
         $this->DeliveryChannels = $DeliveryChannels;
 
         return $this;
     }
 
-    /**
-     * @return PayloadType
-     */
-    public function getPayload()
+    public function getPayload(): PayloadType
     {
         return $this->Payload;
     }
 
-    /**
-     * @param PayloadType $Payload
-     *
-     * @return DualDeliveryRequestType
-     */
-    public function setPayload($Payload)
+    public function setPayload(PayloadType $Payload): self
     {
         $this->Payload = $Payload;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param string $version
-     *
-     * @return DualDeliveryRequestType
-     */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
         $this->version = $version;
 

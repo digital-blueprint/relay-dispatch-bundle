@@ -33,60 +33,36 @@ class KeyValueType
         $this->any = $any;
     }
 
-    /**
-     * @return DSAKeyValueType
-     */
-    public function getDSAKeyValue()
+    public function getDSAKeyValue(): DSAKeyValueType
     {
         return $this->DSAKeyValue;
     }
 
-    /**
-     * @param DSAKeyValueType $DSAKeyValue
-     *
-     * @return KeyValueType
-     */
-    public function setDSAKeyValue($DSAKeyValue)
+    public function setDSAKeyValue(DSAKeyValueType $DSAKeyValue): self
     {
         $this->DSAKeyValue = $DSAKeyValue;
 
         return $this;
     }
 
-    /**
-     * @return RSAKeyValueType
-     */
-    public function getRSAKeyValue()
+    public function getRSAKeyValue(): RSAKeyValueType
     {
         return $this->RSAKeyValue;
     }
 
-    /**
-     * @param RSAKeyValueType $RSAKeyValue
-     *
-     * @return KeyValueType
-     */
-    public function setRSAKeyValue($RSAKeyValue)
+    public function setRSAKeyValue(RSAKeyValueType $RSAKeyValue): self
     {
         $this->RSAKeyValue = $RSAKeyValue;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return KeyValueType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 

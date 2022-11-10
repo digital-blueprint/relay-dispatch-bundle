@@ -64,10 +64,8 @@ class DeliveryType
 
     /**
      * @param AlphaNumIDType $DeliveryID
-     *
-     * @return DeliveryType
      */
-    public function setDeliveryID($DeliveryID)
+    public function setDeliveryID($DeliveryID): self
     {
         $this->DeliveryID = $DeliveryID;
 
@@ -84,90 +82,56 @@ class DeliveryType
 
     /**
      * @param date $Date
-     *
-     * @return DeliveryType
      */
-    public function setDate($Date)
+    public function setDate($Date): self
     {
         $this->Date = $Date;
 
         return $this;
     }
 
-    /**
-     * @return PeriodType
-     */
-    public function getPeriod()
+    public function getPeriod(): PeriodType
     {
         return $this->Period;
     }
 
-    /**
-     * @param PeriodType $Period
-     *
-     * @return DeliveryType
-     */
-    public function setPeriod($Period)
+    public function setPeriod(PeriodType $Period): self
     {
         $this->Period = $Period;
 
         return $this;
     }
 
-    /**
-     * @return AddressType
-     */
-    public function getAddress()
+    public function getAddress(): AddressType
     {
         return $this->Address;
     }
 
-    /**
-     * @param AddressType $Address
-     *
-     * @return DeliveryType
-     */
-    public function setAddress($Address)
+    public function setAddress(AddressType $Address): self
     {
         $this->Address = $Address;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->Description;
     }
 
-    /**
-     * @param string $Description
-     *
-     * @return DeliveryType
-     */
-    public function setDescription($Description)
+    public function setDescription(string $Description): self
     {
         $this->Description = $Description;
 
         return $this;
     }
 
-    /**
-     * @return DeliveryExtensionType
-     */
-    public function getDeliveryExtension()
+    public function getDeliveryExtension(): DeliveryExtensionType
     {
         return $this->DeliveryExtension;
     }
 
-    /**
-     * @param DeliveryExtensionType $DeliveryExtension
-     *
-     * @return DeliveryType
-     */
-    public function setDeliveryExtension($DeliveryExtension)
+    public function setDeliveryExtension(DeliveryExtensionType $DeliveryExtension): self
     {
         $this->DeliveryExtension = $DeliveryExtension;
 

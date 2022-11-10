@@ -26,40 +26,24 @@ class Costs
         $this->DetailedCosts = $DetailedCosts;
     }
 
-    /**
-     * @return float
-     */
-    public function getTotalCosts()
+    public function getTotalCosts(): float
     {
         return $this->TotalCosts;
     }
 
-    /**
-     * @param float $TotalCosts
-     *
-     * @return Costs
-     */
-    public function setTotalCosts($TotalCosts)
+    public function setTotalCosts(float $TotalCosts): self
     {
         $this->TotalCosts = $TotalCosts;
 
         return $this;
     }
 
-    /**
-     * @return DetailedCosts
-     */
-    public function getDetailedCosts()
+    public function getDetailedCosts(): DetailedCosts
     {
         return $this->DetailedCosts;
     }
 
-    /**
-     * @param DetailedCosts $DetailedCosts
-     *
-     * @return Costs
-     */
-    public function setDetailedCosts($DetailedCosts)
+    public function setDetailedCosts(DetailedCosts $DetailedCosts): self
     {
         $this->DetailedCosts = $DetailedCosts;
 

@@ -28,40 +28,24 @@ class InternetAddressType extends AbstractAddressType
         $this->Address = $Address;
     }
 
-    /**
-     * @return KeyInfoType
-     */
-    public function getKeyInfo()
+    public function getKeyInfo(): KeyInfoType
     {
         return $this->KeyInfo;
     }
 
-    /**
-     * @param KeyInfoType $KeyInfo
-     *
-     * @return InternetAddressType
-     */
-    public function setKeyInfo($KeyInfo)
+    public function setKeyInfo(KeyInfoType $KeyInfo): self
     {
         $this->KeyInfo = $KeyInfo;
 
         return $this;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getAddress()
+    public function getAddress(): AnyURI
     {
         return $this->Address;
     }
 
-    /**
-     * @param AnyURI $Address
-     *
-     * @return InternetAddressType
-     */
-    public function setAddress($Address)
+    public function setAddress(AnyURI $Address): self
     {
         $this->Address = $Address;
 

@@ -26,20 +26,12 @@ class Checksum
         $this->Value = $Value;
     }
 
-    /**
-     * @return string
-     */
-    public function getAlgorithmID()
+    public function getAlgorithmID(): string
     {
         return $this->AlgorithmID;
     }
 
-    /**
-     * @param string $AlgorithmID
-     *
-     * @return Checksum
-     */
-    public function setAlgorithmID($AlgorithmID)
+    public function setAlgorithmID(string $AlgorithmID): self
     {
         $this->AlgorithmID = $AlgorithmID;
 
@@ -56,10 +48,8 @@ class Checksum
 
     /**
      * @param base64Binary $Value
-     *
-     * @return Checksum
      */
-    public function setValue($Value)
+    public function setValue($Value): self
     {
         $this->Value = $Value;
 

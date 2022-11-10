@@ -19,20 +19,12 @@ class BinaryDocumentType extends DocumentType
         $this->Content = $Content;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->Content;
     }
 
-    /**
-     * @param string $Content
-     *
-     * @return BinaryDocumentType
-     */
-    public function setContent($Content)
+    public function setContent(string $Content): self
     {
         $this->Content = $Content;
 

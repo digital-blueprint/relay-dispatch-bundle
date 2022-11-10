@@ -32,10 +32,8 @@ class AttributeType extends AttributeDesignatorType
 
     /**
      * @param mixed $AttributeValue
-     *
-     * @return AttributeType
      */
-    public function setAttributeValue($AttributeValue)
+    public function setAttributeValue($AttributeValue): self
     {
         $this->AttributeValue = $AttributeValue;
 

@@ -30,20 +30,12 @@ class EMailDeliveryType extends DeliveryChannelSetType
     {
     }
 
-    /**
-     * @return bool
-     */
-    public function getRegMail()
+    public function getRegMail(): bool
     {
         return $this->RegMail;
     }
 
-    /**
-     * @param bool $RegMail
-     *
-     * @return EMailDeliveryType
-     */
-    public function setRegMail($RegMail)
+    public function setRegMail(bool $RegMail): self
     {
         $this->RegMail = $RegMail;
 
@@ -68,10 +60,8 @@ class EMailDeliveryType extends DeliveryChannelSetType
 
     /**
      * @param \DateTime $RegMailDepositUntil
-     *
-     * @return EMailDeliveryType
      */
-    public function setRegMailDepositUntil(\DateTime $RegMailDepositUntil = null)
+    public function setRegMailDepositUntil(\DateTime $RegMailDepositUntil = null): self
     {
         if ($RegMailDepositUntil === null) {
             $this->RegMailDepositUntil = null;
@@ -92,30 +82,20 @@ class EMailDeliveryType extends DeliveryChannelSetType
 
     /**
      * @param base64Binary $MailBody
-     *
-     * @return EMailDeliveryType
      */
-    public function setMailBody($MailBody)
+    public function setMailBody($MailBody): self
     {
         $this->MailBody = $MailBody;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMIMEType()
+    public function getMIMEType(): string
     {
         return $this->MIMEType;
     }
 
-    /**
-     * @param string $MIMEType
-     *
-     * @return EMailDeliveryType
-     */
-    public function setMIMEType($MIMEType)
+    public function setMIMEType(string $MIMEType): self
     {
         $this->MIMEType = $MIMEType;
 

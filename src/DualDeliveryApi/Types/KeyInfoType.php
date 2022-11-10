@@ -75,180 +75,108 @@ class KeyInfoType
         $this->Id = $Id;
     }
 
-    /**
-     * @return string
-     */
-    public function getKeyName()
+    public function getKeyName(): string
     {
         return $this->KeyName;
     }
 
-    /**
-     * @param string $KeyName
-     *
-     * @return KeyInfoType
-     */
-    public function setKeyName($KeyName)
+    public function setKeyName(string $KeyName): self
     {
         $this->KeyName = $KeyName;
 
         return $this;
     }
 
-    /**
-     * @return KeyValueType
-     */
-    public function getKeyValue()
+    public function getKeyValue(): KeyValueType
     {
         return $this->KeyValue;
     }
 
-    /**
-     * @param KeyValueType $KeyValue
-     *
-     * @return KeyInfoType
-     */
-    public function setKeyValue($KeyValue)
+    public function setKeyValue(KeyValueType $KeyValue): self
     {
         $this->KeyValue = $KeyValue;
 
         return $this;
     }
 
-    /**
-     * @return RetrievalMethodType
-     */
-    public function getRetrievalMethod()
+    public function getRetrievalMethod(): RetrievalMethodType
     {
         return $this->RetrievalMethod;
     }
 
-    /**
-     * @param RetrievalMethodType $RetrievalMethod
-     *
-     * @return KeyInfoType
-     */
-    public function setRetrievalMethod($RetrievalMethod)
+    public function setRetrievalMethod(RetrievalMethodType $RetrievalMethod): self
     {
         $this->RetrievalMethod = $RetrievalMethod;
 
         return $this;
     }
 
-    /**
-     * @return X509DataType
-     */
-    public function getX509Data()
+    public function getX509Data(): X509DataType
     {
         return $this->X509Data;
     }
 
-    /**
-     * @param X509DataType $X509Data
-     *
-     * @return KeyInfoType
-     */
-    public function setX509Data($X509Data)
+    public function setX509Data(X509DataType $X509Data): self
     {
         $this->X509Data = $X509Data;
 
         return $this;
     }
 
-    /**
-     * @return PGPDataType
-     */
-    public function getPGPData()
+    public function getPGPData(): PGPDataType
     {
         return $this->PGPData;
     }
 
-    /**
-     * @param PGPDataType $PGPData
-     *
-     * @return KeyInfoType
-     */
-    public function setPGPData($PGPData)
+    public function setPGPData(PGPDataType $PGPData): self
     {
         $this->PGPData = $PGPData;
 
         return $this;
     }
 
-    /**
-     * @return SPKIDataType
-     */
-    public function getSPKIData()
+    public function getSPKIData(): SPKIDataType
     {
         return $this->SPKIData;
     }
 
-    /**
-     * @param SPKIDataType $SPKIData
-     *
-     * @return KeyInfoType
-     */
-    public function setSPKIData($SPKIData)
+    public function setSPKIData(SPKIDataType $SPKIData): self
     {
         $this->SPKIData = $SPKIData;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMgmtData()
+    public function getMgmtData(): string
     {
         return $this->MgmtData;
     }
 
-    /**
-     * @param string $MgmtData
-     *
-     * @return KeyInfoType
-     */
-    public function setMgmtData($MgmtData)
+    public function setMgmtData(string $MgmtData): self
     {
         $this->MgmtData = $MgmtData;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAny()
+    public function getAny(): string
     {
         return $this->any;
     }
 
-    /**
-     * @param string $any
-     *
-     * @return KeyInfoType
-     */
-    public function setAny($any)
+    public function setAny(string $any): self
     {
         $this->any = $any;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->Id;
     }
 
-    /**
-     * @param string $Id
-     *
-     * @return KeyInfoType
-     */
-    public function setId($Id)
+    public function setId(string $Id): self
     {
         $this->Id = $Id;
 

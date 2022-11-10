@@ -19,20 +19,12 @@ class DocumentReferenceType extends DocumentType
         $this->URL = $URL;
     }
 
-    /**
-     * @return AnyURI
-     */
-    public function getURL()
+    public function getURL(): AnyURI
     {
         return $this->URL;
     }
 
-    /**
-     * @param AnyURI $URL
-     *
-     * @return DocumentReferenceType
-     */
-    public function setURL($URL)
+    public function setURL(AnyURI $URL): self
     {
         $this->URL = $URL;
 

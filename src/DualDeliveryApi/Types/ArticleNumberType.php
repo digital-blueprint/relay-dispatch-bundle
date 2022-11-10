@@ -19,20 +19,12 @@ class ArticleNumberType
         $this->ArticleNumberType = $ArticleNumberType;
     }
 
-    /**
-     * @return ArticleNumberTypeType
-     */
-    public function getArticleNumberType()
+    public function getArticleNumberType(): ArticleNumberTypeType
     {
         return $this->ArticleNumberType;
     }
 
-    /**
-     * @param ArticleNumberTypeType $ArticleNumberType
-     *
-     * @return ArticleNumberType
-     */
-    public function setArticleNumberType($ArticleNumberType)
+    public function setArticleNumberType(ArticleNumberTypeType $ArticleNumberType): self
     {
         $this->ArticleNumberType = $ArticleNumberType;
 

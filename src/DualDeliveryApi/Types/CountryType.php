@@ -19,20 +19,12 @@ class CountryType
         $this->CountryCode = $CountryCode;
     }
 
-    /**
-     * @return CountryCodeType
-     */
-    public function getCountryCode()
+    public function getCountryCode(): CountryCodeType
     {
         return $this->CountryCode;
     }
 
-    /**
-     * @param CountryCodeType $CountryCode
-     *
-     * @return CountryType
-     */
-    public function setCountryCode($CountryCode)
+    public function setCountryCode(CountryCodeType $CountryCode): self
     {
         $this->CountryCode = $CountryCode;
 
