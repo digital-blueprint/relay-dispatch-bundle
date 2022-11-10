@@ -91,7 +91,7 @@ class Debug2Command extends Command
         $personData = new PersonDataType($physicalPerson);
         $recipient = new RecipientType($personData);
         $recipients = new Recipients([
-            new Recipient(null, $recipient), ]);
+            new Recipient('42', $recipient), ]);
 
         $meta = new PreMetaData(uniqid());
         $meta->setAdditionalMetaData(

@@ -16,53 +16,29 @@ class Recipient
      */
     protected $Recipient = null;
 
-    /**
-     * @param string        $RecipientID
-     * @param RecipientType $Recipient
-     */
-    public function __construct($RecipientID = null, $Recipient = null)
+    public function __construct(string $RecipientID, RecipientType $Recipient)
     {
         $this->RecipientID = $RecipientID;
         $this->Recipient = $Recipient;
     }
 
-    /**
-     * @return string
-     */
-    public function getRecipientID()
+    public function getRecipientID(): string
     {
         return $this->RecipientID;
     }
 
-    /**
-     * @param string $RecipientID
-     *
-     * @return Recipient
-     */
-    public function setRecipientID($RecipientID)
+    public function setRecipientID(string $RecipientID)
     {
         $this->RecipientID = $RecipientID;
-
-        return $this;
     }
 
-    /**
-     * @return RecipientType
-     */
-    public function getRecipient()
+    public function getRecipient(): RecipientType
     {
         return $this->Recipient;
     }
 
-    /**
-     * @param RecipientType $Recipient
-     *
-     * @return Recipient
-     */
-    public function setRecipient($Recipient)
+    public function setRecipient(RecipientType $Recipient)
     {
         $this->Recipient = $Recipient;
-
-        return $this;
     }
 }
