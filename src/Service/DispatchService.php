@@ -1015,11 +1015,12 @@ class DispatchService
         }
 
         // TODO: Respond in another way?
-        if ($response->getAddressingResults()->getAddressingResult() === null) {
+        $addressingResults = $response->getAddressingResults()->getAddressingResult();
+        if ($addressingResults === null || count($addressingResults) === 0) {
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'Person was not found!', 'dispatch:request-pre-addressing-not-found', ['message' => 'No addressing results found!']);
         }
 
-        $preAddressingRequest->setDualDeliveryID($response->getAddressingResults()->getAddressingResult()[0]->getDualDeliveryID());
+        $preAddressingRequest->setDualDeliveryID($addressingResults[0]->getDualDeliveryID());
     }
 
     public function doDualDeliveryRequestSoapRequest(Request &$dualDeliveryRequest)
