@@ -1034,13 +1034,24 @@ class DispatchService
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
             $personData = new PersonDataType($physicalPerson);
-            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
-            // TODO: remove
+            $dualDeliveryRecipients[] = new Recipient(null, new RecipientType($personData));
+//            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
         }
+
+        $dualDeliveryPayloads = [];
 
         /** @var RequestFile[] $files */
         $files = $dualDeliveryRequest->getFiles();
         foreach ($files as $file) {
+            $parameters = new ParametersType(new ParameterType('bla', 'foo'));
+            $payloadAttrs = new PayloadAttributesType($file->getName(), $file->getFileFormat());
+            $payloadAttrs->setSize($file->getContentSize());
+            // Id must not start with a number (says trail&error, xsd:ID or xs:NCName spec don't tell)!
+            $payloadAttrs->setId('file-' . $file->getIdentifier());
+            // TODO: Use real content
+            $doc = new BinaryDocumentType('dummy');
+//            $doc = new BinaryDocumentType($file->getContentUrl());
+            $dualDeliveryPayloads[] = new PayloadType($payloadAttrs, $doc);
         }
 
 //        $recipients = new Recipients($recipients);
@@ -1050,7 +1061,8 @@ class DispatchService
         $sender = new SenderType($senderProfile);
 
         // TODO: Allow to set this via config/request?
-        $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
+        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
+//        $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
         // TODO: Allow to set this via config/request?
         $deliveryQuality = 'Rsa';
         // TODO: Where does this come from?
@@ -1067,15 +1079,13 @@ class DispatchService
             $processingProfile
         );
         $print = new PrintParameter('bla', new AnyURI('ok'));
-        $parameters = new ParametersType(new ParameterType('bla', 'foo'));
-        $payloadAttrs = new PayloadAttributesType('foo', 'bar', $parameters, $print);
-        $doc = new BinaryDocumentType('content');
-        $payload = new PayloadType($payloadAttrs, $doc);
-//        dump($dualDeliveryRecipients[0]);
+        dump($dualDeliveryRecipients[0]);
         // TODO: null would be better
-        $recipientId = '';
+//        $recipientId = '1';
+        $recipientId = null;
         // TODO: Allow more than one recipient and file
-        $request = new DualDeliveryRequest($sender, $recipientId, $dualDeliveryRecipients[0], $meta, null, $payload, '1.0');
+        $request = new DualDeliveryRequest($sender, $recipientId, $dualDeliveryRecipients[0], $meta, null, $dualDeliveryPayloads[0], '1.0');
+        dump($request);
         $response = $service->dualDeliveryRequestOperation($request);
 
         dump($response);

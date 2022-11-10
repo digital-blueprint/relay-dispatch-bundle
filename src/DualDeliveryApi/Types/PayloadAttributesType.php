@@ -54,10 +54,10 @@ class PayloadAttributesType
     /**
      * @param string         $FileName
      * @param string         $MIMEType
-     * @param ParametersType $Parameters
-     * @param PrintParameter $PrintParameter
+     * @param ParametersType|null $Parameters
+     * @param PrintParameter|null $PrintParameter
      */
-    public function __construct($FileName, $MIMEType, $Parameters, $PrintParameter)
+    public function __construct($FileName, $MIMEType, $Parameters = null, $PrintParameter = null)
     {
         $this->FileName = $FileName;
         $this->MIMEType = $MIMEType;
