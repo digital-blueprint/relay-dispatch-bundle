@@ -1071,7 +1071,7 @@ class DispatchService
         // TODO: Where does this come from?
         $gz = 'GZ';
         $meta = new DualDeliveryMetaData(
-            $dualDeliveryRequest->getIdentifier() . "asdasd1",
+            $dualDeliveryRequest->getIdentifier(),
             null,
             $deliveryQuality,
             'Zustellung '.$dualDeliveryRequest->getIdentifier(),
