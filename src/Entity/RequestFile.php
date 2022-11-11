@@ -214,7 +214,7 @@ class RequestFile
      */
     public function getData()
     {
-        return $this->data;
+        return is_resource($this->data) ? stream_get_contents($this->data) : $this->data;
     }
 
     /**
@@ -237,7 +237,7 @@ class RequestFile
 
     public function getContentUrl(): string
     {
-        return Tools::getDataURI(is_resource($this->data) ? stream_get_contents($this->data) : $this->data, $this->fileFormat);
+        return Tools::getDataURI($this->getData(), $this->fileFormat);
     }
 
     public function getFileFormat(): string
