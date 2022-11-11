@@ -1034,8 +1034,8 @@ class DispatchService
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
             $personData = new PersonDataType($physicalPerson);
-            $dualDeliveryRecipients[] = new Recipient(null, new RecipientType($personData));
-//            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
+//            $dualDeliveryRecipients[] = new Recipient(null, new RecipientType($personData));
+            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
         }
 
         $dualDeliveryPayloads = [];
