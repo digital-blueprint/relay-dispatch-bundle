@@ -1035,7 +1035,8 @@ class DispatchService
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
             $personData = new PersonDataType($physicalPerson);
 //            $dualDeliveryRecipients[] = new Recipient(null, new RecipientType($personData));
-            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
+//            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
+            $dualDeliveryRecipients[] = new RecipientType($personData);
         }
 
         $dualDeliveryPayloads = [];
@@ -1045,12 +1046,14 @@ class DispatchService
         foreach ($files as $file) {
             $parameters = new ParametersType(new ParameterType('bla', 'foo'));
             $payloadAttrs = new PayloadAttributesType($file->getName(), $file->getFileFormat());
-            $payloadAttrs->setSize($file->getContentSize());
+            // TODO: It seems to be ok to send no size, we get a mismatched size error otherwise, is PDF even transferred correctly?
+//            $payloadAttrs->setSize($file->getContentSize());
             // Id must not start with a number (says trail&error, xsd:ID or xs:NCName spec don't tell)!
             $payloadAttrs->setId('file-'.$file->getIdentifier());
             // TODO: Use real content
-            $doc = new BinaryDocumentType('dummy');
-//            $doc = new BinaryDocumentType($file->getContentUrl());
+//            $doc = new BinaryDocumentType('dummy');
+            // TODO: Is this the correct format to send content? The examples seem to to it that way.
+            $doc = new BinaryDocumentType(base64_encode($file->getData()));
             $dualDeliveryPayloads[] = new PayloadType($payloadAttrs, $doc);
         }
 
@@ -1061,14 +1064,14 @@ class DispatchService
         $sender = new SenderType($senderProfile);
 
         // TODO: Allow to set this via config/request?
-        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
-//        $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
+//        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
+        $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
         // TODO: Allow to set this via config/request?
         $deliveryQuality = 'Rsa';
         // TODO: Where does this come from?
         $gz = 'GZ';
         $meta = new DualDeliveryMetaData(
-            $dualDeliveryRequest->getIdentifier(),
+            $dualDeliveryRequest->getIdentifier() . "asdasd1",
             null,
             $deliveryQuality,
             'Zustellung '.$dualDeliveryRequest->getIdentifier(),
@@ -1076,7 +1079,9 @@ class DispatchService
             null,
             null,
             false,
-            $processingProfile
+            $processingProfile,
+            null,
+            true
         );
         $print = new PrintParameter('bla', new AnyURI('ok'));
         dump($dualDeliveryRecipients[0]);
@@ -1101,14 +1106,7 @@ class DispatchService
                 $errorTexts[] = $error->getInfo();
             }
 
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'PreAddressing request failed!', 'dispatch:request-pre-addressing-failed', ['message' => implode(', ', $errorTexts)]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDelivery request failed!', 'dispatch:dual-delivery-request-failed', ['message' => implode(', ', $errorTexts)]);
         }
-
-        // TODO: Respond in another way?
-        if ($response->getAddressingResults()->getAddressingResult() === null) {
-            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'Person was not found!', 'dispatch:request-pre-addressing-not-found', ['message' => 'No addressing results found!']);
-        }
-
-        $preAddressingRequest->setDualDeliveryID($response->getAddressingResults()->getAddressingResult()[0]->getDualDeliveryID());
     }
 }
