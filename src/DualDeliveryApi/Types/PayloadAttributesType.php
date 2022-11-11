@@ -52,8 +52,8 @@ class PayloadAttributesType
     protected $PrintParameter = null;
 
     /**
-     * @param string         $FileName
-     * @param string         $MIMEType
+     * @param string              $FileName
+     * @param string              $MIMEType
      * @param ParametersType|null $Parameters
      * @param PrintParameter|null $PrintParameter
      */

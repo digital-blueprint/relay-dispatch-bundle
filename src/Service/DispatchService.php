@@ -1047,7 +1047,7 @@ class DispatchService
             $payloadAttrs = new PayloadAttributesType($file->getName(), $file->getFileFormat());
             $payloadAttrs->setSize($file->getContentSize());
             // Id must not start with a number (says trail&error, xsd:ID or xs:NCName spec don't tell)!
-            $payloadAttrs->setId('file-' . $file->getIdentifier());
+            $payloadAttrs->setId('file-'.$file->getIdentifier());
             // TODO: Use real content
             $doc = new BinaryDocumentType('dummy');
 //            $doc = new BinaryDocumentType($file->getContentUrl());
