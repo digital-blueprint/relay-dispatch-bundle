@@ -11,7 +11,6 @@
         <ignoreFiles>
             <directory name="vendor" />
             <directory name="src/DualDeliveryApi" />
-            <directory name="src/Service" />
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
