@@ -46,12 +46,10 @@ class GroupService implements LoggerAwareInterface
      */
     public function getGroups(int $currentPageNumber, int $maxNumItemsPerPage, array $options = []): array
     {
-        $options['page'] = $currentPageNumber;
-        $options['perPage'] = $maxNumItemsPerPage;
         $options['identifiers'] = $this->auth->getGroups();
 
         $groups = [];
-        foreach ($this->organizationProvider->getOrganizations($options)->getItems() as $orgUnit) {
+        foreach ($this->organizationProvider->getOrganizations($currentPageNumber, $maxNumItemsPerPage, $options) as $orgUnit) {
             $group = new Group();
             $group->setIdentifier($orgUnit->getIdentifier());
             $group->setName($orgUnit->getName());

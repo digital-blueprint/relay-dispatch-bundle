@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e85a84b5ace7d6175a17d807e3bbbc2b",
+    "content-hash": "a3e940d4cfd2ea316a799c2b4217081b",
     "packages": [
         {
             "name": "api-platform/core",
@@ -206,15 +206,15 @@
         },
         {
             "name": "dbp/relay-base-organization-bundle",
-            "version": "v0.1.10",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.tugraz.at/dbp/relay/dbp-relay-base-organization-bundle",
-                "reference": "96afa60670b4effcab975e79488640d5de47164c"
+                "reference": "ae687fd483a238a3517c8a5fb8b461ce8ed05f45"
             },
             "require": {
-                "api-platform/core": "^2.6.3",
-                "dbp/relay-core-bundle": "^0.1.38",
+                "api-platform/core": "^2.6.8",
+                "dbp/relay-core-bundle": "^0.1.43",
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^7.0",
                 "nelmio/cors-bundle": "^2.1.0",
@@ -231,15 +231,15 @@
                 "symfony/yaml": "^5.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpstan/phpstan": "^1.0.0",
-                "phpstan/phpstan-phpunit": "^1.0.0",
-                "phpunit/phpunit": "^9",
-                "symfony/browser-kit": "^5.2",
-                "symfony/http-client": "^5.2",
-                "symfony/monolog-bundle": "^3.7",
-                "symfony/phpunit-bridge": "^5.2",
-                "vimeo/psalm": "^4.4"
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "phpstan/phpstan": "^1.8.11",
+                "phpstan/phpstan-phpunit": "^1.2.2",
+                "phpunit/phpunit": "^9.5.26",
+                "symfony/browser-kit": "^5.4.11",
+                "symfony/http-client": "^5.4.15",
+                "symfony/monolog-bundle": "^3.8",
+                "symfony/phpunit-bridge": "^5.4.14",
+                "vimeo/psalm": "^4.29"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -251,7 +251,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2022-10-27T09:36:22+00:00"
+            "time": "2022-11-15T09:46:14+00:00"
         },
         {
             "name": "dbp/relay-base-person-bundle",
@@ -11405,5 +11405,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
