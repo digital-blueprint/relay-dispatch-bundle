@@ -147,7 +147,7 @@ class Debug2Command extends Command
         $payloadAttrs = new PayloadAttributesType('foo', 'bar', $parameters, $print);
         $doc = new BinaryDocumentType('content');
         $payload = new PayloadType($payloadAttrs, $doc);
-        $request = new DualDeliveryRequest($sender, 'id', $recipientType, $meta, $channels, $payload, '1.0');
+        $request = new DualDeliveryRequest($sender, 'id', $recipientType, $meta, $channels, array($payload), '1.0');
         $response = $service->dualDeliveryRequestOperation($request);
         var_dump($response);
 
