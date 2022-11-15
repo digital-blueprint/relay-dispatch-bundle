@@ -12,13 +12,13 @@ class Checksum
     protected $AlgorithmID = null;
 
     /**
-     * @var base64Binary
+     * @var string
      */
     protected $Value = null;
 
     /**
-     * @param string       $AlgorithmID
-     * @param base64Binary $Value
+     * @param string $AlgorithmID
+     * @param string $Value
      */
     public function __construct($AlgorithmID, $Value)
     {
@@ -39,7 +39,7 @@ class Checksum
     }
 
     /**
-     * @return base64Binary
+     * @return string
      */
     public function getValue()
     {
@@ -47,7 +47,7 @@ class Checksum
     }
 
     /**
-     * @param base64Binary $Value
+     * @param string $Value
      */
     public function setValue($Value): self
     {

@@ -16,7 +16,7 @@ class Recipient
      */
     protected $Recipient = null;
 
-    public function __construct(string $RecipientID, RecipientType $Recipient)
+    public function __construct(?string $RecipientID, RecipientType $Recipient)
     {
         $this->RecipientID = $RecipientID;
         $this->Recipient = $Recipient;

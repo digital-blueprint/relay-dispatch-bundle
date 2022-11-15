@@ -34,7 +34,7 @@ class DualDeliveryRequestType
     protected $DeliveryChannels = null;
 
     /**
-     * @var PayloadType
+     * @var PayloadType[]
      */
     protected $Payload = null;
 
@@ -49,7 +49,7 @@ class DualDeliveryRequestType
      * @param RecipientType         $Recipient
      * @param MetaData              $MetaData
      * @param DeliveryChannels|null $DeliveryChannels
-     * @param PayloadType           $Payload
+     * @param PayloadType[]         $Payload
      * @param string                $version
      */
     public function __construct($Sender, $RecipientID, $Recipient, $MetaData, $DeliveryChannels, $Payload, $version)
@@ -123,12 +123,15 @@ class DualDeliveryRequestType
         return $this;
     }
 
-    public function getPayload(): PayloadType
+    /**
+     * @return PayloadType[]
+     */
+    public function getPayload(): array
     {
-        return $this->Payload;
+        return $this->Payload ?? [];
     }
 
-    public function setPayload(PayloadType $Payload): self
+    public function setPayload(array $Payload): self
     {
         $this->Payload = $Payload;
 

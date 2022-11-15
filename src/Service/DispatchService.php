@@ -9,9 +9,9 @@ use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannels;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannelSetType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as DualDeliveryMetadata;
@@ -26,7 +26,6 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PrintParameter;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
@@ -1044,16 +1043,18 @@ class DispatchService
         /** @var RequestFile[] $files */
         $files = $dualDeliveryRequest->getFiles();
         foreach ($files as $file) {
-            $parameters = new ParametersType(new ParameterType('bla', 'foo'));
             $payloadAttrs = new PayloadAttributesType($file->getName(), $file->getFileFormat());
-            // TODO: It seems to be ok to send no size, we get a mismatched size error otherwise, is PDF even transferred correctly?
-//            $payloadAttrs->setSize($file->getContentSize());
-            // Id must not start with a number (says trail&error, xsd:ID or xs:NCName spec don't tell)!
+            // TODO: Is this the correct format to send content?
+            // $content is base64 encoded by the SOAP library!
+            $content = $file->getData();
+            $payloadAttrs->setSize($file->getContentSize());
+            // Id must not start with a number (says trial & error, xsd:ID or xs:NCName spec don't tell)!
             $payloadAttrs->setId('file-'.$file->getIdentifier());
-            // TODO: Use real content
-//            $doc = new BinaryDocumentType('dummy');
-            // TODO: Is this the correct format to send content? The examples seem to to it that way.
-            $doc = new BinaryDocumentType(base64_encode($file->getData()));
+            $md5 = md5($content);
+            $checksum = new Checksum('MD5', $md5);
+            $payloadAttrs->setChecksum($checksum);
+
+            $doc = new BinaryDocumentType($content);
             $dualDeliveryPayloads[] = new PayloadType($payloadAttrs, $doc);
         }
 
@@ -1070,43 +1071,54 @@ class DispatchService
         $deliveryQuality = 'Rsa';
         // TODO: Where does this come from?
         $gz = 'GZ';
-        $meta = new DualDeliveryMetaData(
-            $dualDeliveryRequest->getIdentifier(),
-            null,
-            $deliveryQuality,
-            'Zustellung '.$dualDeliveryRequest->getIdentifier(),
-            $gz,
-            null,
-            null,
-            false,
-            $processingProfile,
-            null,
-            true
-        );
-        $print = new PrintParameter('bla', new AnyURI('ok'));
-        dump($dualDeliveryRecipients[0]);
-        // TODO: null would be better
-//        $recipientId = '1';
-        $recipientId = null;
-        // TODO: Allow more than one recipient and file
-        $request = new DualDeliveryRequest($sender, $recipientId, $dualDeliveryRecipients[0], $meta, null, $dualDeliveryPayloads[0], '1.0');
-        dump($request);
-        $response = $service->dualDeliveryRequestOperation($request);
 
-        dump($response);
-        dump($service->getPrettyLastRequest());
-        dump($service->getPrettyLastResponse());
+        foreach ($dualDeliveryRequest->getRecipients() as $recipient) {
+            $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
+            $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
+            $personData = new PersonDataType($physicalPerson);
+//            $dualDeliveryRecipients[] = new Recipient(null, new RecipientType($personData));
+//            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
+            $dualDeliveryRecipient = new RecipientType($personData);
 
-        if ($response->getStatus()->getText() !== 'SUCCESS') {
-            /* @var ErrorType[] $errors */
-            $errors = $response->getErrors()->getError();
-            $errorTexts = [];
+//            $id = $dualDeliveryRequest->getIdentifier().'-'.$recipient->getIdentifier().'-pbek-'.rand(100000, 999999);
+            $id = $dualDeliveryRequest->getIdentifier().'-'.$recipient->getIdentifier();
+            $meta = new DualDeliveryMetaData(
+                $id,
+                null,
+                $deliveryQuality,
+                'Zustellung '.$id,
+                $gz,
+                null,
+                null,
+                false,
+                $processingProfile,
+                null,
+                true
+            );
+            dump($dualDeliveryRecipients);
+            $recipientId = null;
+            $request = new DualDeliveryRequest($sender, $recipientId, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
+            dump($request);
+            $response = $service->dualDeliveryRequestOperation($request);
 
-            foreach ($errors as $error) {
-                $errorTexts[] = $error->getInfo();
+            dump($response);
+            dump($service->getPrettyLastRequest());
+            dump($service->getPrettyLastResponse());
+
+            if ($response->getStatus()->getText() !== 'SUCCESS') {
+                /* @var ErrorType[] $errors */
+                $errors = $response->getErrors()->getError();
+                $errorTexts = [];
+
+                foreach ($errors as $error) {
+                    $errorTexts[] = $error->getInfo();
+                }
+
+                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDelivery request failed!', 'dispatch:dual-delivery-request-failed', ['request-id' => $dualDeliveryRequest->getIdentifier(), 'recipient-id' => $recipient->getIdentifier(), 'message' => implode(', ', $errorTexts)]);
+                // TODO: store dual delivery request id in recipient?
             }
-
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDelivery request failed!', 'dispatch:dual-delivery-request-failed', ['message' => implode(', ', $errorTexts)]);
         }
+
+        // TODO: Return some result
     }
 }
