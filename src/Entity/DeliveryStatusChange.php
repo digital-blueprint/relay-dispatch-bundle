@@ -126,14 +126,14 @@ class DeliveryStatusChange
         return $this->requestRecipient;
     }
 
-    public function getDispatchRequestIdentifier(): string
+    public function getDispatchRequestRecipientIdentifier(): string
     {
-        return $this->dispatchRequestIdentifier;
+        return $this->dispatchRequestRecipientIdentifier;
     }
 
-    public function setDispatchRequestIdentifier(string $dispatchRequestIdentifier): void
+    public function setDispatchRequestRecipientIdentifier(string $dispatchRequestRecipientIdentifier): void
     {
-        $this->dispatchRequestIdentifier = $dispatchRequestIdentifier;
+        $this->dispatchRequestRecipientIdentifier = $dispatchRequestRecipientIdentifier;
     }
 
     public function getStatusType(): int
