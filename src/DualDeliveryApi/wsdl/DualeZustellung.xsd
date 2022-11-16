@@ -995,21 +995,6 @@ Inhalt gleich "KTOAMO" - dann  Aufbereitung Felder AccRec, BLZRec und Amount als
 			<xs:pattern value="[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="StatusRequestType">
-		<xs:sequence>
-			<xs:element ref="dd:ApplicationID" minOccurs="0"/>
-			<xs:element name="ApplicationDeliveryID" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>ApplicationDelivery_ID gemäß Zustellrequest</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="DualDeliveryID" type="xs:integer" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Die ID unter der der Request für die duale Zustellung im DUAL-ZS abgespeichert ist.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="ExtensionPointType">
 		<xs:sequence>
 			<xs:any namespace="##any" processContents="lax">

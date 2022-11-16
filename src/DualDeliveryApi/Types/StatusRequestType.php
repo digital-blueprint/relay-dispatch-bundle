@@ -7,33 +7,28 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class StatusRequestType
 {
     /**
-     * @var ApplicationID
+     * @var ?ApplicationID
      */
     protected $ApplicationID = null;
 
     /**
      * @var string
      */
-    protected $ApplicationDeliveryID = null;
+    protected $AppDeliveryID = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DualDeliveryID = null;
 
-    /**
-     * @param ApplicationID $ApplicationID
-     * @param string        $AppDeliveryID
-     * @param string        $DualDeliveryID
-     */
-    public function __construct($ApplicationID = null, $ApplicationDeliveryID, $DualDeliveryID = null)
+    public function __construct(?ApplicationID $ApplicationID, string $AppDeliveryID, ?string $DualDeliveryID = null)
     {
         $this->ApplicationID = $ApplicationID;
-        $this->ApplicationDeliveryID = $ApplicationDeliveryID;
+        $this->AppDeliveryID = $AppDeliveryID;
         $this->DualDeliveryID = $DualDeliveryID;
     }
 
-    public function getApplicationID(): ApplicationID
+    public function getApplicationID(): ?ApplicationID
     {
         return $this->ApplicationID;
     }
@@ -45,27 +40,23 @@ class StatusRequestType
         return $this;
     }
 
-    public function getApplicationDeliveryID(): string
+    public function getAppDeliveryID(): ?string
     {
-        return $this->ApplicationDeliveryID;
+        return $this->AppDeliveryID;
     }
 
-    public function setApplicationDeliveryID(string $ApplicationDeliveryID): self
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
-        $this->ApplicationDeliveryID = $ApplicationDeliveryID;
-
-        return $this;
+        $this->AppDeliveryID = $AppDeliveryID;
     }
 
-    public function getDualDeliveryID(): string
+    public function getDualDeliveryID(): ?string
     {
         return $this->DualDeliveryID;
     }
 
-    public function setDualDeliveryID(string $DualDeliveryID): self
+    public function setDualDeliveryID(string $DualDeliveryID): void
     {
         $this->DualDeliveryID = $DualDeliveryID;
-
-        return $this;
     }
 }

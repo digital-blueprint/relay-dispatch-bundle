@@ -15,8 +15,11 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as Dual
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellationRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryResponse;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequest;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadAttributesType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
@@ -84,7 +87,7 @@ class Debug2Command extends Command
         return new SenderProfile($profile, '1.0');
     }
 
-    protected function doRequest()
+    protected function doRequest(): DualDeliveryResponse
     {
         $service = $this->getService();
         $senderProfile = $this->getSenderProfile();
@@ -101,14 +104,14 @@ class Debug2Command extends Command
         $dualDeliveryPayloads = [new PayloadType($payloadAttrs, $doc)];
 
         $sender = new SenderType($senderProfile);
-        $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
+        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
 
         $meta = new DualDeliveryMetaData(
             'foo-'.uniqid(),
             null,
             'Rsa',
             'k thx bye',
-            'GZ',
+            '1120 110874-016',
             null,
             null,
             false,
@@ -122,9 +125,11 @@ class Debug2Command extends Command
         $response = $service->dualDeliveryRequestOperation($request);
         var_dump($service->getPrettyLastResponse());
         dump($response);
+
+        return $response;
     }
 
-    protected function doPrAddr()
+    protected function doPrAddr(): DualDeliveryPreAddressingResponseType
     {
         $service = $this->getService();
         $senderProfile = $this->getSenderProfile();
@@ -149,26 +154,36 @@ class Debug2Command extends Command
         $response = $service->dualDeliveryPreAddressingRequestOperation($request);
         var_dump($service->getPrettyLastResponse());
         dump($response);
+
+        return $response;
+    }
+
+    protected function doStatusRequest(string $appDeliveryId): DualNotificationRequestType
+    {
+        $service = $this->getService();
+        $request = new StatusRequestType(null, $appDeliveryId, null);
+        $response = $service->dualStatusRequestOperation($request);
+        var_dump($service->getPrettyLastResponse());
+        dump($response);
+
+        return $response;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $service = $this->getService();
+
+        $this->doPrAddr();
+        $response2 = $this->doRequest();
+        $this->doStatusRequest($response2->getAppDeliveryID());
+
         $senderProfile = $this->getSenderProfile();
 
-        $this->doRequest();
-        $this->doPrAddr();
-
         // Experiments
-        // ---------------------------
-        // dualStatusRequestOperation
-        $applicationId = new ApplicationID('blub', '1.0');
-        $request = new StatusRequestType($applicationId, 'bla');
-        $response = $service->dualStatusRequestOperation($request);
-        var_dump($response);
 
         // ---------------------------
         // dualDeliveryCancellationRequestOperation
+        $applicationId = new ApplicationID('blub', '1.0');
         $request = new DualDeliveryCancellationRequest($senderProfile, $applicationId, 'id', '1.0');
         $response = $service->dualDeliveryCancellationRequestOperation($request);
         var_dump($response);
