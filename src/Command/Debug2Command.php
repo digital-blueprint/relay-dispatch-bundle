@@ -6,19 +6,14 @@ namespace Dbp\Relay\DispatchBundle\Command;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalResults;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditonalResultSetType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as DualDeliveryMetadata;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellationRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryResponse;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadAttributesType;
@@ -34,7 +29,6 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusRequestType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusType;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -176,18 +170,6 @@ class Debug2Command extends Command
         $this->doPrAddr();
         $response2 = $this->doRequest();
         $this->doStatusRequest($response2->getAppDeliveryID());
-
-        $senderProfile = $this->getSenderProfile();
-
-        // Experiments
-
-        // ---------------------------
-        // dualNotificationRequestOperation
-        $res = new AdditionalResults(new AdditonalResultSetType());
-        $status = new StatusType('code');
-        $request = new DualNotificationRequest('foo', 'bar', $res, $status, '1.0');
-        $response = $service->dualNotificationRequestOperation($request);
-        var_dump($response);
 
         return 0;
     }
