@@ -17,7 +17,7 @@ class MetaData
     protected $AppDeliveryID = null;
 
     /**
-     * @var ApplicationID
+     * @var ?ApplicationID
      */
     protected $ApplicationID = null;
 
@@ -27,77 +27,61 @@ class MetaData
     protected $DeliveryQuality = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $Subject = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $GZ = null;
 
     /**
-     * @var Payments
+     * @var ?Payments
      */
     protected $Payments = null;
 
     /**
-     * @var AdditionalMetaData
+     * @var ?AdditionalMetaData
      */
     protected $AdditionalMetaData = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $TestCase = null;
 
     /**
-     * @var ProcessingProfile
+     * @var ?ProcessingProfile
      */
     protected $ProcessingProfile = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DocumentClass = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $Asynchronous = null;
 
     /**
-     * @var int
+     * @var ?int
      */
     protected $BulkId = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $User = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $BillingToken = null;
 
-    /**
-     * @param string             $AppDeliveryID
-     * @param ApplicationID      $ApplicationID
-     * @param string             $DeliveryQuality
-     * @param string             $Subject
-     * @param string             $GZ
-     * @param Payments           $Payments
-     * @param AdditionalMetaData $AdditionalMetaData
-     * @param bool               $TestCase
-     * @param ProcessingProfile  $ProcessingProfile
-     * @param string             $DocumentClass
-     * @param bool               $Asynchronous
-     * @param int                $BulkId
-     * @param string             $User
-     * @param string             $BillingToken
-     */
-    public function __construct($AppDeliveryID, $ApplicationID = null, $DeliveryQuality = null, $Subject = null, $GZ = null, $Payments = null, $AdditionalMetaData = null, $TestCase = null, $ProcessingProfile = null, $DocumentClass = null, $Asynchronous = null, $BulkId = null, $User = null, $BillingToken = null)
+    public function __construct(string $AppDeliveryID, ?ApplicationID $ApplicationID, string $DeliveryQuality, ?string $Subject = null, ?string $GZ = null, ?Payments $Payments = null, ?AdditionalMetaData $AdditionalMetaData = null, ?bool $TestCase = null, ?ProcessingProfile $ProcessingProfile = null, ?string $DocumentClass = null, ?bool $Asynchronous = null, ?int $BulkId = null, ?string $User = null, ?string $BillingToken = null)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->ApplicationID = $ApplicationID;
@@ -120,23 +104,19 @@ class MetaData
         return $this->AppDeliveryID;
     }
 
-    public function setAppDeliveryID(string $AppDeliveryID): self
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
         $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
-    public function getApplicationID(): ApplicationID
+    public function getApplicationID(): ?ApplicationID
     {
         return $this->ApplicationID;
     }
 
-    public function setApplicationID(ApplicationID $ApplicationID): self
+    public function setApplicationID(ApplicationID $ApplicationID): void
     {
         $this->ApplicationID = $ApplicationID;
-
-        return $this;
     }
 
     public function getDeliveryQuality(): string
@@ -151,19 +131,17 @@ class MetaData
         return $this;
     }
 
-    public function getSubject(): string
+    public function getSubject(): ?string
     {
         return $this->Subject;
     }
 
-    public function setSubject(string $Subject): self
+    public function setSubject(string $Subject): void
     {
         $this->Subject = $Subject;
-
-        return $this;
     }
 
-    public function getGZ(): string
+    public function getGZ(): ?string
     {
         return $this->GZ;
     }
@@ -175,111 +153,93 @@ class MetaData
         return $this;
     }
 
-    public function getPayments(): Payments
+    public function getPayments(): ?Payments
     {
         return $this->Payments;
     }
 
-    public function setPayments(Payments $Payments): self
+    public function setPayments(Payments $Payments): void
     {
         $this->Payments = $Payments;
-
-        return $this;
     }
 
-    public function getAdditionalMetaData(): AdditionalMetaData
+    public function getAdditionalMetaData(): ?AdditionalMetaData
     {
         return $this->AdditionalMetaData;
     }
 
-    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): self
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): void
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
-
-        return $this;
     }
 
-    public function getTestCase(): bool
+    public function getTestCase(): ?bool
     {
         return $this->TestCase;
     }
 
-    public function setTestCase(bool $TestCase): self
+    public function setTestCase(bool $TestCase): void
     {
         $this->TestCase = $TestCase;
-
-        return $this;
     }
 
-    public function getProcessingProfile(): ProcessingProfile
+    public function getProcessingProfile(): ?ProcessingProfile
     {
         return $this->ProcessingProfile;
     }
 
-    public function setProcessingProfile(ProcessingProfile $ProcessingProfile): self
+    public function setProcessingProfile(ProcessingProfile $ProcessingProfile): void
     {
         $this->ProcessingProfile = $ProcessingProfile;
-
-        return $this;
     }
 
-    public function getDocumentClass(): string
+    public function getDocumentClass(): ?string
     {
         return $this->DocumentClass;
     }
 
-    public function setDocumentClass(string $DocumentClass): self
+    public function setDocumentClass(string $DocumentClass): void
     {
         $this->DocumentClass = $DocumentClass;
-
-        return $this;
     }
 
-    public function getAsynchronous(): bool
+    public function getAsynchronous(): ?bool
     {
         return $this->Asynchronous;
     }
 
-    public function setAsynchronous(bool $Asynchronous): self
+    public function setAsynchronous(bool $Asynchronous): void
     {
         $this->Asynchronous = $Asynchronous;
-
-        return $this;
     }
 
-    public function getBulkId(): int
+    public function getBulkId(): ?int
     {
         return $this->BulkId;
     }
 
-    public function setBulkId(int $BulkId): self
+    public function setBulkId(int $BulkId): void
     {
         $this->BulkId = $BulkId;
-
-        return $this;
     }
 
-    public function getUser(): string
+    public function getUser(): ?string
     {
         return $this->User;
     }
 
-    public function setUser(string $User): self
+    public function setUser(string $User): void
     {
         $this->User = $User;
-
-        return $this;
     }
 
-    public function getBillingToken(): string
+    public function getBillingToken(): ?string
     {
         return $this->BillingToken;
     }
 
-    public function setBillingToken(string $BillingToken): self
+    public function setBillingToken(string $BillingToken): void
     {
         $this->BillingToken = $BillingToken;
-
-        return $this;
     }
 }
