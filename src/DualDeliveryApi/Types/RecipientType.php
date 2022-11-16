@@ -12,15 +12,11 @@ class RecipientType
     protected $RecipientData = null;
 
     /**
-     * @var ParametersType
+     * @var ?ParametersType
      */
     protected $Parameters = null;
 
-    /**
-     * @param PersonDataType $RecipientData
-     * @param ParametersType $Parameters
-     */
-    public function __construct($RecipientData, $Parameters = null)
+    public function __construct(PersonDataType $RecipientData, ?ParametersType $Parameters = null)
     {
         $this->RecipientData = $RecipientData;
         $this->Parameters = $Parameters;
@@ -31,22 +27,18 @@ class RecipientType
         return $this->RecipientData;
     }
 
-    public function setRecipientData(PersonDataType $RecipientData): self
+    public function setRecipientData(PersonDataType $RecipientData): void
     {
         $this->RecipientData = $RecipientData;
-
-        return $this;
     }
 
-    public function getParameters(): ParametersType
+    public function getParameters(): ?ParametersType
     {
         return $this->Parameters;
     }
 
-    public function setParameters(ParametersType $Parameters): self
+    public function setParameters(ParametersType $Parameters): void
     {
         $this->Parameters = $Parameters;
-
-        return $this;
     }
 }

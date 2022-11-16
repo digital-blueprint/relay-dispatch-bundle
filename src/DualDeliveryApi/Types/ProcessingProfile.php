@@ -16,11 +16,7 @@ class ProcessingProfile
      */
     protected $version = null;
 
-    /**
-     * @param string $_
-     * @param string $version
-     */
-    public function __construct($_, $version)
+    public function __construct(string $_, string $version)
     {
         $this->_ = $_;
         $this->version = $version;
@@ -43,10 +39,8 @@ class ProcessingProfile
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

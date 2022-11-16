@@ -7,27 +7,31 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class ParametersType
 {
     /**
-     * @var ParameterType
+     * @var ParameterType[]
      */
     protected $Parameter = null;
 
     /**
-     * @param ParameterType $Parameter
+     * @param ParameterType[] $Parameter
      */
-    public function __construct($Parameter)
+    public function __construct(array $Parameter)
     {
         $this->Parameter = $Parameter;
     }
 
-    public function getParameter(): ParameterType
+    /**
+     * @return ParameterType[]
+     */
+    public function getParameter(): array
     {
         return $this->Parameter;
     }
 
-    public function setParameter(ParameterType $Parameter): self
+    /**
+     * @param ParameterType[] $Parameter
+     */
+    public function setParameter(array $Parameter): void
     {
         $this->Parameter = $Parameter;
-
-        return $this;
     }
 }

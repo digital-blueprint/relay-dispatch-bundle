@@ -9,17 +9,17 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData;
 class DualDeliveryRequestType
 {
     /**
-     * @var SenderType
+     * @var ?SenderType
      */
     protected $Sender = null;
 
     /**
-     * @var string|null
+     * @var ?string
      */
     protected $RecipientID = null;
 
     /**
-     * @var RecipientType
+     * @var ?RecipientType
      */
     protected $Recipient = null;
 
@@ -43,17 +43,12 @@ class DualDeliveryRequestType
      */
     protected $version = null;
 
-    /**
-     * @param SenderType            $Sender
-     * @param string|null           $RecipientID
-     * @param RecipientType         $Recipient
-     * @param MetaData              $MetaData
-     * @param DeliveryChannels|null $DeliveryChannels
-     * @param PayloadType[]         $Payload
-     * @param string                $version
-     */
-    public function __construct($Sender, $RecipientID, $Recipient, $MetaData, $DeliveryChannels, $Payload, $version)
+    public function __construct(?SenderType $Sender, ?string $RecipientID, ?RecipientType $Recipient, MetaData $MetaData, ?DeliveryChannels $DeliveryChannels, array $Payload, string $version)
     {
+        if ($RecipientID === null && $Recipient === null) {
+            throw new \RuntimeException('Either RecipientID or Recipient needs to be set');
+        }
+
         $this->Sender = $Sender;
         $this->RecipientID = $RecipientID;
         $this->Recipient = $Recipient;
@@ -63,16 +58,14 @@ class DualDeliveryRequestType
         $this->version = $version;
     }
 
-    public function getSender(): SenderType
+    public function getSender(): ?SenderType
     {
         return $this->Sender;
     }
 
-    public function setSender(SenderType $Sender): self
+    public function setSender(SenderType $Sender): void
     {
         $this->Sender = $Sender;
-
-        return $this;
     }
 
     public function getRecipientID(): ?string
@@ -80,23 +73,19 @@ class DualDeliveryRequestType
         return $this->RecipientID;
     }
 
-    public function setRecipientID(?string $RecipientID): self
+    public function setRecipientID(?string $RecipientID): void
     {
         $this->RecipientID = $RecipientID;
-
-        return $this;
     }
 
-    public function getRecipient(): RecipientType
+    public function getRecipient(): ?RecipientType
     {
         return $this->Recipient;
     }
 
-    public function setRecipient(RecipientType $Recipient): self
+    public function setRecipient(RecipientType $Recipient): void
     {
         $this->Recipient = $Recipient;
-
-        return $this;
     }
 
     public function getMetaData(): MetaData
@@ -104,11 +93,9 @@ class DualDeliveryRequestType
         return $this->MetaData;
     }
 
-    public function setMetaData(MetaData $MetaData): self
+    public function setMetaData(MetaData $MetaData): void
     {
         $this->MetaData = $MetaData;
-
-        return $this;
     }
 
     public function getDeliveryChannels(): ?DeliveryChannels
@@ -116,11 +103,9 @@ class DualDeliveryRequestType
         return $this->DeliveryChannels;
     }
 
-    public function setDeliveryChannels(DeliveryChannels $DeliveryChannels): self
+    public function setDeliveryChannels(DeliveryChannels $DeliveryChannels): void
     {
         $this->DeliveryChannels = $DeliveryChannels;
-
-        return $this;
     }
 
     /**
@@ -131,11 +116,9 @@ class DualDeliveryRequestType
         return $this->Payload ?? [];
     }
 
-    public function setPayload(array $Payload): self
+    public function setPayload(array $Payload): void
     {
         $this->Payload = $Payload;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -143,10 +126,8 @@ class DualDeliveryRequestType
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

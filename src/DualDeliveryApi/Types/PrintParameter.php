@@ -12,15 +12,11 @@ class PrintParameter
     protected $any = null;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $profile = null;
 
-    /**
-     * @param string $any
-     * @param AnyURI $profile
-     */
-    public function __construct($any, $profile)
+    public function __construct(string $any, string $profile)
     {
         $this->any = $any;
         $this->profile = $profile;
@@ -31,22 +27,18 @@ class PrintParameter
         return $this->any;
     }
 
-    public function setAny(string $any): self
+    public function setAny(string $any): void
     {
         $this->any = $any;
-
-        return $this;
     }
 
-    public function getProfile(): AnyURI
+    public function getProfile(): string
     {
         return $this->profile;
     }
 
-    public function setProfile(AnyURI $profile): self
+    public function setProfile(AnyURI $profile): void
     {
         $this->profile = $profile;
-
-        return $this;
     }
 }

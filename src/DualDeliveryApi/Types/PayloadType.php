@@ -16,11 +16,7 @@ class PayloadType
      */
     protected $Document = null;
 
-    /**
-     * @param PayloadAttributesType $PayloadAttributes
-     * @param DocumentType          $Document
-     */
-    public function __construct($PayloadAttributes, $Document)
+    public function __construct(PayloadAttributesType $PayloadAttributes, DocumentType $Document)
     {
         $this->PayloadAttributes = $PayloadAttributes;
         $this->Document = $Document;
@@ -31,11 +27,9 @@ class PayloadType
         return $this->PayloadAttributes;
     }
 
-    public function setPayloadAttributes(PayloadAttributesType $PayloadAttributes): self
+    public function setPayloadAttributes(PayloadAttributesType $PayloadAttributes): void
     {
         $this->PayloadAttributes = $PayloadAttributes;
-
-        return $this;
     }
 
     public function getDocument(): DocumentType
@@ -43,10 +37,8 @@ class PayloadType
         return $this->Document;
     }
 
-    public function setDocument(DocumentType $Document): self
+    public function setDocument(DocumentType $Document): void
     {
         $this->Document = $Document;
-
-        return $this;
     }
 }

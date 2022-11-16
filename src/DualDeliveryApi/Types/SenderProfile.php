@@ -16,11 +16,7 @@ class SenderProfile
      */
     protected $version = null;
 
-    /**
-     * @param string $_
-     * @param string $version
-     */
-    public function __construct($_, $version)
+    public function __construct(string $_, string $version)
     {
         $this->_ = $_;
         $this->version = $version;
@@ -31,11 +27,9 @@ class SenderProfile
         return $this->_;
     }
 
-    public function set_(string $_): self
+    public function set_(string $_): void
     {
         $this->_ = $_;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -43,10 +37,8 @@ class SenderProfile
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

@@ -12,15 +12,11 @@ class PersonDataType
     protected $Person = null;
 
     /**
-     * @var AbstractAddressType
+     * @var ?AbstractAddressType
      */
     protected $Address = null;
 
-    /**
-     * @param AbstractPersonType  $Person
-     * @param AbstractAddressType $Address
-     */
-    public function __construct($Person, $Address = null)
+    public function __construct(AbstractPersonType $Person, ?AbstractAddressType $Address = null)
     {
         $this->Person = $Person;
         $this->Address = $Address;
@@ -31,22 +27,18 @@ class PersonDataType
         return $this->Person;
     }
 
-    public function setPerson(AbstractPersonType $Person): self
+    public function setPerson(AbstractPersonType $Person): void
     {
         $this->Person = $Person;
-
-        return $this;
     }
 
-    public function getAddress(): AbstractAddressType
+    public function getAddress(): ?AbstractAddressType
     {
         return $this->Address;
     }
 
-    public function setAddress(AbstractAddressType $Address): self
+    public function setAddress(AbstractAddressType $Address): void
     {
         $this->Address = $Address;
-
-        return $this;
     }
 }

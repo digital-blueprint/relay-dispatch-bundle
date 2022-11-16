@@ -7,7 +7,7 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class PayloadAttributesType
 {
     /**
-     * @var string
+     * @var ?string
      */
     protected $Id = null;
 
@@ -22,42 +22,36 @@ class PayloadAttributesType
     protected $MIMEType = null;
 
     /**
-     * @var int
+     * @var ?int
      */
     protected $Size = null;
 
     /**
-     * @var int
+     * @var ?int
      */
     protected $PageCount = null;
 
     /**
-     * @var Checksum
+     * @var ?Checksum
      */
     protected $Checksum = null;
 
     /**
-     * @var int
+     * @var ?int
      */
     protected $Index = null;
 
     /**
-     * @var ParametersType
+     * @var ?ParametersType
      */
     protected $Parameters = null;
 
     /**
-     * @var PrintParameter
+     * @var ?PrintParameter
      */
     protected $PrintParameter = null;
 
-    /**
-     * @param string              $FileName
-     * @param string              $MIMEType
-     * @param ParametersType|null $Parameters
-     * @param PrintParameter|null $PrintParameter
-     */
-    public function __construct($FileName, $MIMEType, $Parameters = null, $PrintParameter = null)
+    public function __construct(string $FileName, string $MIMEType, ?ParametersType $Parameters = null, ?PrintParameter $PrintParameter = null)
     {
         $this->FileName = $FileName;
         $this->MIMEType = $MIMEType;
@@ -65,16 +59,14 @@ class PayloadAttributesType
         $this->PrintParameter = $PrintParameter;
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->Id;
     }
 
-    public function setId(string $Id): self
+    public function setId(string $Id): void
     {
         $this->Id = $Id;
-
-        return $this;
     }
 
     public function getFileName(): string
@@ -82,11 +74,9 @@ class PayloadAttributesType
         return $this->FileName;
     }
 
-    public function setFileName(string $FileName): self
+    public function setFileName(string $FileName): void
     {
         $this->FileName = $FileName;
-
-        return $this;
     }
 
     public function getMIMEType(): string
@@ -94,82 +84,68 @@ class PayloadAttributesType
         return $this->MIMEType;
     }
 
-    public function setMIMEType(string $MIMEType): self
+    public function setMIMEType(string $MIMEType): void
     {
         $this->MIMEType = $MIMEType;
-
-        return $this;
     }
 
-    public function getSize(): int
+    public function getSize(): ?int
     {
         return $this->Size;
     }
 
-    public function setSize(int $Size): self
+    public function setSize(int $Size): void
     {
         $this->Size = $Size;
-
-        return $this;
     }
 
-    public function getPageCount(): int
+    public function getPageCount(): ?int
     {
         return $this->PageCount;
     }
 
-    public function setPageCount(int $PageCount): self
+    public function setPageCount(int $PageCount): void
     {
         $this->PageCount = $PageCount;
-
-        return $this;
     }
 
-    public function getChecksum(): Checksum
+    public function getChecksum(): ?Checksum
     {
         return $this->Checksum;
     }
 
-    public function setChecksum(Checksum $Checksum): self
+    public function setChecksum(Checksum $Checksum): void
     {
         $this->Checksum = $Checksum;
-
-        return $this;
     }
 
-    public function getIndex(): int
+    public function getIndex(): ?int
     {
         return $this->Index;
     }
 
-    public function setIndex(int $Index): self
+    public function setIndex(int $Index): void
     {
         $this->Index = $Index;
-
-        return $this;
     }
 
-    public function getParameters(): ParametersType
+    public function getParameters(): ?ParametersType
     {
         return $this->Parameters;
     }
 
-    public function setParameters(ParametersType $Parameters): self
+    public function setParameters(ParametersType $Parameters): void
     {
         $this->Parameters = $Parameters;
-
-        return $this;
     }
 
-    public function getPrintParameter(): PrintParameter
+    public function getPrintParameter(): ?PrintParameter
     {
         return $this->PrintParameter;
     }
 
-    public function setPrintParameter(PrintParameter $PrintParameter): self
+    public function setPrintParameter(PrintParameter $PrintParameter): void
     {
         $this->PrintParameter = $PrintParameter;
-
-        return $this;
     }
 }

@@ -12,21 +12,16 @@ class SenderType
     protected $SenderProfile = null;
 
     /**
-     * @var SenderData
+     * @var ?SenderData
      */
     protected $SenderData = null;
 
     /**
-     * @var ParametersType
+     * @var ?ParametersType
      */
     protected $Parameters = null;
 
-    /**
-     * @param SenderProfile  $SenderProfile
-     * @param SenderData     $SenderData
-     * @param ParametersType $Parameters
-     */
-    public function __construct($SenderProfile, $SenderData = null, $Parameters = null)
+    public function __construct(SenderProfile $SenderProfile, ?SenderData $SenderData = null, ?ParametersType $Parameters = null)
     {
         $this->SenderProfile = $SenderProfile;
         $this->SenderData = $SenderData;
@@ -38,34 +33,28 @@ class SenderType
         return $this->SenderProfile;
     }
 
-    public function setSenderProfile(SenderProfile $SenderProfile): self
+    public function setSenderProfile(SenderProfile $SenderProfile): void
     {
         $this->SenderProfile = $SenderProfile;
-
-        return $this;
     }
 
-    public function getSenderData(): SenderData
+    public function getSenderData(): ?SenderData
     {
         return $this->SenderData;
     }
 
-    public function setSenderData(SenderData $SenderData): self
+    public function setSenderData(SenderData $SenderData): void
     {
         $this->SenderData = $SenderData;
-
-        return $this;
     }
 
-    public function getParameters(): ParametersType
+    public function getParameters(): ?ParametersType
     {
         return $this->Parameters;
     }
 
-    public function setParameters(ParametersType $Parameters): self
+    public function setParameters(ParametersType $Parameters): void
     {
         $this->Parameters = $Parameters;
-
-        return $this;
     }
 }

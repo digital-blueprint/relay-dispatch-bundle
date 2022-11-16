@@ -16,11 +16,7 @@ class Checksum
      */
     protected $Value = null;
 
-    /**
-     * @param string $AlgorithmID
-     * @param string $Value
-     */
-    public function __construct($AlgorithmID, $Value)
+    public function __construct(string $AlgorithmID, string $Value)
     {
         $this->AlgorithmID = $AlgorithmID;
         $this->Value = $Value;
@@ -31,28 +27,18 @@ class Checksum
         return $this->AlgorithmID;
     }
 
-    public function setAlgorithmID(string $AlgorithmID): self
+    public function setAlgorithmID(string $AlgorithmID): void
     {
         $this->AlgorithmID = $AlgorithmID;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->Value;
     }
 
-    /**
-     * @param string $Value
-     */
-    public function setValue($Value): self
+    public function setValue(string $Value): void
     {
         $this->Value = $Value;
-
-        return $this;
     }
 }
