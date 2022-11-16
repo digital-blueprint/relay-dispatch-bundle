@@ -263,8 +263,8 @@ class DispatchService
     {
         $deliveryStatusChange = $this->getDeliveryStatusChangeById($identifier);
 
-        // Check if current person owns the request
-        $this->getRequestByIdForCurrentPerson($deliveryStatusChange->getDispatchRequestIdentifier());
+        // Check if current person owns the request of the recipient
+        $this->getRequestRecipientByIdForCurrentPerson($deliveryStatusChange->getDispatchRequestRecipientIdentifier());
 
         return $deliveryStatusChange;
     }
