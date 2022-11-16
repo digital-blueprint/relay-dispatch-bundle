@@ -182,13 +182,6 @@ class Debug2Command extends Command
         // Experiments
 
         // ---------------------------
-        // dualDeliveryCancellationRequestOperation
-        $applicationId = new ApplicationID('blub', '1.0');
-        $request = new DualDeliveryCancellationRequest($senderProfile, $applicationId, 'id', '1.0');
-        $response = $service->dualDeliveryCancellationRequestOperation($request);
-        var_dump($response);
-
-        // ---------------------------
         // dualNotificationRequestOperation
         $res = new AdditionalResults(new AdditonalResultSetType());
         $status = new StatusType('code');
