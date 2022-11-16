@@ -17,12 +17,12 @@ class DualDeliveryResponseType
     protected $Status = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DualDeliveryID = null;
 
     /**
-     * @var AdditionalMetaData
+     * @var ?AdditionalMetaData
      */
     protected $AdditionalMetaData = null;
 
@@ -32,12 +32,12 @@ class DualDeliveryResponseType
     protected $UsedDeliveryChannels = null;
 
     /**
-     * @var ManipulatedPayloadsType
+     * @var ?ManipulatedPayloadsType
      */
     protected $ManipulatedPayloads = null;
 
     /**
-     * @var ErrorsType
+     * @var ?ErrorsType
      */
     protected $Errors = null;
 
@@ -46,15 +46,7 @@ class DualDeliveryResponseType
      */
     protected $version = null;
 
-    /**
-     * @param string             $AppDeliveryID
-     * @param StatusType         $Status
-     * @param string             $DualDeliveryID
-     * @param AdditionalMetaData $AdditionalMetaData
-     * @param ErrorsType         $Errors
-     * @param string             $version
-     */
-    public function __construct($AppDeliveryID, $Status, $DualDeliveryID, $AdditionalMetaData, $Errors, $version)
+    public function __construct(string $AppDeliveryID, StatusType $Status, ?string $DualDeliveryID, ?AdditionalMetaData $AdditionalMetaData, ?ErrorsType $Errors, string $version)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->Status = $Status;
@@ -64,147 +56,83 @@ class DualDeliveryResponseType
         $this->version = $version;
     }
 
-    /**
-     * @return string
-     */
-    public function getAppDeliveryID()
+    public function getAppDeliveryID(): string
     {
         return $this->AppDeliveryID;
     }
 
-    /**
-     * @return DualDeliveryResponseType
-     */
-    public function setAppDeliveryID(string $AppDeliveryID)
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
         $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
-    /**
-     * @return StatusType
-     */
-    public function getStatus()
+    public function getStatus(): StatusType
     {
         return $this->Status;
     }
 
-    /**
-     * @return DualDeliveryResponseType
-     */
-    public function setStatus(StatusType $Status)
+    public function setStatus(StatusType $Status): void
     {
         $this->Status = $Status;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDualDeliveryID()
+    public function getDualDeliveryID(): ?string
     {
         return $this->DualDeliveryID;
     }
 
-    /**
-     * @return DualDeliveryResponseType
-     */
-    public function setDualDeliveryID(string $DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID): void
     {
         $this->DualDeliveryID = $DualDeliveryID;
-
-        return $this;
     }
 
-    /**
-     * @return AdditionalMetaData
-     */
-    public function getAdditionalMetaData()
+    public function getAdditionalMetaData(): ?AdditionalMetaData
     {
         return $this->AdditionalMetaData;
     }
 
-    /**
-     * @return DualDeliveryResponseType
-     */
-    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData)
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): void
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
-
-        return $this;
     }
 
-    /**
-     * @return UsedDeliveryChannels
-     */
-    public function getUsedDeliveryChannels()
+    public function getUsedDeliveryChannels(): UsedDeliveryChannels
     {
         return $this->UsedDeliveryChannels;
     }
 
-    /**
-     * @return DualDeliveryResponseType
-     */
-    public function setUsedDeliveryChannels(UsedDeliveryChannels $UsedDeliveryChannels)
+    public function setUsedDeliveryChannels(UsedDeliveryChannels $UsedDeliveryChannels): void
     {
         $this->UsedDeliveryChannels = $UsedDeliveryChannels;
-
-        return $this;
     }
 
-    /**
-     * @return ManipulatedPayloadsType
-     */
-    public function getManipulatedPayloads()
+    public function getManipulatedPayloads(): ManipulatedPayloadsType
     {
         return $this->ManipulatedPayloads;
     }
 
-    /**
-     * @return DualDeliveryResponseType
-     */
-    public function setManipulatedPayloads(ManipulatedPayloadsType $ManipulatedPayloads)
+    public function setManipulatedPayloads(ManipulatedPayloadsType $ManipulatedPayloads): void
     {
         $this->ManipulatedPayloads = $ManipulatedPayloads;
-
-        return $this;
     }
 
-    /**
-     * @return ErrorsType
-     */
-    public function getErrors()
+    public function getErrors(): ErrorsType
     {
         return $this->Errors;
     }
 
-    /**
-     * @return DualDeliveryResponseType
-     */
-    public function setErrors(ErrorsType $Errors)
+    public function setErrors(ErrorsType $Errors): void
     {
         $this->Errors = $Errors;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @return DualDeliveryResponseType
-     */
-    public function setVersion(string $version)
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }
