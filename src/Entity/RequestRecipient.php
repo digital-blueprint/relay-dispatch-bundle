@@ -243,7 +243,7 @@ class RequestRecipient
     private $dualDeliveryID;
 
     /**
-     * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="request_recipient")
+     * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="requestRecipient")
      * @ORM\OrderBy({"dateCreated" = "DESC"})
      * @ApiProperty
      * @Groups({"DispatchRequestRecipient:output"})

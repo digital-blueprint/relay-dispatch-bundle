@@ -65,14 +65,14 @@ class DeliveryStatusChange
     private $dateCreated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Request", inversedBy="statusChanges")
-     * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
+     * @ORM\ManyToOne(targetEntity="RequestRecipient", inversedBy="statusChanges")
+     * @ORM\JoinColumn(name="dispatch_request_recipient_identifier", referencedColumnName="identifier")
      * @ApiProperty
      * @Groups({"DispatchDeliveryStatusChange:output"})
      *
-     * @var Request
+     * @var RequestRecipient
      */
-    private $request;
+    private $requestRecipient;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -81,7 +81,7 @@ class DeliveryStatusChange
      *
      * @var string
      */
-    private $dispatchRequestIdentifier;
+    private $dispatchRequestRecipientIdentifier;
 
     /**
      * @ORM\Column(type="integer")
@@ -121,9 +121,9 @@ class DeliveryStatusChange
         $this->dateCreated = $dateCreated;
     }
 
-    public function getDispatchRequest(): Request
+    public function getDispatchRequestRecipient(): RequestRecipient
     {
-        return $this->request;
+        return $this->requestRecipient;
     }
 
     public function getDispatchRequestIdentifier(): string
@@ -156,8 +156,8 @@ class DeliveryStatusChange
         $this->description = $description;
     }
 
-    public function setRequest(Request $request): void
+    public function setRequestRecipient(RequestRecipient $requestRecipient): void
     {
-        $this->request = $request;
+        $this->requestRecipient = $requestRecipient;
     }
 }
