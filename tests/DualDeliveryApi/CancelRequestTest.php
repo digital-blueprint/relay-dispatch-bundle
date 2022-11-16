@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellationRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +32,8 @@ class CancelRequestTest extends TestCase
 
         // XXX: I couldn't get this request to work, so this is just an error case
         $senderProfile = new SenderProfile('TU_GRAZ', '1.0');
-        $request = new DualDeliveryCancellationRequest($senderProfile, 'foo', '132487', '1.0');
+        $applicationId = new ApplicationID('1234567890', '1');
+        $request = new DualDeliveryCancellationRequest($senderProfile, $applicationId, '132487', '1.0');
         $response = $service->dualDeliveryCancellationRequestOperation($request);
         $this->assertSame('132487', $response->getDualDeliveryID());
         $this->assertSame('39', $response->getStatus()->getCode());
