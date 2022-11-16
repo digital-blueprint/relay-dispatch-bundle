@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="dispatch_request_status_changes")
+ * @ORM\Table(name="dispatch_delivery_status_changes")
  * @ApiResource(
  *     collectionOperations={
  *         "get" = {
@@ -34,15 +34,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *         },
  *     },
  *     iri="https://schema.org/Status",
- *     shortName="DispatchRequestStatusChange",
+ *     shortName="DispatchDeliveryStatusChange",
  *     normalizationContext={
- *         "groups" = {"DispatchRequestStatusChange:output", "DispatchRequest:output"},
+ *         "groups" = {"DispatchDeliveryStatusChange:output", "DispatchRequest:output"},
  *         "jsonld_embed_context" = true
  *     }
  * )
  */
-class RequestStatusChange
+class DeliveryStatusChange
 {
+    // TODO: Get status values from "Statuswerte" xlsx file
     public const STATUS_SUBMITTED = 1;
     public const STATUS_IN_PROGRESS = 2;
 
@@ -50,14 +51,14 @@ class RequestStatusChange
      * @ORM\Id
      * @ORM\Column(type="string", length=50)
      * @ApiProperty(identifier=true)
-     * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
      * @ApiProperty(iri="https://schema.org/dateCreated")
-     * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
      *
      * @var \DateTimeInterface
      */
@@ -67,7 +68,7 @@ class RequestStatusChange
      * @ORM\ManyToOne(targetEntity="Request", inversedBy="statusChanges")
      * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
      * @ApiProperty
-     * @Groups({"DispatchRequestStatusChange:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output"})
      *
      * @var Request
      */
@@ -76,7 +77,7 @@ class RequestStatusChange
     /**
      * @ORM\Column(type="string", length=50)
      * @ApiProperty(iri="https://schema.org/identifier")
-     * @Groups({"DispatchRequestStatusChange:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output"})
      *
      * @var string
      */
@@ -85,7 +86,7 @@ class RequestStatusChange
     /**
      * @ORM\Column(type="integer")
      * @ApiProperty(iri="https://schema.org/statusType")
-     * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
      *
      * @var int
      */
@@ -94,7 +95,7 @@ class RequestStatusChange
     /**
      * @ORM\Column(type="text")
      * @ApiProperty(iri="https://schema.org/description")
-     * @Groups({"DispatchRequestStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
      *
      * @var string
      */

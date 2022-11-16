@@ -47,7 +47,7 @@ class DebugCommand extends Command
         switch ($action) {
             case 'generate-request-status-change':
                 $output->writeln('Generate request status change...');
-                $this->dispatchService->createRequestStatusChange($identifier, 1, 'Test');
+                $this->dispatchService->createDeliveryStatusChange($identifier, 1, 'Test');
                 break;
             case 'generate-request-api-xml':
                 $output->writeln('Generate request API XML...');

@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                         "application/json" = {
  *                             "schema" = {"type" = "object"},
  *                             "example" = {
+ *                                 "name" = "Aussendung 42",
  *                                 "senderGivenName" = "Max",
  *                                 "senderFamilyName" = "Mustermann",
  *                                 "senderAddressCountry" = "AT",
@@ -117,6 +118,19 @@ class Request
      * @Groups({"DispatchRequest:output"})
      */
     private $identifier;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @ApiProperty(iri="https://schema.org/name")
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Only {{ limit }} letters are allowed"
+     * )
+     *
+     * @var string
+     */
+    private $name;
 
     /**
      * @ORM\Column(type="datetime")
@@ -250,18 +264,10 @@ class Request
      */
     private $files;
 
-    /**
-     * @ORM\OneToMany(targetEntity="RequestStatusChange", mappedBy="request")
-     * @ORM\OrderBy({"dateCreated" = "DESC"})
-     * @Groups({"DispatchRequest:output"})
-     */
-    private $statusChanges;
-
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
         $this->files = new ArrayCollection();
-        $this->statusChanges = new ArrayCollection();
     }
 
     public function getIdentifier(): string
@@ -322,11 +328,6 @@ class Request
     public function getFiles()
     {
         return $this->files;
-    }
-
-    public function getStatusChanges()
-    {
-        return $this->statusChanges;
     }
 
     public function getDateSubmitted(): ?\DateTimeInterface
@@ -395,5 +396,15 @@ class Request
     public function setSenderBuildingNumber(string $senderBuildingNumber): void
     {
         $this->senderBuildingNumber = $senderBuildingNumber;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 }

@@ -8,6 +8,7 @@ date_default_timezone_set('UTC');
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -232,6 +233,28 @@ class RequestRecipient
      */
     private $birthDate;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output"})
+     *
+     * @var string
+     */
+    private $dualDeliveryID;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="request_recipient")
+     * @ORM\OrderBy({"dateCreated" = "DESC"})
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output"})
+     */
+    private $statusChanges;
+
+    public function __construct()
+    {
+        $this->statusChanges = new ArrayCollection();
+    }
+
     public function getIdentifier(): string
     {
         return (string) $this->identifier;
@@ -360,5 +383,20 @@ class RequestRecipient
     public function setBirthDate(\DateTimeInterface $birthDate): void
     {
         $this->birthDate = $birthDate;
+    }
+
+    public function getDualDeliveryID(): string
+    {
+        return $this->dualDeliveryID;
+    }
+
+    public function setDualDeliveryID(string $dualDeliveryID): void
+    {
+        $this->dualDeliveryID = $dualDeliveryID;
+    }
+
+    public function getStatusChanges()
+    {
+        return $this->statusChanges;
     }
 }

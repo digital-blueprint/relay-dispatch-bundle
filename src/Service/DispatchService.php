@@ -36,7 +36,7 @@ use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
-use Dbp\Relay\DispatchBundle\Entity\RequestStatusChange;
+use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 //use Dbp\Relay\DispatchBundle\SoapClient\ApplicationID;
@@ -175,20 +175,20 @@ class DispatchService
     }
 
     /**
-     * Fetches a RequestStatusChange.
+     * Fetches a DeliveryStatusChange.
      */
-    public function getRequestStatusChangeById(string $identifier): ?RequestStatusChange
+    public function getDeliveryStatusChangeById(string $identifier): ?DeliveryStatusChange
     {
-        /** @var RequestStatusChange $requestStatusChange */
-        $requestStatusChange = $this->em
-            ->getRepository(RequestStatusChange::class)
+        /** @var DeliveryStatusChange $deliveryStatusChange */
+        $deliveryStatusChange = $this->em
+            ->getRepository(DeliveryStatusChange::class)
             ->find($identifier);
 
-        if (!$requestStatusChange) {
-            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestStatusChange was not found!', 'dispatch:request-status-change-not-found');
+        if (!$deliveryStatusChange) {
+            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'DeliveryStatusChange was not found!', 'dispatch:request-status-change-not-found');
         }
 
-        return $requestStatusChange;
+        return $deliveryStatusChange;
     }
 
     /**
@@ -257,16 +257,16 @@ class DispatchService
     }
 
     /**
-     * Fetches a RequestStatusChange for the current person.
+     * Fetches a DeliveryStatusChange for the current person.
      */
-    public function getRequestStatusChangeByIdForCurrentPerson(string $identifier): ?RequestStatusChange
+    public function getDeliveryStatusChangeByIdForCurrentPerson(string $identifier): ?DeliveryStatusChange
     {
-        $requestStatusChange = $this->getRequestStatusChangeById($identifier);
+        $deliveryStatusChange = $this->getDeliveryStatusChangeById($identifier);
 
         // Check if current person owns the request
-        $this->getRequestByIdForCurrentPerson($requestStatusChange->getDispatchRequestIdentifier());
+        $this->getRequestByIdForCurrentPerson($deliveryStatusChange->getDispatchRequestIdentifier());
 
-        return $requestStatusChange;
+        return $deliveryStatusChange;
     }
 
     /**
@@ -454,32 +454,32 @@ class DispatchService
         return $requestFile;
     }
 
-    public function createRequestStatusChange(string $dispatchRequestIdentifier, int $statusType, string $description): RequestStatusChange
+    public function createDeliveryStatusChange(string $dispatchRequestIdentifier, int $statusType, string $description): DeliveryStatusChange
     {
-        $requestStatusChange = new RequestStatusChange();
+        $deliveryStatusChange = new DeliveryStatusChange();
 
         // A request object needs to be set for the ORM, setting the identifier only will not persist it
-        $requestStatusChange->setDispatchRequestIdentifier($dispatchRequestIdentifier);
-        $request = $this->getRequestById($requestStatusChange->getDispatchRequestIdentifier());
-        $requestStatusChange->setRequest($request);
+        $deliveryStatusChange->setDispatchRequestIdentifier($dispatchRequestIdentifier);
+        $request = $this->getRequestById($deliveryStatusChange->getDispatchRequestIdentifier());
+        $deliveryStatusChange->setRequest($request);
 
-        $requestStatusChange->setIdentifier((string) Uuid::v4());
+        $deliveryStatusChange->setIdentifier((string) Uuid::v4());
         try {
-            $requestStatusChange->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
+            $deliveryStatusChange->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {
         }
 
-        $requestStatusChange->setStatusType($statusType);
-        $requestStatusChange->setDescription($description);
+        $deliveryStatusChange->setStatusType($statusType);
+        $deliveryStatusChange->setDescription($description);
 
         try {
-            $this->em->persist($requestStatusChange);
+            $this->em->persist($deliveryStatusChange);
             $this->em->flush();
         } catch (\Exception $e) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestStatusChange could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
         }
 
-        return $requestStatusChange;
+        return $deliveryStatusChange;
     }
 
     public function removeRequestFileById(string $identifier)
@@ -502,7 +502,7 @@ class DispatchService
         }
         $this->updateRequestForCurrentPerson($request);
 
-        $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_SUBMITTED, 'Request submitted');
+        $this->createDeliveryStatusChange($request->getIdentifier(), DeliveryStatusChange::STATUS_SUBMITTED, 'Request submitted');
 
         // Put request in queue for submission
         $this->createAndDispatchRequestSubmissionMessage($request);
@@ -523,7 +523,7 @@ class DispatchService
         // TODO: Do Vendo API request
         dump($request);
         // Dispatch another delayed message if Vendo request failed
-        $this->createRequestStatusChange($request->getIdentifier(), RequestStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
+        $this->createDeliveryStatusChange($request->getIdentifier(), DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
     public function doDualDeliveryRequestAPIRequest($body): ?\Psr\Http\Message\ResponseInterface
