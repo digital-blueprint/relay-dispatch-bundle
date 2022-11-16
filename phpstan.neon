@@ -11,3 +11,4 @@ parameters:
     excludePaths:
         - tests/bootstrap.php
         - src/DualDeliveryApi
+        - src/Service
