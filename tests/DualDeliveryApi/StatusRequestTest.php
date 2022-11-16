@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusRequestType;
 use PHPUnit\Framework\TestCase;
 
 class StatusRequestTest extends TestCase
 {
+    use BaseSoapTrait;
+
     private static $SUCCESS_RESPONSE = '<?xml version="1.0"?>
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
@@ -23,20 +24,6 @@ class StatusRequestTest extends TestCase
     </ns2:StatusResponse>
   </soap:Body>
 </soap:Envelope>';
-
-    /**
-     * @return DualDeliveryService
-     */
-    private function getMockService(string $response)
-    {
-        $soapClientMock = $this->getMockBuilder(DualDeliveryService::class)
-            ->setConstructorArgs(['nope'])
-            ->onlyMethods(['__doRequest'])
-            ->getMock();
-        $soapClientMock->method('__doRequest')->will($this->returnValue($response));
-
-        return $soapClientMock;
-    }
 
     public function testStatusRequestSuccess()
     {
