@@ -454,14 +454,14 @@ class DispatchService
         return $requestFile;
     }
 
-    public function createDeliveryStatusChange(string $dispatchRequestIdentifier, int $statusType, string $description): DeliveryStatusChange
+    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description): DeliveryStatusChange
     {
         $deliveryStatusChange = new DeliveryStatusChange();
 
-        // A request object needs to be set for the ORM, setting the identifier only will not persist it
-        $deliveryStatusChange->setDispatchRequestIdentifier($dispatchRequestIdentifier);
-        $request = $this->getRequestById($deliveryStatusChange->getDispatchRequestIdentifier());
-        $deliveryStatusChange->setRequest($request);
+        // A request recipient object needs to be set for the ORM, setting the identifier only will not persist it
+        $deliveryStatusChange->setDispatchRequestRecipientIdentifier($requestRecipientIdentifier);
+        $requestRecipient = $this->getRequestRecipientById($deliveryStatusChange->getDispatchRequestRecipientIdentifier());
+        $deliveryStatusChange->setRequestRecipient($requestRecipient);
 
         $deliveryStatusChange->setIdentifier((string) Uuid::v4());
         try {
@@ -502,10 +502,17 @@ class DispatchService
         }
         $this->updateRequestForCurrentPerson($request);
 
-        $this->createDeliveryStatusChange($request->getIdentifier(), DeliveryStatusChange::STATUS_SUBMITTED, 'Request submitted');
+        $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_SUBMITTED, 'Request submitted');
 
         // Put request in queue for submission
         $this->createAndDispatchRequestSubmissionMessage($request);
+    }
+
+    public function createDeliveryStatusChangeForAllRecipientsOfRequest(Request $request, int $statusType, string $description)
+    {
+        foreach ($request->getRecipients() as $recipient) {
+            $this->createDeliveryStatusChange($recipient->getIdentifier(), $statusType, $description);
+        }
     }
 
     public function createAndDispatchRequestSubmissionMessage(Request $request): RequestSubmissionMessage
@@ -522,8 +529,8 @@ class DispatchService
 
         // TODO: Do Vendo API request
         dump($request);
-        // Dispatch another delayed message if Vendo request failed
-        $this->createDeliveryStatusChange($request->getIdentifier(), DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
+        // TODO: Dispatch another delayed message if Vendo request failed
+        $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
     public function doDualDeliveryRequestAPIRequest($body): ?\Psr\Http\Message\ResponseInterface
@@ -1022,14 +1029,14 @@ class DispatchService
         $preAddressingRequest->setDualDeliveryID($addressingResults[0]->getDualDeliveryID());
     }
 
-    public function doDualDeliveryRequestSoapRequest(Request &$dualDeliveryRequest)
+    public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest)
     {
         $service = $this->getDualDeliveryService();
 
         $dualDeliveryRecipients = [];
 
         /** @var RequestRecipient $recipient */
-        foreach ($dualDeliveryRequest->getRecipients() as $recipient) {
+        foreach ($dispatchRequest->getRecipients() as $recipient) {
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
             $personData = new PersonDataType($physicalPerson);
@@ -1041,7 +1048,7 @@ class DispatchService
         $dualDeliveryPayloads = [];
 
         /** @var RequestFile[] $files */
-        $files = $dualDeliveryRequest->getFiles();
+        $files = $dispatchRequest->getFiles();
         foreach ($files as $file) {
             $payloadAttrs = new PayloadAttributesType($file->getName(), $file->getFileFormat());
             // TODO: Is this the correct format to send content?
@@ -1072,7 +1079,7 @@ class DispatchService
         // TODO: Where does this come from?
         $gz = 'GZ';
 
-        foreach ($dualDeliveryRequest->getRecipients() as $recipient) {
+        foreach ($dispatchRequest->getRecipients() as $recipient) {
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
             $personData = new PersonDataType($physicalPerson);
@@ -1081,7 +1088,7 @@ class DispatchService
             $dualDeliveryRecipient = new RecipientType($personData);
 
 //            $id = $dualDeliveryRequest->getIdentifier().'-'.$recipient->getIdentifier().'-pbek-'.rand(100000, 999999);
-            $id = $dualDeliveryRequest->getIdentifier().'-'.$recipient->getIdentifier();
+            $id = $dispatchRequest->getIdentifier().'-'.$recipient->getIdentifier();
             $meta = new DualDeliveryMetaData(
                 $id,
                 null,
@@ -1096,26 +1103,24 @@ class DispatchService
                 true
             );
             dump($dualDeliveryRecipients);
-            $recipientId = null;
-            $request = new DualDeliveryRequest($sender, $recipientId, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
+            $request = new DualDeliveryRequest($sender, null, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
             dump($request);
 
             try {
                 $response = $service->dualDeliveryRequestOperation($request);
             } catch (\Exception $e) {
-                // use $apiError var so cs-fixer doesn't destroy the code block
-                $apiError = ApiError::withDetails(
+                $this->createDeliveryStatusChange($recipient->getIdentifier(), DeliveryStatusChange::STATUS_SOAP_ERROR, 'Soap error: '.$e->getMessage());
+
+                throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR,
                     'DualDelivery request failed!',
                     'dispatch:dual-delivery-request-soap-error',
                     [
-                        'request-id' => $dualDeliveryRequest->getIdentifier(),
+                        'request-id' => $dispatchRequest->getIdentifier(),
                         'recipient-id' => $recipient->getIdentifier(),
                         'message' => $e->getMessage(),
                     ]
                 );
-
-                throw $apiError;
             }
 
             dump($response);
@@ -1131,16 +1136,16 @@ class DispatchService
                     $errorTexts[] = $apiError->getInfo();
                 }
 
-                // use $apiError var so cs-fixer doesn't destroy the code block
-                $apiError = ApiError::withDetails(
+                $errorText = implode(', ', $errorTexts);
+                $this->createDeliveryStatusChange($recipient->getIdentifier(), DeliveryStatusChange::STATUS_DUAL_DELIVERY_REQUEST_FAILED, 'DualDelivery request failed: '.$errorText);
+
+                throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDelivery request failed!', 'dispatch:dual-delivery-request-failed', [
-                        'request-id' => $dualDeliveryRequest->getIdentifier(),
+                        'request-id' => $dispatchRequest->getIdentifier(),
                         'recipient-id' => $recipient->getIdentifier(),
-                        'message' => implode(', ', $errorTexts),
+                        'message' => $errorText,
                     ]
                 );
-
-                throw $apiError;
             }
 
             $recipient->setDualDeliveryID($response->getDualDeliveryID());
@@ -1149,16 +1154,13 @@ class DispatchService
                 $this->em->persist($recipient);
                 $this->em->flush();
             } catch (\Exception $e) {
-                // use $apiError var so cs-fixer doesn't destroy the code block
-                $apiError = ApiError::withDetails(
+                throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be update after DualDelivery request!', 'dispatch:request-recipient-not-updated', [
-                        'request-id' => $dualDeliveryRequest->getIdentifier(),
+                        'request-id' => $dispatchRequest->getIdentifier(),
                         'recipient-id' => $recipient->getIdentifier(),
                         'message' => $e->getMessage(),
                     ]
                 );
-
-                throw $apiError;
             }
         }
 
