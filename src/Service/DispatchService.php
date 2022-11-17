@@ -526,10 +526,12 @@ class DispatchService
     public function handleRequestSubmissionMessage(RequestSubmissionMessage $message)
     {
         $request = $message->getRequest();
-
-        // TODO: Do Vendo API request
         dump($request);
-        // TODO: Dispatch another delayed message if Vendo request failed
+
+        // Do Vendo API request
+        $this->doDualDeliveryRequestSoapRequest($request);
+
+        // TODO: Dispatch another delayed message if Vendo request failed (is this even possible now since DualDeliveryRequests are made for each recipient?)
         $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
@@ -1076,8 +1078,12 @@ class DispatchService
         $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
         // TODO: Allow to set this via config/request?
         $deliveryQuality = 'Rsa';
-        // TODO: Where does this come from?
-        $gz = 'GZ';
+        // GZ: Über dieses Element kann eine Geschäftszahl bzw. ein Geschäftskennzeichen
+        // für Anzeige und Druck mitgegeben werden, welches eine leichtere Lesbarkeit auf
+        // Ausdrucken bzw. Benachrichtigungen gewährleisten soll. Im Gegensatz zur
+        // AppDeliveryID ist in diesem Fall die technische Eindeutigkeit über das duale
+        // Zustellservice nicht zwingend erforderlich.
+        $gz = null;
 
         foreach ($dispatchRequest->getRecipients() as $recipient) {
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
@@ -1102,7 +1108,7 @@ class DispatchService
                 null,
                 true
             );
-            dump($dualDeliveryRecipients);
+//            dump($dualDeliveryRecipients);
             $request = new DualDeliveryRequest($sender, null, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
             dump($request);
 
