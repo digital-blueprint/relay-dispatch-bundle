@@ -46,6 +46,8 @@ class DeliveryStatusChange
     // TODO: Get status values from "Statuswerte" xlsx file
     public const STATUS_SUBMITTED = 1;
     public const STATUS_IN_PROGRESS = 2;
+    public const STATUS_SOAP_ERROR = 3;
+    public const STATUS_DUAL_DELIVERY_REQUEST_FAILED = 4;
 
     /**
      * @ORM\Id
