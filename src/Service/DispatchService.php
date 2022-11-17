@@ -8,7 +8,6 @@ use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryClient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
@@ -30,7 +29,6 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
@@ -81,6 +79,11 @@ class DispatchService
     /**
      * @var string
      */
+    private $senderProfileVersion;
+
+    /**
+     * @var string
+     */
     private $certPassword;
 
     /**
@@ -109,25 +112,28 @@ class DispatchService
     private $statusRequestUrl;
 
     /**
-     * @var DualDeliveryClient|null
+     * @var DualDeliveryService
      */
-    private $dualDeliveryService = null;
+    private $dd;
 
     public function __construct(
         PersonProviderInterface $personProvider,
         ManagerRegistry $managerRegistry,
-        MessageBusInterface $bus
+        MessageBusInterface $bus,
+        DualDeliveryService $dd
     ) {
         $this->personProvider = $personProvider;
         $manager = $managerRegistry->getManager('dbp_relay_dispatch_bundle');
         assert($manager instanceof EntityManagerInterface);
         $this->em = $manager;
         $this->bus = $bus;
+        $this->dd = $dd;
     }
 
     public function setConfig(array $config)
     {
         $this->senderProfile = $config['sender_profile'] ?? '';
+        $this->senderProfileVersion = $config['sender_profile_version'] ?? '';
         $this->certPassword = $config['cert_password'] ?? '';
         $this->cert = $config['cert'] ?? '';
         $this->baseUrl = $config['base_url'];
@@ -753,7 +759,7 @@ class DispatchService
         $xml_nsDualDeliveryRequest->setAttribute('version', '1.0');
         $xml_nsSender = $xml->createElement('ns:Sender');
         $xml_nsSenderProfile = $xml->createElement('ns:SenderProfile', $this->senderProfile);
-        $xml_nsSenderProfile->setAttribute('version', '1.0');
+        $xml_nsSenderProfile->setAttribute('version', $this->senderProfileVersion);
         $xml_nsSender->appendChild($xml_nsSenderProfile);
         $xml_nsDualDeliveryRequest->appendChild($xml_nsSender);
 //        $xml_nsDualDeliveryID = $xml->createElement('ns:DualDeliveryID', '87720');
@@ -959,26 +965,13 @@ class DispatchService
         return $xml->saveXML();
     }
 
-    public function getDualDeliveryService(): DualDeliveryClient
-    {
-        if ($this->dualDeliveryService instanceof DualDeliveryClient) {
-            return $this->dualDeliveryService;
-        }
-
-        $certFileName = Tools::getTempFileName('.pem');
-        file_put_contents($certFileName, $this->cert);
-        $this->dualDeliveryService = new DualDeliveryClient($this->baseUrl, [$certFileName, $this->certPassword], true);
-
-        return $this->dualDeliveryService;
-    }
-
     public function doPreAddressingSoapRequest(PreAddressingRequest &$preAddressingRequest)
     {
-        $service = $this->getDualDeliveryService();
+        $service = $this->dd->getClient();
 
         $personName = new PersonNameType($preAddressingRequest->getGivenName(), $preAddressingRequest->getFamilyName());
         $physicalPerson = new PhysicalPersonType($personName, $preAddressingRequest->getBirthDate()->format('Y-m-d'));
-        $senderProfile = new SenderProfile($this->senderProfile, '1.0');
+        $senderProfile = $this->dd->getSenderProfile();
         $sender = new SenderType($senderProfile);
         $recipientData = new PersonDataType($physicalPerson);
 //        $parameters = new ParametersType(new ParameterType('bla', 'foo'));
@@ -1033,7 +1026,7 @@ class DispatchService
 
     public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest)
     {
-        $service = $this->getDualDeliveryService();
+        $service = $this->dd->getClient();
 
         $dualDeliveryRecipients = [];
 
@@ -1070,7 +1063,7 @@ class DispatchService
 //        $recipients = new Recipients($recipients);
 //        $applicationId = new ApplicationID($profile, '1.0');
 //        $meta->setApplicationID($applicationId);
-        $senderProfile = new SenderProfile($this->senderProfile, '1.0');
+        $senderProfile = $this->dd->getSenderProfile();
         $sender = new SenderType($senderProfile);
 
         // TODO: Allow to set this via config/request?
