@@ -47,7 +47,8 @@ class DualDeliveryService implements LoggerAwareInterface
     {
         $config = $this->config;
         $profile = $config['sender_profile'];
+        $profileVersion = $config['sender_profile_version'];
 
-        return new SenderProfile($profile, '1.0');
+        return new SenderProfile($profile, $profileVersion);
     }
 }
