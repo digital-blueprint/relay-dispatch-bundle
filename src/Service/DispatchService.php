@@ -1078,10 +1078,10 @@ class DispatchService
         $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
         // TODO: Allow to set this via config/request?
         $deliveryQuality = 'Rsa';
-        // GZ: Über dieses Element kann eine Geschäftszahl bzw. ein Geschäftskennzeichen
-        // für Anzeige und Druck mitgegeben werden, welches eine leichtere Lesbarkeit auf
-        // Ausdrucken bzw. Benachrichtigungen gewährleisten soll. Im Gegensatz zur
-        // AppDeliveryID ist in diesem Fall die technische Eindeutigkeit über das duale
+        // GZ: Ãœber dieses Element kann eine GeschÃ¤ftszahl bzw. ein GeschÃ¤ftskennzeichen
+        // fÃ¼r Anzeige und Druck mitgegeben werden, welches eine leichtere Lesbarkeit auf
+        // Ausdrucken bzw. Benachrichtigungen gewÃ¤hrleisten soll. Im Gegensatz zur
+        // AppDeliveryID ist in diesem Fall die technische Eindeutigkeit Ã¼ber das duale
         // Zustellservice nicht zwingend erforderlich.
         $gz = null;
 
