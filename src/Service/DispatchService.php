@@ -1099,7 +1099,24 @@ class DispatchService
             $recipientId = null;
             $request = new DualDeliveryRequest($sender, $recipientId, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
             dump($request);
-            $response = $service->dualDeliveryRequestOperation($request);
+
+            try {
+                $response = $service->dualDeliveryRequestOperation($request);
+            } catch (\Exception $e) {
+                // use $apiError var so cs-fixer doesn't destroy the code block
+                $apiError = ApiError::withDetails(
+                    Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'DualDelivery request failed!',
+                    'dispatch:dual-delivery-request-soap-error',
+                    [
+                        'request-id' => $dualDeliveryRequest->getIdentifier(),
+                        'recipient-id' => $recipient->getIdentifier(),
+                        'message' => $e->getMessage(),
+                    ]
+                );
+
+                throw $apiError;
+            }
 
             dump($response);
             dump($service->getPrettyLastRequest());
@@ -1110,12 +1127,38 @@ class DispatchService
                 $errors = $response->getErrors()->getError();
                 $errorTexts = [];
 
-                foreach ($errors as $error) {
-                    $errorTexts[] = $error->getInfo();
+                foreach ($errors as $apiError) {
+                    $errorTexts[] = $apiError->getInfo();
                 }
 
-                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDelivery request failed!', 'dispatch:dual-delivery-request-failed', ['request-id' => $dualDeliveryRequest->getIdentifier(), 'recipient-id' => $recipient->getIdentifier(), 'message' => implode(', ', $errorTexts)]);
-                // TODO: store dual delivery request id in recipient?
+                // use $apiError var so cs-fixer doesn't destroy the code block
+                $apiError = ApiError::withDetails(
+                    Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDelivery request failed!', 'dispatch:dual-delivery-request-failed', [
+                        'request-id' => $dualDeliveryRequest->getIdentifier(),
+                        'recipient-id' => $recipient->getIdentifier(),
+                        'message' => implode(', ', $errorTexts),
+                    ]
+                );
+
+                throw $apiError;
+            }
+
+            $recipient->setDualDeliveryID($response->getDualDeliveryID());
+
+            try {
+                $this->em->persist($recipient);
+                $this->em->flush();
+            } catch (\Exception $e) {
+                // use $apiError var so cs-fixer doesn't destroy the code block
+                $apiError = ApiError::withDetails(
+                    Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be update after DualDelivery request!', 'dispatch:request-recipient-not-updated', [
+                        'request-id' => $dualDeliveryRequest->getIdentifier(),
+                        'recipient-id' => $recipient->getIdentifier(),
+                        'message' => $e->getMessage(),
+                    ]
+                );
+
+                throw $apiError;
             }
         }
 
