@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Command;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
@@ -26,10 +25,9 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PropertyValueMetaDataSetType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusRequestType;
-use Dbp\Relay\DispatchBundle\Helpers\Tools;
+use Dbp\Relay\DispatchBundle\Service\DualDeliveryService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,13 +35,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Debug2Command extends Command
 {
     protected static $defaultName = 'dbp:relay-dispatch:debug2';
-    private $config;
+    /**
+     * @var DualDeliveryService
+     */
+    private $dd;
 
-    public function __construct()
+    public function __construct(DualDeliveryService $dd)
     {
         parent::__construct();
 
-        $this->config = [];
+        $this->dd = $dd;
     }
 
     /**
@@ -54,37 +55,10 @@ class Debug2Command extends Command
         $this->setDescription('Debug command');
     }
 
-    public function setConfig(array $config)
-    {
-        $this->config = $config;
-    }
-
-    protected function getService(): DualDeliveryService
-    {
-        $config = $this->config;
-
-        $baseUrl = $config['base_url'];
-        $cert = $config['cert'];
-        $certPassword = $config['cert_password'];
-
-        $certFileName = Tools::getTempFileName('.pem');
-        file_put_contents($certFileName, $cert);
-
-        return new DualDeliveryService($baseUrl, [$certFileName, $certPassword], true);
-    }
-
-    protected function getSenderProfile(): SenderProfile
-    {
-        $config = $this->config;
-        $profile = $config['sender_profile'];
-
-        return new SenderProfile($profile, '1.0');
-    }
-
     protected function doRequest(): DualDeliveryResponse
     {
-        $service = $this->getService();
-        $senderProfile = $this->getSenderProfile();
+        $client = $this->dd->getClient();
+        $senderProfile = $this->dd->getSenderProfile();
 
         $physicalPerson = new PhysicalPersonType(new PersonNameType('Max', 'Mustermann'), '1970-06-04');
         $personData = new PersonDataType($physicalPerson);
@@ -116,8 +90,8 @@ class Debug2Command extends Command
 
         $request = new DualDeliveryRequest($sender, null, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
 
-        $response = $service->dualDeliveryRequestOperation($request);
-        var_dump($service->getPrettyLastResponse());
+        $response = $client->dualDeliveryRequestOperation($request);
+        var_dump($client->getPrettyLastResponse());
         dump($response);
 
         return $response;
@@ -125,8 +99,8 @@ class Debug2Command extends Command
 
     protected function doPrAddr(): DualDeliveryPreAddressingResponseType
     {
-        $service = $this->getService();
-        $senderProfile = $this->getSenderProfile();
+        $client = $this->dd->getClient();
+        $senderProfile = $this->dd->getSenderProfile();
 
         $sender = new SenderType($senderProfile);
 
@@ -145,8 +119,8 @@ class Debug2Command extends Command
         $meta->setAsynchronous(false);
         $meta->setPreCreateSendings(true);
         $request = new DualDeliveryPreAddressingRequestType($sender, $recipients, $meta, null, '1.0');
-        $response = $service->dualDeliveryPreAddressingRequestOperation($request);
-        var_dump($service->getPrettyLastResponse());
+        $response = $client->dualDeliveryPreAddressingRequestOperation($request);
+        var_dump($client->getPrettyLastResponse());
         dump($response);
 
         return $response;
@@ -154,10 +128,10 @@ class Debug2Command extends Command
 
     protected function doStatusRequest(string $appDeliveryId): DualNotificationRequestType
     {
-        $service = $this->getService();
+        $client = $this->dd->getClient();
         $request = new StatusRequestType(null, $appDeliveryId, null);
-        $response = $service->dualStatusRequestOperation($request);
-        var_dump($service->getPrettyLastResponse());
+        $response = $client->dualStatusRequestOperation($request);
+        var_dump($client->getPrettyLastResponse());
         dump($response);
 
         return $response;
@@ -165,8 +139,6 @@ class Debug2Command extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $service = $this->getService();
-
         $this->doPrAddr();
         $response2 = $this->doRequest();
         $this->doStatusRequest($response2->getAppDeliveryID());

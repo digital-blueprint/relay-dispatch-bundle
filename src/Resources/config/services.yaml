@@ -58,6 +58,10 @@ services:
     autowire: true
     autoconfigure: true
 
+  Dbp\Relay\DispatchBundle\Service\DualDeliveryService:
+    autowire: true
+    autoconfigure: true
+
   Dbp\Relay\DispatchBundle\MessageHandler\RequestSubmissionHandler:
     public: false
     autowire: true

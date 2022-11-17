@@ -8,7 +8,7 @@ use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryClient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
@@ -109,7 +109,7 @@ class DispatchService
     private $statusRequestUrl;
 
     /**
-     * @var DualDeliveryService|null
+     * @var DualDeliveryClient|null
      */
     private $dualDeliveryService = null;
 
@@ -959,15 +959,15 @@ class DispatchService
         return $xml->saveXML();
     }
 
-    public function getDualDeliveryService(): DualDeliveryService
+    public function getDualDeliveryService(): DualDeliveryClient
     {
-        if ($this->dualDeliveryService instanceof DualDeliveryService) {
+        if ($this->dualDeliveryService instanceof DualDeliveryClient) {
             return $this->dualDeliveryService;
         }
 
         $certFileName = Tools::getTempFileName('.pem');
         file_put_contents($certFileName, $this->cert);
-        $this->dualDeliveryService = new DualDeliveryService($this->baseUrl, [$certFileName, $this->certPassword], true);
+        $this->dualDeliveryService = new DualDeliveryClient($this->baseUrl, [$certFileName, $this->certPassword], true);
 
         return $this->dualDeliveryService;
     }

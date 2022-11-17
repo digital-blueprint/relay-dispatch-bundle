@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryService;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryClient;
 
 trait BaseSoapTrait
 {
     /**
-     * @return DualDeliveryService
+     * @return DualDeliveryClient
      */
     private function getMockService(string $response)
     {
-        $soapClientMock = $this->getMockBuilder(DualDeliveryService::class)
+        $soapClientMock = $this->getMockBuilder(DualDeliveryClient::class)
             ->setConstructorArgs(['nope'])
             ->onlyMethods(['__doRequest'])
             ->getMock();

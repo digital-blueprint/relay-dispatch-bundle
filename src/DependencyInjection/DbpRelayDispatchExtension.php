@@ -6,8 +6,8 @@ namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
-use Dbp\Relay\DispatchBundle\Command\Debug2Command;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
+use Dbp\Relay\DispatchBundle\Service\DualDeliveryService;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -47,11 +47,11 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         $definition->addMethodCall('setCache', [$cacheDef]);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
 
-        $definition = $container->getDefinition(Debug2Command::class);
-        $definition->addMethodCall('setConfig', [$mergedConfig]);
-
         $definition = $container->getDefinition(AuthorizationService::class);
         $definition->addMethodCall('setConfig', [$mergedConfig['authorization'] ?? []]);
+
+        $definition = $container->getDefinition(DualDeliveryService::class);
+        $definition->addMethodCall('setConfig', [$mergedConfig]);
     }
 
     /**

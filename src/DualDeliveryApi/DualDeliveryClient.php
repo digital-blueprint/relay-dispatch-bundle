@@ -20,7 +20,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusRequestType;
 use DOMDocument;
 
-class DualDeliveryService extends \SoapClient
+class DualDeliveryClient extends \SoapClient
 {
     private static $classmap = [
       'PersonDataType' => '\\PersonDataType',
