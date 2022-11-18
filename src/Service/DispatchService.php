@@ -534,8 +534,12 @@ class DispatchService
         $request = $message->getRequest();
         dump($request);
 
-        // Do Vendo API request
-        $this->doDualDeliveryRequestSoapRequest($request);
+        try {
+            // Do Vendo API request
+            $this->doDualDeliveryRequestSoapRequest($request);
+        } catch (\Throwable $e) {
+            // TODO: how do we handle when request didn't get through?
+        }
 
         // TODO: Dispatch another delayed message if Vendo request failed (is this even possible now since DualDeliveryRequests are made for each recipient?)
         $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
