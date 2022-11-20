@@ -169,11 +169,11 @@
         },
         {
             "name": "dbp/campusonline-api",
-            "version": "v0.2.17",
+            "version": "v0.2.18",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.tugraz.at/dbp/campus-online/dbp-campusonline-api",
-                "reference": "27377e6f0560e8f6656b03b5dea2106e19f6a2ea"
+                "reference": "0db976887894f5fb6d18b68e27f9695002a8344d"
             },
             "require": {
                 "ext-json": "*",
@@ -185,12 +185,12 @@
                 "symfony/polyfill-php80": "^1.23"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpstan/phpstan": "^1.0.0",
-                "phpstan/phpstan-phpunit": "^1.0.0",
-                "phpunit/phpunit": "^9.5",
-                "symfony/phpunit-bridge": "^5.2",
-                "vimeo/psalm": "^4.2.1"
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "phpstan/phpstan": "^1.9.2",
+                "phpstan/phpstan-phpunit": "^1.2.2",
+                "phpunit/phpunit": "^9.5.26",
+                "symfony/phpunit-bridge": "^5.4.14",
+                "vimeo/psalm": "^4.30"
             },
             "type": "library",
             "autoload": {
@@ -202,7 +202,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2022-11-15T11:09:38+00:00"
+            "time": "2022-11-17T14:20:09+00:00"
         },
         {
             "name": "dbp/relay-base-organization-bundle",
@@ -255,15 +255,15 @@
         },
         {
             "name": "dbp/relay-base-person-bundle",
-            "version": "v0.2.4",
+            "version": "v0.2.5",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.tugraz.at/dbp/relay/dbp-relay-base-person-bundle",
-                "reference": "493ecdb1f18867ffffd9fc5a24de13ee9661e929"
+                "reference": "94622ef83ce4b60dd0c599813e44c19e218498fc"
             },
             "require": {
                 "api-platform/core": "^2.6.3",
-                "dbp/relay-core-bundle": "^0.1.38",
+                "dbp/relay-core-bundle": "^0.1.60",
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^7.0",
                 "nelmio/cors-bundle": "^2.1.0",
@@ -300,15 +300,15 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2022-10-27T09:56:57+00:00"
+            "time": "2022-11-16T10:54:26+00:00"
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.59",
+            "version": "v0.1.60",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.tugraz.at/dbp/relay/dbp-relay-core-bundle",
-                "reference": "05266632fdb82ec59ec9a5c9126d602eb7e94361"
+                "reference": "93b24a94a428ac21c8ef0262ebea3c1bf7a7823d"
             },
             "require": {
                 "api-platform/core": "^2.6.8 <2.7.0",
@@ -372,7 +372,7 @@
                 "AGPL-3.0-or-later"
             ],
             "description": "The core bundle of the Relay API gateway",
-            "time": "2022-11-15T12:51:49+00:00"
+            "time": "2022-11-16T10:38:53+00:00"
         },
         {
             "name": "doctrine/annotations",
