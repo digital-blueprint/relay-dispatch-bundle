@@ -31,7 +31,6 @@ class DualDeliveryClient extends \SoapClient
       'AbstractPersonType' => '\\AbstractPersonType',
       'PhysicalPersonType' => '\\PhysicalPersonType',
       'PersonNameType' => '\\PersonNameType',
-      'FamilyName' => '\\FamilyName',
       'CorporateBodyType' => '\\CorporateBodyType',
       'ForAttentionOf' => '\\ForAttentionOf',
       'AbstractAddressType' => '\\AbstractAddressType',
@@ -82,24 +81,24 @@ class DualDeliveryClient extends \SoapClient
       'BankCodeCType' => '\\BankCodeCType',
       'BillerType' => '\\BillerType',
       'ClassificationType' => '\\ClassificationType',
-      'CountryType' => '\\CountryType',
+      'CountryType' => '\\EBInterface\\CountryType',
       'DeliveryType' => '\\DeliveryType',
-      'DetailsType' => '\\DetailsType',
-      'DirectDebitType' => '\\DirectDebitType',
-      'DiscountType' => '\\DiscountType',
-      'FurtherIdentificationType' => '\\FurtherIdentificationType',
+      'DetailsType' => '\\EBInterface\\DetailsType',
+      'DirectDebitType' => '\\EBInterface\\DirectDebitType',
+      'DiscountType' => '\\EBInterface\\DiscountType',
+      'FurtherIdentificationType' => '\\EBInterface\\FurtherIdentificationType',
       'InvoiceType' => '\\InvoiceType',
-      'InvoiceRecipientType' => '\\InvoiceRecipientType',
-      'ItemListType' => '\\ItemListType',
-      'ItemType' => '\\ItemType',
-      'ListLineItemType' => '\\ListLineItemType',
-      'NoPaymentType' => '\\NoPaymentType',
+      'InvoiceRecipientType' => '\\EBInterface\\InvoiceRecipientType',
+      'ItemListType' => '\\EBInterface\\ItemListType',
+      'ItemType' => '\\EBInterface\\ItemType',
+      'ListLineItemType' => '\\EBInterface\\ListLineItemType',
+      'NoPaymentType' => '\\EBInterface\\NoPaymentType',
       'OrderingPartyType' => '\\OrderingPartyType',
       'OrderReferenceDetailType' => '\\OrderReferenceDetailType',
       'OrderReferenceType' => '\\OrderReferenceType',
       'OtherTaxType' => '\\OtherTaxType',
       'PaymentConditionsType' => '\\PaymentConditionsType',
-      'PaymentMethodType' => '\\PaymentMethodType',
+      'PaymentMethodType' => '\\EBInterface\\PaymentMethodType',
       'PaymentReferenceType' => '\\PaymentReferenceType',
       'PeriodType' => '\\PeriodType',
       'PresentationDetailsType' => '\\PresentationDetailsType',
@@ -110,7 +109,7 @@ class DualDeliveryClient extends \SoapClient
       'TaxRateType' => '\\TaxRateType',
       'TaxType' => '\\TaxType',
       'UnitType' => '\\UnitType',
-      'UniversalBankTransactionType' => '\\UniversalBankTransactionType',
+      'UniversalBankTransactionType' => '\\EBInterface\\UniversalBankTransactionType',
       'VATType' => '\\VATType',
       'DualDeliveryRequest' => '\\DualDeliveryRequest',
       'DualDeliveryResponse' => '\\DualDeliveryResponse',
@@ -326,18 +325,23 @@ class DualDeliveryClient extends \SoapClient
         return $dom->saveXML();
     }
 
+    public function getClassMap(): array
+    {
+        $classmap = [];
+        foreach (self::$classmap as $key => $value) {
+            $classmap[$key] = __NAMESPACE__.'\\Types'.$value;
+        }
+
+        return $classmap;
+    }
+
     /**
      * @param array|string|null $cert either a path to a PEM file, or an array with a path and a password
      */
     public function __construct(string $location, $cert = null, $trace = false)
     {
         $options = [];
-
-        foreach (self::$classmap as $key => $value) {
-            if (!isset($options['classmap'][$key])) {
-                $options['classmap'][$key] = __NAMESPACE__.'\\Types'.$value;
-            }
-        }
+        $options['classmap'] = $this->getClassMap();
 
         $this->origLocation = $location;
         $this->activeQuirks = self::getQuirksForLocation($location);

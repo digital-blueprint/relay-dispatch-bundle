@@ -14,4 +14,12 @@ class DualDeliveryApiTest extends TestCase
         $client = new DualDeliveryClient('https://dualtest.vendo.at/');
         $this->assertNotNull($client);
     }
+
+    public function testClassMap()
+    {
+        $client = new DualDeliveryClient('https://dualtest.vendo.at/');
+        foreach ($client->getClassMap() as $key => $value) {
+            $this->assertTrue(class_exists($value), $value);
+        }
+    }
 }

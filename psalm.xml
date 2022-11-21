@@ -11,7 +11,8 @@
         <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
-            <directory name="src/DualDeliveryApi" />
+            <directory name="src/DualDeliveryApi/Types" />
+            <directory name="src/DualDeliveryApi/Types/EBInterface" />
             <directory name="src/Service" />
         </ignoreFiles>
     </projectFiles>
