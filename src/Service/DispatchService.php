@@ -74,16 +74,6 @@ class DispatchService
     /**
      * @var string
      */
-    private $senderProfile;
-
-    /**
-     * @var string
-     */
-    private $senderProfileVersion;
-
-    /**
-     * @var string
-     */
     private $certPassword;
 
     /**
@@ -132,8 +122,6 @@ class DispatchService
 
     public function setConfig(array $config)
     {
-        $this->senderProfile = $config['sender_profile'] ?? '';
-        $this->senderProfileVersion = $config['sender_profile_version'] ?? '';
         $this->certPassword = $config['cert_password'] ?? '';
         $this->cert = $config['cert'] ?? '';
         $this->baseUrl = $config['base_url'];
@@ -762,8 +750,8 @@ class DispatchService
         $xml_nsDualDeliveryRequest = $xml->createElement('ns:DualDeliveryRequest');
         $xml_nsDualDeliveryRequest->setAttribute('version', '1.0');
         $xml_nsSender = $xml->createElement('ns:Sender');
-        $xml_nsSenderProfile = $xml->createElement('ns:SenderProfile', $this->senderProfile);
-        $xml_nsSenderProfile->setAttribute('version', $this->senderProfileVersion);
+        $xml_nsSenderProfile = $xml->createElement('ns:SenderProfile', $this->dd->getSenderProfile()->get_());
+        $xml_nsSenderProfile->setAttribute('version', $this->dd->getSenderProfile()->getVersion());
         $xml_nsSender->appendChild($xml_nsSenderProfile);
         $xml_nsDualDeliveryRequest->appendChild($xml_nsSender);
 //        $xml_nsDualDeliveryID = $xml->createElement('ns:DualDeliveryID', '87720');
@@ -885,8 +873,8 @@ class DispatchService
         $xml_ns1DualDeliveryPreAddressingRequest = $xml->createElement('ns1:DualDeliveryPreAddressingRequest');
         $xml_ns1DualDeliveryPreAddressingRequest->setAttribute('version', '1.0');
         $xml_ns2Sender = $xml->createElement('ns2:Sender');
-        $xml_ns2SenderProfile = $xml->createElement('ns2:SenderProfile', 'TU_GRAZ');
-        $xml_ns2SenderProfile->setAttribute('version', '1.0');
+        $xml_ns2SenderProfile = $xml->createElement('ns2:SenderProfile', $this->dd->getSenderProfile()->get_());
+        $xml_ns2SenderProfile->setAttribute('version', $this->dd->getSenderProfile()->getVersion());
         $xml_ns2Sender->appendChild($xml_ns2SenderProfile);
         $xml_ns1DualDeliveryPreAddressingRequest->appendChild($xml_ns2Sender);
         $xml_ns1Recipients = $xml->createElement('ns1:Recipients');

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Command;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as DualDeliveryMetadata;
@@ -14,14 +13,12 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingResp
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryResponse;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequestType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadAttributesType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PropertyValueMetaDataSetType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
@@ -66,7 +63,6 @@ class Debug2Command extends Command
 
         $data = file_get_contents(__DIR__.'/../../tests/DualDeliveryApi/example.pdf');
         $payloadAttrs = new PayloadAttributesType('example.pdf', 'application/pdf');
-        $payloadAttrs->setId('foobar-'.uniqid());
         $payloadAttrs->setChecksum(new Checksum('MD5', md5($data)));
         $doc = new BinaryDocumentType($data);
         $dualDeliveryPayloads = [new PayloadType($payloadAttrs, $doc)];
@@ -75,8 +71,8 @@ class Debug2Command extends Command
         $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
 
         $meta = new DualDeliveryMetaData(
-            'foo-'.uniqid(),
-            null,
+            $this->dd->createAppDeliveryID(),
+            $this->dd->getApplicationID(),
             'Rsa',
             'k thx bye',
             '1120 110874-016',
@@ -108,12 +104,9 @@ class Debug2Command extends Command
         $personData = new PersonDataType($physicalPerson);
         $recipient = new RecipientType($personData);
         $recipients = new Recipients([
-            new Recipient('42', $recipient), ]);
+            new Recipient($this->dd->createRecipientID(), $recipient), ]);
 
-        $meta = new PreMetaData('foo-'.uniqid());
-        $meta->setAdditionalMetaData(
-            new AdditionalMetaData(
-                new PropertyValueMetaDataSetType(new ParameterType('CampaignId', 'DUMMY'))));
+        $meta = new PreMetaData($this->dd->createAppDeliveryID());
         $meta->setTestCase(false);
         $meta->setProcessingProfile(new ProcessingProfile('ZuseDD', '1.1'));
         $meta->setAsynchronous(false);
@@ -129,7 +122,7 @@ class Debug2Command extends Command
     protected function doStatusRequest(string $appDeliveryId): DualNotificationRequestType
     {
         $client = $this->dd->getClient();
-        $request = new StatusRequestType(null, $appDeliveryId, null);
+        $request = new StatusRequestType($this->dd->getApplicationID(), $appDeliveryId, null);
         $response = $client->dualStatusRequestOperation($request);
         var_dump($client->getPrettyLastResponse());
         dump($response);
