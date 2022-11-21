@@ -16,45 +16,36 @@ class MetaData
     protected $AppDeliveryID = null;
 
     /**
-     * @var ApplicationID
+     * @var ?ApplicationID
      */
     protected $ApplicationID = null;
 
     /**
-     * @var AdditionalMetaData
+     * @var ?AdditionalMetaData
      */
     protected $AdditionalMetaData = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $TestCase = null;
 
     /**
-     * @var ProcessingProfile
+     * @var ?ProcessingProfile
      */
     protected $ProcessingProfile = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $Asynchronous = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $PreCreateSendings = null;
 
-    /**
-     * @param string             $AppDeliveryID
-     * @param ApplicationID      $ApplicationID
-     * @param AdditionalMetaData $AdditionalMetaData
-     * @param bool               $TestCase
-     * @param ProcessingProfile  $ProcessingProfile
-     * @param bool               $Asynchronous
-     * @param bool               $PreCreateSendings
-     */
-    public function __construct($AppDeliveryID, $ApplicationID = null, $AdditionalMetaData = null, $TestCase = null, $ProcessingProfile = null, $Asynchronous = null, $PreCreateSendings = null)
+    public function __construct(string $AppDeliveryID, ?ApplicationID $ApplicationID = null, ?AdditionalMetaData $AdditionalMetaData = null, ?bool $TestCase = null, ?ProcessingProfile $ProcessingProfile = null, ?bool $Asynchronous = null, ?bool $PreCreateSendings = null)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->ApplicationID = $ApplicationID;
@@ -70,82 +61,68 @@ class MetaData
         return $this->AppDeliveryID;
     }
 
-    public function setAppDeliveryID(string $AppDeliveryID): self
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
         $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
-    public function getApplicationID(): ApplicationID
+    public function getApplicationID(): ?ApplicationID
     {
         return $this->ApplicationID;
     }
 
-    public function setApplicationID(ApplicationID $ApplicationID): self
+    public function setApplicationID(ApplicationID $ApplicationID): void
     {
         $this->ApplicationID = $ApplicationID;
-
-        return $this;
     }
 
-    public function getAdditionalMetaData(): AdditionalMetaData
+    public function getAdditionalMetaData(): ?AdditionalMetaData
     {
         return $this->AdditionalMetaData;
     }
 
-    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): self
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): void
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
-
-        return $this;
     }
 
-    public function getTestCase(): bool
+    public function getTestCase(): ?bool
     {
         return $this->TestCase;
     }
 
-    public function setTestCase(bool $TestCase): self
+    public function setTestCase(bool $TestCase): void
     {
         $this->TestCase = $TestCase;
-
-        return $this;
     }
 
-    public function getProcessingProfile(): ProcessingProfile
+    public function getProcessingProfile(): ?ProcessingProfile
     {
         return $this->ProcessingProfile;
     }
 
-    public function setProcessingProfile(ProcessingProfile $ProcessingProfile): self
+    public function setProcessingProfile(ProcessingProfile $ProcessingProfile): void
     {
         $this->ProcessingProfile = $ProcessingProfile;
-
-        return $this;
     }
 
-    public function getAsynchronous(): bool
+    public function getAsynchronous(): ?bool
     {
         return $this->Asynchronous;
     }
 
-    public function setAsynchronous(bool $Asynchronous): self
+    public function setAsynchronous(bool $Asynchronous): void
     {
         $this->Asynchronous = $Asynchronous;
-
-        return $this;
     }
 
-    public function getPreCreateSendings(): bool
+    public function getPreCreateSendings(): ?bool
     {
         return $this->PreCreateSendings;
     }
 
-    public function setPreCreateSendings(bool $PreCreateSendings): self
+    public function setPreCreateSendings(bool $PreCreateSendings): void
     {
         $this->PreCreateSendings = $PreCreateSendings;
-
-        return $this;
     }
 }

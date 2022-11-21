@@ -7,27 +7,22 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class DeliveryChannels
 {
     /**
-     * @var DeliveryChannelSetType
+     * @var ?DeliveryChannelSetType
      */
     protected $DeliveryChannelSet = null;
 
-    /**
-     * @param DeliveryChannelSetType $DeliveryChannelSet
-     */
-    public function __construct($DeliveryChannelSet = null)
+    public function __construct(?DeliveryChannelSetType $DeliveryChannelSet = null)
     {
         $this->DeliveryChannelSet = $DeliveryChannelSet;
     }
 
-    public function getDeliveryChannelSet(): DeliveryChannelSetType
+    public function getDeliveryChannelSet(): ?DeliveryChannelSetType
     {
         return $this->DeliveryChannelSet;
     }
 
-    public function setDeliveryChannelSet(DeliveryChannelSetType $DeliveryChannelSet): self
+    public function setDeliveryChannelSet(DeliveryChannelSetType $DeliveryChannelSet): void
     {
         $this->DeliveryChannelSet = $DeliveryChannelSet;
-
-        return $this;
     }
 }

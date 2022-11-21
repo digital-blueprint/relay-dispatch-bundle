@@ -12,15 +12,11 @@ class PhysicalPersonType extends AbstractPersonType
     protected $Name = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DateOfBirth = null;
 
-    /**
-     * @param PersonNameType $Name
-     * @param string         $DateOfBirth
-     */
-    public function __construct($Name, $DateOfBirth)
+    public function __construct(PersonNameType $Name, ?string $DateOfBirth = null)
     {
         parent::__construct();
         $this->Name = $Name;
@@ -32,22 +28,18 @@ class PhysicalPersonType extends AbstractPersonType
         return $this->Name;
     }
 
-    public function setName(PersonNameType $Name): self
+    public function setName(PersonNameType $Name): void
     {
         $this->Name = $Name;
-
-        return $this;
     }
 
-    public function getDateOfBirth(): string
+    public function getDateOfBirth(): ?string
     {
         return $this->DateOfBirth;
     }
 
-    public function setDateOfBirth(string $DateOfBirth): self
+    public function setDateOfBirth(string $DateOfBirth): void
     {
         $this->DateOfBirth = $DateOfBirth;
-
-        return $this;
     }
 }

@@ -14,7 +14,7 @@ trait BaseSoapTrait
     private function getMockService(string $response)
     {
         $soapClientMock = $this->getMockBuilder(DualDeliveryClient::class)
-            ->setConstructorArgs(['nope'])
+            ->setConstructorArgs(['nope', null, true])
             ->onlyMethods(['__doRequest'])
             ->getMock();
         $soapClientMock->method('__doRequest')->will($this->returnValue($response));

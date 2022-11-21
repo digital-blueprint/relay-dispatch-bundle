@@ -16,11 +16,7 @@ class PersonNameType
      */
     protected $FamilyName = null;
 
-    /**
-     * @param string $GivenName
-     * @param string $FamilyName
-     */
-    public function __construct($GivenName, $FamilyName)
+    public function __construct(string $GivenName, string $FamilyName)
     {
         $this->GivenName = $GivenName;
         $this->FamilyName = $FamilyName;
@@ -31,11 +27,9 @@ class PersonNameType
         return $this->GivenName;
     }
 
-    public function setGivenName(string $GivenName): self
+    public function setGivenName(string $GivenName): void
     {
         $this->GivenName = $GivenName;
-
-        return $this;
     }
 
     public function getFamilyName(): string
@@ -43,10 +37,8 @@ class PersonNameType
         return $this->FamilyName;
     }
 
-    public function setFamilyName(string $FamilyName): self
+    public function setFamilyName(string $FamilyName): void
     {
         $this->FamilyName = $FamilyName;
-
-        return $this;
     }
 }

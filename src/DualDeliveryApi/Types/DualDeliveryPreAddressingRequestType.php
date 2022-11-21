@@ -24,7 +24,7 @@ class DualDeliveryPreAddressingRequestType
     protected $MetaData = null;
 
     /**
-     * @var DeliveryChannels
+     * @var ?DeliveryChannels
      */
     protected $DeliveryChannels = null;
 
@@ -33,13 +33,7 @@ class DualDeliveryPreAddressingRequestType
      */
     protected $version = null;
 
-    /**
-     * @param SenderType $Sender
-     * @param Recipients $Recipients
-     * @param MetaData   $MetaData
-     * @param string     $version
-     */
-    public function __construct($Sender, $Recipients, $MetaData, ?DeliveryChannels $DeliveryChannels, $version)
+    public function __construct(SenderType $Sender, Recipients $Recipients, MetaData $MetaData, ?DeliveryChannels $DeliveryChannels, string $version)
     {
         $this->Sender = $Sender;
         $this->Recipients = $Recipients;
@@ -53,11 +47,9 @@ class DualDeliveryPreAddressingRequestType
         return $this->Sender;
     }
 
-    public function setSender(SenderType $Sender): self
+    public function setSender(SenderType $Sender): void
     {
         $this->Sender = $Sender;
-
-        return $this;
     }
 
     public function getRecipients(): Recipients
@@ -65,11 +57,9 @@ class DualDeliveryPreAddressingRequestType
         return $this->Recipients;
     }
 
-    public function setRecipients(Recipients $Recipients): self
+    public function setRecipients(Recipients $Recipients): void
     {
         $this->Recipients = $Recipients;
-
-        return $this;
     }
 
     public function getMetaData(): MetaData
@@ -77,23 +67,19 @@ class DualDeliveryPreAddressingRequestType
         return $this->MetaData;
     }
 
-    public function setMetaData(MetaData $MetaData): self
+    public function setMetaData(MetaData $MetaData): void
     {
         $this->MetaData = $MetaData;
-
-        return $this;
     }
 
-    public function getDeliveryChannels(): DeliveryChannels
+    public function getDeliveryChannels(): ?DeliveryChannels
     {
         return $this->DeliveryChannels;
     }
 
-    public function setDeliveryChannels(DeliveryChannels $DeliveryChannels): self
+    public function setDeliveryChannels(DeliveryChannels $DeliveryChannels): void
     {
         $this->DeliveryChannels = $DeliveryChannels;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -101,10 +87,8 @@ class DualDeliveryPreAddressingRequestType
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

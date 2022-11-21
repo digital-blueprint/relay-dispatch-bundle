@@ -27,11 +27,9 @@ class ProcessingProfile
         return $this->_;
     }
 
-    public function set_(string $_): self
+    public function set_(string $_): void
     {
         $this->_ = $_;
-
-        return $this;
     }
 
     public function getVersion(): string

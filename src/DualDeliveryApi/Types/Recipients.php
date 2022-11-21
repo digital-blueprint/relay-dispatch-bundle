@@ -14,7 +14,7 @@ class Recipients
     /**
      * @param Recipient[] $Recipient
      */
-    public function __construct($Recipient)
+    public function __construct(array $Recipient)
     {
         $this->Recipient = $Recipient;
     }
