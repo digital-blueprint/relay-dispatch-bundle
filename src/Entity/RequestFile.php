@@ -214,7 +214,14 @@ class RequestFile
      */
     public function getData()
     {
-        return is_resource($this->data) ? stream_get_contents($this->data) : $this->data;
+        if (is_resource($this->data)) {
+            rewind($this->data);
+            $this->data = stream_get_contents($this->data);
+
+            return $this->data;
+        }
+
+        return $this->data;
     }
 
     /**
