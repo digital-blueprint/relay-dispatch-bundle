@@ -48,6 +48,7 @@ class DeliveryStatusChange
     public const STATUS_IN_PROGRESS = 2;
     public const STATUS_SOAP_ERROR = 3;
     public const STATUS_DUAL_DELIVERY_REQUEST_FAILED = 4;
+    public const STATUS_DUAL_DELIVERY_REQUEST_SUCCESS = 5;
 
     /**
      * @ORM\Id

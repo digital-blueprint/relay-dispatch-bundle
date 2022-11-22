@@ -8,15 +8,19 @@ use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AddressIdentifierType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryAddress;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannels;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannelSetType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as DualDeliveryMetadata;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface\CountryType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ErrorType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParametersType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
@@ -25,6 +29,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PostalAddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
@@ -46,6 +51,7 @@ use GuzzleHttp\Exception\RequestException;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -217,6 +223,25 @@ class DispatchService
         }
 
         return $requestFile;
+    }
+
+    /**
+     * Fetches the RequestFiles of a Request.
+     *
+     * @return RequestFile[]
+     */
+    public function getRequestFilesByRequestId(string $identifier): array
+    {
+        /** @var RequestFile[] $requestFiles */
+        $requestFiles = $this->em
+            ->getRepository(RequestFile::class)
+            ->findBy(['request' => $identifier]);
+
+        if (!$requestFiles) {
+            throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestFiles were not found!', 'dispatch:request-files-not-found');
+        }
+
+        return $requestFiles;
     }
 
     /**
@@ -527,6 +552,7 @@ class DispatchService
             $this->doDualDeliveryRequestSoapRequest($request);
         } catch (\Throwable $e) {
             // TODO: how do we handle when request didn't get through?
+            throw new UnrecoverableMessageHandlingException('Request could not be submitted to Vendo!', 0, $e);
         }
 
         // TODO: Dispatch another delayed message if Vendo request failed (is this even possible now since DualDeliveryRequests are made for each recipient?)
@@ -1016,26 +1042,23 @@ class DispatchService
         $preAddressingRequest->setDualDeliveryID($addressingResults[0]->getDualDeliveryID());
     }
 
-    public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest)
+    public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest): bool
     {
         $service = $this->dd->getClient();
-
-        $dualDeliveryRecipients = [];
-
-        /** @var RequestRecipient $recipient */
-        foreach ($dispatchRequest->getRecipients() as $recipient) {
-            $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
-            $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
-            $personData = new PersonDataType($physicalPerson);
-//            $dualDeliveryRecipients[] = new Recipient(null, new RecipientType($personData));
-//            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
-            $dualDeliveryRecipients[] = new RecipientType($personData);
-        }
-
         $dualDeliveryPayloads = [];
 
         /** @var RequestFile[] $files */
         $files = $dispatchRequest->getFiles();
+//        dump('$files');
+//        dump($files);
+
+        // For some reasons files are not loaded by default
+        if (count($files) === 0) {
+            $files = $this->getRequestFilesByRequestId($dispatchRequest->getIdentifier());
+        }
+
+//        dump('$files2');
+//        dump($files);
         foreach ($files as $file) {
             $payloadAttrs = new PayloadAttributesType($file->getName(), $file->getFileFormat());
             // TODO: Is this the correct format to send content?
@@ -1070,9 +1093,36 @@ class DispatchService
         // Zustellservice nicht zwingend erforderlich.
         $gz = null;
 
+        /** @var RequestRecipient $recipient */
         foreach ($dispatchRequest->getRecipients() as $recipient) {
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
+//            $address = new AddressType(
+//                new AddressIdentifierType($recipient->getIdentifier()),
+//                '',
+//                $recipient->getGivenName() . ' ' . $recipient->getFamilyName(),
+//                $recipient->getStreetAddress() . ' ' . $recipient->getBuildingNumber(),
+//                '',
+//                $recipient->getAddressLocality(),
+//                $recipient->getPostalCode(),
+//                new CountryType($recipient->getAddressCountry()),
+//                '',
+//                '',
+//                '',
+//                ''
+//            );
+
+            $address = new PostalAddressType(
+                $recipient->getIdentifier(),
+                $recipient->getPostalCode(),
+                $recipient->getAddressLocality(),
+                null,
+                new DeliveryAddress($recipient->getStreetAddress(), $recipient->getBuildingNumber())
+            );
+            $address->setCountryCode($recipient->getAddressCountry());
+
+//            $personData = new PersonDataType($physicalPerson, $address);
+            // TODO: Add address
             $personData = new PersonDataType($physicalPerson);
 //            $dualDeliveryRecipients[] = new Recipient(null, new RecipientType($personData));
 //            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
@@ -1100,7 +1150,8 @@ class DispatchService
             try {
                 $response = $service->dualDeliveryRequestOperation($request);
             } catch (\Exception $e) {
-                $this->createDeliveryStatusChange($recipient->getIdentifier(), DeliveryStatusChange::STATUS_SOAP_ERROR, 'Soap error: '.$e->getMessage());
+                $this->createDeliveryStatusChange($recipient->getIdentifier(),
+                    DeliveryStatusChange::STATUS_SOAP_ERROR, 'Soap error: '.$e->getMessage());
 
                 throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR,
@@ -1128,7 +1179,8 @@ class DispatchService
                 }
 
                 $errorText = implode(', ', $errorTexts);
-                $this->createDeliveryStatusChange($recipient->getIdentifier(), DeliveryStatusChange::STATUS_DUAL_DELIVERY_REQUEST_FAILED, 'DualDelivery request failed: '.$errorText);
+                $this->createDeliveryStatusChange($recipient->getIdentifier(),
+                    DeliveryStatusChange::STATUS_DUAL_DELIVERY_REQUEST_FAILED, 'DualDelivery request failed: '.$errorText);
 
                 throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDelivery request failed!', 'dispatch:dual-delivery-request-failed', [
@@ -1139,6 +1191,8 @@ class DispatchService
                 );
             }
 
+            $this->createDeliveryStatusChange($recipient->getIdentifier(),
+                DeliveryStatusChange::STATUS_DUAL_DELIVERY_REQUEST_SUCCESS, 'DualDelivery request submitted');
             $recipient->setDualDeliveryID($response->getDualDeliveryID());
 
             try {
@@ -1146,7 +1200,8 @@ class DispatchService
                 $this->em->flush();
             } catch (\Exception $e) {
                 throw ApiError::withDetails(
-                    Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be update after DualDelivery request!', 'dispatch:request-recipient-not-updated', [
+                    Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be update after DualDelivery request!',
+                    'dispatch:request-recipient-not-updated', [
                         'request-id' => $dispatchRequest->getIdentifier(),
                         'recipient-id' => $recipient->getIdentifier(),
                         'message' => $e->getMessage(),
@@ -1155,6 +1210,6 @@ class DispatchService
             }
         }
 
-        // TODO: Return some result
+        return true;
     }
 }
