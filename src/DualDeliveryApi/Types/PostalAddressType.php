@@ -32,7 +32,7 @@ class PostalAddressType extends AbstractAddressType
     protected $DeliveryAddress = null;
 
     /**
-     * @var anonymous223
+     * @var string
      */
     protected $type = null;
 
@@ -40,11 +40,11 @@ class PostalAddressType extends AbstractAddressType
      * @param string          $Id
      * @param string          $PostalCode
      * @param string          $Municipality
-     * @param string          $MunicipalityNumber
+     * @param string|null     $MunicipalityNumber
      * @param DeliveryAddress $DeliveryAddress
-     * @param anonymous223    $type
+     * @param string|null     $type
      */
-    public function __construct($Id, $PostalCode, $Municipality, $MunicipalityNumber, $DeliveryAddress, $type)
+    public function __construct($Id, $PostalCode, $Municipality, $MunicipalityNumber, $DeliveryAddress, $type = null)
     {
         parent::__construct($Id);
         $this->PostalCode = $PostalCode;
@@ -115,7 +115,7 @@ class PostalAddressType extends AbstractAddressType
     }
 
     /**
-     * @return anonymous223
+     * @return string
      */
     public function getType()
     {
@@ -123,7 +123,7 @@ class PostalAddressType extends AbstractAddressType
     }
 
     /**
-     * @param anonymous223 $type
+     * @param string $type
      */
     public function setType($type): self
     {
