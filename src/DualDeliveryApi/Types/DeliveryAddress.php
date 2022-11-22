@@ -27,12 +27,12 @@ class DeliveryAddress
     protected $DoorNumber = null;
 
     /**
-     * @param string $StreetName
-     * @param string $BuildingNumber
-     * @param string $Unit
-     * @param string $DoorNumber
+     * @param string      $StreetName
+     * @param string      $BuildingNumber
+     * @param string|null $Unit
+     * @param string|null $DoorNumber
      */
-    public function __construct($StreetName, $BuildingNumber, $Unit, $DoorNumber)
+    public function __construct($StreetName, $BuildingNumber, $Unit = null, $DoorNumber = null)
     {
         $this->StreetName = $StreetName;
         $this->BuildingNumber = $BuildingNumber;
