@@ -379,7 +379,7 @@ class DualDeliveryClient extends \SoapClient
             $path = $mapping[$name];
             // In case the mapping value is null, assume it's not supported
             if ($path === null) {
-                throw new \SoapFault(null, $host." doesn't provide ".$name);
+                throw new \SoapFault('', $host." doesn't provide ".$name);
             }
         } else {
             $path = '';

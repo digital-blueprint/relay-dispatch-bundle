@@ -142,7 +142,7 @@ class RequestFile
     /**
      * @ORM\Column(type="binary", length=209715200)
      *
-     * @var resource
+     * @var resource|string|false
      */
     private $data;
 
@@ -210,7 +210,7 @@ class RequestFile
     }
 
     /**
-     * @return resource|string
+     * @return resource|string|false
      */
     public function getData()
     {

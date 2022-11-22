@@ -67,11 +67,11 @@ class DebugCommand extends Command
 
                 var_dump($response);
 
-                if ($response) {
-                    var_dump($response->getHeaders());
-                    var_dump($response->getStatusCode());
-                    echo $response->getBody()->getContents();
-                }
+//                if ($response) {
+//                    var_dump($response->getHeaders());
+//                    var_dump($response->getStatusCode());
+//                    echo $response->getBody()->getContents();
+//                }
                 break;
             case 'do-api-pre-addressing-request':
                 $output->writeln('Do API PreAddrssing request...');
