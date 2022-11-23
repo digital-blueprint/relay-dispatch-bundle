@@ -22,7 +22,7 @@ class Success
     protected $NotificationsPerformed = null;
 
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $ConfirmationTimestamp = null;
 
@@ -41,15 +41,7 @@ class Success
      */
     protected $Signature = null;
 
-    /**
-     * @param Sender                 $Sender
-     * @param Receiver               $Receiver
-     * @param NotificationsPerformed $NotificationsPerformed
-     * @param AssertionType          $AuthBlock
-     * @param BinaryConfirmation     $BinaryConfirmation
-     * @param SignatureType          $Signature
-     */
-    public function __construct($Sender, $Receiver, $NotificationsPerformed, \DateTime $ConfirmationTimestamp, $AuthBlock, $BinaryConfirmation, $Signature)
+    public function __construct(Sender $Sender, Receiver $Receiver, NotificationsPerformed $NotificationsPerformed, \DateTimeInterface $ConfirmationTimestamp, AssertionType $AuthBlock, BinaryConfirmation $BinaryConfirmation, SignatureType $Signature)
     {
         $this->Sender = $Sender;
         $this->Receiver = $Receiver;
@@ -65,11 +57,9 @@ class Success
         return $this->Sender;
     }
 
-    public function setSender(Sender $Sender): self
+    public function setSender(Sender $Sender): void
     {
         $this->Sender = $Sender;
-
-        return $this;
     }
 
     public function getReceiver(): Receiver
@@ -77,11 +67,9 @@ class Success
         return $this->Receiver;
     }
 
-    public function setReceiver(Receiver $Receiver): self
+    public function setReceiver(Receiver $Receiver): void
     {
         $this->Receiver = $Receiver;
-
-        return $this;
     }
 
     public function getNotificationsPerformed(): NotificationsPerformed
@@ -89,34 +77,19 @@ class Success
         return $this->NotificationsPerformed;
     }
 
-    public function setNotificationsPerformed(NotificationsPerformed $NotificationsPerformed): self
+    public function setNotificationsPerformed(NotificationsPerformed $NotificationsPerformed): void
     {
         $this->NotificationsPerformed = $NotificationsPerformed;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getConfirmationTimestamp()
+    public function getConfirmationTimestamp(): \DateTimeInterface
     {
-        if ($this->ConfirmationTimestamp === null) {
-            return null;
-        } else {
-            try {
-                return new \DateTime($this->ConfirmationTimestamp);
-            } catch (\Exception $e) {
-                return false;
-            }
-        }
+        return new \DateTimeImmutable($this->ConfirmationTimestamp);
     }
 
-    public function setConfirmationTimestamp(\DateTime $ConfirmationTimestamp): self
+    public function setConfirmationTimestamp(\DateTimeInterface $ConfirmationTimestamp): void
     {
         $this->ConfirmationTimestamp = $ConfirmationTimestamp->format(\DateTime::ATOM);
-
-        return $this;
     }
 
     public function getAuthBlock(): AssertionType
@@ -124,11 +97,9 @@ class Success
         return $this->AuthBlock;
     }
 
-    public function setAuthBlock(AssertionType $AuthBlock): self
+    public function setAuthBlock(AssertionType $AuthBlock): void
     {
         $this->AuthBlock = $AuthBlock;
-
-        return $this;
     }
 
     public function getBinaryConfirmation(): BinaryConfirmation
@@ -136,11 +107,9 @@ class Success
         return $this->BinaryConfirmation;
     }
 
-    public function setBinaryConfirmation(BinaryConfirmation $BinaryConfirmation): self
+    public function setBinaryConfirmation(BinaryConfirmation $BinaryConfirmation): void
     {
         $this->BinaryConfirmation = $BinaryConfirmation;
-
-        return $this;
     }
 
     public function getSignature(): SignatureType
@@ -148,10 +117,8 @@ class Success
         return $this->Signature;
     }
 
-    public function setSignature(SignatureType $Signature): self
+    public function setSignature(SignatureType $Signature): void
     {
         $this->Signature = $Signature;
-
-        return $this;
     }
 }
