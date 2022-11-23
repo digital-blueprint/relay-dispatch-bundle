@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Controller;
 
-use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
-use Symfony\Component\HttpFoundation\Response;
 
 class PostSubmitRequest extends BaseDispatchController
 {

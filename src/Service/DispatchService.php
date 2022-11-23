@@ -542,7 +542,6 @@ class DispatchService
     /**
      * Checks if a request is in a state where it can be submitted.
      *
-     * @param Request $request
      * @return void
      */
     public function checkRequestReadyForSubmit(Request $request)
