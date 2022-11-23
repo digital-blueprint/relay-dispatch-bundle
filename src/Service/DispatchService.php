@@ -1107,7 +1107,7 @@ class DispatchService
             $personData = new PersonDataType($physicalPerson, $address);
             $dualDeliveryRecipient = new RecipientType($personData);
 
-//            $id = $dualDeliveryRequest->getIdentifier().'-'.$recipient->getIdentifier().'-pbek-'.rand(100000, 999999);
+//            $id = $dispatchRequest->getIdentifier().'-'.$recipient->getIdentifier().'-pbek-'.rand(100000, 999999);
             $id = $dispatchRequest->getIdentifier().'-'.$recipient->getIdentifier();
             $meta = new DualDeliveryMetaData(
                 $id,
