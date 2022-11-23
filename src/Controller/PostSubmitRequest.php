@@ -28,10 +28,7 @@ class PostSubmitRequest extends BaseDispatchController
 
         $request = $this->dispatchService->getRequestByIdForCurrentPerson($identifier);
 
-        if ($request->isSubmitted()) {
-            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request was already submitted!', 'dispatch:request-submitted-read-only');
-        }
-
+        $this->dispatchService->checkRequestReadyForSubmit($request);
         $this->dispatchService->submitRequest($request);
 
         return $request;

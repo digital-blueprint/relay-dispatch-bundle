@@ -407,4 +407,11 @@ class Request
     {
         $this->name = $name;
     }
+
+    public function isReadyForSubmit(): bool
+    {
+        return $this->isSubmitted() === false &&
+            $this->getRecipients()->count() > 0 &&
+            $this->getFiles()->count() > 0;
+    }
 }
