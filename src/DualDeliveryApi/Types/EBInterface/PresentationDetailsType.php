@@ -6,7 +6,6 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PresentationDetailsExtensionType;
 
 class PresentationDetailsType
 {

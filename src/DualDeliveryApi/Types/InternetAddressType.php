@@ -9,7 +9,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface\KeyInfoType;
 class InternetAddressType extends AbstractAddressType
 {
     /**
-     * @var KeyInfoType
+     * @var \Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\KeyInfoType
      */
     protected $KeyInfo = null;
 
@@ -19,9 +19,9 @@ class InternetAddressType extends AbstractAddressType
     protected $Address = null;
 
     /**
-     * @param string      $Id
-     * @param KeyInfoType $KeyInfo
-     * @param AnyURI      $Address
+     * @param string                                                              $Id
+     * @param \Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\KeyInfoType $KeyInfo
+     * @param AnyURI                                                              $Address
      */
     public function __construct($Id, $KeyInfo, $Address)
     {

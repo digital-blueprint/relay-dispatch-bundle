@@ -11,10 +11,9 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Decimal2Type;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DetailsType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DocumentTypeType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\InvoiceRecipientType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\InvoiceRootExtensionType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\LanguageType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PaymentMethodType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SignatureType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\SignatureType;
 
 class InvoiceType
 {
