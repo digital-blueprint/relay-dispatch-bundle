@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\AdditionalMetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ApplicationID;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfile;
 
 class MetaData
 {

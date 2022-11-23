@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\CurrencyType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\date;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Decimal2Type;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DetailsType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DocumentTypeType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\InvoiceRecipientType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\LanguageType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PaymentMethodType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\SignatureType;
 

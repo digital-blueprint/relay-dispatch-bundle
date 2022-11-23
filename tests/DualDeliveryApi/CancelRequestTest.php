@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ApplicationID;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellation\DualDeliveryCancellationRequest;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
 use PHPUnit\Framework\TestCase;
 
 class CancelRequestTest extends TestCase

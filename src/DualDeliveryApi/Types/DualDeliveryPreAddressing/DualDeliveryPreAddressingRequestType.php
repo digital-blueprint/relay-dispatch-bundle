@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannels;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\DeliveryChannels;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
 
 class DualDeliveryPreAddressingRequestType
 {

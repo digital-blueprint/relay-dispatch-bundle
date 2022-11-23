@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ErrorsType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\AdditionalMetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ErrorsType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\StatusType;
 
 class DualDeliveryBulkResponseType
 {

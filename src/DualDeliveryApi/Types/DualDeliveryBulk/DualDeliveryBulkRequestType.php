@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Sender;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\PayloadType;
 
 class DualDeliveryBulkRequestType
 {

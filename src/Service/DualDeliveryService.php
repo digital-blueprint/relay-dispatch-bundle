@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Service;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryClient;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ApplicationID;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;

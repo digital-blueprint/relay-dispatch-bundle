@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Payments;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
-
 class MetaData
 {
     /**
@@ -124,11 +119,9 @@ class MetaData
         return $this->DeliveryQuality;
     }
 
-    public function setDeliveryQuality(string $DeliveryQuality): self
+    public function setDeliveryQuality(string $DeliveryQuality): void
     {
         $this->DeliveryQuality = $DeliveryQuality;
-
-        return $this;
     }
 
     public function getSubject(): ?string
@@ -146,11 +139,9 @@ class MetaData
         return $this->GZ;
     }
 
-    public function setGZ(string $GZ): self
+    public function setGZ(string $GZ): void
     {
         $this->GZ = $GZ;
-
-        return $this;
     }
 
     public function getPayments(): ?Payments

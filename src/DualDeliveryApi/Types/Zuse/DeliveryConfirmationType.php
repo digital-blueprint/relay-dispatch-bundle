@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Receiver;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Sender;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk\Sender;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\SignatureType;
 
 class DeliveryConfirmationType extends DeliveryAnswerType

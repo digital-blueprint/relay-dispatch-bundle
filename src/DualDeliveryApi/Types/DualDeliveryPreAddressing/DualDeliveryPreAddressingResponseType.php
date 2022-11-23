@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AddressingResults;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ErrorsType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ErrorsType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\StatusType;
 
 class DualDeliveryPreAddressingResponseType
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
 use PHPUnit\Framework\TestCase;
 
 class StatusRequestTest extends TestCase

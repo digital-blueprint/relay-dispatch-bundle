@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellation;
 
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\StatusType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk\BulkElements;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusType;
 
 class DualDeliveryCancellationResponseType
 {

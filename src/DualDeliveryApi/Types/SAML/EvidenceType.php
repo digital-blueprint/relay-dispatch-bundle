@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\IDReferenceType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\IDReferenceType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\stringReferenceType;
 
 class EvidenceType

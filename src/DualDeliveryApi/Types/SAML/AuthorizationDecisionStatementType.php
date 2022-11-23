@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DecisionType;
 
 class AuthorizationDecisionStatementType extends SubjectStatementAbstractType
 {

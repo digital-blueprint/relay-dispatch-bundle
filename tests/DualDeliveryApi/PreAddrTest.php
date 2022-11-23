@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipient;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;

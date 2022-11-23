@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\BinaryDocumentType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\Checksum;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\DualDeliveryRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as DualDeliveryMetadata;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadAttributesType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\PayloadAttributesType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\PayloadType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
