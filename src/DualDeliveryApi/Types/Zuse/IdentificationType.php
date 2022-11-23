@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\stringentificationType;
-
 class IdentificationType
 {
     /**
@@ -15,17 +12,17 @@ class IdentificationType
     protected $Value = null;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Type = null;
 
     /**
-     * @var AnyURI
+     * @var ?string
      */
     protected $Authority = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $any = null;
 
@@ -34,14 +31,7 @@ class IdentificationType
      */
     protected $Id = null;
 
-    /**
-     * @param Value  $Value
-     * @param AnyURI $Type
-     * @param AnyURI $Authority
-     * @param string $any
-     * @param string $Id
-     */
-    public function __construct($Value, $Type, $Authority, $any, $Id)
+    public function __construct(Value $Value, string $Type, ?string $Authority, ?string $any, string $Id)
     {
         $this->Value = $Value;
         $this->Type = $Type;
@@ -55,59 +45,39 @@ class IdentificationType
         return $this->Value;
     }
 
-    /**
-     * @return stringentificationType
-     */
-    public function setValue(Value $Value): self
+    public function setValue(Value $Value): void
     {
         $this->Value = $Value;
-
-        return $this;
     }
 
-    public function getType(): AnyURI
+    public function getType(): string
     {
         return $this->Type;
     }
 
-    /**
-     * @return stringentificationType
-     */
-    public function setType(AnyURI $Type): self
+    public function setType(string $Type): void
     {
         $this->Type = $Type;
-
-        return $this;
     }
 
-    public function getAuthority(): AnyURI
+    public function getAuthority(): ?string
     {
         return $this->Authority;
     }
 
-    /**
-     * @return stringentificationType
-     */
-    public function setAuthority(AnyURI $Authority): self
+    public function setAuthority(string $Authority): void
     {
         $this->Authority = $Authority;
-
-        return $this;
     }
 
-    public function getAny(): string
+    public function getAny(): ?string
     {
         return $this->any;
     }
 
-    /**
-     * @return stringentificationType
-     */
-    public function setAny(string $any): self
+    public function setAny(string $any): void
     {
         $this->any = $any;
-
-        return $this;
     }
 
     public function getId(): string
@@ -115,13 +85,8 @@ class IdentificationType
         return $this->Id;
     }
 
-    /**
-     * @return stringentificationType
-     */
-    public function setId(string $Id): self
+    public function setId(string $Id): void
     {
         $this->Id = $Id;
-
-        return $this;
     }
 }

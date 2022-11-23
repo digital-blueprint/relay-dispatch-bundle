@@ -7,22 +7,22 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 class MetaData
 {
     /**
-     * @var string
+     * @var ?string
      */
     protected $Subject = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $AppDeliveryID = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $GZ = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $MZSDeliveryID = null;
 
@@ -32,47 +32,36 @@ class MetaData
     protected $DeliveryQuality = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $DeliveryConfirmation = null;
 
     /**
-     * @var DocumentClass
+     * @var ?DocumentClass
      */
     protected $DocumentClass = null;
 
     /**
-     * @var ReferencesType
+     * @var ?ReferencesType
      */
     protected $References = null;
 
     /**
-     * @var \DateTime
+     * @var ?string
      */
     protected $StartNotificationBefore = null;
 
     /**
-     * @var \DateTime
+     * @var ?string
      */
     protected $DeliverBefore = null;
 
     /**
-     * @var PrintParameter
+     * @var ?PrintParameter
      */
     protected $PrintParameter = null;
 
-    /**
-     * @param string         $Subject
-     * @param string         $AppDeliveryID
-     * @param string         $GZ
-     * @param string         $MZSDeliveryID
-     * @param string         $DeliveryQuality
-     * @param bool           $DeliveryConfirmation
-     * @param DocumentClass  $DocumentClass
-     * @param ReferencesType $References
-     * @param PrintParameter $PrintParameter
-     */
-    public function __construct($Subject, $AppDeliveryID, $GZ, $MZSDeliveryID, $DeliveryQuality, $DeliveryConfirmation, $DocumentClass, $References, \DateTime $StartNotificationBefore, \DateTime $DeliverBefore, $PrintParameter)
+    public function __construct(?string $Subject, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $DeliveryQuality, ?bool $DeliveryConfirmation, ?DocumentClass $DocumentClass, ?ReferencesType $References, ?\DateTimeInterface $StartNotificationBefore, ?\DateTimeInterface $DeliverBefore, ?PrintParameter $PrintParameter)
     {
         $this->Subject = $Subject;
         $this->AppDeliveryID = $AppDeliveryID;
@@ -87,175 +76,121 @@ class MetaData
         $this->PrintParameter = $PrintParameter;
     }
 
-    public function getSubject(): string
+    public function getSubject(): ?string
     {
         return $this->Subject;
     }
 
-    public function setSubject(string $Subject): self
+    public function setSubject(string $Subject): void
     {
         $this->Subject = $Subject;
-
-        return $this;
     }
 
-    /**
-     * @return token255
-     */
-    public function getAppDeliveryID()
+    public function getAppDeliveryID(): ?string
     {
         return $this->AppDeliveryID;
     }
 
-    /**
-     * @param token255 $AppDeliveryID
-     */
-    public function setAppDeliveryID($AppDeliveryID): self
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
         $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
-    public function getGZ(): string
+    public function getGZ(): ?string
     {
         return $this->GZ;
     }
 
-    public function setGZ(string $GZ): self
+    public function setGZ(string $GZ): void
     {
         $this->GZ = $GZ;
-
-        return $this;
     }
 
-    /**
-     * @return token255
-     */
-    public function getMZSDeliveryID()
+    public function getMZSDeliveryID(): ?string
     {
         return $this->MZSDeliveryID;
     }
 
-    /**
-     * @param token255 $MZSDeliveryID
-     */
-    public function setMZSDeliveryID($MZSDeliveryID): self
+    public function setMZSDeliveryID(string $MZSDeliveryID): void
     {
         $this->MZSDeliveryID = $MZSDeliveryID;
-
-        return $this;
     }
 
-    /**
-     * @return token255
-     */
-    public function getDeliveryQuality()
+    public function getDeliveryQuality(): string
     {
         return $this->DeliveryQuality;
     }
 
-    /**
-     * @param token255 $DeliveryQuality
-     */
-    public function setDeliveryQuality($DeliveryQuality): self
+    public function setDeliveryQuality(string $DeliveryQuality): void
     {
         $this->DeliveryQuality = $DeliveryQuality;
-
-        return $this;
     }
 
-    public function getDeliveryConfirmation(): bool
+    public function getDeliveryConfirmation(): ?bool
     {
         return $this->DeliveryConfirmation;
     }
 
-    public function setDeliveryConfirmation(bool $DeliveryConfirmation): self
+    public function setDeliveryConfirmation(bool $DeliveryConfirmation): void
     {
         $this->DeliveryConfirmation = $DeliveryConfirmation;
-
-        return $this;
     }
 
-    public function getDocumentClass(): DocumentClass
+    public function getDocumentClass(): ?DocumentClass
     {
         return $this->DocumentClass;
     }
 
-    public function setDocumentClass(DocumentClass $DocumentClass): self
+    public function setDocumentClass(DocumentClass $DocumentClass): void
     {
         $this->DocumentClass = $DocumentClass;
-
-        return $this;
     }
 
-    public function getReferences(): ReferencesType
+    public function getReferences(): ?ReferencesType
     {
         return $this->References;
     }
 
-    public function setReferences(ReferencesType $References): self
+    public function setReferences(ReferencesType $References): void
     {
         $this->References = $References;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getStartNotificationBefore()
+    public function getStartNotificationBefore(): ?\DateTimeInterface
     {
         if ($this->StartNotificationBefore === null) {
             return null;
         } else {
-            try {
-                return new \DateTime($this->StartNotificationBefore);
-            } catch (\Exception $e) {
-                return false;
-            }
+            return new \DateTimeImmutable($this->StartNotificationBefore);
         }
     }
 
-    public function setStartNotificationBefore(\DateTime $StartNotificationBefore): self
+    public function setStartNotificationBefore(\DateTime $StartNotificationBefore): void
     {
         $this->StartNotificationBefore = $StartNotificationBefore->format(\DateTime::ATOM);
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDeliverBefore()
+    public function getDeliverBefore(): ?\DateTimeInterface
     {
         if ($this->DeliverBefore === null) {
             return null;
         } else {
-            try {
-                return new \DateTime($this->DeliverBefore);
-            } catch (\Exception $e) {
-                return false;
-            }
+            return new \DateTimeImmutable($this->DeliverBefore);
         }
     }
 
-    public function setDeliverBefore(\DateTime $DeliverBefore): self
+    public function setDeliverBefore(\DateTime $DeliverBefore): void
     {
         $this->DeliverBefore = $DeliverBefore->format(\DateTime::ATOM);
-
-        return $this;
     }
 
-    public function getPrintParameter(): PrintParameter
+    public function getPrintParameter(): ?PrintParameter
     {
         return $this->PrintParameter;
     }
 
-    public function setPrintParameter(PrintParameter $PrintParameter): self
+    public function setPrintParameter(PrintParameter $PrintParameter): void
     {
         $this->PrintParameter = $PrintParameter;
-
-        return $this;
     }
 }

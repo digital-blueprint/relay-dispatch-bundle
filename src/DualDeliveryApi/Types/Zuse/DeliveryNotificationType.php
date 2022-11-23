@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Success;
-
 class DeliveryNotificationType extends DeliveryAnswerType
 {
     /**
@@ -24,21 +22,11 @@ class DeliveryNotificationType extends DeliveryAnswerType
     protected $AdditionalFormat = null;
 
     /**
-     * @var anonymous290
+     * @var string
      */
     protected $version = null;
 
-    /**
-     * @param string255    $DeliveryService
-     * @param token255     $AppDeliveryID
-     * @param string       $GZ
-     * @param token255     $MZSDeliveryID
-     * @param token255     $ZSDeliveryID
-     * @param Success      $Success
-     * @param Error        $Error
-     * @param anonymous290 $version
-     */
-    public function __construct($DeliveryService, $AppDeliveryID, $GZ, $MZSDeliveryID, $ZSDeliveryID, $Success, $Error, $version)
+    public function __construct(string $DeliveryService, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $ZSDeliveryID, Success $Success, Error $Error, string $version)
     {
         parent::__construct($DeliveryService, $AppDeliveryID, $GZ, $MZSDeliveryID, $ZSDeliveryID);
         $this->Success = $Success;
@@ -51,26 +39,19 @@ class DeliveryNotificationType extends DeliveryAnswerType
         return $this->Success;
     }
 
-    public function setSuccess(Success $Success): self
+    public function setSuccess(Success $Success): void
     {
         $this->Success = $Success;
-
-        return $this;
     }
 
-    /**
-     * @return Error
-     */
-    public function getError()
+    public function getError(): Error
     {
         return $this->Error;
     }
 
-    public function setError(\Error $Error): self
+    public function setError(Error $Error): void
     {
         $this->Error = $Error;
-
-        return $this;
     }
 
     /**
@@ -84,28 +65,18 @@ class DeliveryNotificationType extends DeliveryAnswerType
     /**
      * @param AdditionalFormat[] $AdditionalFormat
      */
-    public function setAdditionalFormat(array $AdditionalFormat = null): self
+    public function setAdditionalFormat(array $AdditionalFormat): void
     {
         $this->AdditionalFormat = $AdditionalFormat;
-
-        return $this;
     }
 
-    /**
-     * @return anonymous290
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param anonymous290 $version
-     */
-    public function setVersion($version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

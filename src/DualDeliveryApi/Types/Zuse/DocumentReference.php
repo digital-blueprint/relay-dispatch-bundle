@@ -44,7 +44,7 @@ class DocumentReference
         $this->URL = $URL;
     }
 
-    public function getMimeType(): string
+    public function getMimeType(): ?string
     {
         return $this->MimeType;
     }
@@ -54,7 +54,7 @@ class DocumentReference
         $this->MimeType = $MimeType;
     }
 
-    public function getFileName(): string
+    public function getFileName(): ?string
     {
         return $this->FileName;
     }
@@ -64,7 +64,7 @@ class DocumentReference
         $this->FileName = $FileName;
     }
 
-    public function getMD5Checksum(): string
+    public function getMD5Checksum(): ?string
     {
         return $this->MD5Checksum;
     }

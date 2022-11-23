@@ -27,23 +27,11 @@ class DeliveryRequestStatusType extends DeliveryAnswerType
     protected $Error = null;
 
     /**
-     * @var anonymous273
+     * @var string
      */
     protected $version = null;
 
-    /**
-     * @param string255                $DeliveryService
-     * @param token255                 $AppDeliveryID
-     * @param string                   $GZ
-     * @param token255                 $MZSDeliveryID
-     * @param token255                 $ZSDeliveryID
-     * @param DeliveryAnswerType       $Success
-     * @param DeliveryConfirmationType $DeliveryConfirmation
-     * @param DeliveryAnswerType       $PartialSuccess
-     * @param Error                    $Error
-     * @param anonymous273             $version
-     */
-    public function __construct($DeliveryService, $AppDeliveryID, $GZ, $MZSDeliveryID, $ZSDeliveryID, $Success, $DeliveryConfirmation, $PartialSuccess, $Error, $version)
+    public function __construct(string $DeliveryService, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $ZSDeliveryID, DeliveryAnswerType $Success, DeliveryConfirmationType $DeliveryConfirmation, DeliveryAnswerType $PartialSuccess, Error $Error, string $version)
     {
         parent::__construct($DeliveryService, $AppDeliveryID, $GZ, $MZSDeliveryID, $ZSDeliveryID);
         $this->Success = $Success;
@@ -58,11 +46,9 @@ class DeliveryRequestStatusType extends DeliveryAnswerType
         return $this->Success;
     }
 
-    public function setSuccess(DeliveryAnswerType $Success): self
+    public function setSuccess(DeliveryAnswerType $Success): void
     {
         $this->Success = $Success;
-
-        return $this;
     }
 
     public function getDeliveryConfirmation(): DeliveryConfirmationType
@@ -70,11 +56,9 @@ class DeliveryRequestStatusType extends DeliveryAnswerType
         return $this->DeliveryConfirmation;
     }
 
-    public function setDeliveryConfirmation(DeliveryConfirmationType $DeliveryConfirmation): self
+    public function setDeliveryConfirmation(DeliveryConfirmationType $DeliveryConfirmation): void
     {
         $this->DeliveryConfirmation = $DeliveryConfirmation;
-
-        return $this;
     }
 
     public function getPartialSuccess(): DeliveryAnswerType
@@ -82,43 +66,28 @@ class DeliveryRequestStatusType extends DeliveryAnswerType
         return $this->PartialSuccess;
     }
 
-    public function setPartialSuccess(DeliveryAnswerType $PartialSuccess): self
+    public function setPartialSuccess(DeliveryAnswerType $PartialSuccess): void
     {
         $this->PartialSuccess = $PartialSuccess;
-
-        return $this;
     }
 
-    /**
-     * @return Error
-     */
-    public function getError()
+    public function getError(): Error
     {
         return $this->Error;
     }
 
-    public function setError(\Error $Error): self
+    public function setError(Error $Error): void
     {
         $this->Error = $Error;
-
-        return $this;
     }
 
-    /**
-     * @return anonymous273
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param anonymous273 $version
-     */
-    public function setVersion($version): self
+    public function setVersion($version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

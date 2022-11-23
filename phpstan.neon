@@ -12,5 +12,4 @@ parameters:
         - tests/bootstrap.php
         - src/DualDeliveryApi/Types/EBInterface
         - src/DualDeliveryApi/Types/XMLDsig
-        - src/DualDeliveryApi/Types/Zuse
         - src/DualDeliveryApi/Types/SAML

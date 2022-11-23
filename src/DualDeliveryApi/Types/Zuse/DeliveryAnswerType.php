@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\string255;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\token255;
-
 class DeliveryAnswerType
 {
     /**
-     * @var string255
+     * @var string
      */
     protected $DeliveryService = null;
 
     /**
-     * @var token255
+     * @var string
      */
     protected $AppDeliveryID = null;
 
@@ -25,28 +22,21 @@ class DeliveryAnswerType
     protected $GZ = null;
 
     /**
-     * @var token255
+     * @var ?string
      */
     protected $MZSDeliveryID = null;
 
     /**
-     * @var token255
+     * @var ?string
      */
     protected $ZSDeliveryID = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $RelayedViaERV = null;
 
-    /**
-     * @param string255 $DeliveryService
-     * @param token255  $AppDeliveryID
-     * @param string    $GZ
-     * @param token255  $MZSDeliveryID
-     * @param token255  $ZSDeliveryID
-     */
-    public function __construct($DeliveryService, $AppDeliveryID, $GZ, $MZSDeliveryID, $ZSDeliveryID)
+    public function __construct(string $DeliveryService, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $ZSDeliveryID)
     {
         $this->DeliveryService = $DeliveryService;
         $this->AppDeliveryID = $AppDeliveryID;
@@ -55,99 +45,63 @@ class DeliveryAnswerType
         $this->ZSDeliveryID = $ZSDeliveryID;
     }
 
-    /**
-     * @return string255
-     */
-    public function getDeliveryService()
+    public function getDeliveryService(): string
     {
         return $this->DeliveryService;
     }
 
-    /**
-     * @param string255 $DeliveryService
-     */
-    public function setDeliveryService($DeliveryService): self
+    public function setDeliveryService($DeliveryService): void
     {
         $this->DeliveryService = $DeliveryService;
-
-        return $this;
     }
 
-    /**
-     * @return token255
-     */
-    public function getAppDeliveryID()
+    public function getAppDeliveryID(): string
     {
         return $this->AppDeliveryID;
     }
 
-    /**
-     * @param token255 $AppDeliveryID
-     */
-    public function setAppDeliveryID($AppDeliveryID): self
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
         $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
-    public function getGZ(): string
+    public function getGZ(): ?string
     {
         return $this->GZ;
     }
 
-    public function setGZ(string $GZ): self
+    public function setGZ(string $GZ): void
     {
         $this->GZ = $GZ;
-
-        return $this;
     }
 
-    /**
-     * @return token255
-     */
-    public function getMZSDeliveryID()
+    public function getMZSDeliveryID(): ?string
     {
         return $this->MZSDeliveryID;
     }
 
-    /**
-     * @param token255 $MZSDeliveryID
-     */
-    public function setMZSDeliveryID($MZSDeliveryID): self
+    public function setMZSDeliveryID(string $MZSDeliveryID): void
     {
         $this->MZSDeliveryID = $MZSDeliveryID;
-
-        return $this;
     }
 
-    /**
-     * @return token255
-     */
-    public function getZSDeliveryID()
+    public function getZSDeliveryID(): ?string
     {
         return $this->ZSDeliveryID;
     }
 
-    /**
-     * @param token255 $ZSDeliveryID
-     */
-    public function setZSDeliveryID($ZSDeliveryID): self
+    public function setZSDeliveryID(string $ZSDeliveryID): void
     {
         $this->ZSDeliveryID = $ZSDeliveryID;
-
-        return $this;
     }
 
-    public function getRelayedViaERV(): bool
+    public function getRelayedViaERV(): ?bool
     {
         return $this->RelayedViaERV;
     }
 
-    public function setRelayedViaERV(bool $RelayedViaERV): self
+    public function setRelayedViaERV(bool $RelayedViaERV): void
     {
         $this->RelayedViaERV = $RelayedViaERV;
-
-        return $this;
     }
 }

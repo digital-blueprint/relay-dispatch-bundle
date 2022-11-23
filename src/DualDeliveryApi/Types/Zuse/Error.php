@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Receiver;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Sender;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\SignatureType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\ErrorInfo;
 
-class ErrorCustom
+class Error
 {
     /**
      * @var Sender
@@ -34,14 +35,7 @@ class ErrorCustom
      */
     protected $Signature = null;
 
-    /**
-     * @param Sender                 $Sender
-     * @param Receiver               $Receiver
-     * @param NotificationsPerformed $NotificationsPerformed
-     * @param ErrorInfo              $ErrorInfo
-     * @param SignatureType          $Signature
-     */
-    public function __construct($Sender, $Receiver, $NotificationsPerformed, $ErrorInfo, $Signature)
+    public function __construct(Sender $Sender, Receiver $Receiver, NotificationsPerformed $NotificationsPerformed, ErrorInfo $ErrorInfo, SignatureType $Signature)
     {
         $this->Sender = $Sender;
         $this->Receiver = $Receiver;
@@ -55,11 +49,9 @@ class ErrorCustom
         return $this->Sender;
     }
 
-    public function setSender(Sender $Sender): self
+    public function setSender(Sender $Sender): void
     {
         $this->Sender = $Sender;
-
-        return $this;
     }
 
     public function getReceiver(): Receiver
@@ -67,11 +59,9 @@ class ErrorCustom
         return $this->Receiver;
     }
 
-    public function setReceiver(Receiver $Receiver): self
+    public function setReceiver(Receiver $Receiver): void
     {
         $this->Receiver = $Receiver;
-
-        return $this;
     }
 
     public function getNotificationsPerformed(): NotificationsPerformed
@@ -79,11 +69,9 @@ class ErrorCustom
         return $this->NotificationsPerformed;
     }
 
-    public function setNotificationsPerformed(NotificationsPerformed $NotificationsPerformed): self
+    public function setNotificationsPerformed(NotificationsPerformed $NotificationsPerformed): void
     {
         $this->NotificationsPerformed = $NotificationsPerformed;
-
-        return $this;
     }
 
     public function getErrorInfo(): ErrorInfo
@@ -91,11 +79,9 @@ class ErrorCustom
         return $this->ErrorInfo;
     }
 
-    public function setErrorInfo(ErrorInfo $ErrorInfo): self
+    public function setErrorInfo(ErrorInfo $ErrorInfo): void
     {
         $this->ErrorInfo = $ErrorInfo;
-
-        return $this;
     }
 
     public function getSignature(): SignatureType
@@ -103,10 +89,8 @@ class ErrorCustom
         return $this->Signature;
     }
 
-    public function setSignature(SignatureType $Signature): self
+    public function setSignature(SignatureType $Signature): void
     {
         $this->Signature = $Signature;
-
-        return $this;
     }
 }

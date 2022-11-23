@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\anonymous267;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\CustomNotificationIntervals;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Identification;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\MetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\NotificationAddress;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Receiver;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Sender;
@@ -15,17 +12,17 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Sender;
 class DeliveryRequestType
 {
     /**
-     * @var token255
+     * @var ?string
      */
     protected $ZbPK = null;
 
     /**
-     * @var token255
+     * @var ?string
      */
     protected $edID = null;
 
     /**
-     * @var stringentification
+     * @var ?Identification
      */
     protected $Identification = null;
 
@@ -40,7 +37,7 @@ class DeliveryRequestType
     protected $Sender = null;
 
     /**
-     * @var Receiver
+     * @var ?Receiver
      */
     protected $Receiver = null;
 
@@ -50,31 +47,21 @@ class DeliveryRequestType
     protected $MetaData = null;
 
     /**
-     * @var DocumentReference
+     * @var ?DocumentReference
      */
     protected $DocumentReference = null;
 
     /**
-     * @var CustomNotificationIntervals
+     * @var ?CustomNotificationIntervals
      */
     protected $CustomNotificationIntervals = null;
 
     /**
-     * @var anonymous267
+     * @var string
      */
     protected $version = null;
 
-    /**
-     * @param token255            $ZbPK
-     * @param token255            $edID
-     * @param Identification      $Identification
-     * @param NotificationAddress $NotificationAddress
-     * @param Sender              $Sender
-     * @param Receiver            $Receiver
-     * @param MetaData            $MetaData
-     * @param anonymous267        $version
-     */
-    public function __construct($ZbPK, $edID, $Identification, $NotificationAddress, $Sender, $Receiver, $MetaData, $version)
+    public function __construct(?string $ZbPK, ?string $edID, ?Identification $Identification, NotificationAddress $NotificationAddress, Sender $Sender, ?Receiver $Receiver, MetaData $MetaData, string $version)
     {
         $this->ZbPK = $ZbPK;
         $this->edID = $edID;
@@ -86,55 +73,34 @@ class DeliveryRequestType
         $this->version = $version;
     }
 
-    /**
-     * @return token255
-     */
-    public function getZbPK()
+    public function getZbPK(): ?string
     {
         return $this->ZbPK;
     }
 
-    /**
-     * @param token255 $ZbPK
-     */
-    public function setZbPK($ZbPK): self
+    public function setZbPK(string $ZbPK): void
     {
         $this->ZbPK = $ZbPK;
-
-        return $this;
     }
 
-    /**
-     * @return token255
-     */
-    public function getEdID()
+    public function getEdID(): ?string
     {
         return $this->edID;
     }
 
-    /**
-     * @param token255 $edID
-     */
-    public function setEdID($edID): self
+    public function setEdID(string $edID): void
     {
         $this->edID = $edID;
-
-        return $this;
     }
 
-    /**
-     * @return stringentification
-     */
-    public function getIdentification()
+    public function getIdentification(): ?Identification
     {
         return $this->Identification;
     }
 
-    public function setIdentification(Identification $Identification): self
+    public function setIdentification(Identification $Identification): void
     {
         $this->Identification = $Identification;
-
-        return $this;
     }
 
     public function getNotificationAddress(): NotificationAddress
@@ -142,11 +108,9 @@ class DeliveryRequestType
         return $this->NotificationAddress;
     }
 
-    public function setNotificationAddress(NotificationAddress $NotificationAddress): self
+    public function setNotificationAddress(NotificationAddress $NotificationAddress): void
     {
         $this->NotificationAddress = $NotificationAddress;
-
-        return $this;
     }
 
     public function getSender(): Sender
@@ -154,82 +118,58 @@ class DeliveryRequestType
         return $this->Sender;
     }
 
-    public function setSender(Sender $Sender): self
+    public function setSender(Sender $Sender): void
     {
         $this->Sender = $Sender;
-
-        return $this;
     }
 
-    public function getReceiver(): Receiver
+    public function getReceiver(): ?Receiver
     {
         return $this->Receiver;
     }
 
-    public function setReceiver(Receiver $Receiver): self
+    public function setReceiver(Receiver $Receiver): void
     {
         $this->Receiver = $Receiver;
-
-        return $this;
     }
 
-    /**
-     * @return MetaData
-     */
-    public function getMetaData()
+    public function getMetaData(): MetaData
     {
         return $this->MetaData;
     }
 
-    /**
-     * @param MetaData $MetaData
-     */
-    public function setMetaData($MetaData): self
+    public function setMetaData(MetaData $MetaData): void
     {
         $this->MetaData = $MetaData;
-
-        return $this;
     }
 
-    public function getDocumentReference(): DocumentReference
+    public function getDocumentReference(): ?DocumentReference
     {
         return $this->DocumentReference;
     }
 
-    public function setDocumentReference(DocumentReference $DocumentReference): self
+    public function setDocumentReference(DocumentReference $DocumentReference): void
     {
         $this->DocumentReference = $DocumentReference;
-
-        return $this;
     }
 
-    public function getCustomNotificationIntervals(): CustomNotificationIntervals
+    public function getCustomNotificationIntervals(): ?CustomNotificationIntervals
     {
         return $this->CustomNotificationIntervals;
     }
 
-    public function setCustomNotificationIntervals(CustomNotificationIntervals $CustomNotificationIntervals): self
+    public function setCustomNotificationIntervals(CustomNotificationIntervals $CustomNotificationIntervals): void
     {
         $this->CustomNotificationIntervals = $CustomNotificationIntervals;
-
-        return $this;
     }
 
-    /**
-     * @return anonymous267
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param anonymous267 $version
-     */
-    public function setVersion($version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class PrintParameter
 {
     /**
@@ -39,7 +37,7 @@ class PrintParameter
         return $this->profile;
     }
 
-    public function setProfile(AnyURI $profile): void
+    public function setProfile(string $profile): void
     {
         $this->profile = $profile;
     }

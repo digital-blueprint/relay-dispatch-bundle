@@ -7,83 +7,54 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 class DeliveryNotificationACKType
 {
     /**
-     * @var token255
+     * @var string
      */
     protected $AppDeliveryID = null;
 
     /**
-     * @var token255
+     * @var string
      */
     protected $ZSDeliveryID = null;
 
     /**
-     * @var anonymous293
+     * @var string
      */
     protected $version = null;
 
-    /**
-     * @param token255     $AppDeliveryID
-     * @param token255     $ZSDeliveryID
-     * @param anonymous293 $version
-     */
-    public function __construct($AppDeliveryID, $ZSDeliveryID, $version)
+    public function __construct(string $AppDeliveryID, string $ZSDeliveryID, string $version)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->ZSDeliveryID = $ZSDeliveryID;
         $this->version = $version;
     }
 
-    /**
-     * @return token255
-     */
-    public function getAppDeliveryID()
+    public function getAppDeliveryID(): string
     {
         return $this->AppDeliveryID;
     }
 
-    /**
-     * @param token255 $AppDeliveryID
-     */
-    public function setAppDeliveryID($AppDeliveryID): self
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
         $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
-    /**
-     * @return token255
-     */
-    public function getZSDeliveryID()
+    public function getZSDeliveryID(): string
     {
         return $this->ZSDeliveryID;
     }
 
-    /**
-     * @param token255 $ZSDeliveryID
-     */
-    public function setZSDeliveryID($ZSDeliveryID): self
+    public function setZSDeliveryID(string $ZSDeliveryID): void
     {
         $this->ZSDeliveryID = $ZSDeliveryID;
-
-        return $this;
     }
 
-    /**
-     * @return anonymous293
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @param anonymous293 $version
-     */
-    public function setVersion($version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

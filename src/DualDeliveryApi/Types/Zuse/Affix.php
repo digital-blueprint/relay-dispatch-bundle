@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\anonymous217;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\anonymous218;
-
 class Affix
 {
     /**
@@ -15,21 +12,16 @@ class Affix
     protected $_ = null;
 
     /**
-     * @var anonymous217
+     * @var string
      */
     protected $type = null;
 
     /**
-     * @var anonymous218
+     * @var string
      */
     protected $position = null;
 
-    /**
-     * @param string       $_
-     * @param anonymous217 $type
-     * @param anonymous218 $position
-     */
-    public function __construct($_, $type, $position)
+    public function __construct(string $_, string $type, string $position)
     {
         $this->_ = $_;
         $this->type = $type;
@@ -48,39 +40,23 @@ class Affix
         return $this;
     }
 
-    /**
-     * @return anonymous217
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param anonymous217 $type
-     */
-    public function setType($type): self
+    public function setType(string $type): void
     {
         $this->type = $type;
-
-        return $this;
     }
 
-    /**
-     * @return anonymous218
-     */
-    public function getPosition()
+    public function getPosition(): string
     {
         return $this->position;
     }
 
-    /**
-     * @param anonymous218 $position
-     */
-    public function setPosition($position): self
+    public function setPosition(string $position): void
     {
         $this->position = $position;
-
-        return $this;
     }
 }

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
+
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientNotification;
 
 class NotificationsPerformed
 {
@@ -24,10 +26,8 @@ class NotificationsPerformed
         return $this->RecipientNotification;
     }
 
-    public function setRecipientNotification(RecipientNotification $RecipientNotification): self
+    public function setRecipientNotification(RecipientNotification $RecipientNotification): void
     {
         $this->RecipientNotification = $RecipientNotification;
-
-        return $this;
     }
 }

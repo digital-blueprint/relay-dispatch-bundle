@@ -4,64 +4,41 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\base64Binary;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\UNKNOWN;
-
 class AdditionalFormat
 {
     /**
-     * @var base64Binary
+     * @var string
      */
     protected $_ = null;
 
     /**
-     * @var UNKNOWN
+     * @var string
      */
     protected $Type = null;
 
-    /**
-     * @param base64Binary $_
-     * @param UNKNOWN      $Type
-     */
-    public function __construct($_, $Type)
+    public function __construct(string $_, string $Type)
     {
         $this->_ = $_;
         $this->Type = $Type;
     }
 
-    /**
-     * @return base64Binary
-     */
-    public function get_()
+    public function get_(): string
     {
         return $this->_;
     }
 
-    /**
-     * @param base64Binary $_
-     */
-    public function set_($_): self
+    public function set_(string $_): void
     {
         $this->_ = $_;
-
-        return $this;
     }
 
-    /**
-     * @return UNKNOWN
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->Type;
     }
 
-    /**
-     * @param UNKNOWN $Type
-     */
-    public function setType($Type): self
+    public function setType(string $Type): void
     {
         $this->Type = $Type;
-
-        return $this;
     }
 }

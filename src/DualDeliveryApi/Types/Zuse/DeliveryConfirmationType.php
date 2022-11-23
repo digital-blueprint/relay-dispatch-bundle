@@ -21,7 +21,7 @@ class DeliveryConfirmationType extends DeliveryAnswerType
     protected $Receiver = null;
 
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $DeliveryTimestamp = null;
 
@@ -30,17 +30,7 @@ class DeliveryConfirmationType extends DeliveryAnswerType
      */
     protected $Signature = null;
 
-    /**
-     * @param string255     $DeliveryService
-     * @param token255      $AppDeliveryID
-     * @param string        $GZ
-     * @param token255      $MZSDeliveryID
-     * @param token255      $ZSDeliveryID
-     * @param Sender        $Sender
-     * @param Receiver      $Receiver
-     * @param SignatureType $Signature
-     */
-    public function __construct($DeliveryService, $AppDeliveryID, $GZ, $MZSDeliveryID, $ZSDeliveryID, $Sender, $Receiver, \DateTime $DeliveryTimestamp, $Signature)
+    public function __construct(string $DeliveryService, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $ZSDeliveryID, Sender $Sender, Receiver $Receiver, \DateTimeInterface $DeliveryTimestamp, SignatureType $Signature)
     {
         parent::__construct($DeliveryService, $AppDeliveryID, $GZ, $MZSDeliveryID, $ZSDeliveryID);
         $this->Sender = $Sender;
@@ -54,11 +44,9 @@ class DeliveryConfirmationType extends DeliveryAnswerType
         return $this->Sender;
     }
 
-    public function setSender(Sender $Sender): self
+    public function setSender(Sender $Sender): void
     {
         $this->Sender = $Sender;
-
-        return $this;
     }
 
     public function getReceiver(): Receiver
@@ -66,34 +54,21 @@ class DeliveryConfirmationType extends DeliveryAnswerType
         return $this->Receiver;
     }
 
-    public function setReceiver(Receiver $Receiver): self
+    public function setReceiver(Receiver $Receiver): void
     {
         $this->Receiver = $Receiver;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDeliveryTimestamp()
+    public function getDeliveryTimestamp(): \DateTimeInterface
     {
-        if ($this->DeliveryTimestamp === null) {
-            return null;
-        } else {
-            try {
-                return new \DateTime($this->DeliveryTimestamp);
-            } catch (\Exception $e) {
-                return false;
-            }
-        }
+        assert($this->DeliveryTimestamp !== null);
+
+        return new \DateTimeImmutable($this->DeliveryTimestamp);
     }
 
-    public function setDeliveryTimestamp(\DateTime $DeliveryTimestamp): self
+    public function setDeliveryTimestamp(\DateTimeInterface $DeliveryTimestamp): void
     {
         $this->DeliveryTimestamp = $DeliveryTimestamp->format(\DateTime::ATOM);
-
-        return $this;
     }
 
     public function getSignature(): SignatureType
@@ -101,10 +76,8 @@ class DeliveryConfirmationType extends DeliveryAnswerType
         return $this->Signature;
     }
 
-    public function setSignature(SignatureType $Signature): self
+    public function setSignature(SignatureType $Signature): void
     {
         $this->Signature = $Signature;
-
-        return $this;
     }
 }
