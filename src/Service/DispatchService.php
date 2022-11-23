@@ -539,6 +539,27 @@ class DispatchService
         return $message;
     }
 
+    /**
+     * Checks if a request is in a state where it can be submitted.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function checkRequestReadyForSubmit(Request $request)
+    {
+        if ($request->isSubmitted()) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request was already submitted!', 'dispatch:request-already-submitted');
+        }
+
+        if ($request->getRecipients()->count() === 0) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request has no recipients!', 'dispatch:request-has-no-recipients');
+        }
+
+        if ($request->getFiles()->count() === 0) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request has no files!', 'dispatch:request-has-no-files');
+        }
+    }
+
     public function handleRequestSubmissionMessage(RequestSubmissionMessage $message)
     {
         $request = $message->getRequest();
@@ -624,7 +645,7 @@ class DispatchService
             $options['cert'] = [$certFileName, $password];
         }
 
-        // TODO: We should get verification working
+        // _TODO: We should get verification working
         // https://docs.guzzlephp.org/en/stable/request-options.html#verify-option
         $options['verify'] = false;
 //        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
@@ -640,7 +661,7 @@ class DispatchService
             // Error 500 go here
 //            var_dump($e->getRequest());
             var_dump($e->getMessage());
-            // TODO: Handle errors
+            // _TODO: Handle errors
             $response = $e->getResponse();
         } finally {
             if ($useCert) {
@@ -698,7 +719,7 @@ class DispatchService
 //            $options['cert'] = [$certFileName, $password];
 //        }
 //
-//        // TODO: We should get verification working
+//        // _TODO: We should get verification working
 //        // https://docs.guzzlephp.org/en/stable/request-options.html#verify-option
 //        $options['verify'] = false;
     ////        $options['verify'] = './vendor/dbp/relay-dispatch-bundle/tu_graz_client.kbprintcom.at_.crt.pem';
@@ -744,7 +765,7 @@ class DispatchService
 //            // Error 500 go here
     ////            var_dump($e->getRequest());
 //            var_dump($e->getMessage());
-//            // TODO: Handle errors
+//            // _TODO: Handle errors
 //            $response = $e->getResponse();
 //        } finally {
 //            if ($useCert) {
@@ -782,12 +803,12 @@ class DispatchService
         $xml_nsMetaData = $xml->createElement('ns:MetaData');
         $xml_nsAppDeliveryID = $xml->createElement('ns:AppDeliveryID', $request->getIdentifier());
         $xml_nsMetaData->appendChild($xml_nsAppDeliveryID);
-        // TODO: Is this always "Rsa"?
+        // _TODO: Is this always "Rsa"?
         $xml_nsDeliveryQuality = $xml->createElement('ns:DeliveryQuality', 'Rsa');
         $xml_nsMetaData->appendChild($xml_nsDeliveryQuality);
         $xml_nsAsynchronous = $xml->createElement('ns:Asynchronous', 'true');
         $xml_nsMetaData->appendChild($xml_nsAsynchronous);
-        // TODO: Do we need a subject?
+        // _TODO: Do we need a subject?
         $xml_nsSubject = $xml->createElement('ns:Subject', 'Duale Zustellung');
         $xml_nsMetaData->appendChild($xml_nsSubject);
         $xml_nsAdditionalMetaData = $xml->createElement('ns:AdditionalMetaData');
@@ -820,7 +841,7 @@ class DispatchService
             $xml_ns2FamilyName = $xml->createElement('ns2:FamilyName', $recipient->getFamilyName());
             $xml_ns2Name->appendChild($xml_ns2FamilyName);
             $xml_ns2PhysicalPerson->appendChild($xml_ns2Name);
-            // TODO: We need a DateOfBirth
+            // _TODO: We need a DateOfBirth
 //            $xml_ns2DateOfBirth = $xml->createElement('ns2:DateOfBirth','1970-06-04');
 //            $xml_ns2PhysicalPerson->appendChild($xml_ns2DateOfBirth);
             $xml_RecipientData->appendChild($xml_ns2PhysicalPerson);
@@ -840,7 +861,7 @@ class DispatchService
             $xml_RecipientData->appendChild($xml_ns2PostalAddress);
             $xml_nsRecipient->appendChild($xml_RecipientData);
 
-            // TODO: Which fields should be submitted? Do we always have a PreAddressingRequest?
+            // _TODO: Which fields should be submitted? Do we always have a PreAddressingRequest?
             // There is no "RecipientId", says the API
 //            $xml_nsRecipientId = $xml->createElement('ns:RecipientId', $recipient->getRecipientId());
 //            $xml_nsRecipientId = $xml->createElement('ns:RecipientId', $recipient->getIdentifier());
@@ -861,7 +882,7 @@ class DispatchService
             $xml_nsPayload->appendChild($xml_nsPayloadAttributes);
             $xml_nsBinaryDocument = $xml->createElement('ns:BinaryDocument');
             $content = base64_encode(stream_get_contents($file->getData()));
-            // TODO: remove debug limit
+            // _TODO: remove debug limit
 //            $content = substr($content, 0, 100);
             $xml_nsContent = $xml->createElement('ns:Content', $content);
             $xml_nsBinaryDocument->appendChild($xml_nsContent);
@@ -1058,12 +1079,20 @@ class DispatchService
 //        dump($files);
         foreach ($files as $file) {
             $payloadAttrs = new PayloadAttributesType($file->getName(), $file->getFileFormat());
-            // TODO: Is this the correct format to send content?
-            // $content is base64 encoded by the SOAP library!
-            $content = $file->getData();
             $payloadAttrs->setSize($file->getContentSize());
             // Id must not start with a number (says trial & error, xsd:ID or xs:NCName spec don't tell)!
             $payloadAttrs->setId('file-'.$file->getIdentifier());
+
+            // TODO: Is this the correct format to send content?
+            // $content is base64 encoded by the SOAP library!
+            $content = $file->getData();
+
+            // Attempt to re-read the file if content is empty
+            if ($content === null) {
+                $file = $this->getRequestFileById($file->getIdentifier());
+                $content = $file->getData();
+            }
+
             $md5 = md5($content);
             $checksum = new Checksum('MD5', $md5);
             $payloadAttrs->setChecksum($checksum);
