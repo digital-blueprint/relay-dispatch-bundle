@@ -7,33 +7,22 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class GetVersionResponse
 {
     /**
-     * @var versionNumberType
+     * @var string
      */
     protected $Version = null;
 
-    /**
-     * @param versionNumberType $Version
-     */
-    public function __construct($Version)
+    public function __construct(string $Version)
     {
         $this->Version = $Version;
     }
 
-    /**
-     * @return versionNumberType
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->Version;
     }
 
-    /**
-     * @param versionNumberType $Version
-     */
-    public function setVersion($Version): self
+    public function setVersion(string $Version): void
     {
         $this->Version = $Version;
-
-        return $this;
     }
 }

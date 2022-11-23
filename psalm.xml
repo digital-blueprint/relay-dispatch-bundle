@@ -11,9 +11,10 @@
         <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
-            <directory name="src/DualDeliveryApi/Types" />
             <directory name="src/DualDeliveryApi/Types/EBInterface" />
-            <directory name="src/Service" />
+            <directory name="src/DualDeliveryApi/Types/XMLDsig" />
+            <directory name="src/DualDeliveryApi/Types/Zuse" />
+            <directory name="src/DualDeliveryApi/Types/SAML" />
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>

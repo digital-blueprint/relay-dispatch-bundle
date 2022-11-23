@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML\AssertionType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\SignatureType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\BinaryConfirmation;
 
 class Success
 {

@@ -7,27 +7,22 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class DocumentReferenceType extends DocumentType
 {
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $URL = null;
 
-    /**
-     * @param AnyURI $URL
-     */
-    public function __construct($URL)
+    public function __construct(string $URL)
     {
         $this->URL = $URL;
     }
 
-    public function getURL(): AnyURI
+    public function getURL(): string
     {
         return $this->URL;
     }
 
-    public function setURL(AnyURI $URL): self
+    public function setURL(string $URL): void
     {
         $this->URL = $URL;
-
-        return $this;
     }
 }

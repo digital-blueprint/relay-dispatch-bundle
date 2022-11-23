@@ -4,35 +4,31 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\IdentificationType;
+
 class ForAttentionOf
 {
     /**
-     * @var stringentificationType
+     * @var ?IdentificationType
      */
     protected $Identification = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $Department = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $GivenName = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $FamilyName = null;
 
-    /**
-     * @param IdentificationType $Identification
-     * @param string             $Department
-     * @param string             $GivenName
-     * @param FamilyName         $FamilyName
-     */
-    public function __construct($Identification, $Department, $GivenName, $FamilyName)
+    public function __construct(?IdentificationType $Identification, ?string $Department, ?string $GivenName, ?string $FamilyName)
     {
         $this->Identification = $Identification;
         $this->Department = $Department;
@@ -40,54 +36,43 @@ class ForAttentionOf
         $this->FamilyName = $FamilyName;
     }
 
-    /**
-     * @return stringentificationType
-     */
-    public function getIdentification()
+    public function getIdentification(): ?IdentificationType
     {
         return $this->Identification;
     }
 
-    public function setIdentification(IdentificationType $Identification): self
+    public function setIdentification(IdentificationType $Identification): void
     {
         $this->Identification = $Identification;
-
-        return $this;
     }
 
-    public function getDepartment(): string
+    public function getDepartment(): ?string
     {
         return $this->Department;
     }
 
-    public function setDepartment(string $Department): self
+    public function setDepartment(string $Department): void
     {
         $this->Department = $Department;
-
-        return $this;
     }
 
-    public function getGivenName(): string
+    public function getGivenName(): ?string
     {
         return $this->GivenName;
     }
 
-    public function setGivenName(string $GivenName): self
+    public function setGivenName(string $GivenName): void
     {
         $this->GivenName = $GivenName;
-
-        return $this;
     }
 
-    public function getFamilyName(): string
+    public function getFamilyName(): ?string
     {
         return $this->FamilyName;
     }
 
-    public function setFamilyName(string $FamilyName): self
+    public function setFamilyName(string $FamilyName): void
     {
         $this->FamilyName = $FamilyName;
-
-        return $this;
     }
 }

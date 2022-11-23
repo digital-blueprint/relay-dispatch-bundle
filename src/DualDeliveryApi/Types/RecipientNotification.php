@@ -7,62 +7,40 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class RecipientNotification
 {
     /**
-     * @var NotificationMethod
+     * @var string
      */
     protected $NotificationMethod = null;
 
     /**
-     * @var \DateTime
+     * @var string
      */
     protected $Timestamp = null;
 
-    /**
-     * @param NotificationMethod $NotificationMethod
-     */
-    public function __construct($NotificationMethod, \DateTime $Timestamp)
+    public function __construct(string $NotificationMethod, \DateTimeInterface $Timestamp)
     {
         $this->NotificationMethod = $NotificationMethod;
         $this->Timestamp = $Timestamp->format(\DateTime::ATOM);
     }
 
-    /**
-     * @return NotificationMethod
-     */
-    public function getNotificationMethod()
+    public function getNotificationMethod(): string
     {
         return $this->NotificationMethod;
     }
 
-    /**
-     * @param NotificationMethod $NotificationMethod
-     */
-    public function setNotificationMethod($NotificationMethod): self
+    public function setNotificationMethod(string $NotificationMethod): void
     {
         $this->NotificationMethod = $NotificationMethod;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getTimestamp()
+    public function getTimestamp(): \DateTimeInterface
     {
-        if ($this->Timestamp === null) {
-            return null;
-        } else {
-            try {
-                return new \DateTime($this->Timestamp);
-            } catch (\Exception $e) {
-                return false;
-            }
-        }
+        assert($this->Timestamp !== null);
+
+        return new \DateTimeImmutable($this->Timestamp);
     }
 
-    public function setTimestamp(\DateTime $Timestamp): self
+    public function setTimestamp(\DateTimeInterface $Timestamp): void
     {
         $this->Timestamp = $Timestamp->format(\DateTime::ATOM);
-
-        return $this;
     }
 }

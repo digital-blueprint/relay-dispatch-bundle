@@ -7,22 +7,22 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class EMailDeliveryType extends DeliveryChannelSetType
 {
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $RegMail = null;
 
     /**
-     * @var \DateTime
+     * @var ?string
      */
     protected $RegMailDepositUntil = null;
 
     /**
-     * @var base64Binary
+     * @var ?string
      */
     protected $MailBody = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $MIMEType = null;
 
@@ -30,75 +30,47 @@ class EMailDeliveryType extends DeliveryChannelSetType
     {
     }
 
-    public function getRegMail(): bool
+    public function getRegMail(): ?bool
     {
         return $this->RegMail;
     }
 
-    public function setRegMail(bool $RegMail): self
+    public function setRegMail(bool $RegMail): void
     {
         $this->RegMail = $RegMail;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getRegMailDepositUntil()
+    public function getRegMailDepositUntil(): ?\DateTimeInterface
     {
         if ($this->RegMailDepositUntil === null) {
             return null;
         } else {
-            try {
-                return new \DateTime($this->RegMailDepositUntil);
-            } catch (\Exception $e) {
-                return false;
-            }
+            return new \DateTimeImmutable($this->RegMailDepositUntil);
         }
     }
 
-    /**
-     * @param \DateTime $RegMailDepositUntil
-     */
-    public function setRegMailDepositUntil(\DateTime $RegMailDepositUntil = null): self
+    public function setRegMailDepositUntil(\DateTimeInterface $RegMailDepositUntil): void
     {
-        if ($RegMailDepositUntil === null) {
-            $this->RegMailDepositUntil = null;
-        } else {
-            $this->RegMailDepositUntil = $RegMailDepositUntil->format(\DateTime::ATOM);
-        }
-
-        return $this;
+        $this->RegMailDepositUntil = $RegMailDepositUntil->format(\DateTime::ATOM);
     }
 
-    /**
-     * @return base64Binary
-     */
-    public function getMailBody()
+    public function getMailBody(): ?string
     {
         return $this->MailBody;
     }
 
-    /**
-     * @param base64Binary $MailBody
-     */
-    public function setMailBody($MailBody): self
+    public function setMailBody(string $MailBody): void
     {
         $this->MailBody = $MailBody;
-
-        return $this;
     }
 
-    public function getMIMEType(): string
+    public function getMIMEType(): ?string
     {
         return $this->MIMEType;
     }
 
-    public function setMIMEType(string $MIMEType): self
+    public function setMIMEType(string $MIMEType): void
     {
         $this->MIMEType = $MIMEType;
-
-        return $this;
     }
 }

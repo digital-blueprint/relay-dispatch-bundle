@@ -24,10 +24,8 @@ class AdditonalPrintResults
         return $this->AdditionalPrintResultSet;
     }
 
-    public function setAdditionalPrintResultSet(AdditionalPrintResultSetType $AdditionalPrintResultSet): self
+    public function setAdditionalPrintResultSet(AdditionalPrintResultSetType $AdditionalPrintResultSet): void
     {
         $this->AdditionalPrintResultSet = $AdditionalPrintResultSet;
-
-        return $this;
     }
 }

@@ -10,6 +10,7 @@ parameters:
         - tests
     excludePaths:
         - tests/bootstrap.php
-        - src/DualDeliveryApi/Types
         - src/DualDeliveryApi/Types/EBInterface
-        - src/Service
+        - src/DualDeliveryApi/Types/XMLDsig
+        - src/DualDeliveryApi/Types/Zuse
+        - src/DualDeliveryApi/Types/SAML

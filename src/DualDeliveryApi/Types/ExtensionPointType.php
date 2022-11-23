@@ -12,15 +12,11 @@ class ExtensionPointType
     protected $any = null;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $namespace = null;
 
-    /**
-     * @param string $any
-     * @param AnyURI $namespace
-     */
-    public function __construct($any, $namespace)
+    public function __construct(string $any, string $namespace)
     {
         $this->any = $any;
         $this->namespace = $namespace;
@@ -31,22 +27,18 @@ class ExtensionPointType
         return $this->any;
     }
 
-    public function setAny(string $any): self
+    public function setAny(string $any): void
     {
         $this->any = $any;
-
-        return $this;
     }
 
-    public function getNamespace(): AnyURI
+    public function getNamespace(): string
     {
         return $this->namespace;
     }
 
-    public function setNamespace(AnyURI $namespace): self
+    public function setNamespace(string $namespace): void
     {
         $this->namespace = $namespace;
-
-        return $this;
     }
 }

@@ -24,9 +24,12 @@ class DualDeliveryService implements LoggerAwareInterface
     private const APPLICATION_ID = 'relay-dispatch-bundle';
     private const APPLICATION_VERSION = '0.1';
 
+    private $config;
+
     public function __construct()
     {
         $this->logger = new NullLogger();
+        $this->config = [];
     }
 
     public function setConfig(array $config)

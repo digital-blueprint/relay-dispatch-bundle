@@ -12,16 +12,13 @@ class EDeliveryNotificationType extends NotificationChannelSetType
     protected $DeliveryNotification = null;
 
     /**
-     * @var base64Binary
+     * @var string
      */
     protected $BinaryDeliveryNotification = null;
 
-    /**
-     * @param DeliveryNotification $DeliveryNotification
-     * @param base64Binary         $BinaryDeliveryNotification
-     */
-    public function __construct($DeliveryNotification, $BinaryDeliveryNotification)
+    public function __construct(DeliveryNotification $DeliveryNotification, string $BinaryDeliveryNotification)
     {
+        parent::__construct();
         $this->DeliveryNotification = $DeliveryNotification;
         $this->BinaryDeliveryNotification = $BinaryDeliveryNotification;
     }
@@ -31,28 +28,18 @@ class EDeliveryNotificationType extends NotificationChannelSetType
         return $this->DeliveryNotification;
     }
 
-    public function setDeliveryNotification(DeliveryNotification $DeliveryNotification): self
+    public function setDeliveryNotification(DeliveryNotification $DeliveryNotification): void
     {
         $this->DeliveryNotification = $DeliveryNotification;
-
-        return $this;
     }
 
-    /**
-     * @return base64Binary
-     */
-    public function getBinaryDeliveryNotification()
+    public function getBinaryDeliveryNotification(): string
     {
         return $this->BinaryDeliveryNotification;
     }
 
-    /**
-     * @param base64Binary $BinaryDeliveryNotification
-     */
-    public function setBinaryDeliveryNotification($BinaryDeliveryNotification): self
+    public function setBinaryDeliveryNotification($BinaryDeliveryNotification): void
     {
         $this->BinaryDeliveryNotification = $BinaryDeliveryNotification;
-
-        return $this;
     }
 }

@@ -106,7 +106,7 @@ class DualDeliveryResponseType
         $this->UsedDeliveryChannels = $UsedDeliveryChannels;
     }
 
-    public function getManipulatedPayloads(): ManipulatedPayloadsType
+    public function getManipulatedPayloads(): ?ManipulatedPayloadsType
     {
         return $this->ManipulatedPayloads;
     }
@@ -116,7 +116,7 @@ class DualDeliveryResponseType
         $this->ManipulatedPayloads = $ManipulatedPayloads;
     }
 
-    public function getErrors(): ErrorsType
+    public function getErrors(): ?ErrorsType
     {
         return $this->Errors;
     }

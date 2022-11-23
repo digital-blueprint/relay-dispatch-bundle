@@ -42,7 +42,7 @@ class StatusType
         $this->Code = $Code;
     }
 
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->Text;
     }

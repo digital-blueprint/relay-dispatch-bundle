@@ -7,58 +7,38 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class InternationalAccount
 {
     /**
-     * @var BIC
+     * @var string
      */
     protected $BIC = null;
 
     /**
-     * @var IBAN
+     * @var string
      */
     protected $IBAN = null;
 
-    /**
-     * @param BIC  $BIC
-     * @param IBAN $IBAN
-     */
-    public function __construct($BIC, $IBAN)
+    public function __construct(string $BIC, string $IBAN)
     {
         $this->BIC = $BIC;
         $this->IBAN = $IBAN;
     }
 
-    /**
-     * @return BIC
-     */
-    public function getBIC()
+    public function getBIC(): string
     {
         return $this->BIC;
     }
 
-    /**
-     * @param BIC $BIC
-     */
-    public function setBIC($BIC): self
+    public function setBIC(string $BIC): void
     {
         $this->BIC = $BIC;
-
-        return $this;
     }
 
-    /**
-     * @return IBAN
-     */
-    public function getIBAN()
+    public function getIBAN(): string
     {
         return $this->IBAN;
     }
 
-    /**
-     * @param IBAN $IBAN
-     */
-    public function setIBAN($IBAN): self
+    public function setIBAN(string $IBAN): void
     {
         $this->IBAN = $IBAN;
-
-        return $this;
     }
 }

@@ -7,58 +7,38 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class LocalAccount
 {
     /**
-     * @var BLZ
+     * @var string
      */
     protected $BLZ = null;
 
     /**
-     * @var AccountNr
+     * @var string
      */
     protected $AccountNr = null;
 
-    /**
-     * @param BLZ       $BLZ
-     * @param AccountNr $AccountNr
-     */
-    public function __construct($BLZ, $AccountNr)
+    public function __construct(string $BLZ, string $AccountNr)
     {
         $this->BLZ = $BLZ;
         $this->AccountNr = $AccountNr;
     }
 
-    /**
-     * @return BLZ
-     */
-    public function getBLZ()
+    public function getBLZ(): string
     {
         return $this->BLZ;
     }
 
-    /**
-     * @param BLZ $BLZ
-     */
-    public function setBLZ($BLZ): self
+    public function setBLZ(string $BLZ): void
     {
         $this->BLZ = $BLZ;
-
-        return $this;
     }
 
-    /**
-     * @return AccountNr
-     */
-    public function getAccountNr()
+    public function getAccountNr(): string
     {
         return $this->AccountNr;
     }
 
-    /**
-     * @param AccountNr $AccountNr
-     */
-    public function setAccountNr($AccountNr): self
+    public function setAccountNr(string $AccountNr): void
     {
         $this->AccountNr = $AccountNr;
-
-        return $this;
     }
 }

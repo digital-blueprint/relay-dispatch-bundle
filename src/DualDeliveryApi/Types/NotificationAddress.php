@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\InternetAddressType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\WebserviceURL;
+
 class NotificationAddress
 {
     /**

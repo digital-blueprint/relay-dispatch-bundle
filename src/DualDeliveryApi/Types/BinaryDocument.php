@@ -7,33 +7,22 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class BinaryDocument
 {
     /**
-     * @var UNKNOWN
+     * @var string
      */
     protected $MIMEType = null;
 
-    /**
-     * @param UNKNOWN $MIMEType
-     */
-    public function __construct($MIMEType)
+    public function __construct(string $MIMEType)
     {
         $this->MIMEType = $MIMEType;
     }
 
-    /**
-     * @return UNKNOWN
-     */
-    public function getMIMEType()
+    public function getMIMEType(): string
     {
         return $this->MIMEType;
     }
 
-    /**
-     * @param UNKNOWN $MIMEType
-     */
-    public function setMIMEType($MIMEType): self
+    public function setMIMEType(string $MIMEType): void
     {
         $this->MIMEType = $MIMEType;
-
-        return $this;
     }
 }

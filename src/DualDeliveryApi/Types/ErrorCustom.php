@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\SignatureType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\ErrorInfo;
 
 class ErrorCustom
 {

@@ -7,47 +7,47 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class PostalNotificationType extends NotificationChannelSetType
 {
     /**
-     * @var Pages
+     * @var ?int
      */
     protected $Pages = null;
 
     /**
-     * @var \DateTime
+     * @var ?string
      */
     protected $Printtime = null;
 
     /**
-     * @var PrintType
+     * @var ?string
      */
     protected $PrintType = null;
 
     /**
-     * @var Weight
+     * @var ?string
      */
     protected $Weight = null;
 
     /**
-     * @var EnvelopeType
+     * @var ?string
      */
     protected $EnvelopeType = null;
 
     /**
-     * @var \DateTime
+     * @var ?string
      */
     protected $PostalDeliveryTime = null;
 
     /**
-     * @var \DateTime
+     * @var ?string
      */
     protected $ServiceDeliveryTime = null;
 
     /**
-     * @var Sheets
+     * @var ?int
      */
     protected $Sheets = null;
 
     /**
-     * @var PaymentForms
+     * @var ?int
      */
     protected $PaymentForms = null;
 
@@ -57,224 +57,124 @@ class PostalNotificationType extends NotificationChannelSetType
     protected $Costs = null;
 
     /**
-     * @var AdditonalPrintResults
+     * @var ?AdditonalPrintResults
      */
     protected $AdditonalPrintResults = null;
 
     /**
-     * @var DelivererInformation
+     * @var ?DelivererInformation
      */
     protected $DelivererInformation = null;
 
     /**
-     * @var ScannedData
+     * @var ?ScannedData
      */
     protected $ScannedData = null;
 
-    /**
-     * @param AdditonalPrintResults $AdditonalPrintResults
-     */
-    public function __construct($AdditonalPrintResults)
+    public function __construct()
     {
-        $this->AdditonalPrintResults = $AdditonalPrintResults;
     }
 
-    /**
-     * @return Pages
-     */
-    public function getPages()
+    public function getPages(): ?int
     {
         return $this->Pages;
     }
 
-    /**
-     * @param Pages $Pages
-     */
-    public function setPages($Pages): self
+    public function setPages(int $Pages): void
     {
         $this->Pages = $Pages;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getPrinttime()
+    public function getPrinttime(): ?\DateTimeInterface
     {
         if ($this->Printtime === null) {
             return null;
         } else {
-            try {
-                return new \DateTime($this->Printtime);
-            } catch (\Exception $e) {
-                return false;
-            }
+            return new \DateTimeImmutable($this->Printtime);
         }
     }
 
-    /**
-     * @param \DateTime $Printtime
-     */
-    public function setPrinttime(\DateTime $Printtime = null): self
+    public function setPrinttime(\DateTimeInterface $Printtime): void
     {
-        if ($Printtime === null) {
-            $this->Printtime = null;
-        } else {
-            $this->Printtime = $Printtime->format(\DateTime::ATOM);
-        }
-
-        return $this;
+        $this->Printtime = $Printtime->format(\DateTime::ATOM);
     }
 
-    /**
-     * @return PrintType
-     */
-    public function getPrintType()
+    public function getPrintType(): ?string
     {
         return $this->PrintType;
     }
 
-    /**
-     * @param PrintType $PrintType
-     */
-    public function setPrintType($PrintType): self
+    public function setPrintType(string $PrintType): void
     {
         $this->PrintType = $PrintType;
-
-        return $this;
     }
 
-    /**
-     * @return Weight
-     */
-    public function getWeight()
+    public function getWeight(): ?string
     {
         return $this->Weight;
     }
 
-    /**
-     * @param Weight $Weight
-     */
-    public function setWeight($Weight): self
+    public function setWeight(string $Weight): void
     {
         $this->Weight = $Weight;
-
-        return $this;
     }
 
-    /**
-     * @return EnvelopeType
-     */
-    public function getEnvelopeType()
+    public function getEnvelopeType(): ?string
     {
         return $this->EnvelopeType;
     }
 
-    /**
-     * @param EnvelopeType $EnvelopeType
-     */
-    public function setEnvelopeType($EnvelopeType): self
+    public function setEnvelopeType(string $EnvelopeType): void
     {
         $this->EnvelopeType = $EnvelopeType;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getPostalDeliveryTime()
+    public function getPostalDeliveryTime(): ?\DateTimeInterface
     {
         if ($this->PostalDeliveryTime === null) {
             return null;
         } else {
-            try {
-                return new \DateTime($this->PostalDeliveryTime);
-            } catch (\Exception $e) {
-                return false;
-            }
+            return new \DateTime($this->PostalDeliveryTime);
         }
     }
 
-    /**
-     * @param \DateTime $PostalDeliveryTime
-     */
-    public function setPostalDeliveryTime(\DateTime $PostalDeliveryTime = null): self
+    public function setPostalDeliveryTime(\DateTimeInterface $PostalDeliveryTime): void
     {
-        if ($PostalDeliveryTime === null) {
-            $this->PostalDeliveryTime = null;
-        } else {
-            $this->PostalDeliveryTime = $PostalDeliveryTime->format(\DateTime::ATOM);
-        }
-
-        return $this;
+        $this->PostalDeliveryTime = $PostalDeliveryTime->format(\DateTime::ATOM);
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getServiceDeliveryTime()
+    public function getServiceDeliveryTime(): ?\DateTimeInterface
     {
         if ($this->ServiceDeliveryTime === null) {
             return null;
         } else {
-            try {
-                return new \DateTime($this->ServiceDeliveryTime);
-            } catch (\Exception $e) {
-                return false;
-            }
+            return new \DateTimeImmutable($this->ServiceDeliveryTime);
         }
     }
 
-    /**
-     * @param \DateTime $ServiceDeliveryTime
-     */
-    public function setServiceDeliveryTime(\DateTime $ServiceDeliveryTime = null): self
+    public function setServiceDeliveryTime(\DateTimeInterface $ServiceDeliveryTime): void
     {
-        if ($ServiceDeliveryTime === null) {
-            $this->ServiceDeliveryTime = null;
-        } else {
-            $this->ServiceDeliveryTime = $ServiceDeliveryTime->format(\DateTime::ATOM);
-        }
-
-        return $this;
+        $this->ServiceDeliveryTime = $ServiceDeliveryTime->format(\DateTime::ATOM);
     }
 
-    /**
-     * @return Sheets
-     */
-    public function getSheets()
+    public function getSheets(): ?int
     {
         return $this->Sheets;
     }
 
-    /**
-     * @param Sheets $Sheets
-     */
-    public function setSheets($Sheets): self
+    public function setSheets(int $Sheets): void
     {
         $this->Sheets = $Sheets;
-
-        return $this;
     }
 
-    /**
-     * @return PaymentForms
-     */
-    public function getPaymentForms()
+    public function getPaymentForms(): ?int
     {
         return $this->PaymentForms;
     }
 
-    /**
-     * @param PaymentForms $PaymentForms
-     */
-    public function setPaymentForms($PaymentForms): self
+    public function setPaymentForms(int $PaymentForms): void
     {
         $this->PaymentForms = $PaymentForms;
-
-        return $this;
     }
 
     public function getCosts(): Costs
@@ -282,46 +182,38 @@ class PostalNotificationType extends NotificationChannelSetType
         return $this->Costs;
     }
 
-    public function setCosts(Costs $Costs): self
+    public function setCosts(Costs $Costs): void
     {
         $this->Costs = $Costs;
-
-        return $this;
     }
 
-    public function getAdditonalPrintResults(): AdditonalPrintResults
+    public function getAdditonalPrintResults(): ?AdditonalPrintResults
     {
         return $this->AdditonalPrintResults;
     }
 
-    public function setAdditonalPrintResults(AdditonalPrintResults $AdditonalPrintResults): self
+    public function setAdditonalPrintResults(AdditonalPrintResults $AdditonalPrintResults): void
     {
         $this->AdditonalPrintResults = $AdditonalPrintResults;
-
-        return $this;
     }
 
-    public function getDelivererInformation(): DelivererInformation
+    public function getDelivererInformation(): ?DelivererInformation
     {
         return $this->DelivererInformation;
     }
 
-    public function setDelivererInformation(DelivererInformation $DelivererInformation): self
+    public function setDelivererInformation(DelivererInformation $DelivererInformation): void
     {
         $this->DelivererInformation = $DelivererInformation;
-
-        return $this;
     }
 
-    public function getScannedData(): ScannedData
+    public function getScannedData(): ?ScannedData
     {
         return $this->ScannedData;
     }
 
-    public function setScannedData(ScannedData $ScannedData): self
+    public function setScannedData(ScannedData $ScannedData): void
     {
         $this->ScannedData = $ScannedData;
-
-        return $this;
     }
 }

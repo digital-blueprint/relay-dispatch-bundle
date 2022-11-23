@@ -7,73 +7,61 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class PaymentForm
 {
     /**
-     * @var Receiver
+     * @var string
      */
     protected $Receiver = null;
 
     /**
-     * @var ReceiverBank
+     * @var ?string
      */
     protected $ReceiverBank = null;
 
     /**
-     * @var Amount
+     * @var ?string
      */
     protected $Amount = null;
 
     /**
-     * @var Purpose
+     * @var ?string
      */
     protected $Purpose = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $CustomerData = null;
 
     /**
-     * @var ReadingArea
+     * @var ?string
      */
     protected $ReadingArea = null;
 
     /**
-     * @var Currency
+     * @var ?string
      */
     protected $Currency = null;
 
     /**
-     * @var AccountInfo
+     * @var ?AccountInfo
      */
     protected $AccountInfo = null;
 
     /**
-     * @var \DateTime
+     * @var ?string
      */
     protected $DueDate = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $DirectDebit = null;
 
     /**
-     * @var ParameterSet
+     * @var ?ParameterSet
      */
     protected $ParameterSet = null;
 
-    /**
-     * @param Receiver     $Receiver
-     * @param ReceiverBank $ReceiverBank
-     * @param Amount       $Amount
-     * @param Purpose      $Purpose
-     * @param string       $CustomerData
-     * @param ReadingArea  $ReadingArea
-     * @param Currency     $Currency
-     * @param AccountInfo  $AccountInfo
-     * @param bool         $DirectDebit
-     * @param ParameterSet $ParameterSet
-     */
-    public function __construct($Receiver, $ReceiverBank, $Amount, $Purpose, $CustomerData, $ReadingArea, $Currency, $AccountInfo, \DateTime $DueDate, $DirectDebit, $ParameterSet)
+    public function __construct(string $Receiver, ?string $ReceiverBank, ?string $Amount, ?string $Purpose, ?string $CustomerData, ?string $ReadingArea, ?string $Currency, ?AccountInfo $AccountInfo, ?\DateTimeInterface $DueDate, ?bool $DirectDebit, ?ParameterSet $ParameterSet)
     {
         $this->Receiver = $Receiver;
         $this->ReceiverBank = $ReceiverBank;
@@ -83,181 +71,124 @@ class PaymentForm
         $this->ReadingArea = $ReadingArea;
         $this->Currency = $Currency;
         $this->AccountInfo = $AccountInfo;
-        $this->DueDate = $DueDate->format(\DateTime::ATOM);
+        if ($DueDate !== null) {
+            $this->DueDate = $DueDate->format(\DateTime::ATOM);
+        }
         $this->DirectDebit = $DirectDebit;
         $this->ParameterSet = $ParameterSet;
     }
 
-    public function getReceiver(): Receiver
+    public function getReceiver(): string
     {
         return $this->Receiver;
     }
 
-    public function setReceiver(Receiver $Receiver): self
+    public function setReceiver(string $Receiver): void
     {
         $this->Receiver = $Receiver;
-
-        return $this;
     }
 
-    /**
-     * @return ReceiverBank
-     */
-    public function getReceiverBank()
+    public function getReceiverBank(): ?string
     {
         return $this->ReceiverBank;
     }
 
-    /**
-     * @param ReceiverBank $ReceiverBank
-     */
-    public function setReceiverBank($ReceiverBank): self
+    public function setReceiverBank(string $ReceiverBank): void
     {
         $this->ReceiverBank = $ReceiverBank;
-
-        return $this;
     }
 
-    /**
-     * @return Amount
-     */
-    public function getAmount()
+    public function getAmount(): ?string
     {
         return $this->Amount;
     }
 
-    /**
-     * @param Amount $Amount
-     */
-    public function setAmount($Amount): self
+    public function setAmount(string $Amount): void
     {
         $this->Amount = $Amount;
-
-        return $this;
     }
 
-    /**
-     * @return Purpose
-     */
-    public function getPurpose()
+    public function getPurpose(): ?string
     {
         return $this->Purpose;
     }
 
-    /**
-     * @param Purpose $Purpose
-     */
-    public function setPurpose($Purpose): self
+    public function setPurpose(string $Purpose): void
     {
         $this->Purpose = $Purpose;
-
-        return $this;
     }
 
-    public function getCustomerData(): string
+    public function getCustomerData(): ?string
     {
         return $this->CustomerData;
     }
 
-    public function setCustomerData(string $CustomerData): self
+    public function setCustomerData(string $CustomerData): void
     {
         $this->CustomerData = $CustomerData;
-
-        return $this;
     }
 
-    /**
-     * @return ReadingArea
-     */
-    public function getReadingArea()
+    public function getReadingArea(): ?string
     {
         return $this->ReadingArea;
     }
 
-    /**
-     * @param ReadingArea $ReadingArea
-     */
-    public function setReadingArea($ReadingArea): self
+    public function setReadingArea(string $ReadingArea): void
     {
         $this->ReadingArea = $ReadingArea;
-
-        return $this;
     }
 
-    /**
-     * @return Currency
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->Currency;
     }
 
-    /**
-     * @param Currency $Currency
-     */
-    public function setCurrency($Currency): self
+    public function setCurrency(string $Currency): void
     {
         $this->Currency = $Currency;
-
-        return $this;
     }
 
-    public function getAccountInfo(): AccountInfo
+    public function getAccountInfo(): ?AccountInfo
     {
         return $this->AccountInfo;
     }
 
-    public function setAccountInfo(AccountInfo $AccountInfo): self
+    public function setAccountInfo(AccountInfo $AccountInfo): void
     {
         $this->AccountInfo = $AccountInfo;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDueDate()
+    public function getDueDate(): ?\DateTimeInterface
     {
         if ($this->DueDate === null) {
             return null;
         } else {
-            try {
-                return new \DateTime($this->DueDate);
-            } catch (\Exception $e) {
-                return false;
-            }
+            return new \DateTimeImmutable($this->DueDate);
         }
     }
 
-    public function setDueDate(\DateTime $DueDate): self
+    public function setDueDate(\DateTimeInterface $DueDate): void
     {
         $this->DueDate = $DueDate->format(\DateTime::ATOM);
-
-        return $this;
     }
 
-    public function getDirectDebit(): bool
+    public function getDirectDebit(): ?bool
     {
         return $this->DirectDebit;
     }
 
-    public function setDirectDebit(bool $DirectDebit): self
+    public function setDirectDebit(bool $DirectDebit): void
     {
         $this->DirectDebit = $DirectDebit;
-
-        return $this;
     }
 
-    public function getParameterSet(): ParameterSet
+    public function getParameterSet(): ?ParameterSet
     {
         return $this->ParameterSet;
     }
 
-    public function setParameterSet(ParameterSet $ParameterSet): self
+    public function setParameterSet(ParameterSet $ParameterSet): void
     {
         $this->ParameterSet = $ParameterSet;
-
-        return $this;
     }
 }

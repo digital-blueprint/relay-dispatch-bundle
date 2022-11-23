@@ -7,56 +7,46 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class PrintedEnvelope
 {
     /**
-     * @var RsID
+     * @var string
      */
     protected $RsID = null;
 
     /**
-     * @var Spec_Info_Adr
+     * @var ?string
      */
     protected $Spec_Info_Adr = null;
 
     /**
-     * @var Spec_Info_Top
+     * @var ?string
      */
     protected $Spec_Info_Top = null;
 
     /**
-     * @var Spec_Info_Center
+     * @var ?string
      */
     protected $Spec_Info_Center = null;
 
     /**
-     * @var Spec_Info_Bottom
+     * @var ?string
      */
     protected $Spec_Info_Bottom = null;
 
     /**
-     * @var Name_Row
+     * @var ?string
      */
     protected $Name_Row = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $Zustellverfuegung = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $ZustellverfuegungErgaenzung = null;
 
-    /**
-     * @param RsID             $RsID
-     * @param Spec_Info_Adr    $Spec_Info_Adr
-     * @param Spec_Info_Top    $Spec_Info_Top
-     * @param Spec_Info_Center $Spec_Info_Center
-     * @param Spec_Info_Bottom $Spec_Info_Bottom
-     * @param Name_Row         $Name_Row
-     * @param string           $Zustellverfuegung
-     * @param string           $ZustellverfuegungErgaenzung
-     */
-    public function __construct($RsID, $Spec_Info_Adr, $Spec_Info_Top, $Spec_Info_Center, $Spec_Info_Bottom, $Name_Row, $Zustellverfuegung, $ZustellverfuegungErgaenzung)
+    public function __construct(?string $RsID, ?string $Spec_Info_Adr, ?string $Spec_Info_Top, ?string $Spec_Info_Center, ?string $Spec_Info_Bottom, ?string $Name_Row, ?string $Zustellverfuegung, ?string $ZustellverfuegungErgaenzung)
     {
         $this->RsID = $RsID;
         $this->Spec_Info_Adr = $Spec_Info_Adr;
@@ -68,135 +58,83 @@ class PrintedEnvelope
         $this->ZustellverfuegungErgaenzung = $ZustellverfuegungErgaenzung;
     }
 
-    /**
-     * @return RsID
-     */
-    public function getRsID()
+    public function getRsID(): ?string
     {
         return $this->RsID;
     }
 
-    /**
-     * @param RsID $RsID
-     */
-    public function setRsID($RsID): self
+    public function setRsID(string $RsID): void
     {
         $this->RsID = $RsID;
-
-        return $this;
     }
 
-    /**
-     * @return Spec_Info_Adr
-     */
-    public function getSpec_Info_Adr()
+    public function getSpec_Info_Adr(): ?string
     {
         return $this->Spec_Info_Adr;
     }
 
-    /**
-     * @param Spec_Info_Adr $Spec_Info_Adr
-     */
-    public function setSpec_Info_Adr($Spec_Info_Adr): self
+    public function setSpec_Info_Adr(string $Spec_Info_Adr): void
     {
         $this->Spec_Info_Adr = $Spec_Info_Adr;
-
-        return $this;
     }
 
-    /**
-     * @return Spec_Info_Top
-     */
-    public function getSpec_Info_Top()
+    public function getSpec_Info_Top(): ?string
     {
         return $this->Spec_Info_Top;
     }
 
-    /**
-     * @param Spec_Info_Top $Spec_Info_Top
-     */
-    public function setSpec_Info_Top($Spec_Info_Top): self
+    public function setSpec_Info_Top(string $Spec_Info_Top): void
     {
         $this->Spec_Info_Top = $Spec_Info_Top;
-
-        return $this;
     }
 
-    /**
-     * @return Spec_Info_Center
-     */
-    public function getSpec_Info_Center()
+    public function getSpec_Info_Center(): ?string
     {
         return $this->Spec_Info_Center;
     }
 
-    /**
-     * @param Spec_Info_Center $Spec_Info_Center
-     */
-    public function setSpec_Info_Center($Spec_Info_Center): self
+    public function setSpec_Info_Center(string $Spec_Info_Center): void
     {
         $this->Spec_Info_Center = $Spec_Info_Center;
-
-        return $this;
     }
 
-    /**
-     * @return Spec_Info_Bottom
-     */
-    public function getSpec_Info_Bottom()
+    public function getSpec_Info_Bottom(): ?string
     {
         return $this->Spec_Info_Bottom;
     }
 
-    /**
-     * @param Spec_Info_Bottom $Spec_Info_Bottom
-     */
-    public function setSpec_Info_Bottom($Spec_Info_Bottom): self
+    public function setSpec_Info_Bottom(string $Spec_Info_Bottom): void
     {
         $this->Spec_Info_Bottom = $Spec_Info_Bottom;
-
-        return $this;
     }
 
-    /**
-     * @return Name_Row
-     */
-    public function getName_Row()
+    public function getName_Row(): ?string
     {
         return $this->Name_Row;
     }
 
-    /**
-     * @param Name_Row $Name_Row
-     */
-    public function setName_Row($Name_Row): self
+    public function setName_Row(string $Name_Row): void
     {
         $this->Name_Row = $Name_Row;
-
-        return $this;
     }
 
-    public function getZustellverfuegung(): string
+    public function getZustellverfuegung(): ?string
     {
         return $this->Zustellverfuegung;
     }
 
-    public function setZustellverfuegung(string $Zustellverfuegung): self
+    public function setZustellverfuegung(string $Zustellverfuegung): void
     {
         $this->Zustellverfuegung = $Zustellverfuegung;
-
-        return $this;
     }
 
-    public function getZustellverfuegungErgaenzung(): string
+    public function getZustellverfuegungErgaenzung(): ?string
     {
         return $this->ZustellverfuegungErgaenzung;
     }
 
-    public function setZustellverfuegungErgaenzung(string $ZustellverfuegungErgaenzung): self
+    public function setZustellverfuegungErgaenzung(string $ZustellverfuegungErgaenzung): void
     {
         $this->ZustellverfuegungErgaenzung = $ZustellverfuegungErgaenzung;
-
-        return $this;
     }
 }

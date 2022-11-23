@@ -7,98 +7,75 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class PostalDeliveryType extends DeliveryChannelSetType
 {
     /**
-     * @var Priority
+     * @var ?int
      */
     protected $Priority = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $EnvelopeFormat = null;
 
     /**
-     * @var PrintType
+     * @var ?string
      */
     protected $PrintType = null;
 
     /**
      * @var string
      */
-    protected $PaperFormat = null;
+    protected $PaperFormat = 'A4';
 
     /**
      * @var bool
      */
-    protected $Color = null;
+    protected $Color = false;
 
     /**
-     * @var PrintedEnvelope
+     * @var ?PrintedEnvelope
      */
     protected $PrintedEnvelope = null;
 
     /**
-     * @var AdditionalPrintParameter
+     * @var ?AdditionalPrintParameter
      */
     protected $AdditionalPrintParameter = null;
 
-    /**
-     * @param Priority                 $Priority
-     * @param string                   $EnvelopeFormat
-     * @param AdditionalPrintParameter $AdditionalPrintParameter
-     */
-    public function __construct($Priority, $EnvelopeFormat, $AdditionalPrintParameter)
+    public function __construct(?int $Priority, ?string $EnvelopeFormat, ?AdditionalPrintParameter $AdditionalPrintParameter)
     {
         $this->Priority = $Priority;
         $this->EnvelopeFormat = $EnvelopeFormat;
         $this->AdditionalPrintParameter = $AdditionalPrintParameter;
     }
 
-    /**
-     * @return Priority
-     */
-    public function getPriority()
+    public function getPriority(): ?int
     {
         return $this->Priority;
     }
 
-    /**
-     * @param Priority $Priority
-     */
-    public function setPriority($Priority): self
+    public function setPriority(int $Priority): void
     {
         $this->Priority = $Priority;
-
-        return $this;
     }
 
-    public function getEnvelopeFormat(): string
+    public function getEnvelopeFormat(): ?string
     {
         return $this->EnvelopeFormat;
     }
 
-    public function setEnvelopeFormat(string $EnvelopeFormat): self
+    public function setEnvelopeFormat(string $EnvelopeFormat): void
     {
         $this->EnvelopeFormat = $EnvelopeFormat;
-
-        return $this;
     }
 
-    /**
-     * @return PrintType
-     */
-    public function getPrintType()
+    public function getPrintType(): ?string
     {
         return $this->PrintType;
     }
 
-    /**
-     * @param PrintType $PrintType
-     */
-    public function setPrintType($PrintType): self
+    public function setPrintType(string $PrintType): void
     {
         $this->PrintType = $PrintType;
-
-        return $this;
     }
 
     public function getPaperFormat(): string
@@ -106,11 +83,9 @@ class PostalDeliveryType extends DeliveryChannelSetType
         return $this->PaperFormat;
     }
 
-    public function setPaperFormat(string $PaperFormat): self
+    public function setPaperFormat(string $PaperFormat): void
     {
         $this->PaperFormat = $PaperFormat;
-
-        return $this;
     }
 
     public function getColor(): bool
@@ -125,27 +100,23 @@ class PostalDeliveryType extends DeliveryChannelSetType
         return $this;
     }
 
-    public function getPrintedEnvelope(): PrintedEnvelope
+    public function getPrintedEnvelope(): ?PrintedEnvelope
     {
         return $this->PrintedEnvelope;
     }
 
-    public function setPrintedEnvelope(PrintedEnvelope $PrintedEnvelope): self
+    public function setPrintedEnvelope(PrintedEnvelope $PrintedEnvelope): void
     {
         $this->PrintedEnvelope = $PrintedEnvelope;
-
-        return $this;
     }
 
-    public function getAdditionalPrintParameter(): AdditionalPrintParameter
+    public function getAdditionalPrintParameter(): ?AdditionalPrintParameter
     {
         return $this->AdditionalPrintParameter;
     }
 
-    public function setAdditionalPrintParameter(AdditionalPrintParameter $AdditionalPrintParameter): self
+    public function setAdditionalPrintParameter(AdditionalPrintParameter $AdditionalPrintParameter): void
     {
         $this->AdditionalPrintParameter = $AdditionalPrintParameter;
-
-        return $this;
     }
 }

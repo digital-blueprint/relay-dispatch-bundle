@@ -7,16 +7,16 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 class AddressingResults
 {
     /**
-     * @var AddressingResult[]
+     * @var ?AddressingResult[]
      */
     protected $AddressingResult = null;
 
     /**
      * @param AddressingResult[] $AddressingResult
      */
-    public function __construct($AddressingResult)
+    public function __construct(array $AddressingResult)
     {
-        $this->AddressingResult[] = $AddressingResult;
+        $this->AddressingResult = $AddressingResult;
     }
 
     /**
@@ -30,10 +30,8 @@ class AddressingResults
     /**
      * @param AddressingResult[] $AddressingResult
      */
-    public function setAddressingResult(array $AddressingResult): self
+    public function setAddressingResult(array $AddressingResult): void
     {
         $this->AddressingResult = $AddressingResult;
-
-        return $this;
     }
 }

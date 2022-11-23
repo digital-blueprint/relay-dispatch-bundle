@@ -11,10 +11,7 @@ class IdReferenceType extends DocumentType
      */
     protected $Id = null;
 
-    /**
-     * @param string $Id
-     */
-    public function __construct($Id)
+    public function __construct(string $Id)
     {
         $this->Id = $Id;
     }
@@ -24,13 +21,8 @@ class IdReferenceType extends DocumentType
         return $this->Id;
     }
 
-    /**
-     * @return stringReferenceType
-     */
-    public function setId(string $Id): self
+    public function setId(string $Id): void
     {
         $this->Id = $Id;
-
-        return $this;
     }
 }

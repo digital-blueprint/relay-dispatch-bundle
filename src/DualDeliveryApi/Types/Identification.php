@@ -16,11 +16,7 @@ class Identification
      */
     protected $Value = null;
 
-    /**
-     * @param string $Type
-     * @param string $Value
-     */
-    public function __construct($Type, $Value)
+    public function __construct(string $Type, string $Value)
     {
         $this->Type = $Type;
         $this->Value = $Value;
@@ -31,14 +27,9 @@ class Identification
         return $this->Type;
     }
 
-    /**
-     * @return stringentification
-     */
-    public function setType(string $Type): self
+    public function setType(string $Type): void
     {
         $this->Type = $Type;
-
-        return $this;
     }
 
     public function getValue(): string
@@ -46,13 +37,8 @@ class Identification
         return $this->Value;
     }
 
-    /**
-     * @return stringentification
-     */
-    public function setValue(string $Value): self
+    public function setValue(string $Value): void
     {
         $this->Value = $Value;
-
-        return $this;
     }
 }
