@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulkRequestType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulkResponseType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellationRequest;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellationResponse;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingResponseType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk\DualDeliveryBulkRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk\DualDeliveryBulkResponseType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk\DualNotificationBulkRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk\DualNotificationBulkResponseType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellation\DualDeliveryCancellationRequest;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryCancellation\DualDeliveryCancellationResponse;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryResponse;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationBulkRequestType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationBulkResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualNotificationResponseType;
@@ -27,7 +27,7 @@ class DualDeliveryClient extends \SoapClient
       'TelephoneAddressType' => '\\TelephoneAddressType',
       'TelcomNumberType' => '\\TelcomNumberType',
       'IdentificationType' => '\\Zuse\\IdentificationType',
-      'Value' => '\\Value',
+      'Value' => '\\Zuse\\Value',
       'AbstractPersonType' => '\\AbstractPersonType',
       'PhysicalPersonType' => '\\PhysicalPersonType',
       'PersonNameType' => '\\PersonNameType',
@@ -231,23 +231,23 @@ class DualDeliveryClient extends \SoapClient
       'AdditonalPrintResults' => '\\AdditonalPrintResults',
       'AdditionalPrintResultSetType' => '\\AdditionalPrintResultSetType',
       'PropertyValuePrintResultSetType' => '\\PropertyValuePrintResultSetType',
-      'DualNotificationBulkResponseType' => '\\DualNotificationBulkResponseType',
+      'DualNotificationBulkResponseType' => '\\DualDeliveryBulk\\DualNotificationBulkResponseType',
       'DualNotificationResponses' => '\\DualNotificationResponses',
-      'DualDeliveryBulkRequestType' => '\\DualDeliveryBulkRequestType',
-      'FinishBulk' => '\\FinishBulk',
-      'DualDeliveryBulkResponseType' => '\\DualDeliveryBulkResponseType',
-      'BulkElements' => '\\BulkElements',
-      'DualNotificationBulkRequestType' => '\\DualNotificationBulkRequestType',
-      'DualDeliveryPreAddressingRequestType' => '\\DualDeliveryPreAddressingRequestType',
+      'DualDeliveryBulkRequestType' => '\\DualDeliveryBulk\\DualDeliveryBulkRequestType',
+      'FinishBulk' => '\\DualDeliveryBulk\\FinishBulk',
+      'DualDeliveryBulkResponseType' => '\\DualDeliveryBulk\\DualDeliveryBulkResponseType',
+      'BulkElements' => '\\DualDeliveryBulk\\BulkElements',
+      'DualNotificationBulkRequestType' => '\\DualDeliveryBulk\\DualNotificationBulkRequestType',
+      'DualDeliveryPreAddressingRequestType' => '\\DualDeliveryPreAddressing\\DualDeliveryPreAddressingRequestType',
       'Recipients' => '\\Recipients',
       'Recipient' => '\\Recipient',
-      'DualDeliveryPreAddressingResponseType' => '\\DualDeliveryPreAddressingResponseType',
+      'DualDeliveryPreAddressingResponseType' => '\\DualDeliveryPreAddressing\\DualDeliveryPreAddressingResponseType',
       'AddressingResults' => '\\AddressingResults',
       'AddressingResult' => '\\AddressingResult',
-      'DualDeliveryCancellationRequest' => '\\DualDeliveryCancellationRequest',
-      'DualDeliveryCancellationResponse' => '\\DualDeliveryCancellationResponse',
-      'DualDeliveryCancellationRequestType' => '\\DualDeliveryCancellationRequestType',
-      'DualDeliveryCancellationResponseType' => '\\DualDeliveryCancellationResponseType',
+      'DualDeliveryCancellationRequest' => '\\DualDeliveryCancellation\\DualDeliveryCancellationRequest',
+      'DualDeliveryCancellationResponse' => '\\DualDeliveryCancellation\\DualDeliveryCancellationResponse',
+      'DualDeliveryCancellationRequestType' => '\\DualDeliveryCancellation\\DualDeliveryCancellationRequestType',
+      'DualDeliveryCancellationResponseType' => '\\DualDeliveryCancellation\\DualDeliveryCancellationResponseType',
     ];
 
     // Some vendors have special requirements that are not part of the spec, instead of makeing everything

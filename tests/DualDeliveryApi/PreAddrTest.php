@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests\DualDeliveryApi;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData as PreMetaData;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingResponseType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingResponseType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;

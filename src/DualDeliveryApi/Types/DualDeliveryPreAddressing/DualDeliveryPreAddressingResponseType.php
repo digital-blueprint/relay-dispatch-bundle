@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing;
+
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AddressingResults;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ErrorsType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusType;
 
 class DualDeliveryPreAddressingResponseType
 {

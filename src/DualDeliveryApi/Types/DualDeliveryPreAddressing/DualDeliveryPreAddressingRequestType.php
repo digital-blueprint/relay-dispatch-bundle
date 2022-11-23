@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DeliveryChannels;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Recipients;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
 
 class DualDeliveryPreAddressingRequestType
 {

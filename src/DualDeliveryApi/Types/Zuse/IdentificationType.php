@@ -6,7 +6,6 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\stringentificationType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Value;
 
 class IdentificationType
 {

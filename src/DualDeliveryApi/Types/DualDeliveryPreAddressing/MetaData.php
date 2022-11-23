@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;

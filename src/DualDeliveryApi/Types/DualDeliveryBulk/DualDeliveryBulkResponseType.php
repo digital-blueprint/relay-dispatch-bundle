@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk;
+
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AdditionalMetaData;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ErrorsType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\StatusType;
 
 class DualDeliveryBulkResponseType
 {
