@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
+
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BillerExtensionType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\FurtherIdentificationType;
 
 class BillerType
 {

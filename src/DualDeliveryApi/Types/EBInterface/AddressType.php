@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
-
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface\CountryType;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
 class AddressType
 {
