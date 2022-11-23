@@ -12,21 +12,24 @@ class StatusType
     protected $Code = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $Text = null;
 
     /**
-     * @var \DateTime
+     * @var ?string
      */
     protected $Timestamp = null;
 
-    /**
-     * @param string $Code
-     */
-    public function __construct($Code)
+    public function __construct(string $Code, ?string $Text = null, ?\DateTimeInterface $Timestamp = null)
     {
         $this->Code = $Code;
+        $this->Text = $Text;
+        if ($Timestamp !== null) {
+            $this->setTimestamp($Timestamp);
+        } else {
+            $this->Timestamp = null;
+        }
     }
 
     public function getCode(): string
@@ -34,11 +37,9 @@ class StatusType
         return $this->Code;
     }
 
-    public function setCode(string $Code): self
+    public function setCode(string $Code): void
     {
         $this->Code = $Code;
-
-        return $this;
     }
 
     public function getText(): string
@@ -46,40 +47,22 @@ class StatusType
         return $this->Text;
     }
 
-    public function setText(string $Text): self
+    public function setText(string $Text): void
     {
         $this->Text = $Text;
-
-        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getTimestamp()
+    public function getTimestamp(): ?\DateTimeInterface
     {
         if ($this->Timestamp === null) {
             return null;
         } else {
-            try {
-                return new \DateTime($this->Timestamp);
-            } catch (\Exception $e) {
-                return false;
-            }
+            return new \DateTimeImmutable($this->Timestamp);
         }
     }
 
-    /**
-     * @param \DateTime $Timestamp
-     */
-    public function setTimestamp(\DateTime $Timestamp = null): self
+    public function setTimestamp(\DateTimeInterface $Timestamp): void
     {
-        if ($Timestamp === null) {
-            $this->Timestamp = null;
-        } else {
-            $this->Timestamp = $Timestamp->format(\DateTime::ATOM);
-        }
-
-        return $this;
+        $this->Timestamp = $Timestamp->format(\DateTime::ATOM);
     }
 }
