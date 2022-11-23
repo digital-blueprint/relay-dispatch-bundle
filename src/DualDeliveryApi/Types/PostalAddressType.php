@@ -37,7 +37,7 @@ class PostalAddressType extends AbstractAddressType
     protected $type = null;
 
     /**
-     * @param string          $Id
+     * @param string|null     $Id
      * @param string          $PostalCode
      * @param string          $Municipality
      * @param string|null     $MunicipalityNumber

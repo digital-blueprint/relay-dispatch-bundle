@@ -8,8 +8,6 @@ use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AddressIdentifierType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Checksum;
@@ -20,7 +18,6 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as Dual
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPre\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface\CountryType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ErrorType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParametersType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ParameterType;
@@ -1097,23 +1094,9 @@ class DispatchService
         foreach ($dispatchRequest->getRecipients() as $recipient) {
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
-//            $address = new AddressType(
-//                new AddressIdentifierType($recipient->getIdentifier()),
-//                '',
-//                $recipient->getGivenName() . ' ' . $recipient->getFamilyName(),
-//                $recipient->getStreetAddress() . ' ' . $recipient->getBuildingNumber(),
-//                '',
-//                $recipient->getAddressLocality(),
-//                $recipient->getPostalCode(),
-//                new CountryType($recipient->getAddressCountry()),
-//                '',
-//                '',
-//                '',
-//                ''
-//            );
 
             $address = new PostalAddressType(
-                $recipient->getIdentifier(),
+                null,
                 $recipient->getPostalCode(),
                 $recipient->getAddressLocality(),
                 null,
@@ -1121,11 +1104,7 @@ class DispatchService
             );
             $address->setCountryCode($recipient->getAddressCountry());
 
-//            $personData = new PersonDataType($physicalPerson, $address);
-            // TODO: Add address
-            $personData = new PersonDataType($physicalPerson);
-//            $dualDeliveryRecipients[] = new Recipient(null, new RecipientType($personData));
-//            $dualDeliveryRecipients[] = new Recipient($recipient->getIdentifier(), new RecipientType($personData));
+            $personData = new PersonDataType($physicalPerson, $address);
             $dualDeliveryRecipient = new RecipientType($personData);
 
 //            $id = $dualDeliveryRequest->getIdentifier().'-'.$recipient->getIdentifier().'-pbek-'.rand(100000, 999999);
