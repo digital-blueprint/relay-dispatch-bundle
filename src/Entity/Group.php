@@ -58,6 +58,22 @@ class Group
      */
     private $name;
 
+    /**
+     * @ApiProperty
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var bool
+     */
+    private $mayRead;
+
+    /**
+     * @ApiProperty
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var bool
+     */
+    private $mayWrite;
+
     public function setIdentifier(string $identifier): void
     {
         $this->identifier = $identifier;
@@ -76,5 +92,25 @@ class Group
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    public function getMayRead(): bool
+    {
+        return $this->mayRead;
+    }
+
+    public function setMayRead(bool $mayRead): void
+    {
+        $this->mayRead = $mayRead;
+    }
+
+    public function getMayWrite(): bool
+    {
+        return $this->mayWrite;
+    }
+
+    public function setMayWrite(bool $mayWrite): void
+    {
+        $this->mayWrite = $mayWrite;
     }
 }

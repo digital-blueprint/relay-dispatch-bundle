@@ -15,4 +15,9 @@ class GroupData
     {
         $this->id = $id;
     }
+
+    public function getIdentifier(): string
+    {
+        return $this->id;
+    }
 }

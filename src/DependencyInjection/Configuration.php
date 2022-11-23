@@ -10,6 +10,13 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
+    public const GROUP_READER = 'GROUP_READER';
+    public const GROUP_WRITER = 'GROUP_WRITER';
+    public const ADMIN = 'ADMIN';
+    public const MANAGER = 'MANAGER';
+    public const GROUPS_MAY_READ = 'GROUPS_MAY_READ';
+    public const GROUPS_MAY_WRITE = 'GROUPS_MAY_WRITE';
+
     private function getAuthNode(): NodeDefinition
     {
         $treeBuilder = new TreeBuilder('authorization');
@@ -20,16 +27,16 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('rights')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('GROUP_READER')
+                        ->scalarNode(self::GROUP_READER)
                             ->defaultValue('false')
                         ->end()
-                        ->scalarNode('GROUP_WRITER')
+                        ->scalarNode(self::GROUP_WRITER)
                             ->defaultValue('false')
                         ->end()
-                        ->scalarNode('ADMIN')
+                        ->scalarNode(self::ADMIN)
                             ->defaultValue('false')
                         ->end()
-                        ->scalarNode('MANAGER')
+                        ->scalarNode(self::MANAGER)
                             ->defaultValue('false')
                         ->end()
                     ->end()
@@ -37,7 +44,10 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('attributes')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('GROUPS')
+                        ->scalarNode(self::GROUPS_MAY_READ)
+                            ->defaultValue('[]')
+                        ->end()
+                            ->scalarNode(self::GROUPS_MAY_WRITE)
                             ->defaultValue('[]')
                         ->end()
                     ->end()

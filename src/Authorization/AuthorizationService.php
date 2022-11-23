@@ -5,40 +5,43 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Authorization;
 
 use Dbp\Relay\CoreBundle\Authorization\AbstractAuthorizationService;
+use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
 
 class AuthorizationService extends AbstractAuthorizationService
 {
     public function checkCanRead(string $groupId)
     {
-        $this->denyAccessUnlessIsGranted('GROUP_READER', new GroupData($groupId));
+        $this->denyAccessUnlessIsGranted(Configuration::GROUP_READER, new GroupData($groupId));
     }
 
     public function checkCanWrite(string $groupId)
     {
-        $this->denyAccessUnlessIsGranted('GROUP_WRITER', new GroupData($groupId));
+        $this->denyAccessUnlessIsGranted(Configuration::GROUP_WRITER, new GroupData($groupId));
     }
 
     public function checkIsAdmin()
     {
-        $this->denyAccessUnlessIsGranted('ADMIN');
+        $this->denyAccessUnlessIsGranted(Configuration::ADMIN);
     }
 
     public function checkIsManager()
     {
-        $this->denyAccessUnlessIsGranted('MANAGER');
+        $this->denyAccessUnlessIsGranted(Configuration::MANAGER);
     }
 
     /**
      * @return string[]
      */
-    public function getGroups(): array
+    public function getGroupsMayRead(): array
     {
-        $groups = $this->getAttribute('GROUPS', []);
-        assert(is_array($groups));
+        return $this->getAttribute(Configuration::GROUPS_MAY_READ, []) ?? [];
+    }
 
-        // XXX: for testing
-        $groups = ['1263', '1190', '681', '1231', '2322', '2374', '11072'];
-
-        return $groups;
+    /**
+     * @return string[]
+     */
+    public function getGroupsMayWrite(): array
+    {
+        return $this->getAttribute(Configuration::GROUPS_MAY_WRITE, []) ?? [];
     }
 }
