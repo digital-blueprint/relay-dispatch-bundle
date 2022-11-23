@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
 class TelcomNumberType
 {
@@ -11,10 +11,7 @@ class TelcomNumberType
      */
     protected $FormattedNumber = null;
 
-    /**
-     * @param string $FormattedNumber
-     */
-    public function __construct($FormattedNumber)
+    public function __construct(string $FormattedNumber)
     {
         $this->FormattedNumber = $FormattedNumber;
     }
@@ -24,10 +21,8 @@ class TelcomNumberType
         return $this->FormattedNumber;
     }
 
-    public function setFormattedNumber(string $FormattedNumber): self
+    public function setFormattedNumber(string $FormattedNumber): void
     {
         $this->FormattedNumber = $FormattedNumber;
-
-        return $this;
     }
 }

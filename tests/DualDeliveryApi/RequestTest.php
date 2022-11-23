@@ -10,13 +10,13 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as Dual
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryRequest;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadAttributesType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PayloadType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonDataType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PersonNameType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\ProcessingProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SenderType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
 use PHPUnit\Framework\TestCase;
 

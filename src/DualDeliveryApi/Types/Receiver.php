@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types;
 
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\CorporateBodyType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PostalAddressType;
+
 class Receiver
 {
     /**
