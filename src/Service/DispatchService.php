@@ -1199,21 +1199,52 @@ class DispatchService
 
             $this->createDeliveryStatusChange($recipient->getIdentifier(),
                 DeliveryStatusChange::STATUS_DUAL_DELIVERY_REQUEST_SUCCESS, 'DualDelivery request submitted');
-            $recipient->setDualDeliveryID($response->getDualDeliveryID());
+
+            // Directly update the dualDeliveryID instead of using the ORM, because we had errors like:
+            //
+            // A new entity was found through the relationship 'Dbp\\\\Relay\\\\DispatchBundle\\\\Entity\\\\RequestRecipient#request'
+            // that was not configured to cascade persist operations for entity: Dbp\\\\Relay\\\\DispatchBundle\\\\Entity\\\\Request@658.
+            // To solve this issue: Either explicitly call EntityManager#persist() on this unknown entity or configure cascade persist
+            // this association in the mapping for example @ManyToOne(..,cascade={\\\"persist\\\"}). If you cannot find out which entity
+            // causes the problem implement 'Dbp\\\\Relay\\\\DispatchBundle\\\\Entity\\\\Request#__toString()' to get a clue.
+            $queryBuilder = $this->em->createQueryBuilder();
+            $query = $queryBuilder->update(RequestRecipient::class, 'r')
+                ->set('r.dualDeliveryID', ':dualDeliveryId')
+                ->where('r.identifier = :identifier')
+                ->setParameter('identifier', $recipient->getIdentifier())
+                ->setParameter('dualDeliveryId', $response->getDualDeliveryID())
+                ->getQuery();
 
             try {
-                $this->em->persist($recipient);
-                $this->em->flush();
+                $result = $query->execute();
+                dump($result);
             } catch (\Exception $e) {
                 throw ApiError::withDetails(
-                    Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be update after DualDelivery request!',
+                    Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDeliveryId of RequestRecipient could not be update after DualDelivery request!',
                     'dispatch:request-recipient-not-updated', [
                         'request-id' => $dispatchRequest->getIdentifier(),
                         'recipient-id' => $recipient->getIdentifier(),
+                        'dual-delivery-id' => $response->getDualDeliveryID(),
                         'message' => $e->getMessage(),
                     ]
                 );
             }
+
+//            $recipient->setDualDeliveryID($response->getDualDeliveryID());
+//
+//            try {
+//                $this->em->persist($recipient);
+//                $this->em->flush();
+//            } catch (\Exception $e) {
+//                throw ApiError::withDetails(
+//                    Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be update after DualDelivery request!',
+//                    'dispatch:request-recipient-not-updated', [
+//                        'request-id' => $dispatchRequest->getIdentifier(),
+//                        'recipient-id' => $recipient->getIdentifier(),
+//                        'message' => $e->getMessage(),
+//                    ]
+//                );
+//            }
         }
 
         return true;
