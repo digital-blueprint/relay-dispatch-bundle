@@ -1088,13 +1088,14 @@ class DispatchService
         dump($service->getPrettyLastResponse());
 
         if ($response->getStatus()->getText() !== 'SUCCESS') {
-            /* @var ErrorType[] $errors */
-            $errors = $response->getErrors()->getError();
+            // TODO: Get error texts (are there any?)
+//            /* @var ErrorType[] $errors */
+//            $errors = $response->getErrors()->getError();
             $errorTexts = [];
 
-            foreach ($errors as $apiError) {
-                $errorTexts[] = $apiError->getInfo();
-            }
+//            foreach ($errors as $apiError) {
+//                $errorTexts[] = $apiError->getInfo();
+//            }
 
             $errorText = implode(', ', $errorTexts);
             $this->createDeliveryStatusChange($recipient->getIdentifier(),
