@@ -1087,27 +1087,24 @@ class DispatchService
         dump($service->getPrettyLastRequest());
         dump($service->getPrettyLastResponse());
 
-        if ($response->getStatus()->getText() !== 'SUCCESS') {
-            // TODO: Get error texts (are there any?)
-//            /* @var ErrorType[] $errors */
-//            $errors = $response->getErrors()->getError();
-            $errorTexts = [];
+        $code = $response->getStatus()->getCode();
+        $status = $this->getStatusForCode($code);
 
-//            foreach ($errors as $apiError) {
-//                $errorTexts[] = $apiError->getInfo();
-//            }
-
-            $errorText = implode(', ', $errorTexts);
+        if ($status === 0) {
             $this->createDeliveryStatusChange($recipient->getIdentifier(),
-                DeliveryStatusChange::STATUS_STATUS_REQUEST_FAILED, 'StatusRequest request failed: '.$errorText);
+                DeliveryStatusChange::STATUS_STATUS_REQUEST_FAILED, 'StatusRequest request failed: StatusCode not found');
 
             throw ApiError::withDetails(
                 Response::HTTP_INTERNAL_SERVER_ERROR, 'StatusRequest request failed!', 'dispatch:dual-delivery-request-failed', [
                     'recipient-id' => $recipient->getIdentifier(),
-                    'message' => $errorText,
+                    'message' => 'StatusCode not found',
                 ]
             );
         }
+
+        // TODO: Maybe add textual explanation for status code from DeliveryQuality_ProcessingProfile_Statuswerte_v1.1.0.xlsx
+        $this->createDeliveryStatusChange($recipient->getIdentifier(),
+            $status, 'StatusRequest request: '.$code);
 
         return true;
     }
@@ -1140,7 +1137,7 @@ class DispatchService
             $content = $file->getData();
 
             // Attempt to re-read the file if content is empty
-            if ($content === null) {
+            if ($content === null || $content === 0) {
                 $file = $this->getRequestFileById($file->getIdentifier());
                 $content = $file->getData();
             }
@@ -1303,5 +1300,51 @@ class DispatchService
         }
 
         return true;
+    }
+
+    protected function getStatusForCode(string $code): int
+    {
+        $statusType = 0;
+
+        switch ($code) {
+            case 'P1':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P1;
+                break;
+            case 'P2':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P2;
+                break;
+            case 'P3':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P3;
+                break;
+            case 'P4':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P4;
+                break;
+            case 'P5':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P5;
+                break;
+            case 'P6':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6;
+                break;
+            case 'P7':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P7;
+                break;
+            case 'P8':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P8;
+                break;
+            case 'P9':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P9;
+                break;
+            case 'P10':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P10;
+                break;
+            case 'P11':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P11;
+                break;
+            case 'P12':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P12;
+                break;
+        }
+
+        return $statusType;
     }
 }
