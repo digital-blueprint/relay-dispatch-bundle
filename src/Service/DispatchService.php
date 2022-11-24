@@ -1127,7 +1127,6 @@ class DispatchService
                 null,
                 $recipient->getPostalCode(),
                 $recipient->getAddressLocality(),
-                null,
                 new DeliveryAddress($recipient->getStreetAddress(), $recipient->getBuildingNumber())
             );
             $address->setCountryCode($recipient->getAddressCountry());

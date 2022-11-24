@@ -7,65 +7,54 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotificatio
 class DetailedCosts
 {
     /**
-     * @var float
+     * @var ?float
      */
     protected $PrintingCosts = null;
 
     /**
-     * @var float
+     * @var ?float
      */
     protected $HandlingCosts = null;
 
     /**
-     * @var float
+     * @var ?float
      */
     protected $PostageCosts = null;
 
-    /**
-     * @param float $PrintingCosts
-     * @param float $HandlingCosts
-     * @param float $PostageCosts
-     */
-    public function __construct($PrintingCosts, $HandlingCosts, $PostageCosts)
+    public function __construct(?float $PrintingCosts, ?float $HandlingCosts, ?float $PostageCosts)
     {
         $this->PrintingCosts = $PrintingCosts;
         $this->HandlingCosts = $HandlingCosts;
         $this->PostageCosts = $PostageCosts;
     }
 
-    public function getPrintingCosts(): float
+    public function getPrintingCosts(): ?float
     {
         return $this->PrintingCosts;
     }
 
-    public function setPrintingCosts(float $PrintingCosts): self
+    public function setPrintingCosts(float $PrintingCosts): void
     {
         $this->PrintingCosts = $PrintingCosts;
-
-        return $this;
     }
 
-    public function getHandlingCosts(): float
+    public function getHandlingCosts(): ?float
     {
         return $this->HandlingCosts;
     }
 
-    public function setHandlingCosts(float $HandlingCosts): self
+    public function setHandlingCosts(float $HandlingCosts): void
     {
         $this->HandlingCosts = $HandlingCosts;
-
-        return $this;
     }
 
-    public function getPostageCosts(): float
+    public function getPostageCosts(): ?float
     {
         return $this->PostageCosts;
     }
 
-    public function setPostageCosts(float $PostageCosts): self
+    public function setPostageCosts(float $PostageCosts): void
     {
         $this->PostageCosts = $PostageCosts;
-
-        return $this;
     }
 }

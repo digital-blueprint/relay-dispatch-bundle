@@ -16,11 +16,7 @@ class Value
      */
     protected $Id = null;
 
-    /**
-     * @param string $_
-     * @param string $Id
-     */
-    public function __construct($_, $Id)
+    public function __construct(string $_, ?string $Id)
     {
         $this->_ = $_;
         $this->Id = $Id;
@@ -31,22 +27,18 @@ class Value
         return $this->_;
     }
 
-    public function set_(string $_): self
+    public function set_(string $_): void
     {
         $this->_ = $_;
-
-        return $this;
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->Id;
     }
 
-    public function setId(string $Id): self
+    public function setId(string $Id): void
     {
         $this->Id = $Id;
-
-        return $this;
     }
 }

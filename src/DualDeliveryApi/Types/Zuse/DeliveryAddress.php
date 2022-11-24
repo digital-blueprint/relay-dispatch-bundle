@@ -17,22 +17,16 @@ class DeliveryAddress
     protected $BuildingNumber = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $Unit = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DoorNumber = null;
 
-    /**
-     * @param string      $StreetName
-     * @param string      $BuildingNumber
-     * @param string|null $Unit
-     * @param string|null $DoorNumber
-     */
-    public function __construct($StreetName, $BuildingNumber, $Unit = null, $DoorNumber = null)
+    public function __construct(string $StreetName, string $BuildingNumber, ?string $Unit = null, ?string $DoorNumber = null)
     {
         $this->StreetName = $StreetName;
         $this->BuildingNumber = $BuildingNumber;
@@ -45,11 +39,9 @@ class DeliveryAddress
         return $this->StreetName;
     }
 
-    public function setStreetName(string $StreetName): self
+    public function setStreetName(string $StreetName): void
     {
         $this->StreetName = $StreetName;
-
-        return $this;
     }
 
     public function getBuildingNumber(): string
@@ -57,34 +49,28 @@ class DeliveryAddress
         return $this->BuildingNumber;
     }
 
-    public function setBuildingNumber(string $BuildingNumber): self
+    public function setBuildingNumber(string $BuildingNumber): void
     {
         $this->BuildingNumber = $BuildingNumber;
-
-        return $this;
     }
 
-    public function getUnit(): string
+    public function getUnit(): ?string
     {
         return $this->Unit;
     }
 
-    public function setUnit(string $Unit): self
+    public function setUnit(string $Unit): void
     {
         $this->Unit = $Unit;
-
-        return $this;
     }
 
-    public function getDoorNumber(): string
+    public function getDoorNumber(): ?string
     {
         return $this->DoorNumber;
     }
 
-    public function setDoorNumber(string $DoorNumber): self
+    public function setDoorNumber(string $DoorNumber): void
     {
         $this->DoorNumber = $DoorNumber;
-
-        return $this;
     }
 }

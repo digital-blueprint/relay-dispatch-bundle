@@ -11,44 +11,36 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfil
 class MetaData
 {
     /**
-     * @var ApplicationID
+     * @var ?ApplicationID
      */
     protected $ApplicationID = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $GZ = null;
 
     /**
-     * @var AdditionalMetaData
+     * @var ?AdditionalMetaData
      */
     protected $AdditionalMetaData = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $TestCase = null;
 
     /**
-     * @var ProcessingProfile
+     * @var ?ProcessingProfile
      */
     protected $ProcessingProfile = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $Asynchronous = null;
 
-    /**
-     * @param ApplicationID      $ApplicationID
-     * @param string             $GZ
-     * @param AdditionalMetaData $AdditionalMetaData
-     * @param bool               $TestCase
-     * @param ProcessingProfile  $ProcessingProfile
-     * @param bool               $Asynchronous
-     */
-    public function __construct($ApplicationID, $GZ, $AdditionalMetaData, $TestCase, $ProcessingProfile, $Asynchronous)
+    public function __construct(?ApplicationID $ApplicationID, ?string $GZ, ?AdditionalMetaData $AdditionalMetaData, ?bool $TestCase, ?ProcessingProfile $ProcessingProfile, ?bool $Asynchronous)
     {
         $this->ApplicationID = $ApplicationID;
         $this->GZ = $GZ;
@@ -58,75 +50,63 @@ class MetaData
         $this->Asynchronous = $Asynchronous;
     }
 
-    public function getApplicationID(): ApplicationID
+    public function getApplicationID(): ?ApplicationID
     {
         return $this->ApplicationID;
     }
 
-    public function setApplicationID(ApplicationID $ApplicationID): self
+    public function setApplicationID(ApplicationID $ApplicationID): void
     {
         $this->ApplicationID = $ApplicationID;
-
-        return $this;
     }
 
-    public function getGZ(): string
+    public function getGZ(): ?string
     {
         return $this->GZ;
     }
 
-    public function setGZ(string $GZ): self
+    public function setGZ(string $GZ): void
     {
         $this->GZ = $GZ;
-
-        return $this;
     }
 
-    public function getAdditionalMetaData(): AdditionalMetaData
+    public function getAdditionalMetaData(): ?AdditionalMetaData
     {
         return $this->AdditionalMetaData;
     }
 
-    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): self
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): void
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
-
-        return $this;
     }
 
-    public function getTestCase(): bool
+    public function getTestCase(): ?bool
     {
         return $this->TestCase;
     }
 
-    public function setTestCase(bool $TestCase): self
+    public function setTestCase(bool $TestCase): void
     {
         $this->TestCase = $TestCase;
-
-        return $this;
     }
 
-    public function getProcessingProfile(): ProcessingProfile
+    public function getProcessingProfile(): ?ProcessingProfile
     {
         return $this->ProcessingProfile;
     }
 
-    public function setProcessingProfile(ProcessingProfile $ProcessingProfile): self
+    public function setProcessingProfile(ProcessingProfile $ProcessingProfile): void
     {
         $this->ProcessingProfile = $ProcessingProfile;
-
-        return $this;
     }
 
-    public function getAsynchronous(): bool
+    public function getAsynchronous(): ?bool
     {
         return $this->Asynchronous;
     }
 
-    public function setAsynchronous(bool $Asynchronous): self
+    public function setAsynchronous(bool $Asynchronous): void
     {
         $this->Asynchronous = $Asynchronous;
-
-        return $this;
     }
 }

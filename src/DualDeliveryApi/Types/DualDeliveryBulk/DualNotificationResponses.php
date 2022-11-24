@@ -19,16 +19,11 @@ class DualNotificationResponses
     protected $ApplicationDeliveryID = null;
 
     /**
-     * @var int
+     * @var ?int
      */
     protected $DualZSID = null;
 
-    /**
-     * @param DualNotificationResponseType $DualNotificationResponse
-     * @param string                       $ApplicationDeliveryID
-     * @param int                          $DualZSID
-     */
-    public function __construct($DualNotificationResponse, $ApplicationDeliveryID, $DualZSID)
+    public function __construct(DualNotificationResponseType $DualNotificationResponse, string $ApplicationDeliveryID, ?int $DualZSID)
     {
         $this->DualNotificationResponse = $DualNotificationResponse;
         $this->ApplicationDeliveryID = $ApplicationDeliveryID;
@@ -40,11 +35,9 @@ class DualNotificationResponses
         return $this->DualNotificationResponse;
     }
 
-    public function setDualNotificationResponse(DualNotificationResponseType $DualNotificationResponse): self
+    public function setDualNotificationResponse(DualNotificationResponseType $DualNotificationResponse): void
     {
         $this->DualNotificationResponse = $DualNotificationResponse;
-
-        return $this;
     }
 
     public function getApplicationDeliveryID(): string
@@ -52,22 +45,18 @@ class DualNotificationResponses
         return $this->ApplicationDeliveryID;
     }
 
-    public function setApplicationDeliveryID(string $ApplicationDeliveryID): self
+    public function setApplicationDeliveryID(string $ApplicationDeliveryID): void
     {
         $this->ApplicationDeliveryID = $ApplicationDeliveryID;
-
-        return $this;
     }
 
-    public function getDualZSID(): int
+    public function getDualZSID(): ?int
     {
         return $this->DualZSID;
     }
 
-    public function setDualZSID(int $DualZSID): self
+    public function setDualZSID(int $DualZSID): void
     {
         $this->DualZSID = $DualZSID;
-
-        return $this;
     }
 }

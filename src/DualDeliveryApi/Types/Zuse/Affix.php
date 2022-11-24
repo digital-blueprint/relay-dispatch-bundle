@@ -17,11 +17,11 @@ class Affix
     protected $type = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $position = null;
 
-    public function __construct(string $_, string $type, string $position)
+    public function __construct(string $_, string $type, ?string $position)
     {
         $this->_ = $_;
         $this->type = $type;
@@ -33,11 +33,9 @@ class Affix
         return $this->_;
     }
 
-    public function set_(string $_): self
+    public function set_(string $_): void
     {
         $this->_ = $_;
-
-        return $this;
     }
 
     public function getType(): string
@@ -50,7 +48,7 @@ class Affix
         $this->type = $type;
     }
 
-    public function getPosition(): string
+    public function getPosition(): ?string
     {
         return $this->position;
     }

@@ -7,7 +7,7 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 class PostalAddressType extends AbstractAddressType
 {
     /**
-     * @var string
+     * @var ?string
      */
     protected $CountryCode = null;
 
@@ -22,48 +22,26 @@ class PostalAddressType extends AbstractAddressType
     protected $Municipality = null;
 
     /**
-     * @var string
-     */
-    protected $MunicipalityNumber = null;
-
-    /**
      * @var DeliveryAddress
      */
     protected $DeliveryAddress = null;
 
-    /**
-     * @var string
-     */
-    protected $type = null;
-
-    /**
-     * @param string|null     $Id
-     * @param string          $PostalCode
-     * @param string          $Municipality
-     * @param string|null     $MunicipalityNumber
-     * @param DeliveryAddress $DeliveryAddress
-     * @param string|null     $type
-     */
-    public function __construct($Id, $PostalCode, $Municipality, $MunicipalityNumber, $DeliveryAddress, $type = null)
+    public function __construct(?string $Id, string $PostalCode, string $Municipality, DeliveryAddress $DeliveryAddress)
     {
         parent::__construct($Id);
         $this->PostalCode = $PostalCode;
         $this->Municipality = $Municipality;
-        $this->MunicipalityNumber = $MunicipalityNumber;
         $this->DeliveryAddress = $DeliveryAddress;
-        $this->type = $type;
     }
 
-    public function getCountryCode(): string
+    public function getCountryCode(): ?string
     {
         return $this->CountryCode;
     }
 
-    public function setCountryCode(string $CountryCode): self
+    public function setCountryCode(string $CountryCode): void
     {
         $this->CountryCode = $CountryCode;
-
-        return $this;
     }
 
     public function getPostalCode(): string
@@ -71,11 +49,9 @@ class PostalAddressType extends AbstractAddressType
         return $this->PostalCode;
     }
 
-    public function setPostalCode(string $PostalCode): self
+    public function setPostalCode(string $PostalCode): void
     {
         $this->PostalCode = $PostalCode;
-
-        return $this;
     }
 
     public function getMunicipality(): string
@@ -83,23 +59,9 @@ class PostalAddressType extends AbstractAddressType
         return $this->Municipality;
     }
 
-    public function setMunicipality(string $Municipality): self
+    public function setMunicipality(string $Municipality): void
     {
         $this->Municipality = $Municipality;
-
-        return $this;
-    }
-
-    public function getMunicipalityNumber(): string
-    {
-        return $this->MunicipalityNumber;
-    }
-
-    public function setMunicipalityNumber(string $MunicipalityNumber): self
-    {
-        $this->MunicipalityNumber = $MunicipalityNumber;
-
-        return $this;
     }
 
     public function getDeliveryAddress(): DeliveryAddress
@@ -107,28 +69,8 @@ class PostalAddressType extends AbstractAddressType
         return $this->DeliveryAddress;
     }
 
-    public function setDeliveryAddress(DeliveryAddress $DeliveryAddress): self
+    public function setDeliveryAddress(DeliveryAddress $DeliveryAddress): void
     {
         $this->DeliveryAddress = $DeliveryAddress;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType($type): self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 }

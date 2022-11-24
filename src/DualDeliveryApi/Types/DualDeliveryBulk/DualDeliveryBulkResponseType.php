@@ -16,17 +16,17 @@ class DualDeliveryBulkResponseType
     protected $Status = null;
 
     /**
-     * @var int
+     * @var ?int
      */
     protected $BulkId = null;
 
     /**
-     * @var AdditionalMetaData
+     * @var ?AdditionalMetaData
      */
     protected $AdditionalMetaData = null;
 
     /**
-     * @var ErrorsType
+     * @var ?ErrorsType
      */
     protected $Errors = null;
 
@@ -35,14 +35,7 @@ class DualDeliveryBulkResponseType
      */
     protected $version = null;
 
-    /**
-     * @param StatusType         $Status
-     * @param int                $BulkId
-     * @param AdditionalMetaData $AdditionalMetaData
-     * @param ErrorsType         $Errors
-     * @param string             $version
-     */
-    public function __construct($Status, $BulkId, $AdditionalMetaData, $Errors, $version)
+    public function __construct(StatusType $Status, ?int $BulkId, ?AdditionalMetaData $AdditionalMetaData, ?ErrorsType $Errors, string $version)
     {
         $this->Status = $Status;
         $this->BulkId = $BulkId;
@@ -56,47 +49,39 @@ class DualDeliveryBulkResponseType
         return $this->Status;
     }
 
-    public function setStatus(StatusType $Status): self
+    public function setStatus(StatusType $Status): void
     {
         $this->Status = $Status;
-
-        return $this;
     }
 
-    public function getBulkId(): int
+    public function getBulkId(): ?int
     {
         return $this->BulkId;
     }
 
-    public function setBulkId(int $BulkId): self
+    public function setBulkId(int $BulkId): void
     {
         $this->BulkId = $BulkId;
-
-        return $this;
     }
 
-    public function getAdditionalMetaData(): AdditionalMetaData
+    public function getAdditionalMetaData(): ?AdditionalMetaData
     {
         return $this->AdditionalMetaData;
     }
 
-    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): self
+    public function setAdditionalMetaData(AdditionalMetaData $AdditionalMetaData): void
     {
         $this->AdditionalMetaData = $AdditionalMetaData;
-
-        return $this;
     }
 
-    public function getErrors(): ErrorsType
+    public function getErrors(): ?ErrorsType
     {
         return $this->Errors;
     }
 
-    public function setErrors(ErrorsType $Errors): self
+    public function setErrors(ErrorsType $Errors): void
     {
         $this->Errors = $Errors;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -104,10 +89,8 @@ class DualDeliveryBulkResponseType
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

@@ -14,7 +14,7 @@ class AddressingResult
     protected $DeliveryChannelAddressingResult = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DualDeliveryID = null;
 
@@ -25,10 +25,8 @@ class AddressingResult
 
     /**
      * @param UsedDeliveryChannelType[] $DeliveryChannelAddressingResult
-     * @param string                    $DualDeliveryID
-     * @param string                    $RecipientID
      */
-    public function __construct($DeliveryChannelAddressingResult, $DualDeliveryID, $RecipientID)
+    public function __construct(array $DeliveryChannelAddressingResult, ?string $DualDeliveryID, string $RecipientID)
     {
         $this->DeliveryChannelAddressingResult = $DeliveryChannelAddressingResult;
         $this->DualDeliveryID = $DualDeliveryID;
@@ -46,23 +44,19 @@ class AddressingResult
     /**
      * @param UsedDeliveryChannelType[] $DeliveryChannelAddressingResult
      */
-    public function setDeliveryChannelAddressingResult(array $DeliveryChannelAddressingResult): self
+    public function setDeliveryChannelAddressingResult(array $DeliveryChannelAddressingResult): void
     {
         $this->DeliveryChannelAddressingResult = $DeliveryChannelAddressingResult;
-
-        return $this;
     }
 
-    public function getDualDeliveryID(): string
+    public function getDualDeliveryID(): ?string
     {
         return $this->DualDeliveryID;
     }
 
-    public function setDualDeliveryID(string $DualDeliveryID): self
+    public function setDualDeliveryID(string $DualDeliveryID): void
     {
         $this->DualDeliveryID = $DualDeliveryID;
-
-        return $this;
     }
 
     public function getRecipientID(): string
@@ -70,10 +64,8 @@ class AddressingResult
         return $this->RecipientID;
     }
 
-    public function setRecipientID(string $RecipientID): self
+    public function setRecipientID(string $RecipientID): void
     {
         $this->RecipientID = $RecipientID;
-
-        return $this;
     }
 }

@@ -12,15 +12,11 @@ class DelivererInformation
     protected $Deliverer = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DelivererReference = null;
 
-    /**
-     * @param string $Deliverer
-     * @param string $DelivererReference
-     */
-    public function __construct($Deliverer, $DelivererReference)
+    public function __construct(string $Deliverer, ?string $DelivererReference)
     {
         $this->Deliverer = $Deliverer;
         $this->DelivererReference = $DelivererReference;
@@ -31,22 +27,18 @@ class DelivererInformation
         return $this->Deliverer;
     }
 
-    public function setDeliverer(string $Deliverer): self
+    public function setDeliverer(string $Deliverer): void
     {
         $this->Deliverer = $Deliverer;
-
-        return $this;
     }
 
-    public function getDelivererReference(): string
+    public function getDelivererReference(): ?string
     {
         return $this->DelivererReference;
     }
 
-    public function setDelivererReference(string $DelivererReference): self
+    public function setDelivererReference(string $DelivererReference): void
     {
         $this->DelivererReference = $DelivererReference;
-
-        return $this;
     }
 }

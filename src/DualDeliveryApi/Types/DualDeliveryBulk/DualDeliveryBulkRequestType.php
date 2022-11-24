@@ -19,17 +19,17 @@ class DualDeliveryBulkRequestType
     protected $MetaData = null;
 
     /**
-     * @var PayloadType
+     * @var PayloadType[]
      */
     protected $Payload = null;
 
     /**
-     * @var bool
+     * @var ?bool
      */
     protected $StartBulk = null;
 
     /**
-     * @var FinishBulk
+     * @var ?FinishBulk
      */
     protected $FinishBulk = null;
 
@@ -39,14 +39,9 @@ class DualDeliveryBulkRequestType
     protected $version = null;
 
     /**
-     * @param Sender      $Sender
-     * @param MetaData    $MetaData
-     * @param PayloadType $Payload
-     * @param bool        $StartBulk
-     * @param FinishBulk  $FinishBulk
-     * @param string      $version
+     * @param PayloadType[] $Payload
      */
-    public function __construct($Sender, $MetaData, $Payload, $StartBulk, $FinishBulk, $version)
+    public function __construct(Sender $Sender, MetaData $MetaData, array $Payload, ?bool $StartBulk, ?FinishBulk $FinishBulk, string $version)
     {
         $this->Sender = $Sender;
         $this->MetaData = $MetaData;
@@ -61,11 +56,9 @@ class DualDeliveryBulkRequestType
         return $this->Sender;
     }
 
-    public function setSender(Sender $Sender): self
+    public function setSender(Sender $Sender): void
     {
         $this->Sender = $Sender;
-
-        return $this;
     }
 
     public function getMetaData(): MetaData
@@ -73,47 +66,45 @@ class DualDeliveryBulkRequestType
         return $this->MetaData;
     }
 
-    public function setMetaData(MetaData $MetaData): self
+    public function setMetaData(MetaData $MetaData): void
     {
         $this->MetaData = $MetaData;
-
-        return $this;
     }
 
-    public function getPayload(): PayloadType
+    /**
+     * @return PayloadType[]
+     */
+    public function getPayload(): array
     {
         return $this->Payload;
     }
 
-    public function setPayload(PayloadType $Payload): self
+    /**
+     * @param PayloadType[] $Payload
+     */
+    public function setPayload(array $Payload): void
     {
         $this->Payload = $Payload;
-
-        return $this;
     }
 
-    public function getStartBulk(): bool
+    public function getStartBulk(): ?bool
     {
         return $this->StartBulk;
     }
 
-    public function setStartBulk(bool $StartBulk): self
+    public function setStartBulk(bool $StartBulk): void
     {
         $this->StartBulk = $StartBulk;
-
-        return $this;
     }
 
-    public function getFinishBulk(): FinishBulk
+    public function getFinishBulk(): ?FinishBulk
     {
         return $this->FinishBulk;
     }
 
-    public function setFinishBulk(FinishBulk $FinishBulk): self
+    public function setFinishBulk(FinishBulk $FinishBulk): void
     {
         $this->FinishBulk = $FinishBulk;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -121,10 +112,8 @@ class DualDeliveryBulkRequestType
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

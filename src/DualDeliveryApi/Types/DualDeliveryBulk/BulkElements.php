@@ -9,27 +9,31 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\Dual
 class BulkElements
 {
     /**
-     * @var DualNotificationRequest
+     * @var DualNotificationRequest[]
      */
     protected $DualNotificationRequest = null;
 
     /**
-     * @param DualNotificationRequest $DualNotificationRequest
+     * @param DualNotificationRequest[] $DualNotificationRequest
      */
-    public function __construct($DualNotificationRequest)
+    public function __construct(array $DualNotificationRequest)
     {
         $this->DualNotificationRequest = $DualNotificationRequest;
     }
 
-    public function getDualNotificationRequest(): DualNotificationRequest
+    /**
+     * @return DualNotificationRequest[]
+     */
+    public function getDualNotificationRequest(): array
     {
         return $this->DualNotificationRequest;
     }
 
-    public function setDualNotificationRequest(DualNotificationRequest $DualNotificationRequest): self
+    /**
+     * @param DualNotificationRequest[] $DualNotificationRequest
+     */
+    public function setDualNotificationRequest(array $DualNotificationRequest): void
     {
         $this->DualNotificationRequest = $DualNotificationRequest;
-
-        return $this;
     }
 }

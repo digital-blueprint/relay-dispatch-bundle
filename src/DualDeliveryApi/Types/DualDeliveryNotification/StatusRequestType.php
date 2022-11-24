@@ -35,11 +35,9 @@ class StatusRequestType
         return $this->ApplicationID;
     }
 
-    public function setApplicationID(ApplicationID $ApplicationID): self
+    public function setApplicationID(ApplicationID $ApplicationID): void
     {
         $this->ApplicationID = $ApplicationID;
-
-        return $this;
     }
 
     public function getAppDeliveryID(): ?string

@@ -15,12 +15,12 @@ class DualNotificationBulkRequestType
     protected $ApplicationDeliveryID = null;
 
     /**
-     * @var int
+     * @var ?int
      */
     protected $DualZSID = null;
 
     /**
-     * @var BulkElements
+     * @var ?BulkElements
      */
     protected $BulkElements = null;
 
@@ -30,7 +30,7 @@ class DualNotificationBulkRequestType
     protected $Status = null;
 
     /**
-     * @var ErrorsType
+     * @var ?ErrorsType
      */
     protected $Errors = null;
 
@@ -39,14 +39,7 @@ class DualNotificationBulkRequestType
      */
     protected $version = null;
 
-    /**
-     * @param string       $ApplicationDeliveryID
-     * @param BulkElements $BulkElements
-     * @param StatusType   $Status
-     * @param ErrorsType   $Errors
-     * @param string       $version
-     */
-    public function __construct($ApplicationDeliveryID, $BulkElements, $Status, $Errors, $version)
+    public function __construct(string $ApplicationDeliveryID, ?BulkElements $BulkElements, StatusType $Status, ?ErrorsType $Errors, string $version)
     {
         $this->ApplicationDeliveryID = $ApplicationDeliveryID;
         $this->BulkElements = $BulkElements;
@@ -60,35 +53,29 @@ class DualNotificationBulkRequestType
         return $this->ApplicationDeliveryID;
     }
 
-    public function setApplicationDeliveryID(string $ApplicationDeliveryID): self
+    public function setApplicationDeliveryID(string $ApplicationDeliveryID): void
     {
         $this->ApplicationDeliveryID = $ApplicationDeliveryID;
-
-        return $this;
     }
 
-    public function getDualZSID(): int
+    public function getDualZSID(): ?int
     {
         return $this->DualZSID;
     }
 
-    public function setDualZSID(int $DualZSID): self
+    public function setDualZSID(int $DualZSID): void
     {
         $this->DualZSID = $DualZSID;
-
-        return $this;
     }
 
-    public function getBulkElements(): BulkElements
+    public function getBulkElements(): ?BulkElements
     {
         return $this->BulkElements;
     }
 
-    public function setBulkElements(BulkElements $BulkElements): self
+    public function setBulkElements(BulkElements $BulkElements): void
     {
         $this->BulkElements = $BulkElements;
-
-        return $this;
     }
 
     public function getStatus(): StatusType
@@ -96,23 +83,19 @@ class DualNotificationBulkRequestType
         return $this->Status;
     }
 
-    public function setStatus(StatusType $Status): self
+    public function setStatus(StatusType $Status): void
     {
         $this->Status = $Status;
-
-        return $this;
     }
 
-    public function getErrors(): ErrorsType
+    public function getErrors(): ?ErrorsType
     {
         return $this->Errors;
     }
 
-    public function setErrors(ErrorsType $Errors): self
+    public function setErrors(ErrorsType $Errors): void
     {
         $this->Errors = $Errors;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -120,10 +103,8 @@ class DualNotificationBulkRequestType
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

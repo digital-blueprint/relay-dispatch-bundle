@@ -27,11 +27,9 @@ class WebserviceURL
         return $this->_;
     }
 
-    public function set_(string $_): self
+    public function set_(string $_): void
     {
         $this->_ = $_;
-
-        return $this;
     }
 
     public function getAlternativeEmail(): string
@@ -39,10 +37,8 @@ class WebserviceURL
         return $this->AlternativeEmail;
     }
 
-    public function setAlternativeEmail(string $AlternativeEmail): self
+    public function setAlternativeEmail(string $AlternativeEmail): void
     {
         $this->AlternativeEmail = $AlternativeEmail;
-
-        return $this;
     }
 }

@@ -7,27 +7,22 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk;
 class FinishBulk
 {
     /**
-     * @var int
+     * @var ?int
      */
     protected $BulkId = null;
 
-    /**
-     * @param int $BulkId
-     */
-    public function __construct($BulkId)
+    public function __construct(?int $BulkId)
     {
         $this->BulkId = $BulkId;
     }
 
-    public function getBulkId(): int
+    public function getBulkId(): ?int
     {
         return $this->BulkId;
     }
 
-    public function setBulkId(int $BulkId): self
+    public function setBulkId(int $BulkId): void
     {
         $this->BulkId = $BulkId;
-
-        return $this;
     }
 }

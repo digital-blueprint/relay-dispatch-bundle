@@ -18,9 +18,8 @@ class DualNotificationBulkResponseType
 
     /**
      * @param DualNotificationResponses[] $DualNotificationResponses
-     * @param string                      $version
      */
-    public function __construct(array $DualNotificationResponses, $version)
+    public function __construct(array $DualNotificationResponses, string $version)
     {
         $this->DualNotificationResponses = $DualNotificationResponses;
         $this->version = $version;
@@ -37,11 +36,9 @@ class DualNotificationBulkResponseType
     /**
      * @param DualNotificationResponses[] $DualNotificationResponses
      */
-    public function setDualNotificationResponses(array $DualNotificationResponses): self
+    public function setDualNotificationResponses(array $DualNotificationResponses): void
     {
         $this->DualNotificationResponses = $DualNotificationResponses;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -49,10 +46,8 @@ class DualNotificationBulkResponseType
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

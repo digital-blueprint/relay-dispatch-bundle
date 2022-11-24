@@ -24,12 +24,7 @@ class DualNotificationResponseType
      */
     protected $version = null;
 
-    /**
-     * @param Success   $Success
-     * @param ErrorType $Error
-     * @param string    $version
-     */
-    public function __construct($Success, $Error, $version)
+    public function __construct(Success $Success, ErrorType $Error, string $version)
     {
         $this->Success = $Success;
         $this->Error = $Error;
@@ -41,11 +36,9 @@ class DualNotificationResponseType
         return $this->Success;
     }
 
-    public function setSuccess(Success $Success): self
+    public function setSuccess(Success $Success): void
     {
         $this->Success = $Success;
-
-        return $this;
     }
 
     public function getError(): ErrorType
@@ -53,11 +46,9 @@ class DualNotificationResponseType
         return $this->Error;
     }
 
-    public function setError(ErrorType $Error): self
+    public function setError(ErrorType $Error): void
     {
         $this->Error = $Error;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -65,10 +56,8 @@ class DualNotificationResponseType
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

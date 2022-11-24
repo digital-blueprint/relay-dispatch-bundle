@@ -20,17 +20,17 @@ class DualDeliveryPreAddressingResponseType
     protected $Status = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DualDeliveryID = null;
 
     /**
-     * @var AddressingResults
+     * @var ?AddressingResults
      */
     protected $AddressingResults = null;
 
     /**
-     * @var ErrorsType
+     * @var ?ErrorsType
      */
     protected $Errors = null;
 
@@ -39,14 +39,7 @@ class DualDeliveryPreAddressingResponseType
      */
     protected $version = null;
 
-    /**
-     * @param string     $AppDeliveryID
-     * @param StatusType $Status
-     * @param string     $DualDeliveryID
-     * @param ErrorsType $Errors
-     * @param string     $version
-     */
-    public function __construct($AppDeliveryID, $Status, $DualDeliveryID, $Errors, $version)
+    public function __construct(string $AppDeliveryID, StatusType $Status, ?string $DualDeliveryID, ?ErrorsType $Errors, string $version)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->Status = $Status;
@@ -60,11 +53,9 @@ class DualDeliveryPreAddressingResponseType
         return $this->AppDeliveryID;
     }
 
-    public function setAppDeliveryID(string $AppDeliveryID): self
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
         $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
     public function getStatus(): StatusType
@@ -72,47 +63,39 @@ class DualDeliveryPreAddressingResponseType
         return $this->Status;
     }
 
-    public function setStatus(StatusType $Status): self
+    public function setStatus(StatusType $Status): void
     {
         $this->Status = $Status;
-
-        return $this;
     }
 
-    public function getDualDeliveryID(): string
+    public function getDualDeliveryID(): ?string
     {
         return $this->DualDeliveryID;
     }
 
-    public function setDualDeliveryID(string $DualDeliveryID): self
+    public function setDualDeliveryID(string $DualDeliveryID): void
     {
         $this->DualDeliveryID = $DualDeliveryID;
-
-        return $this;
     }
 
-    public function getAddressingResults(): AddressingResults
+    public function getAddressingResults(): ?AddressingResults
     {
         return $this->AddressingResults;
     }
 
-    public function setAddressingResults(AddressingResults $AddressingResults): self
+    public function setAddressingResults(AddressingResults $AddressingResults): void
     {
         $this->AddressingResults = $AddressingResults;
-
-        return $this;
     }
 
-    public function getErrors(): ErrorsType
+    public function getErrors(): ?ErrorsType
     {
         return $this->Errors;
     }
 
-    public function setErrors(ErrorsType $Errors): self
+    public function setErrors(ErrorsType $Errors): void
     {
         $this->Errors = $Errors;
-
-        return $this;
     }
 
     public function getVersion(): string
@@ -120,10 +103,8 @@ class DualDeliveryPreAddressingResponseType
         return $this->version;
     }
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }

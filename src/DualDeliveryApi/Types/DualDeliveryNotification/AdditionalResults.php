@@ -7,27 +7,31 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotificatio
 class AdditionalResults
 {
     /**
-     * @var AdditonalResultSetType
+     * @var AdditonalResultSetType[]
      */
     protected $AdditonalResultSet = null;
 
     /**
-     * @param AdditonalResultSetType $AdditonalResultSet
+     * @param AdditonalResultSetType[] $AdditonalResultSet
      */
-    public function __construct($AdditonalResultSet)
+    public function __construct(array $AdditonalResultSet)
     {
         $this->AdditonalResultSet = $AdditonalResultSet;
     }
 
-    public function getAdditonalResultSet(): AdditonalResultSetType
+    /**
+     * @return AdditonalResultSetType[]
+     */
+    public function getAdditonalResultSet(): array
     {
         return $this->AdditonalResultSet;
     }
 
-    public function setAdditonalResultSet(AdditonalResultSetType $AdditonalResultSet): self
+    /**
+     * @param AdditonalResultSetType[] $AdditonalResultSet
+     */
+    public function setAdditonalResultSet(array $AdditonalResultSet): void
     {
         $this->AdditonalResultSet = $AdditonalResultSet;
-
-        return $this;
     }
 }

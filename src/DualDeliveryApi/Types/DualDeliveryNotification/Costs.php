@@ -16,11 +16,7 @@ class Costs
      */
     protected $DetailedCosts = null;
 
-    /**
-     * @param float         $TotalCosts
-     * @param DetailedCosts $DetailedCosts
-     */
-    public function __construct($TotalCosts, $DetailedCosts)
+    public function __construct(float $TotalCosts, DetailedCosts $DetailedCosts)
     {
         $this->TotalCosts = $TotalCosts;
         $this->DetailedCosts = $DetailedCosts;
@@ -31,11 +27,9 @@ class Costs
         return $this->TotalCosts;
     }
 
-    public function setTotalCosts(float $TotalCosts): self
+    public function setTotalCosts(float $TotalCosts): void
     {
         $this->TotalCosts = $TotalCosts;
-
-        return $this;
     }
 
     public function getDetailedCosts(): DetailedCosts
@@ -43,10 +37,8 @@ class Costs
         return $this->DetailedCosts;
     }
 
-    public function setDetailedCosts(DetailedCosts $DetailedCosts): self
+    public function setDetailedCosts(DetailedCosts $DetailedCosts): void
     {
         $this->DetailedCosts = $DetailedCosts;
-
-        return $this;
     }
 }
