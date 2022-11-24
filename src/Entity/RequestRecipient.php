@@ -399,4 +399,8 @@ class RequestRecipient
     {
         return $this->statusChanges;
     }
+
+    public function getAppDeliveryID(): string {
+        return $this->request->getIdentifier().'-'.$this->identifier;
+    }
 }
