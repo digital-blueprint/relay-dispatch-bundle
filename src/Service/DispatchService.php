@@ -23,6 +23,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\PayloadType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
@@ -1059,6 +1060,57 @@ class DispatchService
         $preAddressingRequest->setDualDeliveryID($addressingResults[0]->getDualDeliveryID());
     }
 
+    public function doDualDeliveryStatusRequestSoapRequest(RequestRecipient $recipient): bool
+    {
+        $service = $this->dd->getClient();
+        $appDeliveryId = $recipient->getAppDeliveryID();
+        $statusRequest = new StatusRequestType(null, $appDeliveryId);
+
+        try {
+            $response = $service->dualStatusRequestOperation($statusRequest);
+        } catch (\Exception $e) {
+            $this->createDeliveryStatusChange($recipient->getIdentifier(),
+                DeliveryStatusChange::STATUS_SOAP_ERROR, 'StatusRequest Soap error: '.$e->getMessage());
+
+            throw ApiError::withDetails(
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                'DualDelivery request failed!',
+                'dispatch:status-request-soap-error',
+                [
+                    'recipient-id' => $recipient->getIdentifier(),
+                    'message' => $e->getMessage(),
+                ]
+            );
+        }
+
+        dump($response);
+        dump($service->getPrettyLastRequest());
+        dump($service->getPrettyLastResponse());
+
+        if ($response->getStatus()->getText() !== 'SUCCESS') {
+            /* @var ErrorType[] $errors */
+            $errors = $response->getErrors()->getError();
+            $errorTexts = [];
+
+            foreach ($errors as $apiError) {
+                $errorTexts[] = $apiError->getInfo();
+            }
+
+            $errorText = implode(', ', $errorTexts);
+            $this->createDeliveryStatusChange($recipient->getIdentifier(),
+                DeliveryStatusChange::STATUS_STATUS_REQUEST_FAILED, 'StatusRequest request failed: '.$errorText);
+
+            throw ApiError::withDetails(
+                Response::HTTP_INTERNAL_SERVER_ERROR, 'StatusRequest request failed!', 'dispatch:dual-delivery-request-failed', [
+                    'recipient-id' => $recipient->getIdentifier(),
+                    'message' => $errorText,
+                ]
+            );
+        }
+
+        return true;
+    }
+
     public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest): bool
     {
         $service = $this->dd->getClient();
@@ -1157,7 +1209,7 @@ class DispatchService
                 $response = $service->dualDeliveryRequestOperation($request);
             } catch (\Exception $e) {
                 $this->createDeliveryStatusChange($recipient->getIdentifier(),
-                    DeliveryStatusChange::STATUS_SOAP_ERROR, 'Soap error: '.$e->getMessage());
+                    DeliveryStatusChange::STATUS_SOAP_ERROR, 'DualDeliveryRequest Soap error: '.$e->getMessage());
 
                 throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR,
@@ -1220,7 +1272,7 @@ class DispatchService
                 dump($result);
             } catch (\Exception $e) {
                 throw ApiError::withDetails(
-                    Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDeliveryId of RequestRecipient could not be update after DualDelivery request!',
+                    Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDeliveryId of RequestRecipient could not be updated after DualDelivery request!',
                     'dispatch:request-recipient-not-updated', [
                         'request-id' => $dispatchRequest->getIdentifier(),
                         'recipient-id' => $recipient->getIdentifier(),
@@ -1245,6 +1297,8 @@ class DispatchService
 //                    ]
 //                );
 //            }
+
+            $this->doDualDeliveryStatusRequestSoapRequest($recipient);
         }
 
         return true;

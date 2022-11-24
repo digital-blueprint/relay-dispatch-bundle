@@ -14,7 +14,7 @@ class StatusRequestType
     protected $ApplicationID = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $AppDeliveryID = null;
 
@@ -23,7 +23,7 @@ class StatusRequestType
      */
     protected $DualDeliveryID = null;
 
-    public function __construct(?ApplicationID $ApplicationID, string $AppDeliveryID, ?string $DualDeliveryID = null)
+    public function __construct(?ApplicationID $ApplicationID = null, ?string $AppDeliveryID = null, ?string $DualDeliveryID = null)
     {
         $this->ApplicationID = $ApplicationID;
         $this->AppDeliveryID = $AppDeliveryID;
