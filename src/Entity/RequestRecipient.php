@@ -243,6 +243,15 @@ class RequestRecipient
     private $dualDeliveryID;
 
     /**
+     * @ORM\Column(type="datetime")
+     * @ApiProperty(iri="https://schema.org/endDate")
+     * @Groups({"DispatchRequestRecipient:output"})
+     *
+     * @var \DateTimeInterface
+     */
+    private $deliveryEndDate;
+
+    /**
      * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="requestRecipient")
      * @ORM\OrderBy({"dateCreated" = "DESC"})
      * @ApiProperty
@@ -403,5 +412,15 @@ class RequestRecipient
     public function getAppDeliveryID(): string
     {
         return $this->request->getIdentifier().'-'.$this->identifier;
+    }
+
+    public function getDeliveryEndDate(): \DateTimeInterface
+    {
+        return $this->deliveryEndDate;
+    }
+
+    public function setDeliveryEndDate(\DateTimeInterface $deliveryEndDate): void
+    {
+        $this->deliveryEndDate = $deliveryEndDate;
     }
 }
