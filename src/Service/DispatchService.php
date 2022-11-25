@@ -243,20 +243,12 @@ class DispatchService
     }
 
     /**
-     * Fetches RequestRecipients where still dual delivery status requests need to be made
+     * Fetches RequestRecipients where still dual delivery status requests need to be made.
      *
      * @return RequestRecipient[]
      */
     public function getNotFinishedRequestRecipients(): array
     {
-//        $criteria = new Criteria();
-//        $criteria->where(Criteria::expr()->neq('deliveryEndDate', null));
-//
-//        /** @var RequestRecipient[] $requestRecipients */
-//        $requestRecipients = $this->em
-//            ->getRepository(RequestRecipient::class)
-//            ->matching($criteria)->getValues();
-
         /** @var RequestRecipient[] $requestRecipients */
         $requestRecipients = $this->em
             ->getRepository(RequestRecipient::class)
@@ -1386,7 +1378,8 @@ class DispatchService
         return $statusType;
     }
 
-    public function doStatusRequests() {
+    public function doStatusRequests()
+    {
         $recipients = $this->getNotFinishedRequestRecipients();
 
         foreach ($recipients as $recipient) {
@@ -1413,7 +1406,8 @@ class DispatchService
         return $query->getOneOrNullResult();
     }
 
-    protected function setRecipientDeliveryEndDate(RequestRecipient $recipient) {
+    protected function setRecipientDeliveryEndDate(RequestRecipient $recipient)
+    {
         $queryBuilder = $this->em->createQueryBuilder();
         $query = $queryBuilder->update(RequestRecipient::class, 'r')
             ->set('r.deliveryEndDate', ':deliveryEndDate')
@@ -1424,7 +1418,7 @@ class DispatchService
 
         try {
             $result = $query->execute();
-            dump($result);
+//            dump($result);
         } catch (\Exception $e) {
             throw ApiError::withDetails(
                 Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryEndDate of RequestRecipient could not be set!',

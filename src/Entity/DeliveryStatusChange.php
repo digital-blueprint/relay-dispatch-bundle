@@ -181,7 +181,7 @@ class DeliveryStatusChange
 
     /**
      * Checks if a dual delivery status is final.
-     * TODO: Those seem very Vendo-specific
+     * TODO: Those seem very Vendo-specific.
      */
     public function isFinalDualDeliveryStatus(): bool
     {
