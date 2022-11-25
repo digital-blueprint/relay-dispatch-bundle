@@ -50,6 +50,8 @@ class DeliveryStatusChange
     public const STATUS_DUAL_DELIVERY_REQUEST_FAILED = 4;
     public const STATUS_DUAL_DELIVERY_REQUEST_SUCCESS = 5;
     public const STATUS_STATUS_REQUEST_FAILED = 10;
+    // TODO: Those seem very Vendo-specific
+    public const STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND = 20;
     public const STATUS_DUAL_DELIVERY_STATUS_P1 = 21;
     public const STATUS_DUAL_DELIVERY_STATUS_P2 = 22;
     public const STATUS_DUAL_DELIVERY_STATUS_P3 = 23;
@@ -175,5 +177,21 @@ class DeliveryStatusChange
     public function setRequestRecipient(RequestRecipient $requestRecipient): void
     {
         $this->requestRecipient = $requestRecipient;
+    }
+
+    /**
+     * Checks if a dual delivery status is final.
+     * TODO: Those seem very Vendo-specific
+     */
+    public function isFinalDualDeliveryStatus(): bool
+    {
+        return in_array($this->statusType, [
+            self::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND,
+            self::STATUS_DUAL_DELIVERY_STATUS_P5,
+            self::STATUS_DUAL_DELIVERY_STATUS_P6,
+            self::STATUS_DUAL_DELIVERY_STATUS_P9,
+            self::STATUS_DUAL_DELIVERY_STATUS_P10,
+            self::STATUS_DUAL_DELIVERY_STATUS_P12,
+        ], true);
     }
 }

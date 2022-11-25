@@ -106,6 +106,11 @@ class DebugCommand extends Command
                     echo $response->getBody()->getContents();
                 }
                 break;
+            case 'do-api-status-requests':
+                $output->writeln('Do API StatusRequest requests...');
+                $this->dispatchService->doStatusRequests();
+
+                break;
             default:
                 $output->writeln('Action not found!');
 

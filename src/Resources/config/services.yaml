@@ -67,3 +67,7 @@ services:
     autowire: true
     autoconfigure: true
     tags: ['messenger.message_handler']
+
+  Dbp\Relay\DispatchBundle\Cron\StatusCronJob:
+    autowire: true
+    autoconfigure: true

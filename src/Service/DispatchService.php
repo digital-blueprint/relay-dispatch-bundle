@@ -243,6 +243,29 @@ class DispatchService
     }
 
     /**
+     * Fetches RequestRecipients where still dual delivery status requests need to be made
+     *
+     * @return RequestRecipient[]
+     */
+    public function getNotFinishedRequestRecipients(): array
+    {
+//        $criteria = new Criteria();
+//        $criteria->where(Criteria::expr()->neq('deliveryEndDate', null));
+//
+//        /** @var RequestRecipient[] $requestRecipients */
+//        $requestRecipients = $this->em
+//            ->getRepository(RequestRecipient::class)
+//            ->matching($criteria)->getValues();
+
+        /** @var RequestRecipient[] $requestRecipients */
+        $requestRecipients = $this->em
+            ->getRepository(RequestRecipient::class)
+            ->findBy(['deliveryEndDate' => null]);
+
+        return $requestRecipients;
+    }
+
+    /**
      * Fetches all Request entities for the current person.
      *
      * @return Request[]
@@ -1083,16 +1106,23 @@ class DispatchService
             );
         }
 
-        dump($response);
-        dump($service->getPrettyLastRequest());
+//        dump($response);
+//        dump($service->getPrettyLastRequest());
         dump($service->getPrettyLastResponse());
 
         $code = $response->getStatus()->getCode();
         $status = $this->getStatusForCode($code);
 
+        $lastStatusChange = $this->getLastStatusChange($recipient);
+
+        // Check if there is a status change
+        if ($lastStatusChange !== null && $lastStatusChange->getStatusType() === $status) {
+            return false;
+        }
+
         if ($status === 0) {
             $this->createDeliveryStatusChange($recipient->getIdentifier(),
-                DeliveryStatusChange::STATUS_STATUS_REQUEST_FAILED, 'StatusRequest request failed: StatusCode not found');
+                DeliveryStatusChange::STATUS_STATUS_REQUEST_FAILED, 'StatusRequest request failed: StatusCode "'.$code.'" not found');
 
             throw ApiError::withDetails(
                 Response::HTTP_INTERNAL_SERVER_ERROR, 'StatusRequest request failed!', 'dispatch:dual-delivery-request-failed', [
@@ -1103,8 +1133,13 @@ class DispatchService
         }
 
         // TODO: Maybe add textual explanation for status code from DeliveryQuality_ProcessingProfile_Statuswerte_v1.1.0.xlsx
-        $this->createDeliveryStatusChange($recipient->getIdentifier(),
-            $status, 'StatusRequest request: '.$code);
+        $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(),
+            $status, 'StatusRequest status code: '.$code);
+
+        // Set the end date for the recipient if the status is final
+        if ($statusChange->isFinalDualDeliveryStatus()) {
+            $this->setRecipientDeliveryEndDate($recipient);
+        }
 
         return true;
     }
@@ -1307,6 +1342,9 @@ class DispatchService
         $statusType = 0;
 
         switch ($code) {
+            case '17':
+                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND;
+                break;
             case 'P1':
                 $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P1;
                 break;
@@ -1346,5 +1384,55 @@ class DispatchService
         }
 
         return $statusType;
+    }
+
+    public function doStatusRequests() {
+        $recipients = $this->getNotFinishedRequestRecipients();
+
+        foreach ($recipients as $recipient) {
+            try {
+                $this->doDualDeliveryStatusRequestSoapRequest($recipient);
+            } catch (\Exception $e) {
+                // TODO: Handle error?
+                dump($e);
+            }
+        }
+    }
+
+    public function getLastStatusChange(RequestRecipient $recipient): ?DeliveryStatusChange
+    {
+        $queryBuilder = $this->em->createQueryBuilder();
+        $query = $queryBuilder->select('dsc')
+            ->from(DeliveryStatusChange::class, 'dsc')
+            ->where('dsc.requestRecipient = :requestRecipient')
+            ->orderBy('dsc.dateCreated', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('requestRecipient', $recipient)
+            ->getQuery();
+
+        return $query->getOneOrNullResult();
+    }
+
+    protected function setRecipientDeliveryEndDate(RequestRecipient $recipient) {
+        $queryBuilder = $this->em->createQueryBuilder();
+        $query = $queryBuilder->update(RequestRecipient::class, 'r')
+            ->set('r.deliveryEndDate', ':deliveryEndDate')
+            ->where('r.identifier = :identifier')
+            ->setParameter('identifier', $recipient->getIdentifier())
+            ->setParameter('deliveryEndDate', new \DateTimeImmutable('now', new DateTimeZone('UTC')))
+            ->getQuery();
+
+        try {
+            $result = $query->execute();
+            dump($result);
+        } catch (\Exception $e) {
+            throw ApiError::withDetails(
+                Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryEndDate of RequestRecipient could not be set!',
+                'dispatch:request-recipient-delivery-end-date-not-set', [
+                    'recipient-id' => $recipient->getIdentifier(),
+                    'message' => $e->getMessage(),
+                ]
+            );
+        }
     }
 }
