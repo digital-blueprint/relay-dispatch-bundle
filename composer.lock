@@ -169,11 +169,11 @@
         },
         {
             "name": "dbp/campusonline-api",
-            "version": "v0.2.18",
+            "version": "v0.2.20",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.tugraz.at/dbp/campus-online/dbp-campusonline-api",
-                "reference": "0db976887894f5fb6d18b68e27f9695002a8344d"
+                "reference": "d5059c92c8ffcb3daa74b6abf62b67ad7fc219b7"
             },
             "require": {
                 "ext-json": "*",
@@ -202,7 +202,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2022-11-17T14:20:09+00:00"
+            "time": "2022-11-21T11:08:21+00:00"
         },
         {
             "name": "dbp/relay-base-organization-bundle",
@@ -255,11 +255,11 @@
         },
         {
             "name": "dbp/relay-base-person-bundle",
-            "version": "v0.2.5",
+            "version": "v0.2.6",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.tugraz.at/dbp/relay/dbp-relay-base-person-bundle",
-                "reference": "94622ef83ce4b60dd0c599813e44c19e218498fc"
+                "reference": "d0fbe7236914d9f5343366cd50d6903c41446758"
             },
             "require": {
                 "api-platform/core": "^2.6.3",
@@ -300,15 +300,15 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2022-11-16T10:54:26+00:00"
+            "time": "2022-11-24T08:50:01+00:00"
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.60",
+            "version": "v0.1.61",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.tugraz.at/dbp/relay/dbp-relay-core-bundle",
-                "reference": "93b24a94a428ac21c8ef0262ebea3c1bf7a7823d"
+                "reference": "996fc7d43361720e3749401fd0f005ed3d97404b"
             },
             "require": {
                 "api-platform/core": "^2.6.8 <2.7.0",
@@ -372,7 +372,7 @@
                 "AGPL-3.0-or-later"
             ],
             "description": "The core bundle of the Relay API gateway",
-            "time": "2022-11-16T10:38:53+00:00"
+            "time": "2022-11-23T12:35:13+00:00"
         },
         {
             "name": "doctrine/annotations",
