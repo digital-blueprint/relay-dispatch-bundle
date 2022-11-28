@@ -27,8 +27,8 @@ class StatusCronJob implements CronJobInterface
 
     public function getInterval(): string
     {
-        // Twice a day
-        return '0 0,12 * * *';
+        // Every 3h
+        return '0 0,3,6,9,12,15,18,21 * * *';
 //        return '* * * * *';
     }
 
