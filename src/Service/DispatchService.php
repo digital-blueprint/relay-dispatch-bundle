@@ -47,14 +47,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LogLevel;
+use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 
-class DispatchService
+class DispatchService implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var PersonProviderInterface
      */
@@ -122,6 +128,7 @@ class DispatchService
         $this->em = $manager;
         $this->bus = $bus;
         $this->dd = $dd;
+        $this->logger = new NullLogger();
     }
 
     public function setConfig(array $config)
@@ -578,7 +585,7 @@ class DispatchService
     public function handleRequestSubmissionMessage(RequestSubmissionMessage $message)
     {
         $request = $message->getRequest();
-        dump($request);
+//        dump($request);
 
         try {
             // Do Vendo API request
@@ -1100,7 +1107,7 @@ class DispatchService
 
 //        dump($response);
 //        dump($service->getPrettyLastRequest());
-        dump($service->getPrettyLastResponse());
+//        dump($service->getPrettyLastResponse());
 
         $code = $response->getStatus()->getCode();
         $status = $this->getStatusForCode($code);
@@ -1149,6 +1156,9 @@ class DispatchService
         // For some reasons files are not loaded by default
         if (count($files) === 0) {
             $files = $this->getRequestFilesByRequestId($dispatchRequest->getIdentifier());
+            $this->logWarning('Request had no files and files were reloaded!', [
+                'recipient-id' => $dispatchRequest->getIdentifier(),
+            ]);
         }
 
 //        dump('$files2');
@@ -1167,6 +1177,9 @@ class DispatchService
             if ($content === null || $content === 0) {
                 $file = $this->getRequestFileById($file->getIdentifier());
                 $content = $file->getData();
+                $this->logWarning('Content of file was empty and reloaded!', [
+                    'file-id' => $file->getIdentifier(),
+                ]);
             }
 
             $md5 = md5($content);
@@ -1228,7 +1241,7 @@ class DispatchService
             );
 //            dump($dualDeliveryRecipients);
             $request = new DualDeliveryRequest($sender, null, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
-            dump($request);
+//            dump($request);
 
             try {
                 $response = $service->dualDeliveryRequestOperation($request);
@@ -1248,9 +1261,9 @@ class DispatchService
                 );
             }
 
-            dump($response);
-            dump($service->getPrettyLastRequest());
-            dump($service->getPrettyLastResponse());
+//            dump($response);
+//            dump($service->getPrettyLastRequest());
+//            dump($service->getPrettyLastResponse());
 
             if ($response->getStatus()->getText() !== 'SUCCESS') {
                 /* @var ErrorType[] $errors */
@@ -1294,7 +1307,7 @@ class DispatchService
 
             try {
                 $result = $query->execute();
-                dump($result);
+//                dump($result);
             } catch (\Exception $e) {
                 throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDeliveryId of RequestRecipient could not be updated after DualDelivery request!',
@@ -1387,7 +1400,11 @@ class DispatchService
                 $this->doDualDeliveryStatusRequestSoapRequest($recipient);
             } catch (\Exception $e) {
                 // TODO: Handle error?
-                dump($e);
+//                dump($e);
+                $this->logWarning('Error while doing status request!', [
+                    'recipient-id' => $recipient->getIdentifier(),
+                    'exception' => $e,
+                ]);
             }
         }
     }
@@ -1428,5 +1445,21 @@ class DispatchService
                 ]
             );
         }
+    }
+
+    protected function log($level, string $message, array $context = [])
+    {
+        $context['service'] = 'dispatch';
+        $this->logger->log($level, $message, $context);
+    }
+
+    protected function logWarning(string $message, array $context = [])
+    {
+        $this->log(LogLevel::WARNING, $message, $context);
+    }
+
+    protected function logError(string $message, array $context = [])
+    {
+        $this->log(LogLevel::ERROR, $message, $context);
     }
 }
