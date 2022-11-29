@@ -7,16 +7,22 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 class PostalAddressType extends AbstractAddressType
 {
     /**
+     * Code for the country, use ISO or international Postalstandard, compare Staatscode.
+     *
      * @var ?string
      */
     protected $CountryCode = null;
 
     /**
+     * ZIP, compare Postleitzahl.
+     *
      * @var string
      */
     protected $PostalCode = null;
 
     /**
+     * compare Gemeinde.
+     *
      * @var string
      */
     protected $Municipality = null;

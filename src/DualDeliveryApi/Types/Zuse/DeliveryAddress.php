@@ -17,6 +17,8 @@ class DeliveryAddress
     protected $BuildingNumber = null;
 
     /**
+     * Stiege oder näheren Bezeichnung wie z.b. Werkstatt.
+     *
      * @var ?string
      */
     protected $Unit = null;
