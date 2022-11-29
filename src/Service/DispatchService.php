@@ -1092,7 +1092,7 @@ class DispatchService implements LoggerAwareInterface
         $appDeliveryId = $recipient->getAppDeliveryID();
         $statusRequest = new StatusRequestType(null, $appDeliveryId);
         $this->logInfo('Doing status request', [
-            'recipient-id' => $recipient->getIdentifier()
+            'recipient-id' => $recipient->getIdentifier(),
         ]);
 
         try {
@@ -1401,7 +1401,8 @@ class DispatchService implements LoggerAwareInterface
         return $statusType;
     }
 
-    static public function getStatusTypeDescription(int $status): string {
+    public static function getStatusTypeDescription(int $status): string
+    {
         // The P* codes are textual explanation for status code from DeliveryQuality_ProcessingProfile_Statuswerte_v1.1.0.xlsx
         $descriptions = [
             DeliveryStatusChange::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND => 'ApplicationID wurde nicht gefunden',
