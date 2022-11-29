@@ -247,7 +247,7 @@ class RequestRecipient
      * @ApiProperty(iri="https://schema.org/endDate")
      * @Groups({"DispatchRequestRecipient:output"})
      *
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     private $deliveryEndDate;
 
@@ -414,7 +414,7 @@ class RequestRecipient
         return $this->request->getIdentifier().'-'.$this->identifier;
     }
 
-    public function getDeliveryEndDate(): \DateTimeInterface
+    public function getDeliveryEndDate(): ?\DateTimeInterface
     {
         return $this->deliveryEndDate;
     }
