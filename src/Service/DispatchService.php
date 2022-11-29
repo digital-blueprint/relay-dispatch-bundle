@@ -493,8 +493,12 @@ class DispatchService implements LoggerAwareInterface
         return $requestFile;
     }
 
-    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description): DeliveryStatusChange
+    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = ''): DeliveryStatusChange
     {
+        if ($description === '') {
+            $description = self::getStatusTypeDescription($statusType);
+        }
+
         $deliveryStatusChange = new DeliveryStatusChange();
 
         // A request recipient object needs to be set for the ORM, setting the identifier only will not persist it
@@ -1139,9 +1143,7 @@ class DispatchService implements LoggerAwareInterface
             );
         }
 
-        // TODO: Maybe add textual explanation for status code from DeliveryQuality_ProcessingProfile_Statuswerte_v1.1.0.xlsx
-        $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(),
-            $status, 'StatusRequest status code: '.$code);
+        $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(), $status);
 
         // Set the end date for the recipient if the status is final
         if ($statusChange->isFinalDualDeliveryStatus()) {
@@ -1397,6 +1399,27 @@ class DispatchService implements LoggerAwareInterface
         }
 
         return $statusType;
+    }
+
+    static public function getStatusTypeDescription(int $status): string {
+        // The P* codes are textual explanation for status code from DeliveryQuality_ProcessingProfile_Statuswerte_v1.1.0.xlsx
+        $descriptions = [
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND => 'ApplicationID wurde nicht gefunden',
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P1 => 'P1: Addressierbarkeit wird geprüft',
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P2 => 'P2: Datenanreicherung des Geschäftsfalles',
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P3 => 'P3: Geschäftsfall wird zugestellt',
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P4 => "P4: Geschäftsfall teilweise zugestellt\nDer Geschäftsfall wurde von der Applikation an den Zustellservice übertragen. Keine Bestätigung vom Zustelldienst erhalten, ein erneuter Versuch erfolgt.",
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P5 => "P5: Geschäftsfall erfolgreich übermittelt\nDer Geschäftsfall wurde von der Applikation an den Zustellservice übertragen.",
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6 => 'P6: Alle Nachweise erhalten von allen Kanälen',
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P7 => 'P7: Geschäftfall wird verarbeitet',
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P8 => "P8: Empfänger konnte nicht ermittelt werden\nnegative Antwort vom zentralen Adressverzeichnis (Zustellkopf), mit den übergebenen Informationen konnte keine eindeutige Person identifiziert werden",
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P9 => "P9: Zustellung konnte nicht erfolgreich verarbeitet/zugestellt werden\nMögliche Gründe: fehlende Adressierungsmerkmale, keine Fristgerechte Antwort von Druckstrasse erhalten.",
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P10 => "P10: Geschäftfall erfolgreich zugestellt\nGeschäftsfall ist beim Empfängerpostfach am Zustelldienst hinterlegt bzw. von der Druckstrasse produziert worden.",
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P11 => 'P11: Nachweise befindet sich im Zulauf',
+            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P12 => 'P12: Fehler aufgetreten, bitte kontaktieren Sie den Support',
+        ];
+
+        return $descriptions[$status] ?? '';
     }
 
     public function doStatusRequests()
