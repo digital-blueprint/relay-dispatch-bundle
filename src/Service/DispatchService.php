@@ -1087,6 +1087,9 @@ class DispatchService implements LoggerAwareInterface
         $service = $this->dd->getClient();
         $appDeliveryId = $recipient->getAppDeliveryID();
         $statusRequest = new StatusRequestType(null, $appDeliveryId);
+        $this->logInfo('Doing status request', [
+            'recipient-id' => $recipient->getIdentifier()
+        ]);
 
         try {
             $response = $service->dualStatusRequestOperation($statusRequest);
@@ -1122,6 +1125,11 @@ class DispatchService implements LoggerAwareInterface
         if ($status === 0) {
             $this->createDeliveryStatusChange($recipient->getIdentifier(),
                 DeliveryStatusChange::STATUS_STATUS_REQUEST_FAILED, 'StatusRequest request failed: StatusCode "'.$code.'" not found');
+
+            $this->logWarning('StatusCode of StatusRequest not found!', [
+                'recipient-id' => $recipient->getIdentifier(),
+                'code' => $code,
+            ]);
 
             throw ApiError::withDetails(
                 Response::HTTP_INTERNAL_SERVER_ERROR, 'StatusRequest request failed!', 'dispatch:dual-delivery-request-failed', [
@@ -1399,7 +1407,6 @@ class DispatchService implements LoggerAwareInterface
             try {
                 $this->doDualDeliveryStatusRequestSoapRequest($recipient);
             } catch (\Exception $e) {
-                // TODO: Handle error?
 //                dump($e);
                 $this->logWarning('Error while doing status request!', [
                     'recipient-id' => $recipient->getIdentifier(),
@@ -1456,6 +1463,11 @@ class DispatchService implements LoggerAwareInterface
     protected function logWarning(string $message, array $context = [])
     {
         $this->log(LogLevel::WARNING, $message, $context);
+    }
+
+    protected function logInfo(string $message, array $context = [])
+    {
+        $this->log(LogLevel::INFO, $message, $context);
     }
 
     protected function logError(string $message, array $context = [])
