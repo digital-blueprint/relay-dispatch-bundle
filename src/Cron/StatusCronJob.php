@@ -34,7 +34,6 @@ class StatusCronJob implements CronJobInterface
 
     public function run(CronOptions $options): void
     {
-        // TODO: Make status requests
         $this->dispatchService->doStatusRequests();
     }
 }
