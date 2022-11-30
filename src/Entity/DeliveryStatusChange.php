@@ -43,7 +43,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class DeliveryStatusChange
 {
-    // TODO: Get status values from "Statuswerte" xlsx file
     public const STATUS_SUBMITTED = 1;
     public const STATUS_IN_PROGRESS = 2;
     public const STATUS_SOAP_ERROR = 3;

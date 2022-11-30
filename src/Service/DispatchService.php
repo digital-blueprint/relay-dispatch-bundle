@@ -599,7 +599,8 @@ class DispatchService implements LoggerAwareInterface
             throw new UnrecoverableMessageHandlingException('Request could not be submitted to Vendo!', 0, $e);
         }
 
-        // TODO: Dispatch another delayed message if Vendo request failed (is this even possible now since DualDeliveryRequests are made for each recipient?)
+        // TODO: Dispatch another delayed message if Vendo request failed? (this isn't even possible now since DualDeliveryRequests are made for each recipient)
+
         $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
@@ -1206,7 +1207,7 @@ class DispatchService implements LoggerAwareInterface
         $senderProfile = $this->dd->getSenderProfile();
         $sender = new SenderType($senderProfile);
 
-        // TODO: Allow to set this via config/request?
+        // TODO: Allow to set this via request (limited by config)
 //        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
         $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
         // TODO: Allow to set this via config/request?
@@ -1288,6 +1289,7 @@ class DispatchService implements LoggerAwareInterface
                 $this->createDeliveryStatusChange($recipient->getIdentifier(),
                     DeliveryStatusChange::STATUS_DUAL_DELIVERY_REQUEST_FAILED, 'DualDelivery request failed: '.$errorText);
 
+                // TODO: Should we really exit with an error here or continue with other recipients?
                 throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDelivery request failed!', 'dispatch:dual-delivery-request-failed', [
                         'request-id' => $dispatchRequest->getIdentifier(),
