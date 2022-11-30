@@ -71,3 +71,4 @@ services:
   Dbp\Relay\DispatchBundle\Cron\StatusCronJob:
     autowire: true
     autoconfigure: true
+

@@ -59,6 +59,38 @@ class Group
     private $name;
 
     /**
+     * @ApiProperty(iri="https://schema.org/streetAddress")
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var string
+     */
+    private $street;
+
+    /**
+     * @ApiProperty(iri="https://schema.org/addressLocality")
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var string
+     */
+    private $locality;
+
+    /**
+     * @ApiProperty(iri="https://schema.org/postalCode")
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var string
+     */
+    private $postalCode;
+
+    /**
+     * @ApiProperty(iri="https://schema.org/addressCountry")
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var string
+     */
+    private $country;
+
+    /**
      * @ApiProperty
      * @Groups({"DispatchGroup:output"})
      *
@@ -92,6 +124,46 @@ class Group
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    public function getStreet(): string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): void
+    {
+        $this->street = $street;
+    }
+
+    public function getLocality(): string
+    {
+        return $this->locality;
+    }
+
+    public function setLocality(string $locality): void
+    {
+        $this->locality = $locality;
+    }
+
+    public function getPostalCode(): string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(string $postalCode): void
+    {
+        $this->postalCode = $postalCode;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): void
+    {
+        $this->country = $country;
     }
 
     public function getMayRead(): bool

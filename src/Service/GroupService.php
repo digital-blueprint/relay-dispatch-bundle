@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Service;
 
+use ApiPlatform\Core\Api\IriConverterInterface;
 use Dbp\CampusonlineApi\LegacyWebService\ApiException;
-use Dbp\Relay\BaseOrganizationBundle\API\OrganizationProviderInterface;
+use Dbp\Relay\CoreBundle\Entity\NamedEntityInterface;
+use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\LocalData\LocalData;
+use Dbp\Relay\CoreBundle\LocalData\LocalDataAwareInterface;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
+use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
 use Dbp\Relay\DispatchBundle\Entity\Group;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Symfony\Component\HttpFoundation\Response;
 
 class GroupService implements LoggerAwareInterface
 {
@@ -18,13 +24,22 @@ class GroupService implements LoggerAwareInterface
     /** @var AuthorizationService */
     private $auth;
 
-    /** @var OrganizationProviderInterface */
-    private $organizationProvider;
+    /** @var IriConverterInterface */
+    private $iriConverter;
 
-    public function __construct(AuthorizationService $auth, OrganizationProviderInterface $organizationProvider)
+    /** @var array */
+    private $config;
+
+    public function __construct(AuthorizationService $auth, IriConverterInterface $iriConverter)
     {
+        $this->config = [];
         $this->auth = $auth;
-        $this->organizationProvider = $organizationProvider;
+        $this->iriConverter = $iriConverter;
+    }
+
+    public function setConfig(array $config)
+    {
+        $this->config = $config;
     }
 
     /**
@@ -32,13 +47,7 @@ class GroupService implements LoggerAwareInterface
      */
     public function getGroupById(string $identifier, array $options = []): Group
     {
-        $orgUnit = $this->organizationProvider->getOrganizationById($identifier, $options);
-
-        $group = new Group();
-        $group->setIdentifier($orgUnit->getIdentifier());
-        $group->setName($orgUnit->getName());
-
-        return $group;
+        return $this->createGroup($identifier, $this->auth->getGroupsMayRead(), $this->auth->getGroupsMayWrite());
     }
 
     /**
@@ -46,26 +55,48 @@ class GroupService implements LoggerAwareInterface
      */
     public function getGroups(int $currentPageNumber, int $maxNumItemsPerPage, array $options = []): array
     {
-        $groups = [];
+        $groupsMayReadIds = $this->auth->getGroupsMayRead();
+        $groupsMayWriteIds = $this->auth->getGroupsMayWrite();
+        $groupsMayAccessIds = array_merge($groupsMayReadIds, $groupsMayWriteIds);
+        $groupsMayAccessIds = array_unique($groupsMayAccessIds);
 
-        $groupsMayRead = $this->auth->getGroupsMayRead();
-        $groupsMayWrite = $this->auth->getGroupsMayWrite();
-        $groupsMayAccess = array_merge($groupsMayRead, $groupsMayWrite);
-        $groupsMayAccess = array_unique($groupsMayAccess);
-
-        if (!empty($groupsMayAccess)) {
-            $options['identifiers'] = $groupsMayAccess;
-
-            foreach ($this->organizationProvider->getOrganizations($currentPageNumber, $maxNumItemsPerPage, $options) as $orgUnit) {
-                $group = new Group();
-                $group->setIdentifier($orgUnit->getIdentifier());
-                $group->setName($orgUnit->getName());
-                $group->setMayRead(in_array($orgUnit->getIdentifier(), $groupsMayRead, true));
-                $group->setMayWrite(in_array($orgUnit->getIdentifier(), $groupsMayWrite, true));
-                $groups[] = $group;
-            }
+        $groupsMyAccess = [];
+        foreach ($groupsMayAccessIds as $groupId) {
+            $groupsMyAccess[] = $this->createGroup($groupId, $groupsMayReadIds, $groupsMayWriteIds);
         }
 
-        return $groups;
+        return $groupsMyAccess;
+    }
+
+    private function createGroup(string $groupId, array $groupsMayReadIds, array $groupsMayWriteIds): Group
+    {
+        $entity = $this->iriConverter->getItemFromIri(sprintf($this->config[Configuration::GROUP_DATA_IRI_TEMPLATE], $groupId),
+            ['filters' => [LocalData::INCLUDE_PARAMETER_NAME => LocalData::toIncludeLocalParameterValue($this->getAddressAttributes())]]);
+
+        if ($entity instanceof NamedEntityInterface === false ||
+            $entity instanceof LocalDataAwareInterface === false) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'object not suitable to provide group name and address');
+        }
+
+        $group = new Group();
+        $group->setIdentifier($entity->getIdentifier());
+        $group->setName($entity->getName());
+        $group->setMayRead(in_array($groupId, $groupsMayReadIds, true));
+        $group->setMayWrite(in_array($groupId, $groupsMayWriteIds, true));
+        $group->setStreet($entity->getLocalDataValue(
+                $this->getAddressAttributes()[Configuration::GROUP_STREET_ATTRIBUTE]) ?? '');
+        $group->setPostalCode($entity->getLocalDataValue(
+                $this->getAddressAttributes()[Configuration::GROUP_POSTAL_CODE_ATTRIBUTE]) ?? '');
+        $group->setLocality($entity->getLocalDataValue(
+                $this->getAddressAttributes()[Configuration::GROUP_LOCALITY_ATTRIBUTE]) ?? '');
+        $group->setCountry($entity->getLocalDataValue(
+                $this->getAddressAttributes()[Configuration::GROUP_COUNTRY_ATTRIBUTE]) ?? '');
+
+        return $group;
+    }
+
+    private function getAddressAttributes(): array
+    {
+        return $this->config[Configuration::GROUP_DATA_ADDRESS_ATTRIBUTES_NODE];
     }
 }

@@ -9,7 +9,6 @@
         "ext-soap": "*",
         "api-platform/core": "^2.6",
         "dbp/campusonline-api": "^0.2.13",
-        "dbp/relay-base-organization-bundle": "^0.2.0",
         "dbp/relay-base-person-bundle": "^0.2.1",
         "dbp/relay-core-bundle": "^0.1.54",
         "guzzlehttp/guzzle": "^7.0",
