@@ -10,6 +10,7 @@ use Dbp\Relay\CoreBundle\Entity\NamedEntityInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\CoreBundle\LocalData\LocalData;
 use Dbp\Relay\CoreBundle\LocalData\LocalDataAwareInterface;
+use Dbp\Relay\CoreBundle\Pagination\Pagination;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
 use Dbp\Relay\DispatchBundle\Entity\Group;
@@ -61,7 +62,7 @@ class GroupService implements LoggerAwareInterface
         $groupsMayAccessIds = array_unique($groupsMayAccessIds);
 
         $groupsMyAccess = [];
-        foreach ($groupsMayAccessIds as $groupId) {
+        foreach (array_slice($groupsMayAccessIds, Pagination::getFirstItemIndex($currentPageNumber, $maxNumItemsPerPage), $maxNumItemsPerPage) as $groupId) {
             $groupsMyAccess[] = $this->createGroup($groupId, $groupsMayReadIds, $groupsMayWriteIds);
         }
 
