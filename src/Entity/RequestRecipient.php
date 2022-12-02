@@ -253,7 +253,7 @@ class RequestRecipient
 
     /**
      * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="requestRecipient")
-     * @ORM\OrderBy({"dateCreated" = "DESC"})
+     * @ORM\OrderBy({"orderId" = "DESC"})
      * @ApiProperty
      * @Groups({"DispatchRequestRecipient:output"})
      */

@@ -118,6 +118,13 @@ class DeliveryStatusChange
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var int
+     */
+    private $orderId;
+
     public function getIdentifier(): string
     {
         return (string) $this->identifier;
