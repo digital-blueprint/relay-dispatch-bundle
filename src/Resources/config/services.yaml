@@ -54,6 +54,10 @@ services:
     autowire: true
     autoconfigure: true
 
+  Dbp\Relay\DispatchBundle\Command\TestSeedCommand:
+    autowire: true
+    autoconfigure: true
+
   Dbp\Relay\DispatchBundle\Authorization\AuthorizationService:
     autowire: true
     autoconfigure: true

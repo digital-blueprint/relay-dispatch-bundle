@@ -42,6 +42,7 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
@@ -373,12 +374,10 @@ class DispatchService implements LoggerAwareInterface
         return $request;
     }
 
-    public function createRequestForCurrentPerson(Request $request): Request
+    public function createRequest(Request $request): Request
     {
-        $personId = $this->getCurrentPerson()->getIdentifier();
-
         $request->setIdentifier((string) Uuid::v4());
-        $request->setPersonIdentifier($personId);
+
         try {
             $request->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {
@@ -392,6 +391,14 @@ class DispatchService implements LoggerAwareInterface
         }
 
         return $request;
+    }
+
+    public function createRequestForCurrentPerson(Request $request): Request
+    {
+        $personId = $this->getCurrentPerson()->getIdentifier();
+        $request->setPersonIdentifier($personId);
+
+        return $this->createRequest($request);
     }
 
     /**
@@ -455,7 +462,7 @@ class DispatchService implements LoggerAwareInterface
         $this->em->flush();
     }
 
-    public function createRequestFile(UploadedFile $uploadedFile, string $dispatchRequestIdentifier): RequestFile
+    public function createRequestFile(File $uploadedFile, string $dispatchRequestIdentifier): RequestFile
     {
         $data = $uploadedFile->getContent();
         $requestFile = new RequestFile();
@@ -466,9 +473,9 @@ class DispatchService implements LoggerAwareInterface
         $requestFile->setRequest($request);
 
         $requestFile->setIdentifier((string) Uuid::v4());
-        $requestFile->setName($uploadedFile->getClientOriginalName());
+        $requestFile->setName($uploadedFile instanceof UploadedFile ? $uploadedFile->getClientOriginalName() : $uploadedFile->getFilename());
         $requestFile->setData($data);
-        $requestFile->setFileFormat($uploadedFile->getClientMimeType());
+        $requestFile->setFileFormat($uploadedFile->getMimeType());
         $requestFile->setContentSize($uploadedFile->getSize());
         try {
             $requestFile->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
