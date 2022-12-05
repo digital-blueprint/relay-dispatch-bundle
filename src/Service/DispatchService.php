@@ -755,7 +755,6 @@ class DispatchService implements LoggerAwareInterface
             // Id must not start with a number (says trial & error, xsd:ID or xs:NCName spec don't tell)!
             $payloadAttrs->setId('file-'.$file->getIdentifier());
 
-            // TODO: Is this the correct format to send content?
             // $content is base64 encoded by the SOAP library!
             $content = $file->getData();
 
@@ -782,10 +781,10 @@ class DispatchService implements LoggerAwareInterface
         $senderProfile = $this->dd->getSenderProfile();
         $sender = new SenderType($senderProfile);
 
-        // TODO: Allow to set this via request (limited by config)
+        // TODO: Allow to set this via request (limited by config, STRETCH_GOAL)
 //        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
         $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
-        // TODO: Allow to set this via config/request?
+        // TODO: Allow to set this via config/request (STRETCH_GOAL)
         $deliveryQuality = 'Rsa';
         // GZ: Über dieses Element kann eine Geschäftszahl bzw. ein Geschäftskennzeichen
         // für Anzeige und Druck mitgegeben werden, welches eine leichtere Lesbarkeit auf
