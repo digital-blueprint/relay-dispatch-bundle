@@ -158,7 +158,7 @@ class DispatchService implements LoggerAwareInterface
     /**
      * Fetches a Request.
      */
-    public function getRequestById(string $identifier): ?Request
+    public function getRequestById(string $identifier): Request
     {
         /** @var Request $request */
         $request = $this->em
@@ -192,7 +192,7 @@ class DispatchService implements LoggerAwareInterface
     /**
      * Fetches a RequestRecipient.
      */
-    public function getRequestRecipientById(string $identifier): ?RequestRecipient
+    public function getRequestRecipientById(string $identifier): RequestRecipient
     {
         /** @var RequestRecipient $requestRecipient */
         $requestRecipient = $this->em
@@ -270,6 +270,20 @@ class DispatchService implements LoggerAwareInterface
         $requests = $this->em
             ->getRepository(Request::class)
             ->findBy(['personIdentifier' => $person->getIdentifier()]);
+
+        return $requests;
+    }
+
+    /**
+     * Fetches all Request entities for the given group.
+     *
+     * @return Request[]
+     */
+    public function getRequestsForGroupId(string $groupId): array
+    {
+        $requests = $this->em
+            ->getRepository(Request::class)
+            ->findBy(['groupId' => $groupId]);
 
         return $requests;
     }

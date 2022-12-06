@@ -6,6 +6,7 @@ namespace Dbp\Relay\DispatchBundle\DataProvider;
 
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,10 +17,15 @@ final class RequestFileItemDataProvider extends AbstractController implements It
      * @var DispatchService
      */
     private $dispatchService;
+    /**
+     * @var AuthorizationService
+     */
+    private $auth;
 
-    public function __construct(DispatchService $dispatchService)
+    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
     {
         $this->dispatchService = $dispatchService;
+        $this->auth = $auth;
     }
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
@@ -30,10 +36,13 @@ final class RequestFileItemDataProvider extends AbstractController implements It
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?RequestFile
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->denyAccessUnlessGranted('ROLE_SCOPE_DISPATCH');
 
         $filters = $context['filters'] ?? [];
 
-        return $this->dispatchService->getRequestFileByIdForCurrentPerson($id);
+        $requestFile = $this->dispatchService->getRequestFileById($id);
+        $request = $this->dispatchService->getRequestById($requestFile->getDispatchRequestIdentifier());
+        $this->auth->checkCanReadMetadata($request->getGroupId());
+
+        return $requestFile;
     }
 }

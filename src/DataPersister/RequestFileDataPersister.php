@@ -6,6 +6,7 @@ namespace Dbp\Relay\DispatchBundle\DataPersister;
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +19,15 @@ class RequestFileDataPersister extends AbstractController implements ContextAwar
      */
     private $dispatchService;
 
-    public function __construct(DispatchService $dispatchService)
+    /**
+     * @var AuthorizationService
+     */
+    private $auth;
+
+    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
     {
         $this->dispatchService = $dispatchService;
+        $this->auth = $auth;
     }
 
     public function supports($data, array $context = []): bool
@@ -33,6 +40,9 @@ class RequestFileDataPersister extends AbstractController implements ContextAwar
      */
     public function persist($data, array $context = [])
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        throw new \RuntimeException('Not used, see the controller');
     }
 
     /**
@@ -43,13 +53,13 @@ class RequestFileDataPersister extends AbstractController implements ContextAwar
     public function remove($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->denyAccessUnlessGranted('ROLE_SCOPE_DISPATCH');
 
         $requestFile = $data;
         assert($requestFile instanceof RequestFile);
 
-        // Check if current person owns the request
-        $request = $this->dispatchService->getRequestByIdForCurrentPerson($requestFile->getDispatchRequestIdentifier());
+        $request = $this->dispatchService->getRequestById($requestFile->getDispatchRequestIdentifier());
+
+        $this->auth->checkCanWrite($request->getGroupId());
 
         if ($request->isSubmitted()) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DataPersister;
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\Uid\Uuid;
 
 class PreAddressingRequestDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
@@ -17,10 +19,15 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
      * @var DispatchService
      */
     private $dispatchService;
+    /**
+     * @var AuthorizationService
+     */
+    private $auth;
 
-    public function __construct(DispatchService $dispatchService)
+    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
     {
         $this->dispatchService = $dispatchService;
+        $this->auth = $auth;
     }
 
     public function supports($data, array $context = []): bool
@@ -36,7 +43,9 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
     public function persist($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->denyAccessUnlessGranted('ROLE_SCOPE_DISPATCH');
+        // Users only need pre-addressing if they can create new delivery requests, so only if
+        // they have the right to write something in at elast one group.
+        $this->auth->checkCanWriteSomething();
 
         $preAddressingRequest = $data;
         assert($preAddressingRequest instanceof PreAddressingRequest);
@@ -68,5 +77,8 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
      */
     public function remove($data, array $context = [])
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        throw new MethodNotAllowedHttpException([]);
     }
 }

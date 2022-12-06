@@ -6,10 +6,13 @@ namespace Dbp\Relay\DispatchBundle\DataProvider;
 
 use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\CoreBundle\Helpers\ArrayFullPaginator;
+use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 final class RequestCollectionDataProvider extends AbstractController implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
@@ -17,10 +20,15 @@ final class RequestCollectionDataProvider extends AbstractController implements 
      * @var DispatchService
      */
     private $dispatchService;
+    /**
+     * @var AuthorizationService
+     */
+    private $auth;
 
-    public function __construct(DispatchService $dispatchService)
+    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
     {
         $this->dispatchService = $dispatchService;
+        $this->auth = $auth;
     }
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
@@ -31,12 +39,17 @@ final class RequestCollectionDataProvider extends AbstractController implements 
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): ArrayFullPaginator
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->denyAccessUnlessGranted('ROLE_SCOPE_DISPATCH');
+
+        $filters = $context['filters'] ?? [];
+
+        if (!isset($filters['groupId'])) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'groupId query parameter missing');
+        }
+        $groupId = $filters['groupId'];
+        $this->auth->checkCanReadMetadata($groupId);
 
         $perPage = 30;
         $page = 1;
-
-        $filters = $context['filters'] ?? [];
 
         if (isset($filters['page'])) {
             $page = (int) $filters['page'];
@@ -46,7 +59,7 @@ final class RequestCollectionDataProvider extends AbstractController implements 
         }
 
         return new ArrayFullPaginator(
-            $this->dispatchService->getRequestsForCurrentPerson(),
+            $this->dispatchService->getRequestsForGroupId($groupId),
             $page,
             $perPage);
     }
