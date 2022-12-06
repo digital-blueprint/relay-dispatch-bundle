@@ -48,7 +48,9 @@ class GroupService implements LoggerAwareInterface
      */
     public function getGroupById(string $identifier, array $options = []): Group
     {
-        return $this->createGroup($identifier, $this->auth->getGroupsMayRead(), $this->auth->getGroupsMayWrite());
+        $this->auth->checkCanReadMetadata($identifier);
+
+        return $this->createGroup($identifier);
     }
 
     /**
@@ -56,20 +58,16 @@ class GroupService implements LoggerAwareInterface
      */
     public function getGroups(int $currentPageNumber, int $maxNumItemsPerPage, array $options = []): array
     {
-        $groupsMayReadIds = $this->auth->getGroupsMayRead();
-        $groupsMayWriteIds = $this->auth->getGroupsMayWrite();
-        $groupsMayAccessIds = array_merge($groupsMayReadIds, $groupsMayWriteIds);
-        $groupsMayAccessIds = array_unique($groupsMayAccessIds);
-
+        $groups = $this->auth->getGroups();
         $groupsMyAccess = [];
-        foreach (array_slice($groupsMayAccessIds, Pagination::getFirstItemIndex($currentPageNumber, $maxNumItemsPerPage), $maxNumItemsPerPage) as $groupId) {
-            $groupsMyAccess[] = $this->createGroup($groupId, $groupsMayReadIds, $groupsMayWriteIds);
+        foreach (array_slice($groups, Pagination::getFirstItemIndex($currentPageNumber, $maxNumItemsPerPage), $maxNumItemsPerPage) as $groupId) {
+            $groupsMyAccess[] = $this->createGroup($groupId);
         }
 
         return $groupsMyAccess;
     }
 
-    private function createGroup(string $groupId, array $groupsMayReadIds, array $groupsMayWriteIds): Group
+    private function createGroup(string $groupId): Group
     {
         $entity = $this->iriConverter->getItemFromIri(sprintf($this->config[Configuration::GROUP_DATA_IRI_TEMPLATE], $groupId),
             ['filters' => [LocalData::INCLUDE_PARAMETER_NAME => LocalData::toIncludeLocalParameterValue($this->getAddressAttributes())]]);
@@ -82,8 +80,8 @@ class GroupService implements LoggerAwareInterface
         $group = new Group();
         $group->setIdentifier($entity->getIdentifier());
         $group->setName($entity->getName());
-        $group->setMayRead(in_array($groupId, $groupsMayReadIds, true));
-        $group->setMayWrite(in_array($groupId, $groupsMayWriteIds, true));
+        $group->setMayRead($this->auth->getCanReadMetadata($groupId));
+        $group->setMayWrite($this->auth->getCanWrite($groupId));
         $group->setStreet($entity->getLocalDataValue(
                 $this->getAddressAttributes()[Configuration::GROUP_STREET_ATTRIBUTE]) ?? '');
         $group->setPostalCode($entity->getLocalDataValue(

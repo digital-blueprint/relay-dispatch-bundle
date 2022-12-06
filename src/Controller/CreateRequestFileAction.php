@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Controller;
 
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -19,9 +20,15 @@ final class CreateRequestFileAction extends BaseDispatchController
      */
     private $dispatchService;
 
-    public function __construct(DispatchService $dispatchService)
+    /**
+     * @var AuthorizationService
+     */
+    private $auth;
+
+    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
     {
         $this->dispatchService = $dispatchService;
+        $this->auth = $auth;
     }
 
     /**
@@ -30,7 +37,6 @@ final class CreateRequestFileAction extends BaseDispatchController
     public function __invoke(Request $request): RequestFile
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->denyAccessUnlessGranted('ROLE_SCOPE_DISPATCH');
 
         $dispatchRequestIdentifier = self::requestGet($request, 'dispatchRequestIdentifier');
 
@@ -39,7 +45,9 @@ final class CreateRequestFileAction extends BaseDispatchController
         }
 
         // Check if current person owns the request
-        $dispatchRequest = $this->dispatchService->getRequestByIdForCurrentPerson($dispatchRequestIdentifier);
+        $dispatchRequest = $this->dispatchService->getRequestById($dispatchRequestIdentifier);
+
+        $this->auth->checkCanWrite($dispatchRequest->getGroupId());
 
         if ($dispatchRequest->isSubmitted()) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');

@@ -5,43 +5,113 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Authorization;
 
 use Dbp\Relay\CoreBundle\Authorization\AbstractAuthorizationService;
+use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthorizationService extends AbstractAuthorizationService
 {
-    public function checkCanRead(string $groupId)
+    /**
+     * Check if the user can read the group metadata, throws if not.
+     */
+    public function checkCanReadMetadata(string $groupId): void
     {
-        $this->denyAccessUnlessIsGranted(Configuration::GROUP_READER, new GroupData($groupId));
-    }
-
-    public function checkCanWrite(string $groupId)
-    {
-        $this->denyAccessUnlessIsGranted(Configuration::GROUP_WRITER, new GroupData($groupId));
-    }
-
-    public function checkIsAdmin()
-    {
-        $this->denyAccessUnlessIsGranted(Configuration::ADMIN);
-    }
-
-    public function checkIsManager()
-    {
-        $this->denyAccessUnlessIsGranted(Configuration::MANAGER);
+        if ($this->getCanReadMetadata($groupId)) {
+            return;
+        }
+        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
     }
 
     /**
-     * @return string[]
+     * Check if the user can read the group content, throws if not.
      */
-    public function getGroupsMayRead(): array
+    public function checkCanReadContent(string $groupId): void
     {
-        return $this->getAttribute(Configuration::GROUPS_MAY_READ, []) ?? [];
+        $groupData = new GroupData($groupId);
+        if ($this->isGranted(Configuration::GROUP_WRITER, $groupData) ||
+            $this->isGranted(Configuration::GROUP_READER_CONTENT, $groupData)) {
+            return;
+        }
+        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
     }
 
     /**
+     * Check if the user can write in the group, throws if not.
+     */
+    public function checkCanWrite(string $groupId): void
+    {
+        if ($this->getCanWrite($groupId)) {
+            return;
+        }
+        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
+    }
+
+    /**
+     * Returns if the user can write in the group.
+     */
+    public function getCanWrite(string $groupId): bool
+    {
+        // XXX: should we check isValidGroup() in all cases?
+        // At least check it here where we input data into the system
+        if (!$this->isValidGroup($groupId)) {
+            return false;
+        }
+
+        return $this->isGranted(Configuration::GROUP_WRITER, new GroupData($groupId));
+    }
+
+    /**
+     * Returns if the user can read something in a group.
+     */
+    public function getCanReadMetadata(string $groupId): bool
+    {
+        $groupData = new GroupData($groupId);
+        if ($this->isGranted(Configuration::GROUP_WRITER, $groupData) ||
+            $this->isGranted(Configuration::GROUP_READER_CONTENT, $groupData) ||
+            $this->isGranted(Configuration::GROUP_READER_METADATA, $groupData)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the user has write access in at least one group.
+     */
+    public function checkCanWriteSomething(): void
+    {
+        $groups = $this->getGroups();
+        foreach ($groups as $id) {
+            if ($this->getCanWrite($id)) {
+                return;
+            }
+        }
+        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
+    }
+
+    /**
+     * Returns if the group ID is valid.
+     */
+    private function isValidGroup(string $groupId): bool
+    {
+        return in_array($groupId, $this->getGroups(), true);
+    }
+
+    /**
+     * Returns all groups the user has some kind of access to.
+     *
      * @return string[]
      */
-    public function getGroupsMayWrite(): array
+    public function getGroups(): array
     {
-        return $this->getAttribute(Configuration::GROUPS_MAY_WRITE, []) ?? [];
+        $allGroups = $this->getAttribute(Configuration::GROUPS);
+        $groups = [];
+        foreach ($allGroups as $id) {
+            if ($this->getCanReadMetadata($id)) {
+                $groups[] = $id;
+            }
+        }
+
+        return $groups;
     }
 }

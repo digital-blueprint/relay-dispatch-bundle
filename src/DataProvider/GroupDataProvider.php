@@ -40,6 +40,6 @@ class GroupDataProvider extends AbstractDataProvider
     {
         parent::onOperationStart($operation);
 
-        $this->denyAccessUnlessGranted('ROLE_SCOPE_DISPATCH');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
     }
 }

@@ -36,7 +36,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                                 "senderPostalCode" = "8010",
  *                                 "senderAddressLocality" = "Graz",
  *                                 "senderStreetAddress" = "Am Grund",
- *                                 "senderBuildingNumber" = "1"
+ *                                 "senderBuildingNumber" = "1",
+ *                                 "groupId" = "11072"
  *                             },
  *                         }
  *                     }
@@ -47,7 +48,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
  *             "path" = "/dispatch/requests",
  *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
+ *                 "tags" = {"Dispatch"},
+ *                 "parameters" = {
+ *                     {"name" = "groupId", "in" = "query", "description" = "The group ID for which to fetch requests", "type" = "string", "required" = true},
+ *                 }
  *             },
  *         }
  *     },
@@ -264,6 +268,20 @@ class Request
      */
     private $files;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @ApiProperty
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Only {{ limit }} letters are allowed"
+     * )
+     * @Assert\NotNull
+     *
+     * @var string
+     */
+    private $groupId;
+
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
@@ -413,5 +431,15 @@ class Request
         return $this->isSubmitted() === false &&
             $this->getRecipients()->count() > 0 &&
             $this->getFiles()->count() > 0;
+    }
+
+    public function getGroupId(): string
+    {
+        return $this->groupId;
+    }
+
+    public function setGroupId(string $groupId): void
+    {
+        $this->groupId = $groupId;
     }
 }
