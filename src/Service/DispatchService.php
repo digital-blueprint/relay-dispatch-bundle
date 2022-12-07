@@ -249,12 +249,13 @@ class DispatchService implements LoggerAwareInterface
      */
     public function getNotFinishedRequestRecipients(): array
     {
-        /** @var RequestRecipient[] $requestRecipients */
-        $requestRecipients = $this->em
-            ->getRepository(RequestRecipient::class)
-            ->findBy(['deliveryEndDate' => null]);
+        $queryBuilder = $this->em->createQueryBuilder();
+        $query = $queryBuilder->select('rr')
+            ->from(RequestRecipient::class, 'rr')
+            ->leftJoin('rr.request', 'r')
+            ->where('r.dateSubmitted IS NOT NULL', 'rr.deliveryEndDate IS NULL');
 
-        return $requestRecipients;
+        return $query->getQuery()->getResult();
     }
 
     /**
