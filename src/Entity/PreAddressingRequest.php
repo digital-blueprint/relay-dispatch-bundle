@@ -37,13 +37,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                 },
  *             }
  *         },
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
- *             "path" = "/dispatch/pre-addressing-requests",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         }
  *     },
  *     itemOperations={
  *         "get" = {

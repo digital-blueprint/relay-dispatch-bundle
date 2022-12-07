@@ -4,27 +4,8 @@ services:
     autowire: true
     autoconfigure: true
 
-  Dbp\Relay\DispatchBundle\DataProvider\RequestCollectionDataProvider:
-    tags: [{ name: 'api_platform.collection_data_provider'}]
-    autowire: true
-
-  Dbp\Relay\DispatchBundle\DataProvider\RequestItemDataProvider:
-    tags: ['api_platform.item_data_provider']
-    autowire: true
-
-  Dbp\Relay\DispatchBundle\DataProvider\RequestRecipientItemDataProvider:
-    tags: ['api_platform.item_data_provider']
-    autowire: true
-
-  Dbp\Relay\DispatchBundle\DataProvider\RequestFileItemDataProvider:
-    tags: ['api_platform.item_data_provider']
-    autowire: true
-
-  Dbp\Relay\DispatchBundle\DataProvider\DeliveryStatusChangeItemDataProvider:
-    tags: ['api_platform.item_data_provider']
-    autowire: true
-
-  Dbp\Relay\DispatchBundle\DataProvider\GroupDataProvider:
+  Dbp\Relay\DispatchBundle\DataProvider\:
+    resource: '../../DataProvider'
     autowire: true
     autoconfigure: true
 

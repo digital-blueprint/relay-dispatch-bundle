@@ -25,6 +25,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         $this->addResourceClassDirectory($container, __DIR__.'/../Entity');
 
         $pathsToHide = [
+            '/dispatch/pre-addressing-requests/{identifier}',
             '/dispatch/request-recipients',
             '/dispatch/request-files',
             '/dispatch/request-status-changes',
