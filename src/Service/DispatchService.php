@@ -600,7 +600,8 @@ class DispatchService implements LoggerAwareInterface
 
         // TODO: Dispatch another delayed message if Vendo request failed? (this isn't even possible now since DualDeliveryRequests are made for each recipient)
 
-        $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
+        // Don't update this status, because we are doing a real status request to Vendo before it
+//        $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
     public function doPreAddressingSoapRequest(PreAddressingRequest &$preAddressingRequest)
