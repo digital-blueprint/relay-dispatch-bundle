@@ -636,6 +636,11 @@ class DispatchService implements LoggerAwareInterface
             $channels,
             '1.0'
         );
+//        dump($request);
+//        dump('baseUrl');
+//        dump($this->baseUrl);
+//        dump($this->cert);
+//        dump($this->certPassword);
         $response = $service->dualDeliveryPreAddressingRequestOperation($request);
 
 //        dump($response);
@@ -808,6 +813,8 @@ class DispatchService implements LoggerAwareInterface
             $address->setCountryCode($recipient->getAddressCountry());
 
             $personData = new PersonDataType($physicalPerson, $address);
+            $name = trim($dispatchRequest->getName());
+            $subject = $name !== '' ? $name : 'Zustellung';
             $dualDeliveryRecipient = new RecipientType($personData);
 
             $id = $recipient->getAppDeliveryID();
@@ -816,7 +823,7 @@ class DispatchService implements LoggerAwareInterface
                 $id,
                 null,
                 $deliveryQuality,
-                'Zustellung '.$id,
+                $subject,
                 $gz,
                 null,
                 null,
@@ -846,6 +853,11 @@ class DispatchService implements LoggerAwareInterface
                     ]
                 );
             }
+
+//            dump('baseUrl');
+//            dump($this->baseUrl);
+//            dump($this->cert);
+//            dump($this->certPassword);
 
 //            dump($response);
 //            dump($service->getPrettyLastRequest());
