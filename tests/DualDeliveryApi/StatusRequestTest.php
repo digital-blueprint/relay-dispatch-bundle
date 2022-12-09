@@ -27,10 +27,15 @@ class StatusRequestTest extends TestCase
 
     public function testStatusRequestSuccess()
     {
+        // TODO: Check how to get the EDeliveryNotification object
+//        $service = $this->getMockService(file_get_contents(__DIR__.'/../../output.xml'));
         $service = $this->getMockService(self::$SUCCESS_RESPONSE);
 
         $request = new StatusRequestType(null, 'foo-6374de7d5ed47', null);
         $response = $service->dualStatusRequestOperation($request);
+
+//        var_dump($response);
+//        var_dump($response->getResult()->getNotificationChannel());
         $this->assertSame('foo-6374de7d5ed47', $response->getAppDeliveryID());
         $this->assertSame('132478', $response->getDualDeliveryID());
         $this->assertSame('P3', $response->getStatus()->getCode());
