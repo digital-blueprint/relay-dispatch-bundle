@@ -821,8 +821,8 @@ class DispatchService implements LoggerAwareInterface
             }
 
 //            if ($postalCode !== '' && $addressLocality !== '' && $streetAddress !== '' && $addressCountry !== '') {
-                $address = new PostalAddressType(null, $postalCode, $addressLocality, new DeliveryAddress($streetAddress, $buildingNumber));
-                $address->setCountryCode($addressCountry);
+            $address = new PostalAddressType(null, $postalCode, $addressLocality, new DeliveryAddress($streetAddress, $buildingNumber));
+            $address->setCountryCode($addressCountry);
 //            } else {
 //                $address = null;
 //            }
