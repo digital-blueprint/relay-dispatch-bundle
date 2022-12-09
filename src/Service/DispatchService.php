@@ -695,11 +695,14 @@ class DispatchService implements LoggerAwareInterface
             );
         }
 
+//        dump('baseUrl');
+//        dump($this->baseUrl);
 //        dump($response);
 //        dump($service->getPrettyLastRequest());
 //        dump($service->getPrettyLastResponse());
 
         $code = $response->getStatus()->getCode();
+//        $response->getResult()->getNotificationChannel()->getNotificationChannelSet()
         $status = $this->getStatusForCode($code);
 
         $lastStatusChange = $this->getLastStatusChange($recipient);
@@ -805,13 +808,24 @@ class DispatchService implements LoggerAwareInterface
             $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
 
-            $address = new PostalAddressType(
-                null,
-                $recipient->getPostalCode(),
-                $recipient->getAddressLocality(),
-                new DeliveryAddress($recipient->getStreetAddress(), $recipient->getBuildingNumber())
-            );
-            $address->setCountryCode($recipient->getAddressCountry());
+            $postalCode = trim($recipient->getPostalCode());
+            $addressLocality = trim($recipient->getAddressLocality());
+            $streetAddress = trim($recipient->getStreetAddress());
+            $buildingNumber = trim($recipient->getBuildingNumber());
+            $addressCountry = trim($recipient->getAddressCountry());
+
+            // country must not be empty, or else you will get a SOAP error:
+            // cvc-pattern-valid: Value '' is not facet-valid with respect to pattern '[A-Z]{2}' for type '#AnonType_CountryCodePostalAddressType'.
+            if ($addressCountry === '') {
+                $addressCountry = 'AT';
+            }
+
+//            if ($postalCode !== '' && $addressLocality !== '' && $streetAddress !== '' && $addressCountry !== '') {
+                $address = new PostalAddressType(null, $postalCode, $addressLocality, new DeliveryAddress($streetAddress, $buildingNumber));
+                $address->setCountryCode($addressCountry);
+//            } else {
+//                $address = null;
+//            }
 
             $personData = new PersonDataType($physicalPerson, $address);
             $name = trim($dispatchRequest->getName());
