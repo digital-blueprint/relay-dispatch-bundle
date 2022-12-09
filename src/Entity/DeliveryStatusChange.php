@@ -192,6 +192,7 @@ class DeliveryStatusChange
     public function isFinalDualDeliveryStatus(): bool
     {
         return in_array($this->statusType, [
+            self::STATUS_DUAL_DELIVERY_REQUEST_FAILED,
             self::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND,
             self::STATUS_DUAL_DELIVERY_STATUS_P5,
             self::STATUS_DUAL_DELIVERY_STATUS_P6,
