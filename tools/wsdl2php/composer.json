@@ -1,5 +1,0 @@
-{
-    "require": {
-        "wsdl2phpgenerator/wsdl2phpgenerator": "^3.4"
-    }
-}
