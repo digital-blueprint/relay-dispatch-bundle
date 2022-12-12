@@ -493,7 +493,7 @@ class DispatchService implements LoggerAwareInterface
         return $requestFile;
     }
 
-    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = ''): DeliveryStatusChange
+    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = '', string $file = null): DeliveryStatusChange
     {
         if ($description === '') {
             $description = self::getStatusTypeDescription($statusType);
@@ -514,6 +514,8 @@ class DispatchService implements LoggerAwareInterface
 
         $deliveryStatusChange->setStatusType($statusType);
         $deliveryStatusChange->setDescription($description);
+        // TODO: Add file
+//        $deliveryStatusChange->setFile($file);
 
         try {
             $this->em->persist($deliveryStatusChange);
@@ -729,7 +731,10 @@ class DispatchService implements LoggerAwareInterface
             );
         }
 
-        $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(), $status);
+        $file = $status === DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6 ?
+            DualDeliveryService::getPdfFromDeliveryNotification($response) : null;
+
+        $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(), $status, '', $file);
 
         // Set the end date for the recipient if the status is final
         if ($statusChange->isFinalDualDeliveryStatus()) {
