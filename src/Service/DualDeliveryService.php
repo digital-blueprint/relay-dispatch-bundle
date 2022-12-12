@@ -7,6 +7,7 @@ namespace Dbp\Relay\DispatchBundle\Service;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryClient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\DualNotificationRequestType;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -81,5 +82,36 @@ class DualDeliveryService implements LoggerAwareInterface
     public function createRecipientID(): string
     {
         return 'RID_'.Uuid::v4()->toRfc4122();
+    }
+
+    static public function getPdfFromDeliveryNotification(DualNotificationRequestType $request) : ?string
+    {
+        $binaryNotification = $request->getResult()->getNotificationChannel()->getEDeliveryNotification()->getBinaryDeliveryNotification();
+
+        $xml = new \SimpleXMLElement($binaryNotification);
+
+        foreach($xml->getDocNamespaces() as $strPrefix => $strNamespace)
+        {
+            if (strlen($strPrefix)==0) {
+                $strPrefix="ns";
+            }
+
+            $xml->registerXPathNamespace($strPrefix, $strNamespace);
+        }
+
+        $binaries = $xml->xpath('//ns:AdditionalFormat');
+
+        foreach ($binaries as $binary)
+        {
+            $type = (string) $binary['Type'];
+
+            if ($type === 'application/pdf')
+            {
+                $content = base64_decode((string) $binary);
+                return $content;
+            }
+        }
+
+        return null;
     }
 }
