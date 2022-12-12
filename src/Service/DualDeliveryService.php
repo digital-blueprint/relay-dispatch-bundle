@@ -84,16 +84,15 @@ class DualDeliveryService implements LoggerAwareInterface
         return 'RID_'.Uuid::v4()->toRfc4122();
     }
 
-    static public function getPdfFromDeliveryNotification(DualNotificationRequestType $request) : ?string
+    public static function getPdfFromDeliveryNotification(DualNotificationRequestType $request): ?string
     {
         $binaryNotification = $request->getResult()->getNotificationChannel()->getEDeliveryNotification()->getBinaryDeliveryNotification();
 
         $xml = new \SimpleXMLElement($binaryNotification);
 
-        foreach($xml->getDocNamespaces() as $strPrefix => $strNamespace)
-        {
-            if (strlen($strPrefix)==0) {
-                $strPrefix="ns";
+        foreach ($xml->getDocNamespaces() as $strPrefix => $strNamespace) {
+            if (strlen($strPrefix) === 0) {
+                $strPrefix = 'ns';
             }
 
             $xml->registerXPathNamespace($strPrefix, $strNamespace);
@@ -101,13 +100,12 @@ class DualDeliveryService implements LoggerAwareInterface
 
         $binaries = $xml->xpath('//ns:AdditionalFormat');
 
-        foreach ($binaries as $binary)
-        {
+        foreach ($binaries as $binary) {
             $type = (string) $binary['Type'];
 
-            if ($type === 'application/pdf')
-            {
-                $content = base64_decode((string) $binary);
+            if ($type === 'application/pdf') {
+                $content = base64_decode((string) $binary, true);
+
                 return $content;
             }
         }
