@@ -21,9 +21,13 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Dua
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\DeliveryAddress;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PostalAddressType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\ProcessingProfile as VendoProcessingProfile;
 use Dbp\Relay\DispatchBundle\Service\DualDeliveryService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,6 +40,18 @@ class Debug2Command extends Command
      * @var DualDeliveryService
      */
     private $dd;
+
+    private const GIVEN_NAME = 'Max';
+    private const FAMILY_NAME = 'Mustermann';
+    private const DATE_OF_BIRTH = '1970-06-04';
+    private const POSTAL_CODE = '8010';
+    private const MUNICIPALITY = 'Graz';
+    private const STREET_NAME = 'Brockmanngasse 41';
+    private const BUILDING_NUMBER = '';
+    private const COUNTRY_CODE = 'AT';
+
+    private const PROCESSING_PROFILE = VendoProcessingProfile::ZUSE_PRINT_DD;
+    private const DELIVERY_QUALITY = DeliveryQuality::RSA;
 
     public function __construct(DualDeliveryService $dd)
     {
@@ -57,8 +73,14 @@ class Debug2Command extends Command
         $client = $this->dd->getClient();
         $senderProfile = $this->dd->getSenderProfile();
 
-        $physicalPerson = new PhysicalPersonType(new PersonNameType('Max', 'Mustermann'), '1970-06-04');
+        $physicalPerson = new PhysicalPersonType(new PersonNameType(self::GIVEN_NAME, self::FAMILY_NAME), self::DATE_OF_BIRTH);
         $personData = new PersonDataType($physicalPerson);
+        $address = new PostalAddressType(
+            null,
+            self::POSTAL_CODE, self::MUNICIPALITY,
+            new DeliveryAddress(self::STREET_NAME, self::BUILDING_NUMBER)
+        );
+        $address->setCountryCode(self::COUNTRY_CODE);
         $dualDeliveryRecipient = new RecipientType($personData);
 
         $data = file_get_contents(__DIR__.'/../../tests/DualDeliveryApi/example.pdf');
@@ -68,14 +90,15 @@ class Debug2Command extends Command
         $dualDeliveryPayloads = [new PayloadType($payloadAttrs, $doc)];
 
         $sender = new SenderType($senderProfile);
-        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
+
+        $processingProfile = new ProcessingProfile(self::PROCESSING_PROFILE, VendoProcessingProfile::VERSION_STANDARD);
 
         $meta = new DualDeliveryMetaData(
             $this->dd->createAppDeliveryID(),
             $this->dd->getApplicationID(),
-            'Rsa',
-            'k thx bye',
-            '1120 110874-016',
+            self::DELIVERY_QUALITY,
+            'Test',
+            '4242 424242-42',
             null,
             null,
             false,
@@ -100,7 +123,7 @@ class Debug2Command extends Command
 
         $sender = new SenderType($senderProfile);
 
-        $physicalPerson = new PhysicalPersonType(new PersonNameType('Max', 'Mustermann'), '1970-06-04');
+        $physicalPerson = new PhysicalPersonType(new PersonNameType(self::GIVEN_NAME, self::FAMILY_NAME), self::DATE_OF_BIRTH);
         $personData = new PersonDataType($physicalPerson);
         $recipient = new RecipientType($personData);
         $recipients = new Recipients([
@@ -108,7 +131,7 @@ class Debug2Command extends Command
 
         $meta = new PreMetaData($this->dd->createAppDeliveryID());
         $meta->setTestCase(false);
-        $meta->setProcessingProfile(new ProcessingProfile('ZuseDD', '1.1'));
+        $meta->setProcessingProfile(new ProcessingProfile(self::PROCESSING_PROFILE, VendoProcessingProfile::VERSION_PRE_ADDRESSING));
         $meta->setAsynchronous(false);
         $meta->setPreCreateSendings(true);
         $request = new DualDeliveryPreAddressingRequestType($sender, $recipients, $meta, null, '1.0');
