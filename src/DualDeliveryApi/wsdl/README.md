@@ -8,4 +8,9 @@ Changes to the WSDL files compared to the above version (also see the git histor
   It is unused and the PHP SOAP client doesn't handle namespaces correctly which leads to conflicts with the
   "StatusRequestType" in "DualeZustellung_Notification.xsd". An alternative might be to create separate wsdl files
   for the different services which only import the .xsd files that are needed (preaddr, request, notify, etc)
-  to avoid conflicts. In this case just removing the unused type seemed like the easiest sollution.
+  to avoid conflicts. In this case just removing the unused type seemed like the easiest solution.
+
+* Removed the "NotificationChannelSet" reference in NotificationChannel and replaced it
+  with a "choice" for the possible subclasses.
+  For some reason php-soap can't decode such responses, maybe because it is using
+  substitutionGroup and is unsupported.

@@ -74,7 +74,11 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="ddn:NotificationChannelSet"/>
+				<xs:choice>
+					<xs:element ref="ddn:EDeliveryNotification"/>
+					<xs:element ref="ddn:OtherNotification"/>
+					<xs:element ref="ddn:PostalNotification"/>
+				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

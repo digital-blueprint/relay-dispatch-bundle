@@ -7,22 +7,54 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotificatio
 class NotificationChannel
 {
     /**
-     * @var NotificationChannelSetType
+     * @var EDeliveryNotificationType
      */
-    protected $NotificationChannelSet = null;
+    protected $EDeliveryNotification = null;
 
-    public function __construct(NotificationChannelSetType $NotificationChannelSet)
+    /**
+     * @var OtherNotificationType
+     */
+    protected $OtherNotification = null;
+
+    /**
+     * @var PostalNotificationType
+     */
+    protected $PostalNotification = null;
+
+    public function __construct(?EDeliveryNotificationType $EDeliveryNotification = null, OtherNotificationType $OtherNotification = null, PostalNotificationType $PostalNotification = null)
     {
-        $this->NotificationChannelSet = $NotificationChannelSet;
+        $this->EDeliveryNotification = $EDeliveryNotification;
+        $this->OtherNotification = $OtherNotification;
+        $this->PostalNotification = $PostalNotification;
     }
 
-    public function getNotificationChannelSet(): NotificationChannelSetType
+    public function getEDeliveryNotification(): ?EDeliveryNotificationType
     {
-        return $this->NotificationChannelSet;
+        return $this->EDeliveryNotification;
     }
 
-    public function setNotificationChannelSet(NotificationChannelSetType $NotificationChannelSet): void
+    public function setEDeliveryNotification(?EDeliveryNotificationType $EDeliveryNotification): void
     {
-        $this->NotificationChannelSet = $NotificationChannelSet;
+        $this->EDeliveryNotification = $EDeliveryNotification;
+    }
+
+    public function getPostalNotification(): ?PostalNotificationType
+    {
+        return $this->PostalNotification;
+    }
+
+    public function setPostalNotification(?PostalNotificationType $PostalNotification): void
+    {
+        $this->PostalNotification = $PostalNotification;
+    }
+
+    public function getOtherNotification(): ?OtherNotificationType
+    {
+        return $this->OtherNotification;
+    }
+
+    public function setOtherNotification(?OtherNotificationType $OtherNotification): void
+    {
+        $this->OtherNotification = $OtherNotification;
     }
 }
