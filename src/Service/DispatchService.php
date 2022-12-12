@@ -1103,6 +1103,11 @@ class DispatchService implements LoggerAwareInterface
         $this->log(LogLevel::INFO, $message, $context);
     }
 
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
+    }
+
     protected function logError(string $message, array $context = [])
     {
         $this->log(LogLevel::ERROR, $message, $context);
