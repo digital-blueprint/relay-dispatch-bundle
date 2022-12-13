@@ -29,7 +29,7 @@ class PostSubmitRequest extends BaseDispatchController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $request = $this->dispatchService->getRequestByIdForCurrentPerson($identifier);
+        $request = $this->dispatchService->getRequestById($identifier);
 
         $this->auth->checkCanWrite($request->getGroupId());
 
