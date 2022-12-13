@@ -119,6 +119,30 @@ class DeliveryStatusChange
     private $description;
 
     /**
+     * @ORM\Column(type="binary", length=209715200)
+     *
+     * @var resource|string|int|false
+     */
+    private $fileData;
+
+    /**
+     * @ApiProperty(iri="https://schema.org/fileFormat")
+     * @ORM\Column(type="string", length=100)
+     * @Groups({"DispatchDeliveryStatusChange:output"})
+     *
+     * @var string
+     */
+    private $fileFormat;
+
+    /**
+     * @ApiProperty(iri="http://schema.org/contentUrl")
+     * @Groups({"DispatchDeliveryStatusChange:output"})
+     *
+     * @var string
+     */
+    private $fileContentUrl;
+
+    /**
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -183,6 +207,49 @@ class DeliveryStatusChange
     public function setRequestRecipient(RequestRecipient $requestRecipient): void
     {
         $this->requestRecipient = $requestRecipient;
+    }
+
+    public function getFileContentUrl(): string
+    {
+        return $this->fileContentUrl;
+    }
+
+    public function setFileContentUrl(string $fileContentUrl): void
+    {
+        $this->fileContentUrl = $fileContentUrl;
+    }
+
+    public function getFileFormat(): string
+    {
+        return $this->fileFormat;
+    }
+
+    public function setFileFormat(string $fileFormat): void
+    {
+        $this->fileFormat = $fileFormat;
+    }
+
+    /**
+     * @return resource|string|int|false
+     */
+    public function getFileData()
+    {
+        if (is_resource($this->fileData)) {
+            rewind($this->fileData);
+            $this->fileData = stream_get_contents($this->fileData);
+
+            return $this->fileData;
+        }
+
+        return $this->fileData;
+    }
+
+    /**
+     * @param $data resource|string
+     */
+    public function setFileData($data): void
+    {
+        $this->fileData = $data;
     }
 
     /**
