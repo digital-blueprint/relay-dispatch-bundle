@@ -47,6 +47,26 @@ class StatusRequestTest extends TestCase
   </soap:Body>
 </soap:Envelope>';
 
+    private static $ERROR_TEXT_RESPONSE = '<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns2:StatusResponse xmlns="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ns2="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" xmlns:ns3="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:ns4="http://reference.bbgdual.dualdelivery.at/namespace/persondata/20170308#" xmlns:ns5="http://www.w3.org/2000/09/xmldsig#" xmlns:ns6="http://www.ebinterface.at/schema/4p0/" xmlns:ns7="http://www.ebinterface.at/schema/4p0/extensions/sv" xmlns:ns8="http://www.ebinterface.at/schema/4p0/extensions/ext" xmlns:ns9="uri:general.additional.params/20130121#" xmlns:ns10="http://reference.e-government.gv.at/namespace/zustellung/msg" xmlns:ns11="http://reference.e-government.gv.at/namespace/persondata/20020228#" xmlns:ns12="urn:oasis:names:tc:SAML:1.0:assertion" xmlns:ns13="http://www.e-zustellung.at/namespaces/zuse_20090922" xmlns:ns14="http://reference.e-government.gv.at/namespace/zustellung/dual_ca/20130121#" xmlns:ns15="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" version="1.0">
+      <AppDeliveryID>4c87-bcf1-fb61e8b9a208</AppDeliveryID>
+      <DualDeliveryID>2216679</DualDeliveryID>
+      <ns2:Result>
+        <Error>
+          <Info>I am an error text.</Info>
+          <Code>-1</Code>
+        </Error>
+      </ns2:Result>
+      <Status>
+        <Code>P9</Code>
+        <Text>Error</Text>
+      </Status>
+    </ns2:StatusResponse>
+  </soap:Body>
+</soap:Envelope>';
+
     public function testStatusRequestSuccess()
     {
         $service = $this->getMockService(self::$SUCCESS_RESPONSE);
@@ -72,5 +92,20 @@ class StatusRequestTest extends TestCase
         $this->assertSame('P6', $response->getStatus()->getCode());
         $this->assertSame('AllNotificationsReceived', $response->getStatus()->getText());
         $this->assertSame('I_AM_A_PDF', DualDeliveryService::getPdfFromDeliveryNotification($response));
+        $this->assertSame('', DualDeliveryService::getErrorTextFromStatusResponse($response));
+    }
+
+    public function testStatusRequestErrorText()
+    {
+        $service = $this->getMockService(self::$ERROR_TEXT_RESPONSE);
+
+        $request = new StatusRequestType();
+        $response = $service->dualStatusRequestOperation($request);
+
+        $this->assertSame('4c87-bcf1-fb61e8b9a208', $response->getAppDeliveryID());
+        $this->assertSame('2216679', $response->getDualDeliveryID());
+        $this->assertSame('P9', $response->getStatus()->getCode());
+        $this->assertSame('Error', $response->getStatus()->getText());
+        $this->assertSame('I am an error text.', DualDeliveryService::getErrorTextFromStatusResponse($response));
     }
 }

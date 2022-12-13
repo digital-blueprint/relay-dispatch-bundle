@@ -84,6 +84,23 @@ class DualDeliveryService implements LoggerAwareInterface
         return 'RID_'.Uuid::v4()->toRfc4122();
     }
 
+    public static function getErrorTextFromStatusResponse(DualNotificationRequestType $request): ?string
+    {
+        $result = $request->getResult();
+
+        if (!$result) {
+            return '';
+        }
+
+        $error = $result->getError();
+
+        if (!$error) {
+            return '';
+        }
+
+        return $error->getInfo();
+    }
+
     public static function getPdfFromDeliveryNotification(DualNotificationRequestType $request): ?string
     {
         $binaryNotification = $request->getResult()->getNotificationChannel()->getEDeliveryNotification()->getBinaryDeliveryNotification();
