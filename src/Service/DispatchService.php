@@ -259,22 +259,6 @@ class DispatchService implements LoggerAwareInterface
     }
 
     /**
-     * Fetches all Request entities for the current person.
-     *
-     * @return Request[]
-     */
-    public function getRequestsForCurrentPerson(): array
-    {
-        $person = $this->getCurrentPerson();
-
-        $requests = $this->em
-            ->getRepository(Request::class)
-            ->findBy(['personIdentifier' => $person->getIdentifier()]);
-
-        return $requests;
-    }
-
-    /**
      * Fetches all Request entities for the given group.
      *
      * @return Request[]
@@ -289,65 +273,11 @@ class DispatchService implements LoggerAwareInterface
     }
 
     /**
-     * Fetches a Request for the current person.
-     */
-    public function getRequestByIdForCurrentPerson(string $identifier): Request
-    {
-        $request = $this->getRequestById($identifier);
-        $person = $this->getCurrentPerson();
-
-        if ($person->getIdentifier() !== $request->getPersonIdentifier()) {
-            throw ApiError::withDetails(Response::HTTP_FORBIDDEN, "Current person doesn't own this request!", 'dispatch:person-does-not-own-request');
-        }
-
-        return $request;
-    }
-
-    /**
-     * Fetches a DeliveryStatusChange for the current person.
-     */
-    public function getDeliveryStatusChangeByIdForCurrentPerson(string $identifier): ?DeliveryStatusChange
-    {
-        $deliveryStatusChange = $this->getDeliveryStatusChangeById($identifier);
-
-        // Check if current person owns the request of the recipient
-        $this->getRequestRecipientByIdForCurrentPerson($deliveryStatusChange->getDispatchRequestRecipientIdentifier());
-
-        return $deliveryStatusChange;
-    }
-
-    /**
-     * Fetches a RequestRecipient for the current person.
-     */
-    public function getRequestRecipientByIdForCurrentPerson(string $identifier): ?RequestRecipient
-    {
-        $requestRecipient = $this->getRequestRecipientById($identifier);
-
-        // Check if current person owns the request
-        $this->getRequestByIdForCurrentPerson($requestRecipient->getDispatchRequestIdentifier());
-
-        return $requestRecipient;
-    }
-
-    /**
-     * Fetches a RequestFile for the current person.
-     */
-    public function getRequestFileByIdForCurrentPerson(string $identifier): ?RequestFile
-    {
-        $requestFile = $this->getRequestFileById($identifier);
-
-        // Check if current person owns the request
-        $this->getRequestByIdForCurrentPerson($requestFile->getDispatchRequestIdentifier());
-
-        return $requestFile;
-    }
-
-    /**
      * Removes a Request for the current person.
      */
-    public function removeRequestByIdForCurrentPerson(string $identifier): void
+    public function removeRequestById(string $identifier): void
     {
-        $request = $this->getRequestByIdForCurrentPerson($identifier);
+        $request = $this->getRequestById($identifier);
 
         if ($request) {
             $this->removeRequest($request);
@@ -371,14 +301,8 @@ class DispatchService implements LoggerAwareInterface
         $this->em->flush();
     }
 
-    public function updateRequestForCurrentPerson(Request $request): Request
+    public function updateRequest(Request $request): Request
     {
-        $person = $this->getCurrentPerson();
-
-        if ($person->getIdentifier() !== $request->getPersonIdentifier()) {
-            throw ApiError::withDetails(Response::HTTP_FORBIDDEN, "Current person doesn't own this request!", 'dispatch:person-does-not-own-request');
-        }
-
         try {
             $this->em->persist($request);
             $this->em->flush();
@@ -393,6 +317,10 @@ class DispatchService implements LoggerAwareInterface
     {
         $request->setIdentifier((string) Uuid::v4());
 
+        // we only store the "creator" atm, so, only when the request is created
+        $personId = $this->getCurrentPerson()->getIdentifier();
+        $request->setPersonIdentifier($personId);
+
         try {
             $request->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {
@@ -406,29 +334,6 @@ class DispatchService implements LoggerAwareInterface
         }
 
         return $request;
-    }
-
-    public function createRequestForCurrentPerson(Request $request): Request
-    {
-        $personId = $this->getCurrentPerson()->getIdentifier();
-        $request->setPersonIdentifier($personId);
-
-        return $this->createRequest($request);
-    }
-
-    /**
-     * Removes all requests of the current person.
-     *
-     * Because of the unique key only a maximum of one request should be removed,
-     * so there is no real need to do that in one query.
-     */
-    public function removeAllRequestsForCurrentPerson()
-    {
-        $reviews = $this->getRequestsForCurrentPerson();
-
-        foreach ($reviews as $request) {
-            $this->removeRequest($request);
-        }
     }
 
     public function createRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
@@ -562,7 +467,7 @@ class DispatchService implements LoggerAwareInterface
         } catch (\Exception $e) {
             $request->setDateSubmitted(new \DateTimeImmutable('now'));
         }
-        $this->updateRequestForCurrentPerson($request);
+        $this->updateRequest($request);
 
         $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_SUBMITTED, 'Request submitted');
 

@@ -65,13 +65,13 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
         $this->auth->checkCanWrite($request->getGroupId());
 
         if ($request->getIdentifier() === '') {
-            return $this->dispatchService->createRequestForCurrentPerson($request);
+            return $this->dispatchService->createRequest($request);
         } else {
             if ($request->isSubmitted()) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
             }
 
-            return $this->dispatchService->updateRequestForCurrentPerson($request);
+            return $this->dispatchService->updateRequest($request);
         }
     }
 
@@ -93,6 +93,6 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
         }
 
-        $this->dispatchService->removeRequestByIdForCurrentPerson($request->getIdentifier());
+        $this->dispatchService->removeRequestById($request->getIdentifier());
     }
 }
