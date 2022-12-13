@@ -97,7 +97,7 @@ class DualNotificationRequestType
     }
 
     /**
-     * @return Result
+     * @return ?Result
      */
     public function getResult()
     {
