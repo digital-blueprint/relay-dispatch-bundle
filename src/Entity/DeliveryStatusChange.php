@@ -8,6 +8,7 @@ date_default_timezone_set('UTC');
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -211,12 +212,7 @@ class DeliveryStatusChange
 
     public function getFileContentUrl(): string
     {
-        return $this->fileContentUrl;
-    }
-
-    public function setFileContentUrl(string $fileContentUrl): void
-    {
-        $this->fileContentUrl = $fileContentUrl;
+        return Tools::getDataURI($this->getFileData(), $this->fileFormat);
     }
 
     public function getFileFormat(): string

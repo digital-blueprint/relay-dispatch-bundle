@@ -27,6 +27,8 @@ class DualDeliveryService implements LoggerAwareInterface
 
     private $config;
 
+    public const DOCUMENT_MIME_TYPE = 'application/pdf';
+
     public function __construct()
     {
         $this->logger = new NullLogger();
@@ -120,10 +122,8 @@ class DualDeliveryService implements LoggerAwareInterface
         foreach ($binaries as $binary) {
             $type = (string) $binary['Type'];
 
-            if ($type === 'application/pdf') {
-                $content = base64_decode((string) $binary, true);
-
-                return $content;
+            if ($type === self::DOCUMENT_MIME_TYPE) {
+                return base64_decode((string) $binary, true);
             }
         }
 
