@@ -16,9 +16,9 @@ class CorporateBodyType extends AbstractPersonType
      */
     protected $Organization = null;
 
-    public function __construct(string $AbstractSimpleIdentification, string $Id, ?string $FullName)
+    public function __construct(string $FullName)
     {
-        parent::__construct($AbstractSimpleIdentification, $Id);
+        parent::__construct();
         $this->FullName = $FullName;
     }
 

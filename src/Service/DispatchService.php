@@ -17,12 +17,14 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\PayloadAttribute
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\PayloadType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\CorporateBodyType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\DeliveryAddress;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
@@ -717,7 +719,12 @@ class DispatchService implements LoggerAwareInterface
 //        $applicationId = new ApplicationID($profile, '1.0');
 //        $meta->setApplicationID($applicationId);
         $senderProfile = $this->dd->getSenderProfile();
-        $sender = new SenderType($senderProfile);
+
+        // TODO: Decide what to send as $senderData
+        $corporateBody = new CorporateBodyType($dispatchRequest->getSenderGivenName());
+        $corporateBody->setOrganization($dispatchRequest->getSenderFamilyName());
+        $senderData = new SenderData($corporateBody);
+        $sender = new SenderType($senderProfile, $senderData);
 
         // TODO: Allow to set this via request (limited by config, STRETCH_GOAL)
 //        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
@@ -777,7 +784,7 @@ class DispatchService implements LoggerAwareInterface
             );
 //            dump($dualDeliveryRecipients);
             $request = new DualDeliveryRequest($sender, null, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
-//            dump($request);
+            dump($request);
 
             try {
                 $response = $service->dualDeliveryRequestOperation($request);
