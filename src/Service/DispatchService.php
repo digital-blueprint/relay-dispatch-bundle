@@ -319,9 +319,11 @@ class DispatchService implements LoggerAwareInterface
     {
         $request->setIdentifier((string) Uuid::v4());
 
-        // we only store the "creator" atm, so, only when the request is created
-        $personId = $this->getCurrentPerson()->getIdentifier();
-        $request->setPersonIdentifier($personId);
+        if ($request->getPersonIdentifier() === null) {
+            // we only store the "creator" atm, so, only when the request is created
+            $personId = $this->getCurrentPerson()->getIdentifier();
+            $request->setPersonIdentifier($personId);
+        }
 
         try {
             $request->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));

@@ -308,7 +308,7 @@ class Request
         $this->dateCreated = $dateCreated;
     }
 
-    public function getPersonIdentifier(): string
+    public function getPersonIdentifier(): ?string
     {
         return $this->personIdentifier;
     }
