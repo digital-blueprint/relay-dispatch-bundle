@@ -52,6 +52,7 @@ class TestSeedCommand extends Command
 
                 $request = new Request();
                 $request->setName('Test-'.rand(1000, 9999));
+                $request->setGroupId('11072');
                 $request->setPersonIdentifier($personId);
                 $request->setSenderGivenName('Hans');
                 $request->setSenderFamilyName('Tester');
