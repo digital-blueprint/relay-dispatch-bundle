@@ -24,7 +24,7 @@ class Result
         $this->Error = $Error;
     }
 
-    public function getNotificationChannel(): NotificationChannel
+    public function getNotificationChannel(): ?NotificationChannel
     {
         return $this->NotificationChannel;
     }
@@ -34,7 +34,7 @@ class Result
         $this->NotificationChannel = $NotificationChannel;
     }
 
-    public function getError(): ErrorType
+    public function getError(): ?ErrorType
     {
         return $this->Error;
     }
