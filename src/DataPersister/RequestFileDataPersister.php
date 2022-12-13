@@ -41,8 +41,6 @@ class RequestFileDataPersister extends AbstractController implements ContextAwar
     public function persist($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        throw new \RuntimeException('Not used, see the controller');
     }
 
     /**
