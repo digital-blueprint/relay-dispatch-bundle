@@ -74,7 +74,7 @@ class DebugCommand extends Command
 //                }
                 break;
             case 'do-api-pre-addressing-request':
-                $output->writeln('Do API PreAddressing request on '.$this->dispatchService->getBaseUrl().'...');
+                $output->writeln('Do API PreAddressing request on '.$this->dispatchService->getUrl().'...');
                 $requestRecipient = $this->dispatchService->getRequestRecipientById($identifier);
                 $xmlString = $this->dispatchService->generatePreAddressingAPIXML($requestRecipient);
 
@@ -91,7 +91,7 @@ class DebugCommand extends Command
                 }
                 break;
             case 'do-api-status-request':
-                $output->writeln('Do API StatusRequest request on '.$this->dispatchService->getBaseUrl().'...');
+                $output->writeln('Do API StatusRequest request on '.$this->dispatchService->getUrl().'...');
                 $xmlString = $this->dispatchService->generateStatusRequestAPIXML($identifier, $identifier2);
 
                 echo $xmlString;
@@ -107,7 +107,7 @@ class DebugCommand extends Command
                 }
                 break;
             case 'do-api-status-requests':
-                $output->writeln('Do API StatusRequest requests on '.$this->dispatchService->getBaseUrl().'...');
+                $output->writeln('Do API StatusRequest requests on '.$this->dispatchService->getUrl().'...');
                 $this->dispatchService->doStatusRequests();
 
                 break;

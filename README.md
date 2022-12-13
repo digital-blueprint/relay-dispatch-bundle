@@ -25,6 +25,9 @@ base64 -w 0 < cert.pem > cert.pem.base64
 
 # set secret for the .env file
 php bin/console secrets:set DISPATCH_CERT cert.pem.base64
+
+# in the config file base64 decode again:
+# cert: '%env(base64:DISPATCH_CERT)%'
 ```
 
 TODO

@@ -89,22 +89,7 @@ class DispatchService implements LoggerAwareInterface
     /**
      * @var string
      */
-    private $baseUrl;
-
-    /**
-     * @var string
-     */
-    private $deliveryRequestUrl;
-
-    /**
-     * @var string
-     */
-    private $preAddressingRequestUrl;
-
-    /**
-     * @var string
-     */
-    private $statusRequestUrl;
+    private $url;
 
     /**
      * @var DualDeliveryService
@@ -130,10 +115,7 @@ class DispatchService implements LoggerAwareInterface
     {
         $this->certPassword = $config['cert_password'] ?? '';
         $this->cert = $config['cert'] ?? '';
-        $this->baseUrl = $config['base_url'];
-        $this->deliveryRequestUrl = $config['base_url'].$config['delivery_request_url_part'];
-        $this->preAddressingRequestUrl = $config['base_url'].$config['pre_addressing_request_url_part'];
-        $this->statusRequestUrl = $config['base_url'].$config['status_request_url_part'];
+        $this->url = $config['service_url'];
     }
 
     public function setCache(?CacheItemPoolInterface $cachePool)
@@ -1035,9 +1017,9 @@ class DispatchService implements LoggerAwareInterface
         $this->log(LogLevel::INFO, $message, $context);
     }
 
-    public function getBaseUrl(): string
+    public function getUrl(): string
     {
-        return $this->baseUrl;
+        return $this->url;
     }
 
     protected function logError(string $message, array $context = [])

@@ -16,21 +16,21 @@ trait DOMMethodsTrait
 {
     public function doDualDeliveryRequestAPIRequest($body): ?\Psr\Http\Message\ResponseInterface
     {
-        $uri = $this->deliveryRequestUrl;
+        $uri = $this->url.'/mprs-core/services10/DDWebServiceProcessor';
 
         return $this->doAPIRequest($uri, $body);
     }
 
     public function doPreAddressingAPIRequest($body): ?\Psr\Http\Message\ResponseInterface
     {
-        $uri = $this->preAddressingRequestUrl;
+        $uri = $this->url.'/mprs-core/services10/DDAddressingProcessor';
 
         return $this->doAPIRequest($uri, $body);
     }
 
     public function doStatusRequestAPIRequest($body): ?\Psr\Http\Message\ResponseInterface
     {
-        $uri = $this->statusRequestUrl;
+        $uri = $this->url.'/mprs-polling/services10/DDPollingServiceProcessor';
 
         return $this->doAPIRequest($uri, $body);
     }
@@ -58,7 +58,6 @@ trait DOMMethodsTrait
 
 //        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
 //        $uri = 'https://www.howsmyssl.com/a/check';
-//        $uri = $this->deliveryRequestUrl;
         $method = 'POST';
 
         $options = [
@@ -132,7 +131,6 @@ trait DOMMethodsTrait
 //
     ////        $uri = 'https://dualtest.vendo.at/mprs-core/services10/DDWebServiceProcessor';
     ////        $uri = 'https://www.howsmyssl.com/a/check';
-    ////        $uri = $this->deliveryRequestUrl;
 //        $method = 'POST';
 //
 //        $options = [

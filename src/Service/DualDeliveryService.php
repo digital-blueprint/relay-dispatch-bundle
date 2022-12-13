@@ -44,14 +44,14 @@ class DualDeliveryService implements LoggerAwareInterface
     {
         $config = $this->config;
 
-        $baseUrl = $config['base_url'];
+        $serviceUrl = $config['service_url'];
         $cert = $config['cert'];
         $certPassword = $config['cert_password'];
 
         $certFileName = Tools::getTempFileName('.pem');
         file_put_contents($certFileName, $cert);
 
-        return new DualDeliveryClient($baseUrl, [$certFileName, $certPassword], true);
+        return new DualDeliveryClient($serviceUrl, [$certFileName, $certPassword], true);
     }
 
     public function getSenderProfile(): SenderProfile
