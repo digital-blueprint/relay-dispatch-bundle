@@ -45,7 +45,7 @@ class TestSeedCommand extends Command
         $this
             ->setDescription('Test seed command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')
-            ->addArgument('person-id', InputArgument::OPTIONAL, 'person-id', '96759CB59373799F');
+            ->addArgument('person-id', InputArgument::REQUIRED, 'person-id');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
