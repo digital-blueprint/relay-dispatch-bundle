@@ -401,7 +401,7 @@ class DispatchService implements LoggerAwareInterface
 
     public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = '', string $file = null): DeliveryStatusChange
     {
-        if ($description === '') {
+        if (!$description) {
             $description = self::getStatusTypeDescription($statusType);
         }
 
