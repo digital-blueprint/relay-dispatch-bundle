@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Command;
 
+use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
@@ -23,11 +24,17 @@ class TestSeedCommand extends Command
      */
     private $dispatchService;
 
-    public function __construct(DispatchService $dispatchService)
+    /**
+     * @var PersonProviderInterface
+     */
+    private $personProvider;
+
+    public function __construct(DispatchService $dispatchService, PersonProviderInterface $personProvider)
     {
         parent::__construct();
 
         $this->dispatchService = $dispatchService;
+        $this->personProvider = $personProvider;
     }
 
     /**
@@ -45,13 +52,15 @@ class TestSeedCommand extends Command
     {
         $action = $input->getArgument('action');
         $personId = $input->getArgument('person-id');
+        $person = $this->personProvider->getPerson($personId);
 
         switch ($action) {
             case 'create':
-                $output->writeln('Generating request with a recipient and a file...');
+                $name = 'Test '.$person->getGivenName().' '.$person->getFamilyName().' '.rand(1000, 9999);
+                $output->writeln('Generating request "'.$name.'" with a recipient and a file...');
 
                 $request = new Request();
-                $request->setName('Test-'.rand(1000, 9999));
+                $request->setName($name);
                 $request->setGroupId('11072');
                 $request->setPersonIdentifier($personId);
                 $request->setSenderGivenName('Hans');
@@ -66,13 +75,17 @@ class TestSeedCommand extends Command
                 $requestRecipient = new RequestRecipient();
                 $requestRecipient->setRequest($request);
                 $requestRecipient->setDispatchRequestIdentifier($request->getIdentifier());
-                $requestRecipient->setGivenName('Hans');
-                $requestRecipient->setFamilyName('Tester');
-                $requestRecipient->setBirthDate(new \DateTime('2000-01-01'));
-                $requestRecipient->setStreetAddress('Musterstrasse');
-                $requestRecipient->setBuildingNumber((string) rand(10, 99));
-                $requestRecipient->setPostalCode((string) rand(1000, 9999));
-                $requestRecipient->setAddressLocality('Musterstadt');
+                $requestRecipient->setGivenName($person->getGivenName());
+                $requestRecipient->setFamilyName($person->getFamilyName());
+                $requestRecipient->setBirthDate(new \DateTime($person->getBirthDate()));
+//                $requestRecipient->setStreetAddress('Musterstrasse');
+//                $requestRecipient->setBuildingNumber((string) rand(10, 99));
+//                $requestRecipient->setPostalCode((string) rand(1000, 9999));
+//                $requestRecipient->setAddressLocality('Musterstadt');
+                $requestRecipient->setStreetAddress('');
+                $requestRecipient->setBuildingNumber('');
+                $requestRecipient->setPostalCode('');
+                $requestRecipient->setAddressLocality('');
                 $requestRecipient->setAddressCountry('AT');
                 $this->dispatchService->createRequestRecipient($requestRecipient);
 
