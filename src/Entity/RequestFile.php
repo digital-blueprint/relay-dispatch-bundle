@@ -133,7 +133,7 @@ class RequestFile
 
     /**
      * @ApiProperty(iri="http://schema.org/contentUrl")
-     * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestFile:output"})
      *
      * @var string
      */
