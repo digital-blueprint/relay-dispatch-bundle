@@ -328,6 +328,7 @@ class DispatchService implements LoggerAwareInterface
         $request = $this->getRequestById($requestRecipient->getDispatchRequestIdentifier());
 
         $requestRecipient->setIdentifier((string) Uuid::v4());
+        $requestRecipient->setAppDeliveryID($this->dd->createAppDeliveryID());
         $requestRecipient->setRequest($request);
         $requestRecipient->setRecipientId('');
         try {

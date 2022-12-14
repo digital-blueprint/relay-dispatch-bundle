@@ -243,6 +243,15 @@ class RequestRecipient
     private $dualDeliveryID;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output"})
+     *
+     * @var string
+     */
+    private $appDeliveryID;
+
+    /**
      * @ORM\Column(type="datetime")
      * @ApiProperty(iri="https://schema.org/endDate")
      * @Groups({"DispatchRequestRecipient:output"})
@@ -409,11 +418,6 @@ class RequestRecipient
         return $this->statusChanges;
     }
 
-    public function getAppDeliveryID(): string
-    {
-        return $this->request->getIdentifier().'-'.$this->identifier;
-    }
-
     public function getDeliveryEndDate(): ?\DateTimeInterface
     {
         return $this->deliveryEndDate;
@@ -422,5 +426,17 @@ class RequestRecipient
     public function setDeliveryEndDate(\DateTimeInterface $deliveryEndDate): void
     {
         $this->deliveryEndDate = $deliveryEndDate;
+    }
+
+    public function getAppDeliveryID(): string
+    {
+        return $this->appDeliveryID === null ?
+            $this->request->getIdentifier().'-'.$this->identifier :
+            $this->appDeliveryID;
+    }
+
+    public function setAppDeliveryID(string $appDeliveryID): void
+    {
+        $this->appDeliveryID = $appDeliveryID;
     }
 }
