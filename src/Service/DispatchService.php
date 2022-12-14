@@ -19,6 +19,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfil
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\DualNotificationRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
@@ -254,6 +255,23 @@ class DispatchService implements LoggerAwareInterface
             ->findBy(['groupId' => $groupId]);
 
         return $requests;
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return RequestRecipient[]
+     */
+    public function getRequestRecipients(int $limit = 100): array
+    {
+        $queryBuilder = $this->em->createQueryBuilder();
+        $query = $queryBuilder->select('rr')
+            ->from(RequestRecipient::class, 'rr')
+            ->orderBy('rr.dateCreated', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return $query->execute();
     }
 
     /**
@@ -642,7 +660,7 @@ class DispatchService implements LoggerAwareInterface
 
         $file = $status === DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6 ?
             DualDeliveryService::getPdfFromDeliveryNotification($response) : null;
-        $description = DualDeliveryService::getErrorTextFromStatusResponse($response);
+        $description = $this->getDeliveryStatusChangeDescription($response);
 
         $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(), $status, $description, $file);
 
@@ -652,6 +670,29 @@ class DispatchService implements LoggerAwareInterface
         }
 
         return true;
+    }
+
+    public function getDeliveryStatusChangeDescription(DualNotificationRequestType $response): string
+    {
+        $code = $response->getStatus()->getCode();
+        $status = $this->getStatusForCode($code);
+
+        // First get the static status description
+        $description = self::getStatusTypeDescription($status);
+
+        // Then try to add the error text from the response
+        $errorText = DualDeliveryService::getErrorTextFromStatusResponse($response);
+        if ($errorText) {
+            $description .= "\n".$errorText;
+        }
+
+        // Last try to add the status text from the response
+        $statusText = $response->getStatus()->getText();
+        if ($statusText) {
+            $description .= "\n".$statusText;
+        }
+
+        return $description;
     }
 
     public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest): bool
