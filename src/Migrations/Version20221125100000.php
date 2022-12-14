@@ -7,13 +7,13 @@ namespace Dbp\Relay\DispatchBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Add dispatch_request_recipients to dispatch_request_recipients.
+ * Add delivery_end_date to dispatch_request_recipients.
  */
 final class Version20221125100000 extends EntityManagerMigration
 {
     public function getDescription(): string
     {
-        return 'Add dispatch_request_recipients to dispatch_request_recipients.';
+        return 'Add delivery_end_date to dispatch_request_recipients.';
     }
 
     public function up(Schema $schema): void
