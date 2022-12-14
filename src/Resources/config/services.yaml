@@ -23,19 +23,8 @@ services:
     autowire: true
     autoconfigure: true
 
-  Dbp\Relay\DispatchBundle\Command\DebugCommand:
-    autowire: true
-    autoconfigure: true
-
-  Dbp\Relay\DispatchBundle\Command\Debug2Command:
-    autowire: true
-    autoconfigure: true
-
-  Dbp\Relay\DispatchBundle\Command\SoapToPhpCommand:
-    autowire: true
-    autoconfigure: true
-
-  Dbp\Relay\DispatchBundle\Command\TestSeedCommand:
+  Dbp\Relay\DispatchBundle\Command\:
+    resource: '../../Command'
     autowire: true
     autoconfigure: true
 
