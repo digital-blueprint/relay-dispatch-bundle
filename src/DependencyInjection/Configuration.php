@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
+use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public const AUTHORIZATION_NODE = 'authorization';
-    public const AUTHORIZATION_RIGHTS_NODE = 'rights';
-    public const AUTHORIZATION_ATTRIBUTES_NODE = 'attributes';
     public const GROUP_READER_METADATA = 'GROUP_READER_METADATA';
     public const GROUP_READER_CONTENT = 'GROUP_READER_CONTENT';
     public const GROUP_WRITER = 'GROUP_WRITER';
@@ -61,44 +59,13 @@ class Configuration implements ConfigurationInterface
 
     private function getAuthNode(): NodeDefinition
     {
-        $treeBuilder = new TreeBuilder(self::AUTHORIZATION_NODE);
-
-        $node = $treeBuilder->getRootNode()
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode(self::AUTHORIZATION_RIGHTS_NODE)
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        // Metadata in this case means everything a "physical" postmaster could know about a delivery.
-                        // So source/target identities, date/time, but no content i.e. what was previously hidden in a
-                        // letter, like the subject and the attachments.
-                        ->scalarNode(self::GROUP_READER_METADATA)
-                            ->defaultValue('false')
-                            ->info('Returns true if the user has read access for the given group, limited to metadata.')
-                        ->end()
-                        ->scalarNode(self::GROUP_READER_CONTENT)
-                            ->defaultValue('false')
-                            ->info('Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.')
-                        ->end()
-                        ->scalarNode(self::GROUP_WRITER)
-                            ->defaultValue('false')
-                            ->info('Returns true if the user has write access for the given group. Implies all reader roles.')
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode(self::AUTHORIZATION_ATTRIBUTES_NODE)
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode(self::GROUPS)
-                            ->defaultValue('[]')
-                            ->info('Returns an array of group IDs.')
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-
-        return $node;
+        return AuthorizationService::getAuthorizationConfigNodeDefinition([
+            self::GROUP_READER_CONTENT => 'false',
+            self::GROUP_READER_METADATA => 'false',
+            self::GROUP_WRITER => 'false',
+        ], [
+            self::GROUPS => '[]',
+        ]);
     }
 
     public function getConfigTreeBuilder(): TreeBuilder

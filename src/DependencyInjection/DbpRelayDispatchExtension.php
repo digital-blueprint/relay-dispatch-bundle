@@ -50,7 +50,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         $definition->addMethodCall('setConfig', [$mergedConfig]);
 
         $definition = $container->getDefinition(AuthorizationService::class);
-        $definition->addMethodCall('setConfig', [$mergedConfig[Configuration::AUTHORIZATION_NODE] ?? []]);
+        $definition->addMethodCall('setConfig', [$mergedConfig]);
 
         $definition = $container->getDefinition(GroupService::class);
         $definition->addMethodCall('setConfig', [$mergedConfig[Configuration::GROUP_NODE] ?? []]);
