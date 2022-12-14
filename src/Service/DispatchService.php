@@ -258,8 +258,6 @@ class DispatchService implements LoggerAwareInterface
     }
 
     /**
-     * @param int $limit
-     *
      * @return RequestRecipient[]
      */
     public function getRequestRecipients(int $limit = 100): array

@@ -42,7 +42,7 @@ class ListRecipientsCommand extends Command
         $limit = (int) $input->getOption('limit');
         $recipients = $this->dispatchService->getRequestRecipients($limit);
 
-        foreach($recipients as $recipient) {
+        foreach ($recipients as $recipient) {
             $io = new SymfonyStyle($input, $output);
 
             $request = $recipient->getDispatchRequest();
