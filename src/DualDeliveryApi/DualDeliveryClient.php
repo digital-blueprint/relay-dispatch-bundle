@@ -271,10 +271,6 @@ class DualDeliveryClient extends \SoapClient
                     'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
                     // Their server config is broken and not sending back the whole cert chain
                     'cafile' => __DIR__.DIRECTORY_SEPARATOR.'Vendo'.DIRECTORY_SEPARATOR.'vendo-at-chain.pem',
-                    // SSL cert is expired
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
                 ],
             ],
         ],
