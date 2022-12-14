@@ -393,7 +393,7 @@ class RequestRecipient
         $this->buildingNumber = $buildingNumber;
     }
 
-    public function getBirthDate(): \DateTimeInterface
+    public function getBirthDate(): ?\DateTimeInterface
     {
         return $this->birthDate;
     }
