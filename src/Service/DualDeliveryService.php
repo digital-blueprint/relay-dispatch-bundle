@@ -8,6 +8,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryClient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\DualNotificationRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -52,6 +53,18 @@ class DualDeliveryService implements LoggerAwareInterface
         file_put_contents($certFileName, $cert);
 
         return new DualDeliveryClient($serviceUrl, [$certFileName, $certPassword], true);
+    }
+
+    public function checkConnection(): void
+    {
+        $client = $this->getClient();
+
+        $status = new StatusRequestType();
+        $response = $client->dualStatusRequestOperation($status);
+        // Expect a proper response object with some error status set
+        if ($response->getStatus() === null) {
+            throw new \RuntimeException('missing status');
+        }
     }
 
     public function getSenderProfile(): SenderProfile

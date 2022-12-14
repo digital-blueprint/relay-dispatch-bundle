@@ -57,3 +57,6 @@ services:
     autowire: true
     autoconfigure: true
 
+  Dbp\Relay\DispatchBundle\Service\HealthCheck:
+    autowire: true
+    autoconfigure: true
