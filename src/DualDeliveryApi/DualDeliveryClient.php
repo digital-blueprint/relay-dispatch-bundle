@@ -269,8 +269,6 @@ class DualDeliveryClient extends \SoapClient
                 'ssl' => [
                     // vendo gives errors sometimes if 1.3 is used, they recommended restricting to 1.2
                     'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
-                    // Their server config is broken and not sending back the whole cert chain
-                    'cafile' => __DIR__.DIRECTORY_SEPARATOR.'Vendo'.DIRECTORY_SEPARATOR.'vendo-at-chain.pem',
                 ],
             ],
         ],
