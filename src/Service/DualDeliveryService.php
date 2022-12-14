@@ -118,7 +118,13 @@ class DualDeliveryService implements LoggerAwareInterface
 
     public static function getPdfFromDeliveryNotification(DualNotificationRequestType $request): ?string
     {
-        $binaryNotification = $request->getResult()->getNotificationChannel()->getEDeliveryNotification()->getBinaryDeliveryNotification();
+        $eDeliveryNotification = $request->getResult()->getNotificationChannel()->getEDeliveryNotification();
+
+        if (!$eDeliveryNotification) {
+            return null;
+        }
+
+        $binaryNotification = $eDeliveryNotification->getBinaryDeliveryNotification();
 
         $xml = new \SimpleXMLElement($binaryNotification);
 
