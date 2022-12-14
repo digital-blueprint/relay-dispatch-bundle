@@ -318,6 +318,11 @@ class RequestRecipient
         $this->recipientId = $recipientId;
     }
 
+    public function getFullName(): string
+    {
+        return $this->givenName.' '.$this->familyName;
+    }
+
     public function getGivenName(): ?string
     {
         return $this->givenName;
