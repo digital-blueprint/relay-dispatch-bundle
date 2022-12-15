@@ -129,7 +129,7 @@ class DeliveryStatusChange
     /**
      * @ApiProperty(iri="https://schema.org/fileFormat")
      * @ORM\Column(type="string", length=100)
-     * @Groups({"DispatchDeliveryStatusChange:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
      *
      * @var string
      */
