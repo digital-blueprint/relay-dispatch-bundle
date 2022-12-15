@@ -35,13 +35,20 @@ class ListRecipientsCommand extends Command
         $this
             ->setDescription('Outputs a list of recipients')
             ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Limit the number of results', 10)
-            ->addOption('submitted-only', 'so', InputOption::VALUE_NONE, 'List only recipients of submitted requests');
+            ->addOption('submitted-only', 'so', InputOption::VALUE_NONE, 'List only recipients of submitted requests')
+            ->addOption('status-requests', 'sr', InputOption::VALUE_NONE, 'Do a status request update before showing the list of recipients');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $limit = (int) $input->getOption('limit');
         $submittedOnly = (bool) $input->getOption('submitted-only');
+        $doStatusRequests = (bool) $input->getOption('status-requests');
+
+        if ($doStatusRequests) {
+            $output->writeln('Do API StatusRequest requests on '.$this->dispatchService->getUrl().'...');
+            $this->dispatchService->doStatusRequests();
+        }
 
         $recipients = $this->dispatchService->getRequestRecipients($submittedOnly, $limit);
 
