@@ -323,6 +323,12 @@ class RequestRecipient
         return $this->givenName.' '.$this->familyName;
     }
 
+    public function getFullAddress(): string
+    {
+        return $this->streetAddress.' '.$this->buildingNumber.', '.$this->postalCode.
+            ' '.$this->addressLocality.', '.$this->addressCountry;
+    }
+
     public function getGivenName(): ?string
     {
         return $this->givenName;

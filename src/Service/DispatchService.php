@@ -260,12 +260,18 @@ class DispatchService implements LoggerAwareInterface
     /**
      * @return RequestRecipient[]
      */
-    public function getRequestRecipients(int $limit = 100): array
+    public function getRequestRecipients(bool $submittedOnly = false, int $limit = 100): array
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $query = $queryBuilder->select('rr')
             ->from(RequestRecipient::class, 'rr')
-            ->orderBy('rr.dateCreated', 'DESC')
+            ->leftJoin('rr.request', 'r');
+
+        if ($submittedOnly) {
+            $query->where('r.dateSubmitted IS NOT NULL');
+        }
+
+        $query = $query->orderBy('rr.dateCreated', 'DESC')
             ->setMaxResults($limit)
             ->getQuery();
 

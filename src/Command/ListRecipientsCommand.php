@@ -6,8 +6,8 @@ namespace Dbp\Relay\DispatchBundle\Command;
 
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -34,13 +34,16 @@ class ListRecipientsCommand extends Command
     {
         $this
             ->setDescription('Outputs a list of recipients')
-            ->addOption('limit', 'l', InputArgument::OPTIONAL, 'Limit the number of results', 10);
+            ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Limit the number of results', 10)
+            ->addOption('submitted-only', 'so', InputOption::VALUE_NONE, 'List only recipients of submitted requests');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $limit = (int) $input->getOption('limit');
-        $recipients = $this->dispatchService->getRequestRecipients($limit);
+        $submittedOnly = (bool) $input->getOption('submitted-only');
+
+        $recipients = $this->dispatchService->getRequestRecipients($submittedOnly, $limit);
 
         foreach ($recipients as $recipient) {
             $io = new SymfonyStyle($input, $output);
@@ -48,14 +51,21 @@ class ListRecipientsCommand extends Command
             $request = $recipient->getDispatchRequest();
             $io->title('Request: '.$request->getName());
 
-            $rows = [
-                ['Recipient', $recipient->getFullName()],
-            ];
+            $rows = [];
+
+            if ($request->getDateSubmitted()) {
+                $rows[] = ['Date Submitted', $request->getDateSubmitted()->format('Y-m-d H:i:s')];
+            }
+
+            $rows[] = ['AppDeliveryID', $recipient->getAppDeliveryID()];
+            $rows[] = ['Recipient', $recipient->getFullName().' ('.$recipient->getBirthDate()->format('Y-m-d').')'];
+            $rows[] = ['Address', $recipient->getFullAddress()];
 
             $lastStatusChange = $this->dispatchService->getLastStatusChange($recipient);
             if ($lastStatusChange) {
-                $rows[] = ['Last status change', $lastStatusChange->getDateCreated()->format('Y-m-d H:i:s').' (status: '.$lastStatusChange->getStatusType().')'];
-                $rows[] = ['  Description', $lastStatusChange->getDescription()];
+                $rows[] = ['Last status change', $lastStatusChange->getDateCreated()->format('Y-m-d H:i:s').
+                    ' (status: '.$lastStatusChange->getStatusType().')'];
+                $rows[] = ['└ Description', $lastStatusChange->getDescription()];
             }
 
             $endDate = $recipient->getDeliveryEndDate();
