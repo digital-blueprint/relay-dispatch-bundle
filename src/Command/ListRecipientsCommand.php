@@ -70,8 +70,7 @@ class ListRecipientsCommand extends Command
 
             $lastStatusChange = $this->dispatchService->getLastStatusChange($recipient);
             if ($lastStatusChange) {
-                $rows[] = ['Last status change', $lastStatusChange->getDateCreated()->format('Y-m-d H:i:s').
-                    ' (status: '.$lastStatusChange->getStatusType().')'];
+                $rows[] = ['Last status change', $lastStatusChange->getDateCreated()->format('Y-m-d H:i:s').' (status: '.$lastStatusChange->getStatusType().')'];
                 $rows[] = ['└ Description', $lastStatusChange->getDescription()];
             }
 
