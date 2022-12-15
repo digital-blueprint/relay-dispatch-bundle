@@ -678,16 +678,16 @@ class DispatchService implements LoggerAwareInterface
         // First get the static status description
         $description = self::getStatusTypeDescription($status);
 
-        // Then try to add the error text from the response
-        $errorText = DualDeliveryService::getErrorTextFromStatusResponse($response);
-        if ($errorText) {
-            $description .= "\n".$errorText;
-        }
-
-        // Last try to add the status text from the response
+        // Try to add the status text from the response
         $statusText = $response->getStatus()->getText();
         if ($statusText) {
             $description .= "\n".$statusText;
+        }
+
+        // Try to add the error text from the response
+        $errorText = DualDeliveryService::getErrorTextFromStatusResponse($response);
+        if ($errorText) {
+            $description .= "\n".$errorText;
         }
 
         return $description;
