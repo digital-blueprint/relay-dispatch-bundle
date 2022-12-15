@@ -15,9 +15,15 @@ class HealthCheck implements CheckInterface
      */
     private $dd;
 
-    public function __construct(DualDeliveryService $dd)
+    /**
+     * @var DispatchService
+     */
+    private $dispatch;
+
+    public function __construct(DualDeliveryService $dd, DispatchService $dispatch)
     {
         $this->dd = $dd;
+        $this->dispatch = $dispatch;
     }
 
     public function getName(): string
@@ -25,7 +31,23 @@ class HealthCheck implements CheckInterface
         return 'dispatch';
     }
 
-    public function check(CheckOptions $options): array
+    private function checkDbConnection(): CheckResult
+    {
+        $result = new CheckResult('Check if we can connect to the DB');
+
+        try {
+            $this->dispatch->checkConnection();
+        } catch (\Throwable $e) {
+            $result->set(CheckResult::STATUS_FAILURE, $e->getMessage(), ['exception' => $e]);
+
+            return $result;
+        }
+        $result->set(CheckResult::STATUS_SUCCESS);
+
+        return $result;
+    }
+
+    public function checkDualDeliveryConnection(): CheckResult
     {
         $result = new CheckResult('Check if the dual delivery service works');
 
@@ -36,6 +58,11 @@ class HealthCheck implements CheckInterface
             $result->set(CheckResult::STATUS_FAILURE, $e->getMessage(), ['exception' => $e]);
         }
 
-        return [$result];
+        return $result;
+    }
+
+    public function check(CheckOptions $options): array
+    {
+        return [$this->checkDualDeliveryConnection(), $this->checkDbConnection()];
     }
 }
