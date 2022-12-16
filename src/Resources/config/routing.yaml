@@ -1,0 +1,5 @@
+dbp_relay_dispatch_bundle:
+  path: /dispatch/delivery-status-change-file/{identifier}
+  methods: ['GET']
+  defaults:
+    _controller: Dbp\Relay\DispatchBundle\Controller\DownloadDeliveryStatusChangeFileController::index

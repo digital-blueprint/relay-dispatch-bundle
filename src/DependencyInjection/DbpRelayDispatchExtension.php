@@ -41,6 +41,8 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         );
         $loader->load('services.yaml');
 
+        $this->addRouteResource($container, __DIR__.'/../Resources/config/routing.yaml', 'yaml');
+
         $cacheDef = $container->register('dbp.relay.cache.dispatch', FilesystemAdapter::class);
         $cacheDef->setArguments(['dispatch', 3600, '%kernel.cache_dir%/dbp/dispatch']);
         $cacheDef->addTag('cache.pool');

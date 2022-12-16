@@ -29,6 +29,7 @@ class DualDeliveryService implements LoggerAwareInterface
     private $config;
 
     public const DOCUMENT_MIME_TYPE = 'application/pdf';
+    public const DOCUMENT_FILE_EXTENSION = 'pdf';
 
     public function __construct()
     {
