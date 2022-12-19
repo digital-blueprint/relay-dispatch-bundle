@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     collectionOperations={
  *         "post" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/pre-addressing-requests",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
@@ -40,7 +40,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     itemOperations={
  *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/pre-addressing-requests/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}

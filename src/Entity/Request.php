@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     collectionOperations={
  *         "post" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/requests",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"},
@@ -45,7 +45,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             }
  *         },
  *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/requests",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"},
@@ -57,28 +57,28 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     itemOperations={
  *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/requests/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
  *         },
  *         "put" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/requests/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
  *         },
  *         "delete" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/requests/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
  *         },
  *         "post_submit" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "method" = "POST",
  *             "path" = "/dispatch/requests/{identifier}/submit",
  *             "controller" = PostSubmitRequest::class,

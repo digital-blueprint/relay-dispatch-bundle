@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     collectionOperations={
  *         "post" = {
  *             "method" = "POST",
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/request-files",
  *             "controller" = CreateRequestFileAction::class,
  *             "deserialize" = false,
@@ -49,7 +49,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             }
  *         },
  *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/request-files",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
@@ -58,14 +58,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     },
  *     itemOperations={
  *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/request-files/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
  *             },
  *         },
  *         "delete" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_SCOPE_DISPATCH')",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/request-files/{identifier}",
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"}
