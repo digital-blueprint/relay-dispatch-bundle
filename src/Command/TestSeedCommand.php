@@ -9,9 +9,11 @@ use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -45,7 +47,8 @@ class TestSeedCommand extends Command
         $this
             ->setDescription('Test seed command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')
-            ->addArgument('person-id', InputArgument::REQUIRED, 'person-id');
+            ->addArgument('person-id', InputArgument::REQUIRED, 'person-id')
+            ->addOption('submit', 's', InputOption::VALUE_NONE, 'Directly submit request after creation');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -53,6 +56,7 @@ class TestSeedCommand extends Command
         $action = $input->getArgument('action');
         $personId = $input->getArgument('person-id');
         $person = $this->personProvider->getPerson($personId);
+        $doSubmit = (bool) $input->getOption('submit');
 
         switch ($action) {
             case 'create':
@@ -87,7 +91,8 @@ class TestSeedCommand extends Command
                 $requestRecipient->setPostalCode('');
                 $requestRecipient->setAddressLocality('');
                 $requestRecipient->setAddressCountry('AT');
-                $this->dispatchService->createRequestRecipient($requestRecipient);
+                $requestRecipient = $this->dispatchService->createRequestRecipient($requestRecipient);
+                $request->setRequestRecipients(new ArrayCollection([$requestRecipient]));
 
 //                $requestFile = new RequestFile();
 //                $requestFile->setRequest($request);
@@ -98,7 +103,16 @@ class TestSeedCommand extends Command
 //                $requestFile->setFileFormat('application/pdf');
 //                $this->dispatchService->createRequestFile($requestFile, $request->getIdentifier());
                 $file = new File(__DIR__.'/../../tests/DualDeliveryApi/example.pdf');
-                $this->dispatchService->createRequestFile($file, $request->getIdentifier());
+                $file = $this->dispatchService->createRequestFile($file, $request->getIdentifier());
+                $request->setRequestFiles(new ArrayCollection([$file]));
+
+                if ($doSubmit) {
+                    $output->writeln('Submitting request...');
+
+                    // Check and submit request
+                    $this->dispatchService->checkRequestReadyForSubmit($request);
+                    $this->dispatchService->submitRequest($request);
+                }
                 break;
             default:
                 $output->writeln('Action not found!');

@@ -442,4 +442,14 @@ class Request
     {
         $this->groupId = $groupId;
     }
+
+    public function setRequestRecipients(ArrayCollection $recipients)
+    {
+        $this->recipients = $recipients;
+    }
+
+    public function setRequestFiles(ArrayCollection $files)
+    {
+        $this->files = $files;
+    }
 }
