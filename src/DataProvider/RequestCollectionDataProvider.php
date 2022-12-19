@@ -11,6 +11,7 @@ use Dbp\Relay\CoreBundle\Helpers\ArrayFullPaginator;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -63,7 +64,7 @@ final class RequestCollectionDataProvider extends AbstractController implements 
         // If the user can't read the content, hide the files and the name
         if (!$this->auth->getCanReadContent($groupId)) {
             foreach ($requests as $request) {
-                $request->setFiles([]);
+                $request->setRequestFiles(new ArrayCollection());
                 $request->setName('');
             }
         }

@@ -9,6 +9,7 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class RequestItemDataProvider extends AbstractController implements ItemDataProviderInterface, RestrictedDataProviderInterface
@@ -45,7 +46,7 @@ final class RequestItemDataProvider extends AbstractController implements ItemDa
 
         // If the user can't read the content, hide the files and the name
         if (!$this->auth->getCanReadContent($groupId)) {
-            $request->setFiles([]);
+            $request->setRequestFiles(new ArrayCollection());
             $request->setName('');
         }
 
