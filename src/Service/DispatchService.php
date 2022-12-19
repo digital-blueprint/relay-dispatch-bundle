@@ -16,6 +16,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\MetaData as Dual
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\PayloadAttributesType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\PayloadType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\ProcessingProfile as VendoProcessingProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
@@ -31,6 +32,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PostalAddressType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Dbp\Relay\DispatchBundle\Entity\Request;
@@ -758,9 +760,9 @@ class DispatchService implements LoggerAwareInterface
 
         // TODO: Allow to set this via request (limited by config, STRETCH_GOAL)
 //        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
-        $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
+        $processingProfile = new ProcessingProfile(VendoProcessingProfile::ZUSE_PRINT_HYBRID_DD, '1.0');
         // TODO: Allow to set this via config/request (STRETCH_GOAL)
-        $deliveryQuality = 'Rsa';
+        $deliveryQuality = DeliveryQuality::RSA;
         // GZ: Über dieses Element kann eine Geschäftszahl bzw. ein Geschäftskennzeichen
         // für Anzeige und Druck mitgegeben werden, welches eine leichtere Lesbarkeit auf
         // Ausdrucken bzw. Benachrichtigungen gewährleisten soll. Im Gegensatz zur
