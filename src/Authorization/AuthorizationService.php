@@ -27,9 +27,7 @@ class AuthorizationService extends AbstractAuthorizationService
      */
     public function checkCanReadContent(string $groupId): void
     {
-        $groupData = new GroupData($groupId);
-        if ($this->isGranted(Configuration::GROUP_WRITER, $groupData) ||
-            $this->isGranted(Configuration::GROUP_READER_CONTENT, $groupData)) {
+        if ($this->getCanReadContent($groupId)) {
             return;
         }
         throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
@@ -69,6 +67,20 @@ class AuthorizationService extends AbstractAuthorizationService
         if ($this->isGranted(Configuration::GROUP_WRITER, $groupData) ||
             $this->isGranted(Configuration::GROUP_READER_CONTENT, $groupData) ||
             $this->isGranted(Configuration::GROUP_READER_METADATA, $groupData)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns if the user can read something in a group.
+     */
+    public function getCanReadContent(string $groupId): bool
+    {
+        $groupData = new GroupData($groupId);
+        if ($this->isGranted(Configuration::GROUP_WRITER, $groupData) ||
+            $this->isGranted(Configuration::GROUP_READER_CONTENT, $groupData)) {
             return true;
         }
 

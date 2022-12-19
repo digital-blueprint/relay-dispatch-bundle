@@ -348,6 +348,11 @@ class Request
         return $this->files;
     }
 
+    public function setFiles(array $files): void
+    {
+        $this->files = $files;
+    }
+
     public function getDateSubmitted(): ?\DateTimeInterface
     {
         /** @var \DateTime $date */

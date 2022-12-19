@@ -40,7 +40,14 @@ final class RequestItemDataProvider extends AbstractController implements ItemDa
         $filters = $context['filters'] ?? [];
 
         $request = $this->dispatchService->getRequestById($id);
-        $this->auth->checkCanReadMetadata($request->getGroupId());
+        $groupId = $request->getGroupId();
+        $this->auth->checkCanReadMetadata($groupId);
+
+        // If the user can't read the content, hide the files and the name
+        if (!$this->auth->getCanReadContent($groupId)) {
+            $request->setFiles([]);
+            $request->setName('');
+        }
 
         return $request;
     }

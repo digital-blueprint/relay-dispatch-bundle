@@ -41,7 +41,7 @@ final class RequestFileItemDataProvider extends AbstractController implements It
 
         $requestFile = $this->dispatchService->getRequestFileById($id);
         $request = $this->dispatchService->getRequestById($requestFile->getDispatchRequestIdentifier());
-        $this->auth->checkCanReadMetadata($request->getGroupId());
+        $this->auth->checkCanReadContent($request->getGroupId());
 
         return $requestFile;
     }

@@ -58,8 +58,18 @@ final class RequestCollectionDataProvider extends AbstractController implements 
             $perPage = (int) $filters['perPage'];
         }
 
+        $requests = $this->dispatchService->getRequestsForGroupId($groupId);
+
+        // If the user can't read the content, hide the files and the name
+        if (!$this->auth->getCanReadContent($groupId)) {
+            foreach ($requests as $request) {
+                $request->setFiles([]);
+                $request->setName('');
+            }
+        }
+
         return new ArrayFullPaginator(
-            $this->dispatchService->getRequestsForGroupId($groupId),
+            $requests,
             $page,
             $perPage);
     }
