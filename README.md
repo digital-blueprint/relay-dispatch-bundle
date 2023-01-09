@@ -37,6 +37,12 @@ php bin/console secrets:set DISPATCH_CERT cert.pem.base64
 # Create request for user id 1234567890
 ./bin/console dbp:relay-dispatch:test-seed create 1234567890
 
+# Create request for user id 1234567890 and directly submit it
+./bin/console dbp:relay-dispatch:test-seed create 1234567890 --submit
+
 # Show last 10 recipients
 ./bin/console dbp:relay-dispatch:recipient-list --limit 10
+
+# Show last 5 sumbitted recipients after sending status requests
+./bin/console dbp:relay-dispatch:recipient-list --limit 5 --submitted-only --status-requests
 ```
