@@ -21,16 +21,17 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\DualNotificationRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\CorporateBodyType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\DeliveryAddress;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\FamilyName;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonDataType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonNameType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PostalAddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\CorporateBodyType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\DeliveryAddress;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PostalAddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\ProcessingProfile as VendoProcessingProfile;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
@@ -544,7 +545,7 @@ class DispatchService implements LoggerAwareInterface
     {
         $service = $this->dd->getClient();
 
-        $personName = new PersonNameType($preAddressingRequest->getGivenName(), $preAddressingRequest->getFamilyName());
+        $personName = new PersonNameType($preAddressingRequest->getGivenName(), new FamilyName($preAddressingRequest->getFamilyName()));
         $physicalPerson = new PhysicalPersonType($personName, $preAddressingRequest->getBirthDate()->format('Y-m-d'));
         $senderProfile = $this->dd->getSenderProfile();
         $sender = new SenderType($senderProfile);
@@ -772,7 +773,7 @@ class DispatchService implements LoggerAwareInterface
 
         /** @var RequestRecipient $recipient */
         foreach ($dispatchRequest->getRecipients() as $recipient) {
-            $personName = new PersonNameType($recipient->getGivenName(), $recipient->getFamilyName());
+            $personName = new PersonNameType($recipient->getGivenName(), new FamilyName($recipient->getFamilyName()));
             $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
 
             $postalCode = trim($recipient->getPostalCode());

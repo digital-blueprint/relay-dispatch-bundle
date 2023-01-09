@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientNotification;
-
 class NotificationsPerformed
 {
     /**
@@ -13,10 +11,7 @@ class NotificationsPerformed
      */
     protected $RecipientNotification = null;
 
-    /**
-     * @param RecipientNotification $RecipientNotification
-     */
-    public function __construct($RecipientNotification)
+    public function __construct(RecipientNotification $RecipientNotification)
     {
         $this->RecipientNotification = $RecipientNotification;
     }

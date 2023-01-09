@@ -74,6 +74,10 @@ class StatusRequestTest extends TestCase
         $request = new StatusRequestType(null, 'foo-6374de7d5ed47', null);
         $response = $service->dualStatusRequestOperation($request);
 
+        // check request
+        $lastRequest = $service->__getLastRequest();
+        $this->assertStringContainsString('foo-6374de7d5ed47', $lastRequest);
+
         $this->assertSame('foo-6374de7d5ed47', $response->getAppDeliveryID());
         $this->assertSame('132478', $response->getDualDeliveryID());
         $this->assertSame('P3', $response->getStatus()->getCode());

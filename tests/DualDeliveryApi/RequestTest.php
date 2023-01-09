@@ -14,9 +14,10 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfil
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\FamilyName;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonDataType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonNameType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
 use PHPUnit\Framework\TestCase;
 
@@ -43,7 +44,7 @@ class RequestTest extends TestCase
         $service = $this->getMockService(self::$SUCCESS_RESPONSE);
 
         $physicalPerson = new PhysicalPersonType(
-            new PersonNameType('Max', 'Mustermann'), '1970-06-04');
+            new PersonNameType('Max', new FamilyName('Mustermann')), '1970-06-04');
         $personData = new PersonDataType($physicalPerson);
         $dualDeliveryRecipient = new RecipientType($personData);
 
@@ -75,6 +76,13 @@ class RequestTest extends TestCase
         $request = new DualDeliveryRequest(
             $sender, null, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
         $response = $service->dualDeliveryRequestOperation($request);
+
+        // check request
+        $lastRequest = $service->__getLastRequest();
+        $this->assertStringContainsString('Max', $lastRequest);
+        $this->assertStringContainsString('Mustermann', $lastRequest);
+        $this->assertStringContainsString('1970-06-04', $lastRequest);
+        $this->assertStringContainsString('example.pdf', $lastRequest);
 
         $this->assertSame('foo-6373a0a778ca1', $response->getAppDeliveryID());
         $this->assertSame('132387', $response->getDualDeliveryID());

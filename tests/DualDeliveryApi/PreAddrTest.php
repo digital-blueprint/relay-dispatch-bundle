@@ -8,14 +8,15 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfil
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\FamilyName;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonDataType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonNameType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\ProcessingProfile as VendoProcessingProfile;
 use PHPUnit\Framework\TestCase;
 
@@ -58,7 +59,7 @@ class PreAddrTest extends TestCase
             </Status>
           </ns4:DeliveryChannelAddressingResult>
           <DualDeliveryID>132269</DualDeliveryID>
-          <RecipientID>1</RecipientID>
+          <RecipientID>4444</RecipientID>
         </ns4:AddressingResult>
       </ns4:AddressingResults>
     </ns4:DualDeliveryPreAddressingResponse>
@@ -71,16 +72,26 @@ class PreAddrTest extends TestCase
 
         $senderProfile = new SenderProfile('TU_GRAZ', '1.0');
         $sender = new SenderType($senderProfile);
-        $physicalPerson = new PhysicalPersonType(new PersonNameType('Max', 'Mustermann'), '1970-06-04');
+        $physicalPerson = new PhysicalPersonType(new PersonNameType('Max', new FamilyName('Mustermann')), '1970-06-04');
         $personData = new PersonDataType($physicalPerson);
         $recipient = new RecipientType($personData);
-        $recipients = new Recipients([new Recipient('1', $recipient)]);
+        $recipients = new Recipients([new Recipient('424242', $recipient)]);
         $meta = new PreMetaData('636ba1dfd012c');
         $meta->setProcessingProfile(new ProcessingProfile(VendoProcessingProfile::ZUSE_DD, VendoProcessingProfile::VERSION_PRE_ADDRESSING));
         $meta->setAsynchronous(false);
         $request = new DualDeliveryPreAddressingRequestType($sender, $recipients, $meta, null, '1.0');
         $response = $service->dualDeliveryPreAddressingRequestOperation($request);
 
+        // check request
+        $lastRequest = $service->__getLastRequest();
+        $this->assertStringContainsString('Max', $lastRequest);
+        $this->assertStringContainsString('Mustermann', $lastRequest);
+        $this->assertStringContainsString('1970-06-04', $lastRequest);
+        $this->assertStringContainsString('424242', $lastRequest);
+        $this->assertStringContainsString(VendoProcessingProfile::ZUSE_DD, $lastRequest);
+        $this->assertStringContainsString(VendoProcessingProfile::VERSION_PRE_ADDRESSING, $lastRequest);
+
+        // check response
         $this->assertTrue($response instanceof DualDeliveryPreAddressingResponseType);
         $this->assertSame('132197', $response->getDualDeliveryID());
         $this->assertSame('636ba1dfd012c', $response->getAppDeliveryID());
@@ -95,15 +106,22 @@ class PreAddrTest extends TestCase
 
         $senderProfile = new SenderProfile('TU_GRAZ', '1.0');
         $sender = new SenderType($senderProfile);
-        $physicalPerson = new PhysicalPersonType(new PersonNameType('Manuel', 'Mustermann'), '1970-06-04');
+        $physicalPerson = new PhysicalPersonType(new PersonNameType('Manuel', new FamilyName('Mustermann')), '1970-06-04');
         $personData = new PersonDataType($physicalPerson);
         $recipient = new RecipientType($personData);
-        $recipients = new Recipients([new Recipient('1', $recipient)]);
+        $recipients = new Recipients([new Recipient('4444', $recipient)]);
         $meta = new PreMetaData('636bbfb63e8a4');
         $meta->setProcessingProfile(new ProcessingProfile(VendoProcessingProfile::ZUSE_DD, VendoProcessingProfile::VERSION_PRE_ADDRESSING));
         $meta->setAsynchronous(false);
         $request = new DualDeliveryPreAddressingRequestType($sender, $recipients, $meta, null, '1.0');
         $response = $service->dualDeliveryPreAddressingRequestOperation($request);
+
+        // check request
+        $lastRequest = $service->__getLastRequest();
+        $this->assertStringContainsString('Manuel', $lastRequest);
+        $this->assertStringContainsString('Mustermann', $lastRequest);
+        $this->assertStringContainsString('1970-06-04', $lastRequest);
+        $this->assertStringContainsString('4444', $lastRequest);
 
         // response
         $this->assertTrue($response instanceof DualDeliveryPreAddressingResponseType);
@@ -117,7 +135,7 @@ class PreAddrTest extends TestCase
 
         // result
         $this->assertSame('132269', $result->getDualDeliveryID());
-        $this->assertSame('1', $result->getRecipientID());
+        $this->assertSame('4444', $result->getRecipientID());
         $channelResults = $result->getDeliveryChannelAddressingResult();
         $this->assertCount(1, $channelResults);
         $channelResult = $channelResults[0];

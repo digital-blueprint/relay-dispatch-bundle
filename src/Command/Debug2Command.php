@@ -16,16 +16,17 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\DualNotificationRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\DeliveryAddress;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\FamilyName;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonDataType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonNameType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PostalAddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\DeliveryAddress;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonDataType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PersonNameType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PhysicalPersonType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse\PostalAddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\ProcessingProfile as VendoProcessingProfile;
 use Dbp\Relay\DispatchBundle\Service\DualDeliveryService;
@@ -50,7 +51,7 @@ class Debug2Command extends Command
     private const BUILDING_NUMBER = '';
     private const COUNTRY_CODE = 'AT';
 
-    private const PROCESSING_PROFILE = VendoProcessingProfile::ZUSE_PRINT_DD;
+    private const PROCESSING_PROFILE = VendoProcessingProfile::ZUSE_DD;
     private const DELIVERY_QUALITY = DeliveryQuality::RSA;
 
     public function __construct(DualDeliveryService $dd)
@@ -73,7 +74,7 @@ class Debug2Command extends Command
         $client = $this->dd->getClient();
         $senderProfile = $this->dd->getSenderProfile();
 
-        $physicalPerson = new PhysicalPersonType(new PersonNameType(self::GIVEN_NAME, self::FAMILY_NAME), self::DATE_OF_BIRTH);
+        $physicalPerson = new PhysicalPersonType(new PersonNameType(self::GIVEN_NAME, new FamilyName(self::FAMILY_NAME)), self::DATE_OF_BIRTH);
         $personData = new PersonDataType($physicalPerson);
         $address = new PostalAddressType(
             null,
@@ -123,7 +124,7 @@ class Debug2Command extends Command
 
         $sender = new SenderType($senderProfile);
 
-        $physicalPerson = new PhysicalPersonType(new PersonNameType(self::GIVEN_NAME, self::FAMILY_NAME), self::DATE_OF_BIRTH);
+        $physicalPerson = new PhysicalPersonType(new PersonNameType(self::GIVEN_NAME, new FamilyName(self::FAMILY_NAME)), self::DATE_OF_BIRTH);
         $personData = new PersonDataType($physicalPerson);
         $recipient = new RecipientType($personData);
         $recipients = new Recipients([

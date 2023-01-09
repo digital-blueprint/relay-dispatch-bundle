@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Zuse;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\CustomNotificationIntervals;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk\Sender;
-
 class DeliveryRequestType
 {
     /**
