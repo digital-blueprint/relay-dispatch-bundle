@@ -7,17 +7,14 @@ namespace Dbp\Relay\DispatchBundle\DataProvider;
 use Dbp\Relay\CoreBundle\DataProvider\AbstractDataProvider;
 use Dbp\Relay\DispatchBundle\Entity\Group;
 use Dbp\Relay\DispatchBundle\Service\GroupService;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class GroupDataProvider extends AbstractDataProvider
 {
     /** @var GroupService */
     private $groupService;
 
-    public function __construct(GroupService $groupService, RequestStack $requestStack)
+    public function __construct(GroupService $groupService)
     {
-        parent::__construct($requestStack);
-
         $this->groupService = $groupService;
     }
 
@@ -34,12 +31,5 @@ class GroupDataProvider extends AbstractDataProvider
     protected function getPage(int $currentPageNumber, int $maxNumItemsPerPage, array $filters = [], array $options = []): array
     {
         return $this->groupService->getGroups($currentPageNumber, $maxNumItemsPerPage, $options);
-    }
-
-    protected function onOperationStart(int $operation)
-    {
-        parent::onOperationStart($operation);
-
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
     }
 }

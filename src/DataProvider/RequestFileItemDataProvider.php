@@ -37,8 +37,6 @@ final class RequestFileItemDataProvider extends AbstractController implements It
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $filters = $context['filters'] ?? [];
-
         $requestFile = $this->dispatchService->getRequestFileById($id);
         $request = $this->dispatchService->getRequestById($requestFile->getDispatchRequestIdentifier());
         $this->auth->checkCanReadContent($request->getGroupId());
