@@ -26,7 +26,7 @@ class FamilyName
     public function __construct($_, ?string $primary = null, ?string $prefix = null)
     {
         $this->_ = $_;
-        $this->$primary = $primary;
+        $this->primary = $primary;
         if ($primary !== null) {
             $this->setPrimary($primary);
         }
