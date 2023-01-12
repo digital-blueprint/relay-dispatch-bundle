@@ -14,10 +14,12 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ProcessingProfil
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\RecipientType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\DeliveryAddress;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\FamilyName;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonDataType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PhysicalPersonType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PostalAddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
 use PHPUnit\Framework\TestCase;
 
@@ -45,7 +47,15 @@ class RequestTest extends TestCase
 
         $physicalPerson = new PhysicalPersonType(
             new PersonNameType('Max', new FamilyName('Mustermann')), '1970-06-04');
-        $personData = new PersonDataType($physicalPerson);
+
+        $address = new PostalAddressType(
+            null,
+            '8010', 'Graz',
+            new DeliveryAddress('Hauptplatz', '2442')
+        );
+        $address->setCountryCode('AT');
+
+        $personData = new PersonDataType($physicalPerson, $address);
         $dualDeliveryRecipient = new RecipientType($personData);
 
         $data = file_get_contents(__DIR__.'/example.pdf');
@@ -83,6 +93,10 @@ class RequestTest extends TestCase
         $this->assertStringContainsString('Mustermann', $lastRequest);
         $this->assertStringContainsString('1970-06-04', $lastRequest);
         $this->assertStringContainsString('example.pdf', $lastRequest);
+        $this->assertStringContainsString('8010', $lastRequest);
+        $this->assertStringContainsString('Graz', $lastRequest);
+        $this->assertStringContainsString('Hauptplatz', $lastRequest);
+        $this->assertStringContainsString('2442', $lastRequest);
 
         $this->assertSame('foo-6373a0a778ca1', $response->getAppDeliveryID());
         $this->assertSame('132387', $response->getDualDeliveryID());

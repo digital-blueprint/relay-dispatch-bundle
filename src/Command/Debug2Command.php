@@ -75,13 +75,13 @@ class Debug2Command extends Command
         $senderProfile = $this->dd->getSenderProfile();
 
         $physicalPerson = new PhysicalPersonType(new PersonNameType(self::GIVEN_NAME, new FamilyName(self::FAMILY_NAME)), self::DATE_OF_BIRTH);
-        $personData = new PersonDataType($physicalPerson);
         $address = new PostalAddressType(
             null,
             self::POSTAL_CODE, self::MUNICIPALITY,
             new DeliveryAddress(self::STREET_NAME, self::BUILDING_NUMBER)
         );
         $address->setCountryCode(self::COUNTRY_CODE);
+        $personData = new PersonDataType($physicalPerson, $address);
         $dualDeliveryRecipient = new RecipientType($personData);
 
         $data = file_get_contents(__DIR__.'/../../tests/DualDeliveryApi/example.pdf');
