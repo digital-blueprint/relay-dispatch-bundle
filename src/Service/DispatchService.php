@@ -622,7 +622,7 @@ class DispatchService implements LoggerAwareInterface
 
             throw ApiError::withDetails(
                 Response::HTTP_INTERNAL_SERVER_ERROR,
-                'DualDelivery request failed!',
+                'DualDelivery status request failed!',
                 'dispatch:status-request-soap-error',
                 [
                     'recipient-id' => $recipient->getIdentifier(),
@@ -677,6 +677,27 @@ class DispatchService implements LoggerAwareInterface
         }
 
         return true;
+    }
+
+    public function doDualDeliveryStatusRequestSoapRequestForAppDeliveryId(string $appDeliveryId): DualNotificationRequestType
+    {
+        $service = $this->dd->getClient();
+        $statusRequest = new StatusRequestType(null, $appDeliveryId);
+
+        try {
+            $response = $service->dualStatusRequestOperation($statusRequest);
+        } catch (\Exception $e) {
+           throw ApiError::withDetails(
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                'DualDelivery status request failed!',
+                'dispatch:status-request-soap-error',
+                [
+                    'message' => $e->getMessage(),
+                ]
+            );
+        }
+
+        return $response;
     }
 
     public function getDeliveryStatusChangeDescription(DualNotificationRequestType $response): string
