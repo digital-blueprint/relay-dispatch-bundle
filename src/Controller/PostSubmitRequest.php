@@ -28,6 +28,7 @@ class PostSubmitRequest extends BaseDispatchController
     public function __invoke(string $identifier): Request
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $request = $this->dispatchService->getRequestById($identifier);
 

@@ -41,6 +41,9 @@ class RequestFileDataPersister extends AbstractController implements ContextAwar
     public function persist($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
+
+        // XXX: This is somehow used by api-platform despite us not using it explicitly, so we need to not throw here.
     }
 
     /**
@@ -51,6 +54,7 @@ class RequestFileDataPersister extends AbstractController implements ContextAwar
     public function remove($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $requestFile = $data;
         assert($requestFile instanceof RequestFile);

@@ -36,6 +36,7 @@ final class RequestRecipientItemDataProvider extends AbstractController implemen
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?RequestRecipient
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $filters = $context['filters'] ?? [];
 

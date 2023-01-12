@@ -43,6 +43,7 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
     public function persist($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
         // Users only need pre-addressing if they can create new delivery requests, so only if
         // they have the right to write something in at elast one group.
         $this->auth->checkCanWriteSomething();
@@ -78,6 +79,7 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
     public function remove($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         throw new MethodNotAllowedHttpException([]);
     }

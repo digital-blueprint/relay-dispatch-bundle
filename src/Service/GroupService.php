@@ -48,8 +48,6 @@ class GroupService implements LoggerAwareInterface
      */
     public function getGroupById(string $identifier, array $options = []): Group
     {
-        $this->auth->checkCanReadMetadata($identifier);
-
         return $this->createGroup($identifier);
     }
 

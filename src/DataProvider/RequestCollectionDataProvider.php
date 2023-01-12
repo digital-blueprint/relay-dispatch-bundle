@@ -40,6 +40,7 @@ final class RequestCollectionDataProvider extends AbstractController implements 
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): ArrayFullPaginator
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $filters = $context['filters'] ?? [];
 

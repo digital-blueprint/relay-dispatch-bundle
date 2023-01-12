@@ -36,6 +36,7 @@ final class DeliveryStatusChangeItemDataProvider extends AbstractController impl
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?DeliveryStatusChange
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $filters = $context['filters'] ?? [];
 

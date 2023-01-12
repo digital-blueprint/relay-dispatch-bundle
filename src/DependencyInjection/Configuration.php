@@ -14,6 +14,7 @@ class Configuration implements ConfigurationInterface
     public const GROUP_READER_METADATA = 'GROUP_READER_METADATA';
     public const GROUP_READER_CONTENT = 'GROUP_READER_CONTENT';
     public const GROUP_WRITER = 'GROUP_WRITER';
+    public const USER = 'USER';
     public const GROUPS = 'GROUPS';
 
     public const GROUP_NODE = 'group';
@@ -63,6 +64,7 @@ class Configuration implements ConfigurationInterface
             self::GROUP_READER_CONTENT => 'false',
             self::GROUP_READER_METADATA => 'false',
             self::GROUP_WRITER => 'false',
+            self::USER => 'false',
         ], [
             self::GROUPS => '[]',
         ]);

@@ -42,6 +42,7 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
     public function persist($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $requestRecipient = $data;
         assert($requestRecipient instanceof RequestRecipient);
@@ -70,6 +71,7 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
     public function remove($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $requestRecipient = $data;
         assert($requestRecipient instanceof RequestRecipient);

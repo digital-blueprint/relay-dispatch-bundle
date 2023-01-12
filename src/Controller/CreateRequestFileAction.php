@@ -37,6 +37,7 @@ final class CreateRequestFileAction extends BaseDispatchController
     public function __invoke(Request $request): RequestFile
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $dispatchRequestIdentifier = self::requestGet($request, 'dispatchRequestIdentifier');
 

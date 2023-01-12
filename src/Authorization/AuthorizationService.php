@@ -12,6 +12,22 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthorizationService extends AbstractAuthorizationService
 {
     /**
+     * Check if the user can access the application at all.
+     */
+    public function checkCanUse(): void
+    {
+        $this->denyAccessUnlessIsGranted(Configuration::USER);
+    }
+
+    /**
+     * Returns if the user can use the application at all.
+     */
+    public function getCanUse(): bool
+    {
+        return $this->isGranted(Configuration::USER);
+    }
+
+    /**
      * Check if the user can read the group metadata, throws if not.
      */
     public function checkCanReadMetadata(string $groupId): void

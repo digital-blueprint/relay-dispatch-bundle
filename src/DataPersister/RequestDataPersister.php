@@ -50,6 +50,7 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
     public function persist($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         // We need to make sure the user has write access to the old group in case the user changes it
         if (isset($context['previous_data'])) {
@@ -83,6 +84,7 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
     public function remove($data, array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->auth->checkCanUse();
 
         $request = $data;
         assert($request instanceof Request);
