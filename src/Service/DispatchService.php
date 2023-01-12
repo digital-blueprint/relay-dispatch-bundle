@@ -687,7 +687,7 @@ class DispatchService implements LoggerAwareInterface
         try {
             $response = $service->dualStatusRequestOperation($statusRequest);
         } catch (\Exception $e) {
-           throw ApiError::withDetails(
+            throw ApiError::withDetails(
                 Response::HTTP_INTERNAL_SERVER_ERROR,
                 'DualDelivery status request failed!',
                 'dispatch:status-request-soap-error',
