@@ -61,12 +61,12 @@ class Configuration implements ConfigurationInterface
     private function getAuthNode(): NodeDefinition
     {
         return AuthorizationService::getAuthorizationConfigNodeDefinition([
-            self::GROUP_READER_CONTENT => 'false',
-            self::GROUP_READER_METADATA => 'false',
-            self::GROUP_WRITER => 'false',
-            self::USER => 'false',
+            [self::USER, 'false', 'Returns true if the user is allowed to use the dispatch API.'],
+            [self::GROUP_READER_METADATA, 'false', 'Returns true if the user has read access for the given group, limited to metadata.'],
+            [self::GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.'],
+            [self::GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.'],
         ], [
-            self::GROUPS => '[]',
+            [self::GROUPS, '[]', 'Returns an array of available group IDs.'],
         ]);
     }
 
