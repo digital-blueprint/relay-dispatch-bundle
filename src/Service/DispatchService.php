@@ -790,7 +790,9 @@ class DispatchService implements LoggerAwareInterface
         // Ausdrucken bzw. Benachrichtigungen gewährleisten soll. Im Gegensatz zur
         // AppDeliveryID ist in diesem Fall die technische Eindeutigkeit über das duale
         // Zustellservice nicht zwingend erforderlich.
-        $gz = null;
+        // New information 2023-01-16: A GZ is mandatory for postal delivery, max 25 chars
+        // TODO: Only use this as fallback if no reference number is set
+        $gz = substr($dispatchRequest->getIdentifier(), 0, 25);
 
         /** @var RequestRecipient $recipient */
         foreach ($dispatchRequest->getRecipients() as $recipient) {
