@@ -44,6 +44,12 @@ test-php8.1:
     PHP: "php8.1"
   <<: *test_defaults
 
+test-php8.2:
+  stage: test
+  variables:
+    PHP: "php8.2"
+  <<: *test_defaults
+
 linting:
   stage: test
   script:
