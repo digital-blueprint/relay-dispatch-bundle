@@ -268,6 +268,19 @@ class RequestRecipient
      */
     private $statusChanges;
 
+    /**
+     * @ORM\Column(type="string", length=25)
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Assert\Length(
+     *     max=25,
+     *     maxMessage="Only {{ limit }} letters are allowed"
+     * )
+     *
+     * @var string
+     */
+    private $referenceNumber;
+
     public function __construct()
     {
         $this->statusChanges = new ArrayCollection();
@@ -449,5 +462,15 @@ class RequestRecipient
     public function setAppDeliveryID(string $appDeliveryID): void
     {
         $this->appDeliveryID = $appDeliveryID;
+    }
+
+    public function getReferenceNumber(): string
+    {
+        return $this->referenceNumber;
+    }
+
+    public function setReferenceNumber(string $referenceNumber): void
+    {
+        $this->referenceNumber = $referenceNumber;
     }
 }
