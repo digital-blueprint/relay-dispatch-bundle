@@ -36,7 +36,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                                 "addressLocality" = "Graz",
  *                                 "streetAddress" = "Am Grund",
  *                                 "buildingNumber" = "1",
- *                                 "birthDate" = "1980-01-01"
+ *                                 "birthDate" = "1980-01-01",
+ *                                 "personIdentifier" = "0800fc577294c34"
  *                             },
  *                         }
  *                     }
@@ -261,14 +262,6 @@ class RequestRecipient
     private $deliveryEndDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="requestRecipient")
-     * @ORM\OrderBy({"orderId" = "DESC"})
-     * @ApiProperty
-     * @Groups({"DispatchRequestRecipient:output"})
-     */
-    private $statusChanges;
-
-    /**
      * @ORM\Column(type="string", length=100)
      * @ApiProperty(iri="https://schema.org/identifier")
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
@@ -284,7 +277,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="boolean")
      * @ApiProperty
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     * @Groups({"DispatchRequestRecipient:output"})
      *
      * @var bool
      */
@@ -293,11 +286,19 @@ class RequestRecipient
     /**
      * @ORM\Column(type="boolean")
      * @ApiProperty
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     * @Groups({"DispatchRequestRecipient:output"})
      *
      * @var bool
      */
     private $electronicallyDeliverable;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="requestRecipient")
+     * @ORM\OrderBy({"orderId" = "DESC"})
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output"})
+     */
+    private $statusChanges;
 
     public function __construct()
     {

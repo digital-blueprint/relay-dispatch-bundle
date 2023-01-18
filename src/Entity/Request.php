@@ -37,7 +37,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                                 "senderAddressLocality" = "Graz",
  *                                 "senderStreetAddress" = "Am Grund",
  *                                 "senderBuildingNumber" = "1",
- *                                 "groupId" = "11072"
+ *                                 "groupId" = "11072",
+ *                                 "referenceNumber" = "GZ-2023/01-13"
  *                             },
  *                         }
  *                     }
@@ -255,20 +256,6 @@ class Request
     private $senderBuildingNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="request")
-     * @ORM\OrderBy({"dateCreated" = "ASC"})
-     * @Groups({"DispatchRequest:output"})
-     */
-    private $recipients;
-
-    /**
-     * @ORM\OneToMany(targetEntity="RequestFile", mappedBy="request")
-     * @ORM\OrderBy({"dateCreated" = "ASC"})
-     * @Groups({"DispatchRequest:output"})
-     */
-    private $files;
-
-    /**
      * @ORM\Column(type="string", length=255)
      * @ApiProperty
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
@@ -294,6 +281,20 @@ class Request
      * @var string
      */
     private $referenceNumber;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="request")
+     * @ORM\OrderBy({"dateCreated" = "ASC"})
+     * @Groups({"DispatchRequest:output"})
+     */
+    private $recipients;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RequestFile", mappedBy="request")
+     * @ORM\OrderBy({"dateCreated" = "ASC"})
+     * @Groups({"DispatchRequest:output"})
+     */
+    private $files;
 
     public function __construct()
     {
