@@ -282,6 +282,19 @@ class Request
      */
     private $groupId;
 
+    /**
+     * @ORM\Column(type="string", length=25)
+     * @ApiProperty
+     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Assert\Length(
+     *     max=25,
+     *     maxMessage="Only {{ limit }} letters are allowed"
+     * )
+     *
+     * @var string
+     */
+    private $referenceNumber;
+
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
@@ -451,5 +464,15 @@ class Request
     public function setRequestFiles(ArrayCollection $files)
     {
         $this->files = $files;
+    }
+
+    public function getReferenceNumber(): string
+    {
+        return $this->referenceNumber;
+    }
+
+    public function setReferenceNumber(string $referenceNumber): void
+    {
+        $this->referenceNumber = $referenceNumber;
     }
 }

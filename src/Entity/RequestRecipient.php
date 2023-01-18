@@ -269,17 +269,35 @@ class RequestRecipient
     private $statusChanges;
 
     /**
-     * @ORM\Column(type="string", length=25)
-     * @ApiProperty
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @ORM\Column(type="string", length=100)
+     * @ApiProperty(iri="https://schema.org/identifier")
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
      * @Assert\Length(
-     *     max=25,
+     *     max=100,
      *     maxMessage="Only {{ limit }} letters are allowed"
      * )
      *
      * @var string
      */
-    private $referenceNumber;
+    private $personIdentifier;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     *
+     * @var bool
+     */
+    private $postalDeliverable;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     *
+     * @var bool
+     */
+    private $electronicallyDeliverable;
 
     public function __construct()
     {
@@ -464,13 +482,33 @@ class RequestRecipient
         $this->appDeliveryID = $appDeliveryID;
     }
 
-    public function getReferenceNumber(): string
+    public function getPersonIdentifier(): string
     {
-        return $this->referenceNumber;
+        return $this->personIdentifier;
     }
 
-    public function setReferenceNumber(string $referenceNumber): void
+    public function setPersonIdentifier(string $personIdentifier): void
     {
-        $this->referenceNumber = $referenceNumber;
+        $this->personIdentifier = $personIdentifier;
+    }
+
+    public function isPostalDeliverable(): bool
+    {
+        return $this->postalDeliverable;
+    }
+
+    public function setPostalDeliverable(bool $postalDeliverable): void
+    {
+        $this->postalDeliverable = $postalDeliverable;
+    }
+
+    public function isElectronicallyDeliverable(): bool
+    {
+        return $this->electronicallyDeliverable;
+    }
+
+    public function setElectronicallyDeliverable(bool $electronicallyDeliverable): void
+    {
+        $this->electronicallyDeliverable = $electronicallyDeliverable;
     }
 }
