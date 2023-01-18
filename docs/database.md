@@ -1,4 +1,4 @@
-## Database migration
+## Database
 
 Run this script to migrate the database. Run this script after installation of the bundle and
 after every update to adapt the database to the new source code.
