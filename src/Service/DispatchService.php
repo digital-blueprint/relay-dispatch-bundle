@@ -347,7 +347,8 @@ class DispatchService implements LoggerAwareInterface
         return $request;
     }
 
-    public function fetchPersonAddressData(RequestRecipient $requestRecipient): void {
+    public function fetchPersonAddressData(RequestRecipient $requestRecipient): void
+    {
         // TODO: Check if Identifier is not NULL
 //        $person = $this->personProvider->getPerson($requestRecipient->getPersonIdentifier());
 
