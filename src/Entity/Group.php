@@ -42,6 +42,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Group
 {
+    public const ACCESS_RIGHT_READ_METADATA = 'rm';
+    public const ACCESS_RIGHT_READ_CONTENT = 'rc';
+    public const ACCESS_RIGHT_WRITE = 'w';
+
     /**
      * @ApiProperty(identifier=true)
      * @Groups({"DispatchGroup:output"})
@@ -91,6 +95,7 @@ class Group
     private $country;
 
     /**
+     * @deprecated by $accessRights
      * @ApiProperty
      * @Groups({"DispatchGroup:output"})
      *
@@ -99,12 +104,26 @@ class Group
     private $mayRead;
 
     /**
+     * @deprecated by $accessRights
      * @ApiProperty
      * @Groups({"DispatchGroup:output"})
      *
      * @var bool
      */
     private $mayWrite;
+
+    /**
+     * @ApiProperty
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var array
+     */
+    private $accessRights;
+
+    public function __construct()
+    {
+        $this->accessRights = [];
+    }
 
     public function setIdentifier(string $identifier): void
     {
@@ -166,23 +185,39 @@ class Group
         $this->country = $country;
     }
 
+    /**
+     * @deprecated
+     */
     public function getMayRead(): bool
     {
-        return $this->mayRead;
+        //return $this->mayRead;
+        return
+            in_array(self::ACCESS_RIGHT_READ_METADATA, $this->accessRights, true) ||
+            in_array(self::ACCESS_RIGHT_READ_CONTENT, $this->accessRights, true) ||
+            in_array(self::ACCESS_RIGHT_WRITE, $this->accessRights, true);
     }
 
-    public function setMayRead(bool $mayRead): void
-    {
-        $this->mayRead = $mayRead;
-    }
-
+    /**
+     * @deprecated
+     */
     public function getMayWrite(): bool
     {
-        return $this->mayWrite;
+        //return $this->mayWrite;
+        return in_array(self::ACCESS_RIGHT_WRITE, $this->accessRights, true);
     }
 
-    public function setMayWrite(bool $mayWrite): void
+    public function addAccessRight(string $accessRight): void
     {
-        $this->mayWrite = $mayWrite;
+        if (!in_array($accessRight, $this->accessRights, true) ?? (
+            $accessRight === self::ACCESS_RIGHT_READ_CONTENT ||
+            $accessRight === self::ACCESS_RIGHT_READ_METADATA ||
+            $accessRight === self::ACCESS_RIGHT_WRITE)) {
+            $this->accessRights[] = $accessRight;
+        }
+    }
+
+    public function getAccessRights(): array
+    {
+        return $this->accessRights;
     }
 }

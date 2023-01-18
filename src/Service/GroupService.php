@@ -78,8 +78,15 @@ class GroupService implements LoggerAwareInterface
         $group = new Group();
         $group->setIdentifier($entity->getIdentifier());
         $group->setName($entity->getName());
-        $group->setMayRead($this->auth->getCanReadMetadata($groupId));
-        $group->setMayWrite($this->auth->getCanWrite($groupId));
+        if ($this->auth->getCanReadMetadata($groupId)) {
+            $group->addAccessRight(Group::ACCESS_RIGHT_READ_METADATA);
+        }
+        if ($this->auth->getCanReadContent($groupId)) {
+            $group->addAccessRight(Group::ACCESS_RIGHT_READ_CONTENT);
+        }
+        if ($this->auth->getCanWrite($groupId)) {
+            $group->addAccessRight(Group::ACCESS_RIGHT_WRITE);
+        }
         $group->setStreet($entity->getLocalDataValue(
                 $this->getAddressAttributes()[Configuration::GROUP_STREET_ATTRIBUTE]) ?? '');
         $group->setPostalCode($entity->getLocalDataValue(
