@@ -347,6 +347,15 @@ class DispatchService implements LoggerAwareInterface
         return $request;
     }
 
+    public function fetchPersonAddressData(RequestRecipient $requestRecipient): void {
+        // TODO: Check if Identifier is not NULL
+//        $person = $this->personProvider->getPerson($requestRecipient->getPersonIdentifier());
+
+        // TODO: Check if person exists
+
+        // TODO: Fetch and set address data
+    }
+
     public function createRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
     {
         // A request object needs to be set for the ORM, setting the identifier only will not persist it
