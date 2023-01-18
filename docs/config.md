@@ -41,3 +41,28 @@ dbp_relay_dispatch:
             GROUPS:               '[]'
 
 ```
+
+## Client Certificate Tips
+
+In case the "Dual Delivery" service provider requires a client certificate the `cert` and `cert_password` can be set. `cert` is the certificate in the `PEM` format.
+
+In case the certificate is provided to you in the `pkcs12` format, usually a file ending with the `.p12` extension you can convert it to `PEM` using openssl:
+
+```bash
+# Convert p12 file to pem (in case the algorithm is outdated you might have to pass "-legacy")
+openssl pkcs12 -in cert.p12 -out cert.pem -clcerts
+```
+
+To put this `PEM` value into the Symfony dotenv config or the Symfony secrets store it's easiest to convert it to base64 and decode it again in the dispatch bundle config:
+
+```bash
+# base64 encode PEM
+base64 -w 0 < cert.pem > cert.pem.base64
+
+# set secret for the .env file
+php bin/console secrets:set DISPATCH_CERT cert.pem.base64
+
+# in the config file base64 decode again:
+# dbp_relay_dispatch:
+#   cert: '%env(base64:DISPATCH_CERT)%'
+```
