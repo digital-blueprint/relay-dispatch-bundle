@@ -8,6 +8,7 @@ use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\LocalData\LocalData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\Checksum;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\DualDeliveryRequest;
@@ -29,6 +30,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\Person
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PostalAddressType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
@@ -347,14 +349,27 @@ class DispatchService implements LoggerAwareInterface
         return $request;
     }
 
-    public function fetchPersonAddressData(RequestRecipient $requestRecipient): void
+    public function fetchAndSetPersonData(RequestRecipient $requestRecipient): void
     {
-        // TODO: Check if Identifier is not NULL
-//        $person = $this->personProvider->getPerson($requestRecipient->getPersonIdentifier());
+        $personIdentifier = trim($requestRecipient->getPersonIdentifier());
 
-        // TODO: Check if person exists
+        if ($personIdentifier === '') {
+            return;
+        }
 
-        // TODO: Fetch and set address data
+        $options = ['includeLocal' => 'streetAddress,addressLocality,postalCode,addressCountry'];
+
+        // This already throws an exception if the person is not found
+        $person = $this->personProvider->getPerson($personIdentifier, $options);
+        $localData = $person->getLocalData();
+
+        $requestRecipient->setGivenName($person->getGivenName());
+        $requestRecipient->setFamilyName($person->getFamilyName());
+        $requestRecipient->setBirthDate(new \DateTime($person->getBirthDate()));
+        $requestRecipient->setStreetAddress($localData['streetAddress'][0] ?? '');
+        $requestRecipient->setPostalCode($localData['postalCode'][0] ?? '');
+        $requestRecipient->setAddressLocality($localData['addressLocality'][0] ?? '');
+        $requestRecipient->setAddressCountry($localData['addressCountry'][0] ?? '');
     }
 
     public function createRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
@@ -551,12 +566,14 @@ class DispatchService implements LoggerAwareInterface
 //        $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
-    public function doPreAddressingSoapRequest(PreAddressingRequest &$preAddressingRequest)
+    public function doPreAddressingSoapRequest(string $givenName, string $familyName, \DateTimeInterface $birthDate): DualDeliveryPreAddressingResponseType
     {
         $service = $this->dd->getClient();
+        $recipientId = $this->dd->createRecipientId();
+        $appDeliveryId = $this->dd->createAppDeliveryID();
 
-        $personName = new PersonNameType($preAddressingRequest->getGivenName(), new FamilyName($preAddressingRequest->getFamilyName()));
-        $physicalPerson = new PhysicalPersonType($personName, $preAddressingRequest->getBirthDate()->format('Y-m-d'));
+        $personName = new PersonNameType($givenName, new FamilyName($familyName));
+        $physicalPerson = new PhysicalPersonType($personName, $birthDate->format('Y-m-d'));
         $senderProfile = $this->dd->getSenderProfile();
         $sender = new SenderType($senderProfile);
         $recipientData = new PersonDataType($physicalPerson);
@@ -566,14 +583,14 @@ class DispatchService implements LoggerAwareInterface
 //        $channels = new DeliveryChannels(new DeliveryChannelSetType());
         $channels = null;
 
-        $recipients = new Recipients([new Recipient($preAddressingRequest->getIdentifier(), $recipientType)]);
+        $recipients = new Recipients([new Recipient($recipientId, $recipientType)]);
         $testCase = false;
         $processingProfile = new ProcessingProfile('ZuseDD', '1.1');
         $request = new DualDeliveryPreAddressingRequestType(
             $sender,
             $recipients,
             new PreMetaData(
-                $preAddressingRequest->getIdentifier(),
+                $appDeliveryId,
                 null,
                 null,
                 $testCase,
@@ -606,13 +623,34 @@ class DispatchService implements LoggerAwareInterface
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'PreAddressing request failed!', 'dispatch:request-pre-addressing-failed', ['message' => implode(', ', $errorTexts)]);
         }
 
+        return $response;
+    }
+
+    public function doPreAddressingSoapRequestForPreAddressingRequest(PreAddressingRequest &$preAddressingRequest)
+    {
+        $response = $this->doPreAddressingSoapRequest($preAddressingRequest->getGivenName(), $preAddressingRequest->getFamilyName(), $preAddressingRequest->getBirthDate());
+
         // TODO: Respond in another way?
         $addressingResults = $response->getAddressingResults()->getAddressingResult();
-        if ($addressingResults === null || count($addressingResults) === 0) {
+        if (count($addressingResults) === 0) {
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'Person was not found!', 'dispatch:request-pre-addressing-not-found', ['message' => 'No addressing results found!']);
         }
 
         $preAddressingRequest->setDualDeliveryID($addressingResults[0]->getDualDeliveryID());
+    }
+
+    public function doPreAddressingSoapRequestForRequestRecipient(RequestRecipient $requestRecipient)
+    {
+        if (!$requestRecipient->canDoPreAddressingRequest()) {
+            $requestRecipient->setElectronicallyDeliverable(false);
+
+            return;
+        }
+
+        $response = $this->doPreAddressingSoapRequest($requestRecipient->getGivenName(), $requestRecipient->getFamilyName(), $requestRecipient->getBirthDate());
+
+        $addressingResults = $response->getAddressingResults()->getAddressingResult();
+        $requestRecipient->setElectronicallyDeliverable(count($addressingResults) > 0);
     }
 
     public function doDualDeliveryStatusRequestSoapRequest(RequestRecipient $recipient): bool

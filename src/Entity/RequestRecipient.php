@@ -482,7 +482,7 @@ class RequestRecipient
         $this->appDeliveryID = $appDeliveryID;
     }
 
-    public function getPersonIdentifier(): string
+    public function getPersonIdentifier(): ?string
     {
         return $this->personIdentifier;
     }
@@ -510,5 +510,19 @@ class RequestRecipient
     public function setElectronicallyDeliverable(bool $electronicallyDeliverable): void
     {
         $this->electronicallyDeliverable = $electronicallyDeliverable;
+    }
+
+    public function canDoPreAddressingRequest(): bool
+    {
+        return $this->getGivenName() !== '' && $this->getFamilyName() !== '' && $this->getBirthDate();
+    }
+
+    public function hasValidAddress(): bool
+    {
+        // We don't check the building number, because it's not always available
+        return $this->getStreetAddress() !== '' &&
+            $this->getPostalCode() !== '' &&
+            $this->getAddressLocality() !== '' &&
+            $this->getAddressCountry() !== '';
     }
 }

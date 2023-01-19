@@ -51,7 +51,10 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         $request = $this->dispatchService->getRequestById($requestRecipient->getDispatchRequestIdentifier());
 
         $this->auth->checkCanWrite($request->getGroupId());
-        $this->dispatchService->fetchPersonAddressData($requestRecipient);
+
+        $this->dispatchService->fetchAndSetPersonData($requestRecipient);
+        $requestRecipient->setPostalDeliverable($requestRecipient->hasValidAddress());
+        $this->dispatchService->doPreAddressingSoapRequestForRequestRecipient($requestRecipient);
 
         if ($requestRecipient->getIdentifier() === '') {
             return $this->dispatchService->createRequestRecipient($requestRecipient);

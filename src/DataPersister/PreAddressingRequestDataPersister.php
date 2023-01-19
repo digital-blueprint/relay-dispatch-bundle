@@ -52,7 +52,7 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
         assert($preAddressingRequest instanceof PreAddressingRequest);
         $preAddressingRequest->setIdentifier((string) Uuid::v4());
 
-        $this->dispatchService->doPreAddressingSoapRequest($preAddressingRequest);
+        $this->dispatchService->doPreAddressingSoapRequestForPreAddressingRequest($preAddressingRequest);
 //        $requestRecipient = new RequestRecipient();
 //        $requestRecipient->setGivenName($preAddressingRequest->getGivenName());
 //        $requestRecipient->setFamilyName($preAddressingRequest->getFamilyName());
