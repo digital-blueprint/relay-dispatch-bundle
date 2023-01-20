@@ -537,12 +537,19 @@ class DispatchService implements LoggerAwareInterface
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request was already submitted!', 'dispatch:request-already-submitted');
         }
 
-        if ($request->getRecipients()->count() === 0) {
+        $requestRecipients = $request->getRecipients();
+        if ($requestRecipients->count() === 0) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request has no recipients!', 'dispatch:request-has-no-recipients');
         }
 
         if ($request->getFiles()->count() === 0) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request has no files!', 'dispatch:request-has-no-files');
+        }
+
+        foreach ($requestRecipients as $requestRecipient) {
+            if (!$requestRecipient->isPostalDeliverable() && !$requestRecipient->isElectronicallyDeliverable()) {
+                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request has a recipient without a delivery method!', 'dispatch:request-has-recipient-without-delivery-method');
+            }
         }
     }
 
