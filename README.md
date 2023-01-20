@@ -2,7 +2,7 @@
 
 [GitHub](https://github.com/digital-blueprint/dbp-relay-dispatch-bundle) |
 [Packagist](https://packagist.org/packages/dbp/relay-dispatch-bundle) |
-[Frontend Application](https://gitlab.tugraz.at/dbp/dual-delivery/dispatch)
+[Frontend Application](https://github.com/digital-blueprint/dispatch-frontend)
 
 [![Test](https://github.com/digital-blueprint/dbp-relay-dispatch-bundle/actions/workflows/test.yml/badge.svg)](https://github.com/digital-blueprint/dbp-relay-dispatch-bundle/actions/workflows/test.yml)
 
