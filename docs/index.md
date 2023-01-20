@@ -1,6 +1,6 @@
 # Overview
 
-Source: https://gitlab.tugraz.at/dbp/dispatch/dbp-relay-dispatch-bundle
+Source: https://github.com/digital-blueprint/dbp-relay-dispatch-bundle
 
 ```mermaid
 graph TD
