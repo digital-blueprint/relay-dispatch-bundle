@@ -440,7 +440,7 @@ class RequestRecipient
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTimeInterface $birthDate): void
+    public function setBirthDate(?\DateTimeInterface $birthDate): void
     {
         $this->birthDate = $birthDate;
     }
@@ -524,5 +524,24 @@ class RequestRecipient
             $this->getPostalCode() !== '' &&
             $this->getAddressLocality() !== '' &&
             $this->getAddressCountry() !== '';
+    }
+
+    /**
+     * Clear personal data if a person identifier is set.
+     */
+    public function clearPersonalDataIfNeeded(): void
+    {
+        if (!$this->getPersonIdentifier()) {
+            return;
+        }
+
+//        $this->setGivenName('');
+//        $this->setFamilyName('');
+        $this->setBirthDate(null);
+        $this->setStreetAddress('');
+        $this->setBuildingNumber('');
+        $this->setPostalCode('');
+        $this->setAddressLocality('');
+        $this->setAddressCountry('');
     }
 }

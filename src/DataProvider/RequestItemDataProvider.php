@@ -51,6 +51,9 @@ final class RequestItemDataProvider extends AbstractController implements ItemDa
             $request->setName('');
         }
 
+        // Clear personal data of the recipients if a person identifier is set
+        $request->clearPersonalDataOfRecipientsIfNeeded();
+
         return $request;
     }
 }

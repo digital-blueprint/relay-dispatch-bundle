@@ -44,6 +44,9 @@ final class RequestRecipientItemDataProvider extends AbstractController implemen
         $request = $this->dispatchService->getRequestById($requestRecipient->getDispatchRequestIdentifier());
         $this->auth->checkCanReadMetadata($request->getGroupId());
 
+        // Clear personal data if a person identifier is set
+        $requestRecipient->clearPersonalDataIfNeeded();
+
         return $requestRecipient;
     }
 }

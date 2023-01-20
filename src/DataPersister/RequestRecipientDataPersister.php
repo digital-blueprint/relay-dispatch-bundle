@@ -57,14 +57,19 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         $this->dispatchService->doPreAddressingSoapRequestForRequestRecipient($requestRecipient);
 
         if ($requestRecipient->getIdentifier() === '') {
-            return $this->dispatchService->createRequestRecipient($requestRecipient);
+            $this->dispatchService->createRequestRecipient($requestRecipient);
         } else {
             if ($request->isSubmitted()) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
             }
 
-            return $this->dispatchService->updateRequestRecipient($requestRecipient);
+            $this->dispatchService->updateRequestRecipient($requestRecipient);
         }
+
+        // Clear personal data if a person identifier is set
+        $requestRecipient->clearPersonalDataIfNeeded();
+
+        return $requestRecipient;
     }
 
     /**
