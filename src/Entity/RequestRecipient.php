@@ -495,7 +495,7 @@ class RequestRecipient
     public function isPostalDeliverable(): bool
     {
         // Can be null if not set
-        return $this->postalDeliverable || false;
+        return $this->postalDeliverable ?? false;
     }
 
     public function setPostalDeliverable(bool $postalDeliverable): void
@@ -506,7 +506,7 @@ class RequestRecipient
     public function isElectronicallyDeliverable(): bool
     {
         // Can be null if not set
-        return $this->electronicallyDeliverable || false;
+        return $this->electronicallyDeliverable ?? false;
     }
 
     public function setElectronicallyDeliverable(bool $electronicallyDeliverable): void

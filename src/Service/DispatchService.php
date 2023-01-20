@@ -350,7 +350,7 @@ class DispatchService implements LoggerAwareInterface
 
     public function fetchAndSetPersonData(RequestRecipient $requestRecipient): void
     {
-        $personIdentifier = trim($requestRecipient->getPersonIdentifier());
+        $personIdentifier = trim($requestRecipient->getPersonIdentifier() ?? '');
 
         if ($personIdentifier === '') {
             return;
