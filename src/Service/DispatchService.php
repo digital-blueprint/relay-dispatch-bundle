@@ -8,6 +8,7 @@ use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\LocalData\LocalData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\Checksum;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\DualDeliveryRequest;
@@ -356,7 +357,9 @@ class DispatchService implements LoggerAwareInterface
             return;
         }
 
-        $options = ['includeLocal' => 'streetAddress,addressLocality,postalCode,addressCountry'];
+        $options = [];
+        // TODO: make address attribute names configurable (see Group address attributes)
+        LocalData::addIncludeParameter($options, ['streetAddress', 'addressLocality', 'postalCode', 'addressCountry']);
 
         // This already throws an exception if the person is not found
         $person = $this->personProvider->getPerson($personIdentifier, $options);

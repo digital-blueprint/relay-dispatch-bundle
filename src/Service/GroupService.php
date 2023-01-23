@@ -67,8 +67,11 @@ class GroupService implements LoggerAwareInterface
 
     private function createGroup(string $groupId): Group
     {
+        $options = [];
+        LocalData::addIncludeParameter($options, $this->getAddressAttributes());
+
         $entity = $this->iriConverter->getItemFromIri(sprintf($this->config[Configuration::GROUP_DATA_IRI_TEMPLATE], $groupId),
-            ['filters' => [LocalData::INCLUDE_PARAMETER_NAME => LocalData::toIncludeLocalParameterValue($this->getAddressAttributes())]]);
+            ['filters' => $options]);
 
         if ($entity instanceof NamedEntityInterface === false ||
             $entity instanceof LocalDataAwareInterface === false) {
