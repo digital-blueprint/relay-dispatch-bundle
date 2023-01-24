@@ -18,7 +18,18 @@ The data and properties of all resources is divided into two categories, "Metada
 * Metadata example: The destination address, since that would be printed on a physical letter, visible for everyone.
 * Content example: The subject line and document attachments, since those would be inside the letter and only visible to the sender and receiver.
 
-## Roles
+## API
+
+In case the user doesn't have the `USER` role then all requests to `/dispatch/*` will fail.
+
+The `/dispatch/groups` endpoint will only return groups to which the user has access to.
+
+The returned `DispatchGroup` resource has two authorization related properties:
+
+* `mayRead`: if the user can read the resources part of this group (always true)
+* `mayWrite`: if the user can create/write resources in this group. This can be used to adjust the user interface for the user by hiding/disabling certain actions for example.
+
+## Roles Configuration
 
 ### General Roles
 
