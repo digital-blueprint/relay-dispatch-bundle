@@ -490,4 +490,14 @@ class Request
             $recipient->clearPersonalDataIfNeeded();
         }
     }
+
+    public function checkAndUpdateReferenceNumber()
+    {
+        $this->referenceNumber = trim($this->referenceNumber ?? '');
+
+        // Set reference number if not set
+        if ($this->referenceNumber === '') {
+            $this->referenceNumber = '-';
+        }
+    }
 }

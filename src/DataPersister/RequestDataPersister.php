@@ -65,6 +65,9 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
         // Only allow if we can write within the given group
         $this->auth->checkCanWrite($request->getGroupId());
 
+        // Set reference number if not set
+        $request->checkAndUpdateReferenceNumber();
+
         if ($request->getIdentifier() === '') {
             $this->dispatchService->createRequest($request);
         } else {
