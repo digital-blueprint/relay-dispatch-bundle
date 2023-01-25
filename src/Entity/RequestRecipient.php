@@ -276,7 +276,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="boolean")
      * @ApiProperty
-     * @Groups({"DispatchRequestRecipient:output"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var bool
      */
@@ -285,7 +285,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="boolean")
      * @ApiProperty
-     * @Groups({"DispatchRequestRecipient:output"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var bool
      */
