@@ -263,7 +263,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=100)
      * @ApiProperty(iri="https://schema.org/identifier")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
      *     max=100,
      *     maxMessage="Only {{ limit }} letters are allowed"
