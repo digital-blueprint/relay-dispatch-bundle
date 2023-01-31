@@ -24,10 +24,12 @@ In case the user doesn't have the `USER` role then all requests to `/dispatch/*`
 
 The `/dispatch/groups` endpoint will only return groups to which the user has access to.
 
-The returned `DispatchGroup` resource has two authorization related properties:
+The returned `DispatchGroup` resource has as property containing the access rights to any resources that are part of this group:
 
-* `mayRead`: if the user can read the resources part of this group (always true)
-* `mayWrite`: if the user can create/write resources in this group. This can be used to adjust the user interface for the user by hiding/disabling certain actions for example.
+* `accessRights`: an array of strings
+  * `rm`: if the user can read the resource metadata of this group (exists always)
+  * `rc`: if the user can read the resource content of this group
+  * `w`: if the user can write/create resources in this group
 
 ## Roles Configuration
 
