@@ -374,6 +374,25 @@ class DispatchService implements LoggerAwareInterface
         $requestRecipient->setAddressCountry($localData['addressCountry'][0] ?? '');
     }
 
+    public function handleRequestRecipientStorage(RequestRecipient $requestRecipient): RequestRecipient
+    {
+        $this->fetchAndSetPersonData($requestRecipient);
+        $requestRecipient->setPostalDeliverable($requestRecipient->hasValidAddress());
+        $this->doPreAddressingSoapRequestForRequestRecipient($requestRecipient);
+
+        if ($requestRecipient->getIdentifier() === '') {
+            $this->createRequestRecipient($requestRecipient);
+        } else {
+            if ($requestRecipient->getDispatchRequest()->isSubmitted()) {
+                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+            }
+
+            $this->updateRequestRecipient($requestRecipient);
+        }
+
+        return $requestRecipient;
+    }
+
     public function createRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
     {
         // A request object needs to be set for the ORM, setting the identifier only will not persist it
@@ -829,14 +848,26 @@ class DispatchService implements LoggerAwareInterface
 //        $recipients = new Recipients($recipients);
 //        $applicationId = new ApplicationID($profile, '1.0');
 //        $meta->setApplicationID($applicationId);
-        $senderProfile = $this->dd->getSenderProfile();
 
-        // TODO: Decide what to send as $senderData
+        //
+        // Set sender data with organization and address
+        //
+        $senderProfile = $this->dd->getSenderProfile();
         $corporateBody = new CorporateBodyType($dispatchRequest->getSenderFullName());
         $corporateBody->setOrganization($dispatchRequest->getSenderOrganizationName());
-        $senderData = new SenderData($corporateBody);
+
+        $senderPostalAddress = new PostalAddressType(
+            null,
+            $dispatchRequest->getSenderPostalCode(),
+            $dispatchRequest->getSenderAddressLocality(),
+            new DeliveryAddress(
+                $dispatchRequest->getSenderStreetAddress(),
+                $dispatchRequest->getSenderBuildingNumber()
+            )
+        );
+
+        $senderData = new SenderData($corporateBody, $senderPostalAddress);
         $sender = new SenderType($senderProfile, $senderData);
-        // TODO: Add PostalAddressType to SenderData
 
         // TODO: Allow to set this via request (limited by config, STRETCH_GOAL)
 //        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');

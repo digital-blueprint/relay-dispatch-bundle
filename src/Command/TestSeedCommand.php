@@ -67,8 +67,8 @@ class TestSeedCommand extends Command
                 $request->setName($name);
                 $request->setGroupId('11072');
                 $request->setPersonIdentifier($personId);
-                $request->setSenderGivenName('Hans');
-                $request->setSenderFamilyName('Tester');
+                $request->setSenderFullName('Hans Tester');
+                $request->setSenderOrganizationName('Test Organisation');
                 $request->setSenderStreetAddress('Musterstrasse');
                 $request->setSenderBuildingNumber((string) rand(10, 99));
                 $request->setSenderPostalCode((string) rand(1000, 9999));
@@ -79,6 +79,7 @@ class TestSeedCommand extends Command
                 $requestRecipient = new RequestRecipient();
                 $requestRecipient->setRequest($request);
                 $requestRecipient->setDispatchRequestIdentifier($request->getIdentifier());
+//                $requestRecipient->setPersonIdentifier($personId);
                 $requestRecipient->setGivenName($person->getGivenName());
                 $requestRecipient->setFamilyName($person->getFamilyName());
                 $requestRecipient->setBirthDate(new \DateTime($person->getBirthDate()));
@@ -91,7 +92,8 @@ class TestSeedCommand extends Command
                 $requestRecipient->setPostalCode('');
                 $requestRecipient->setAddressLocality('');
                 $requestRecipient->setAddressCountry('AT');
-                $requestRecipient = $this->dispatchService->createRequestRecipient($requestRecipient);
+                $requestRecipient = $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
+
                 $request->setRequestRecipients(new ArrayCollection([$requestRecipient]));
 
 //                $requestFile = new RequestFile();
