@@ -832,10 +832,11 @@ class DispatchService implements LoggerAwareInterface
         $senderProfile = $this->dd->getSenderProfile();
 
         // TODO: Decide what to send as $senderData
-        $corporateBody = new CorporateBodyType($dispatchRequest->getSenderGivenName());
-        $corporateBody->setOrganization($dispatchRequest->getSenderFamilyName());
+        $corporateBody = new CorporateBodyType($dispatchRequest->getSenderFullName());
+        $corporateBody->setOrganization($dispatchRequest->getSenderOrganizationName());
         $senderData = new SenderData($corporateBody);
         $sender = new SenderType($senderProfile, $senderData);
+        // TODO: Add PostalAddressType to SenderData
 
         // TODO: Allow to set this via request (limited by config, STRETCH_GOAL)
 //        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');

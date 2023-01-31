@@ -30,8 +30,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                             "schema" = {"type" = "object"},
  *                             "example" = {
  *                                 "name" = "Aussendung 42",
- *                                 "senderGivenName" = "Max",
- *                                 "senderFamilyName" = "Mustermann",
+ *                                 "senderFullName" = "Max Mustermann",
+ *                                 "senderOrganizationName" = "Studienservice TU Graz",
  *                                 "senderAddressCountry" = "AT",
  *                                 "senderPostalCode" = "8010",
  *                                 "senderAddressLocality" = "Graz",
@@ -157,7 +157,7 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @ApiProperty(iri="https://schema.org/givenName")
+     * @ApiProperty(iri="https://schema.org/alternateName")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      * @Assert\Length(
      *     max=255,
@@ -166,11 +166,11 @@ class Request
      *
      * @var string
      */
-    private $senderGivenName;
+    private $senderFullName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @ApiProperty(iri="https://schema.org/familyName")
+     * @ApiProperty(iri="https://schema.org/alternateName")
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      * @Assert\Length(
      *     max=255,
@@ -179,7 +179,7 @@ class Request
      *
      * @var string
      */
-    private $senderFamilyName;
+    private $senderOrganizationName;
 
     /**
      * @ORM\Column(type="datetime")
@@ -332,24 +332,24 @@ class Request
         $this->personIdentifier = $personIdentifier;
     }
 
-    public function getSenderGivenName(): ?string
+    public function getSenderFullName(): ?string
     {
-        return $this->senderGivenName;
+        return $this->senderFullName;
     }
 
-    public function setSenderGivenName(string $senderGivenName): void
+    public function setSenderFullName(string $senderFullName): void
     {
-        $this->senderGivenName = $senderGivenName;
+        $this->senderFullName = $senderFullName;
     }
 
-    public function getSenderFamilyName(): ?string
+    public function getSenderOrganizationName(): ?string
     {
-        return $this->senderFamilyName;
+        return $this->senderOrganizationName;
     }
 
-    public function setSenderFamilyName(string $senderFamilyName): void
+    public function setSenderOrganizationName(string $senderOrganizationName): void
     {
-        $this->senderFamilyName = $senderFamilyName;
+        $this->senderOrganizationName = $senderOrganizationName;
     }
 
     /**
