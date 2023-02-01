@@ -367,7 +367,12 @@ class DispatchService implements LoggerAwareInterface
 
         $requestRecipient->setGivenName($person->getGivenName());
         $requestRecipient->setFamilyName($person->getFamilyName());
-        $requestRecipient->setBirthDate(new \DateTime($person->getBirthDate()));
+        try {
+            $birthDate = $person->getBirthDate() ? new \DateTime($person->getBirthDate()) : null;
+        } catch (\Exception $e) {
+            $birthDate = null;
+        }
+        $requestRecipient->setBirthDate($birthDate);
         $requestRecipient->setStreetAddress($localData['streetAddress'][0] ?? '');
         $requestRecipient->setPostalCode($localData['postalCode'][0] ?? '');
         $requestRecipient->setAddressLocality($localData['addressLocality'][0] ?? '');
@@ -601,7 +606,7 @@ class DispatchService implements LoggerAwareInterface
         $appDeliveryId = $this->dd->createAppDeliveryID();
 
         $personName = new PersonNameType($givenName, new FamilyName($familyName));
-        $physicalPerson = new PhysicalPersonType($personName, $birthDate->format('Y-m-d'));
+        $physicalPerson = new PhysicalPersonType($personName, $birthDate ? $birthDate->format('Y-m-d') : null);
         $senderProfile = $this->dd->getSenderProfile();
         $sender = new SenderType($senderProfile);
         $recipientData = new PersonDataType($physicalPerson);
@@ -891,7 +896,8 @@ class DispatchService implements LoggerAwareInterface
         /** @var RequestRecipient $recipient */
         foreach ($dispatchRequest->getRecipients() as $recipient) {
             $personName = new PersonNameType($recipient->getGivenName(), new FamilyName($recipient->getFamilyName()));
-            $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDate()->format('Y-m-d'));
+            $birthDate = $recipient->getBirthDate();
+            $physicalPerson = new PhysicalPersonType($personName, $birthDate ? $birthDate->format('Y-m-d') : null);
 
             $postalCode = trim($recipient->getPostalCode());
             $addressLocality = trim($recipient->getAddressLocality());
