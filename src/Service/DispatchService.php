@@ -866,6 +866,11 @@ class DispatchService implements LoggerAwareInterface
             )
         );
 
+        // TODO: $senderPostalAddress disabled, because we still get an exception from Vendo:
+        // cvc-complex-type.2.4.b: The content of element 'ElectronicAddresses' is not complete.
+        // One of '{\\\"http:\\/\\/www.plot.at\\/mprs\\/bean\\/v10\\/core\\\":ElectronicAddress}' is expected.
+        $senderPostalAddress = null;
+
         $senderData = new SenderData($corporateBody, $senderPostalAddress);
         $sender = new SenderType($senderProfile, $senderData);
 
