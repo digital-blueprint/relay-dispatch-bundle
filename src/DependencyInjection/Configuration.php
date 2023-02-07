@@ -11,12 +11,16 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public const GROUP_READER_METADATA = 'GROUP_READER_METADATA';
-    public const GROUP_READER_CONTENT = 'GROUP_READER_CONTENT';
-    public const GROUP_WRITER = 'GROUP_WRITER';
-    public const USER = 'USER';
-    public const GROUPS = 'GROUPS';
+    /** Roles */
+    public const ROLE_GROUP_READER_METADATA = 'ROLE_GROUP_READER_METADATA';
+    public const ROLE_GROUP_READER_CONTENT = 'ROLE_GROUP_READER_CONTENT';
+    public const ROLE_GROUP_WRITER = 'ROLE_GROUP_WRITER';
+    public const ROLE_USER = 'ROLE_USER';
 
+    /** Attributes */
+    public const ATTRIBUTE_GROUPS = 'GROUPS';
+
+    /** Config nodes */
     public const GROUP_NODE = 'group';
     public const GROUP_DATA_ADDRESS_ATTRIBUTES_NODE = 'address_attributes';
     public const GROUP_DATA_IRI_TEMPLATE = 'iri_template';
@@ -61,12 +65,12 @@ class Configuration implements ConfigurationInterface
     private function getAuthNode(): NodeDefinition
     {
         return AuthorizationService::getAuthorizationConfigNodeDefinition([
-            [self::USER, 'false', 'Returns true if the user is allowed to use the dispatch API.'],
-            [self::GROUP_READER_METADATA, 'false', 'Returns true if the user has read access for the given group, limited to metadata.'],
-            [self::GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.'],
-            [self::GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.'],
+            [self::ROLE_USER, 'false', 'Returns true if the user is allowed to use the dispatch API.'],
+            [self::ROLE_GROUP_READER_METADATA, 'false', 'Returns true if the user has read access for the given group, limited to metadata.'],
+            [self::ROLE_GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.'],
+            [self::ROLE_GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.'],
         ], [
-            [self::GROUPS, '[]', 'Returns an array of available group IDs.'],
+            [self::ATTRIBUTE_GROUPS, '[]', 'Returns an array of available group IDs.'],
         ]);
     }
 

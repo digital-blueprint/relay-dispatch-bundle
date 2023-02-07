@@ -11,12 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthorizationService extends AbstractAuthorizationService
 {
+    /** @var string An alias variable name for the group data variable that can be used in group role expressions */
+    private const GROUP_DATA_ALIAS = 'currentGroup';
+
     /**
      * Check if the user can access the application at all.
      */
     public function checkCanUse(): void
     {
-        $this->denyAccessUnlessIsGranted(Configuration::USER);
+        $this->denyAccessUnlessIsGranted(Configuration::ROLE_USER);
     }
 
     /**
@@ -24,7 +27,7 @@ class AuthorizationService extends AbstractAuthorizationService
      */
     public function getCanUse(): bool
     {
-        return $this->isGranted(Configuration::USER);
+        return $this->isGranted(Configuration::ROLE_USER);
     }
 
     /**
@@ -71,7 +74,7 @@ class AuthorizationService extends AbstractAuthorizationService
             return false;
         }
 
-        return $this->isGranted(Configuration::GROUP_WRITER, new GroupData($groupId));
+        return $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, new GroupData($groupId));
     }
 
     /**
@@ -80,9 +83,9 @@ class AuthorizationService extends AbstractAuthorizationService
     public function getCanReadMetadata(string $groupId): bool
     {
         $groupData = new GroupData($groupId);
-        if ($this->isGranted(Configuration::GROUP_WRITER, $groupData) ||
-            $this->isGranted(Configuration::GROUP_READER_CONTENT, $groupData) ||
-            $this->isGranted(Configuration::GROUP_READER_METADATA, $groupData)) {
+        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData) ||
+            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData) ||
+            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_METADATA, $groupData)) {
             return true;
         }
 
@@ -95,8 +98,8 @@ class AuthorizationService extends AbstractAuthorizationService
     public function getCanReadContent(string $groupId): bool
     {
         $groupData = new GroupData($groupId);
-        if ($this->isGranted(Configuration::GROUP_WRITER, $groupData) ||
-            $this->isGranted(Configuration::GROUP_READER_CONTENT, $groupData)) {
+        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData) ||
+            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData)) {
             return true;
         }
 
@@ -132,7 +135,7 @@ class AuthorizationService extends AbstractAuthorizationService
      */
     public function getGroups(): array
     {
-        $allGroups = $this->getAttribute(Configuration::GROUPS);
+        $allGroups = $this->getAttribute(Configuration::ATTRIBUTE_GROUPS);
         $groups = [];
         foreach ($allGroups as $id) {
             if ($this->getCanReadMetadata($id)) {
@@ -141,5 +144,10 @@ class AuthorizationService extends AbstractAuthorizationService
         }
 
         return $groups;
+    }
+
+    private function isGrantedGroupRole(string $roleName, GroupData $groupData): bool
+    {
+        return $this->isGranted($roleName, $groupData, self::GROUP_DATA_ALIAS);
     }
 }
