@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Service;
 
 use ApiPlatform\Core\Api\IriConverterInterface;
-use Dbp\CampusonlineApi\LegacyWebService\ApiException;
 use Dbp\Relay\CoreBundle\Entity\NamedEntityInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\CoreBundle\LocalData\LocalData;
@@ -43,17 +42,11 @@ class GroupService implements LoggerAwareInterface
         $this->config = $config;
     }
 
-    /**
-     * @throws ApiException
-     */
     public function getGroupById(string $identifier, array $options = []): Group
     {
         return $this->createGroup($identifier);
     }
 
-    /**
-     * @throws ApiException
-     */
     public function getGroups(int $currentPageNumber, int $maxNumItemsPerPage, array $options = []): array
     {
         $groups = $this->auth->getGroups();
