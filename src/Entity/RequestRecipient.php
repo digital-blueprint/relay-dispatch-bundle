@@ -425,7 +425,7 @@ class RequestRecipient
         $this->streetAddress = $streetAddress;
     }
 
-    public function getBuildingNumber(): string
+    public function getBuildingNumber(): ?string
     {
         return $this->buildingNumber;
     }

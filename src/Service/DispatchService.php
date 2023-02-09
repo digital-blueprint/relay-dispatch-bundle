@@ -899,11 +899,11 @@ class DispatchService implements LoggerAwareInterface
             $birthDate = $recipient->getBirthDate();
             $physicalPerson = new PhysicalPersonType($personName, $birthDate ? $birthDate->format('Y-m-d') : null);
 
-            $postalCode = trim($recipient->getPostalCode());
-            $addressLocality = trim($recipient->getAddressLocality());
-            $streetAddress = trim($recipient->getStreetAddress());
-            $buildingNumber = trim($recipient->getBuildingNumber());
-            $addressCountry = trim($recipient->getAddressCountry());
+            $postalCode = trim($recipient->getPostalCode() ?? '');
+            $addressLocality = trim($recipient->getAddressLocality() ?? '');
+            $streetAddress = trim($recipient->getStreetAddress() ?? '');
+            $buildingNumber = trim($recipient->getBuildingNumber() ?? '');
+            $addressCountry = trim($recipient->getAddressCountry() ?? '');
 
             // country must not be empty, or else you will get a SOAP error:
             // cvc-pattern-valid: Value '' is not facet-valid with respect to pattern '[A-Z]{2}' for type '#AnonType_CountryCodePostalAddressType'.
