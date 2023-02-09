@@ -858,25 +858,41 @@ class DispatchService implements LoggerAwareInterface
         // Set sender data with organization and address
         //
         $senderProfile = $this->dd->getSenderProfile();
-        $corporateBody = new CorporateBodyType($dispatchRequest->getSenderFullName());
-        $corporateBody->setOrganization($dispatchRequest->getSenderOrganizationName());
+        $senderFullName = trim($dispatchRequest->getSenderFullName() ?? '');
+        $senderOrganizationName = trim($dispatchRequest->getSenderOrganizationName() ?? '');
 
-        $senderPostalAddress = new PostalAddressType(
-            null,
-            $dispatchRequest->getSenderPostalCode(),
-            $dispatchRequest->getSenderAddressLocality(),
-            new DeliveryAddress(
-                $dispatchRequest->getSenderStreetAddress(),
-                $dispatchRequest->getSenderBuildingNumber()
-            )
-        );
+        if ($senderFullName === '') {
+            $senderFullName = $senderOrganizationName;
+            $senderOrganizationName = '';
+        }
 
-        // TODO: $senderPostalAddress disabled, because we still get an exception from Vendo:
-        // cvc-complex-type.2.4.b: The content of element 'ElectronicAddresses' is not complete.
-        // One of '{\\\"http:\\/\\/www.plot.at\\/mprs\\/bean\\/v10\\/core\\\":ElectronicAddress}' is expected.
-        $senderPostalAddress = null;
+        if ($senderFullName !== '') {
+            $corporateBody = new CorporateBodyType($senderFullName);
 
-        $senderData = new SenderData($corporateBody, $senderPostalAddress);
+            if ($senderOrganizationName !== '') {
+                $corporateBody->setOrganization($senderOrganizationName);
+            }
+
+            $senderPostalAddress = new PostalAddressType(
+                null,
+                $dispatchRequest->getSenderPostalCode(),
+                $dispatchRequest->getSenderAddressLocality(),
+                new DeliveryAddress(
+                    $dispatchRequest->getSenderStreetAddress(),
+                    $dispatchRequest->getSenderBuildingNumber()
+                )
+            );
+
+            // TODO: $senderPostalAddress disabled, because we still get an exception from Vendo:
+            // cvc-complex-type.2.4.b: The content of element 'ElectronicAddresses' is not complete.
+            // One of '{\\\"http:\\/\\/www.plot.at\\/mprs\\/bean\\/v10\\/core\\\":ElectronicAddress}' is expected.
+            $senderPostalAddress = null;
+
+            $senderData = new SenderData($corporateBody, $senderPostalAddress);
+        } else {
+            $senderData = null;
+        }
+
         $sender = new SenderType($senderProfile, $senderData);
 
         // TODO: Allow to set this via request (limited by config, STRETCH_GOAL)
