@@ -93,6 +93,8 @@ class TestSeedCommand extends Command
                 $requestRecipient->setAddressLocality('');
                 $requestRecipient->setAddressCountry('AT');
                 $requestRecipient = $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
+                $output->writeln('isElectronicallyDeliverable: '.($requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no'));
+                $output->writeln('isPostalDeliverable: '.($requestRecipient->isPostalDeliverable() ? 'yes' : 'no'));
 
                 $request->setRequestRecipients(new ArrayCollection([$requestRecipient]));
 
@@ -114,6 +116,9 @@ class TestSeedCommand extends Command
                     // Check and submit request
                     $this->dispatchService->checkRequestReadyForSubmit($request);
                     $this->dispatchService->submitRequest($request);
+
+                    $output->writeln('Request submitted!');
+                    $output->writeln('AppDeliveryID: '.$requestRecipient->getAppDeliveryID());
                 }
                 break;
             default:
