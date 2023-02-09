@@ -26,6 +26,10 @@
     {
       "matchPackageNames": ["api-platform/core"],
       "allowedVersions": "<2.7"
+    },
+    {
+      "matchPackageNames": ["phpunit/phpunit"],
+      "allowedVersions": "<10"
     }
   ]
 }
