@@ -8,6 +8,8 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryClient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ApplicationID;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\SenderProfile;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\DualNotificationRequestType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\EDeliveryNotificationType;
+use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\PostalNotificationType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Psr\Log\LoggerAwareInterface;
@@ -118,13 +120,29 @@ class DualDeliveryService implements LoggerAwareInterface
 
     public static function getPdfFromDeliveryNotification(DualNotificationRequestType $request): ?string
     {
-        $eDeliveryNotification = $request->getResult()->getNotificationChannel()->getEDeliveryNotification();
+        // Check for EDeliveryNotification (from eDelivery)
+        $notification = $request->getResult()->getNotificationChannel()->getEDeliveryNotification();
 
-        if (!$eDeliveryNotification) {
-            return null;
+        if ($notification) {
+            return self::getPdfFromEDeliveryNotification($notification);
         }
 
-        $binaryNotification = $eDeliveryNotification->getBinaryDeliveryNotification();
+        // Check for PostalNotification (from postal delivery)
+        $notification = $request->getResult()->getNotificationChannel()->getPostalNotification();
+
+        if ($notification) {
+            return self::getPdfFromPostalDeliveryNotification($notification);
+        }
+
+        return null;
+    }
+
+    /**
+     * Fetches the PDF from the EDeliveryNotification.
+     */
+    public static function getPdfFromEDeliveryNotification(EDeliveryNotificationType $notification): ?string
+    {
+        $binaryNotification = $notification->getBinaryDeliveryNotification();
 
         $xml = new \SimpleXMLElement($binaryNotification);
 
@@ -147,5 +165,25 @@ class DualDeliveryService implements LoggerAwareInterface
         }
 
         return null;
+    }
+
+    /**
+     * Fetches the PDF from the PostalNotification.
+     */
+    public static function getPdfFromPostalDeliveryNotification(PostalNotificationType $notification): ?string
+    {
+        $scannedData = $notification->getScannedData();
+
+        if (!$scannedData) {
+            return null;
+        }
+
+        $binaryData = $scannedData->getBinaryDocument();
+
+        if (!$binaryData) {
+            return null;
+        }
+
+        return $binaryData->getContent();
     }
 }
