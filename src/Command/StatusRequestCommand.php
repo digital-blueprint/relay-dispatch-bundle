@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Command;
 
+use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
+use Dbp\Relay\DispatchBundle\Service\DualDeliveryService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -43,6 +45,7 @@ class StatusRequestCommand extends Command
 
         $output->writeln('Doing API StatusRequest request for AppDeliveryID "'.$appDeliveryId.'" on '.$this->dispatchService->getUrl().'...');
         $response = $this->dispatchService->doDualDeliveryStatusRequestSoapRequestForAppDeliveryId($appDeliveryId);
+        $statusCode = $response->getStatus()->getCode();
 
         $io = new SymfonyStyle($input, $output);
         $io->title('StatusRequest');
@@ -50,8 +53,16 @@ class StatusRequestCommand extends Command
         $rows = [];
         $rows[] = ['AppDeliveryID', $response->getAppDeliveryID()];
         $rows[] = ['DualDeliveryID', $response->getDualDeliveryID()];
-        $rows[] = ['Status Code', $response->getStatus()->getCode()];
+        $rows[] = ['Status Code', $statusCode];
         $rows[] = ['Status Text', $response->getStatus()->getText()];
+
+        if ($statusCode === 'P6') {
+            $file = DualDeliveryService::getPdfFromDeliveryNotification($response);
+
+            if ($file !== null) {
+                $rows[] = ['DeliveryNotificationFile', Tools::humanFileSize(strlen($file))];
+            }
+        }
 
         $io->table([], $rows);
 
