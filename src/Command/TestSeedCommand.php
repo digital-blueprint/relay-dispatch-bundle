@@ -48,7 +48,8 @@ class TestSeedCommand extends Command
             ->setDescription('Test seed command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')
             ->addArgument('person-id', InputArgument::REQUIRED, 'person-id')
-            ->addOption('submit', 's', InputOption::VALUE_NONE, 'Directly submit request after creation');
+            ->addOption('submit', 's', InputOption::VALUE_NONE, 'Submit request after creation')
+            ->addOption('direct', 'd', InputOption::VALUE_NONE, 'When submitting don\'t use the queue, but submit directly');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -57,6 +58,7 @@ class TestSeedCommand extends Command
         $personId = $input->getArgument('person-id');
         $person = $this->personProvider->getPerson($personId);
         $doSubmit = (bool) $input->getOption('submit');
+        $direct = (bool) $input->getOption('submit');
 
         switch ($action) {
             case 'create':
@@ -115,7 +117,7 @@ class TestSeedCommand extends Command
 
                     // Check and submit request
                     $this->dispatchService->checkRequestReadyForSubmit($request);
-                    $this->dispatchService->submitRequest($request);
+                    $this->dispatchService->submitRequest($request, $direct);
 
                     $output->writeln('Request submitted!');
                     $output->writeln('AppDeliveryID: '.$requestRecipient->getAppDeliveryID());

@@ -523,7 +523,12 @@ class DispatchService implements LoggerAwareInterface
         $this->em->flush();
     }
 
-    public function submitRequest(Request $request)
+    /**
+     * @param bool $direct true if the queue should be skipped and the request should be submitted directly
+     *
+     * @return void
+     */
+    public function submitRequest(Request $request, bool $direct = false)
     {
         try {
             $request->setDateSubmitted(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
@@ -534,8 +539,13 @@ class DispatchService implements LoggerAwareInterface
 
         $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_SUBMITTED, 'Request submitted');
 
-        // Put request in queue for submission
-        $this->createAndDispatchRequestSubmissionMessage($request);
+        if ($direct) {
+            // Directly submit request
+            $this->doDualDeliveryRequestSoapRequest($request);
+        } else {
+            // Put request in queue for submission
+            $this->createAndDispatchRequestSubmissionMessage($request);
+        }
     }
 
     public function createDeliveryStatusChangeForAllRecipientsOfRequest(Request $request, int $statusType, string $description)
