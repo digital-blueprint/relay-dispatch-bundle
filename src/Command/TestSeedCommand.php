@@ -49,7 +49,8 @@ class TestSeedCommand extends Command
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')
             ->addArgument('person-id', InputArgument::REQUIRED, 'person-id')
             ->addOption('submit', 's', InputOption::VALUE_NONE, 'Submit request after creation')
-            ->addOption('direct', 'd', InputOption::VALUE_NONE, 'When submitting don\'t use the queue, but submit directly');
+            ->addOption('direct', 'd', InputOption::VALUE_NONE, 'When submitting don\'t use the queue, but submit directly')
+            ->addOption('output-request-xml', null, InputOption::VALUE_NONE, 'Output the request XML (only works when sending directly)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -58,7 +59,8 @@ class TestSeedCommand extends Command
         $personId = $input->getArgument('person-id');
         $person = $this->personProvider->getPerson($personId);
         $doSubmit = (bool) $input->getOption('submit');
-        $direct = (bool) $input->getOption('submit');
+        $isDirect = (bool) $input->getOption('submit');
+        $isOutputRequestXml = (bool) $input->getOption('output-request-xml');
 
         switch ($action) {
             case 'create':
@@ -117,7 +119,17 @@ class TestSeedCommand extends Command
 
                     // Check and submit request
                     $this->dispatchService->checkRequestReadyForSubmit($request);
-                    $this->dispatchService->submitRequest($request, $direct);
+
+                    if ($isOutputRequestXml) {
+                        $output->writeln('');
+                        $output->writeln('Request XML:');
+                    }
+
+                    $this->dispatchService->submitRequest($request, $isDirect, $isOutputRequestXml);
+
+                    if ($isOutputRequestXml) {
+                        $output->writeln('');
+                    }
 
                     $output->writeln('Request submitted!');
                     $output->writeln('AppDeliveryID: '.$requestRecipient->getAppDeliveryID());

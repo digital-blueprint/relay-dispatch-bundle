@@ -524,11 +524,12 @@ class DispatchService implements LoggerAwareInterface
     }
 
     /**
-     * @param bool $direct true if the queue should be skipped and the request should be submitted directly
+     * @param bool $direct          true if the queue should be skipped and the request should be submitted directly
+     * @param bool $printRequestXml If true print the request xml to the cli
      *
      * @return void
      */
-    public function submitRequest(Request $request, bool $direct = false)
+    public function submitRequest(Request $request, bool $direct = false, bool $printRequestXml = false)
     {
         try {
             $request->setDateSubmitted(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
@@ -541,7 +542,7 @@ class DispatchService implements LoggerAwareInterface
 
         if ($direct) {
             // Directly submit request
-            $this->doDualDeliveryRequestSoapRequest($request);
+            $this->doDualDeliveryRequestSoapRequest($request, $printRequestXml);
         } else {
             // Put request in queue for submission
             $this->createAndDispatchRequestSubmissionMessage($request);
@@ -814,7 +815,10 @@ class DispatchService implements LoggerAwareInterface
         return $description;
     }
 
-    public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest): bool
+    /**
+     * @param bool $printRequestXml If true print the request xml to the cli
+     */
+    public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest, bool $printRequestXml = false): bool
     {
         $service = $this->dd->getClient();
         $dualDeliveryPayloads = [];
@@ -968,11 +972,19 @@ class DispatchService implements LoggerAwareInterface
             );
 //            dump($dualDeliveryRecipients);
             $request = new DualDeliveryRequest($sender, null, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
-            dump($request);
+//            dump($request);
 
             try {
                 $response = $service->dualDeliveryRequestOperation($request);
+
+                // Needs to be printed directly because if there is an exception the request xml can't be returned
+                if ($printRequestXml) {
+                    echo $service->getPrettyLastRequest();
+                }
             } catch (\Exception $e) {
+                if ($printRequestXml) {
+                    echo $service->getPrettyLastRequest();
+                }
                 $this->createDeliveryStatusChange($recipient->getIdentifier(),
                     DeliveryStatusChange::STATUS_SOAP_ERROR, 'DualDeliveryRequest Soap error: '.$e->getMessage());
 

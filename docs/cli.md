@@ -10,6 +10,9 @@
 # Create request for user id 1234567890 and directly submit it without queue
 ./bin/console dbp:relay-dispatch:test-seed create 1234567890 --submit --direct
 
+# Create request for user id 1234567890, directly submit it without queue and show the xml of the request
+./bin/console dbp:relay-dispatch:test-seed create 1234567890 --submit --direct --output-request-xml
+
 # Show last 10 recipients
 ./bin/console dbp:relay-dispatch:recipient-list --limit 10
 
