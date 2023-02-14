@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                                 "streetAddress" = "Am Grund",
  *                                 "buildingNumber" = "1",
  *                                 "birthDate" = "1980-01-01",
- *                                 "personIdentifier" = "0800fc577294c34"
+ *                                 "personIdentifier" = "/base/people/0800fc577294c34"
  *                             },
  *                         }
  *                     }
