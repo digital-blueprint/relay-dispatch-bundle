@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
+use Dbp\Relay\DispatchBundle\Serializer\RequestRecipientNormalizer;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -109,6 +110,16 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->append($this->getGroupNode())
             ->append($this->getAuthNode())
+            ->append(RequestRecipientNormalizer::getAttributeAccessConfigNodeDefinition([
+                'DispatchRequestRecipient' => [
+                    'addressCountry',
+                    'postalCode',
+                    'addressLocality',
+                    'streetAddress',
+                    'buildingNumber',
+                    'birthDate',
+                ],
+            ]))
             ->end();
 
         return $treeBuilder;

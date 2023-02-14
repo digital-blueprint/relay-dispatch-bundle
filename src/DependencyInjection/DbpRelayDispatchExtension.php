@@ -7,6 +7,7 @@ namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
+use Dbp\Relay\DispatchBundle\Serializer\RequestRecipientNormalizer;
 use Dbp\Relay\DispatchBundle\Service\DualDeliveryService;
 use Dbp\Relay\DispatchBundle\Service\GroupService;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -56,6 +57,9 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         $definition->addMethodCall('setConfig', [$mergedConfig[Configuration::GROUP_NODE] ?? []]);
 
         $definition = $container->getDefinition(DualDeliveryService::class);
+        $definition->addMethodCall('setConfig', [$mergedConfig]);
+
+        $definition = $container->getDefinition(RequestRecipientNormalizer::class);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
     }
 

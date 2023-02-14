@@ -161,7 +161,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=2)
      * @ApiProperty(iri="https://schema.org/addressCountry")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:addressCountry", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
      *     max=2,
      *     maxMessage="Only {{ limit }} letter country codes are allowed"
@@ -174,7 +174,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=20)
      * @ApiProperty(iri="https://schema.org/postalCode")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:postalCode", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
      *     max=20,
      *     maxMessage="Only {{ limit }} letter postal codes are allowed"
@@ -187,7 +187,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=120)
      * @ApiProperty(iri="https://schema.org/addressLocality")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:addressLocality", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
      *     max=120,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -200,7 +200,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=120)
      * @ApiProperty(iri="https://schema.org/streetAddress")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:streetAddress", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
      *     max=120,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -213,7 +213,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=10)
      * @ApiProperty
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:buildingNumber", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      * @Assert\Length(
      *     max=10,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -226,7 +226,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="date")
      * @ApiProperty(iri="http://schema.org/birthDate")
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
+     * @Groups({"DispatchRequestRecipient:birthDate", "DispatchRequestRecipient:input"})
      * I could not find an Assert that doesn't cause an error to do proper checks
      *
      * @var \DateTimeInterface
