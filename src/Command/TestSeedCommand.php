@@ -83,7 +83,11 @@ class TestSeedCommand extends Command
                 $requestRecipient = new RequestRecipient();
                 $requestRecipient->setRequest($request);
                 $requestRecipient->setDispatchRequestIdentifier($request->getIdentifier());
+
+                // You can't use the person identifier to fetch the rest of the person data without the permission of the person
+                // {"message":"access to local data attribute 'streetAddress' denied","errorId":"","errorDetails":[]}
 //                $requestRecipient->setPersonIdentifier($personId);
+
                 $requestRecipient->setGivenName($person->getGivenName());
                 $requestRecipient->setFamilyName($person->getFamilyName());
                 $requestRecipient->setBirthDate(new \DateTime($person->getBirthDate()));
