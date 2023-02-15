@@ -45,7 +45,7 @@ final class RequestRecipientItemDataProvider extends AbstractController implemen
         $this->auth->checkCanReadMetadata($request->getGroupId());
 
         // Clear personal data if a person identifier is set
-        $requestRecipient->clearPersonalDataIfNeeded();
+        //$requestRecipient->clearPersonalDataIfNeeded();
 
         return $requestRecipient;
     }

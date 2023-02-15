@@ -78,7 +78,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     iri="https://schema.org/Person",
  *     shortName="DispatchRequestRecipient",
  *     normalizationContext={
- *         "groups" = {"DispatchRequestRecipient:output", "DispatchRequest:output"},
+ *         "groups" = {"DispatchRequestRecipient:output"},
  *         "jsonld_embed_context" = true
  *     },
  *     denormalizationContext={
@@ -161,7 +161,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=2)
      * @ApiProperty(iri="https://schema.org/addressCountry")
-     * @Groups({"DispatchRequestRecipient:addressCountry", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:addressCountry", "DispatchRequestRecipient:input"})
      * @Assert\Length(
      *     max=2,
      *     maxMessage="Only {{ limit }} letter country codes are allowed"
@@ -174,7 +174,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=20)
      * @ApiProperty(iri="https://schema.org/postalCode")
-     * @Groups({"DispatchRequestRecipient:postalCode", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:postalCode", "DispatchRequestRecipient:input"})
      * @Assert\Length(
      *     max=20,
      *     maxMessage="Only {{ limit }} letter postal codes are allowed"
@@ -187,7 +187,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=120)
      * @ApiProperty(iri="https://schema.org/addressLocality")
-     * @Groups({"DispatchRequestRecipient:addressLocality", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:addressLocality", "DispatchRequestRecipient:input"})
      * @Assert\Length(
      *     max=120,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -200,7 +200,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=120)
      * @ApiProperty(iri="https://schema.org/streetAddress")
-     * @Groups({"DispatchRequestRecipient:streetAddress", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:streetAddress", "DispatchRequestRecipient:input"})
      * @Assert\Length(
      *     max=120,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -213,7 +213,7 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=10)
      * @ApiProperty
-     * @Groups({"DispatchRequestRecipient:buildingNumber", "DispatchRequestRecipient:input", "DispatchRequest:output"})
+     * @Groups({"DispatchRequestRecipient:buildingNumber", "DispatchRequestRecipient:input"})
      * @Assert\Length(
      *     max=10,
      *     maxMessage="Only {{ limit }} letters are allowed"
