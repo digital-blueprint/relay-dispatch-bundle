@@ -70,11 +70,6 @@ final class RequestCollectionDataProvider extends AbstractController implements 
             }
         }
 
-        foreach ($requests as $request) {
-            // Clear personal data of the recipients if a person identifier is set
-            $request->clearPersonalDataOfRecipientsIfNeeded();
-        }
-
         return new ArrayFullPaginator(
             $requests,
             $page,

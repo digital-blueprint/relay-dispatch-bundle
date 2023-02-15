@@ -480,17 +480,6 @@ class Request
         $this->referenceNumber = $referenceNumber;
     }
 
-    /**
-     * Clear personal data of the recipients if a person identifier is set.
-     */
-    public function clearPersonalDataOfRecipientsIfNeeded(): void
-    {
-        /** @var RequestRecipient $recipient */
-        foreach ($this->getRecipients() as $recipient) {
-            $recipient->clearPersonalDataIfNeeded();
-        }
-    }
-
     public function checkAndUpdateReferenceNumber()
     {
         $this->referenceNumber = trim($this->referenceNumber ?? '');

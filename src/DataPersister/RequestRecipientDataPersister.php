@@ -53,9 +53,6 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         $this->auth->checkCanWrite($request->getGroupId());
         $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
 
-        // Clear personal data if a person identifier is set
-        $requestRecipient->clearPersonalDataIfNeeded();
-
         return $requestRecipient;
     }
 

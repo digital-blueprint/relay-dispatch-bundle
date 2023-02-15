@@ -78,9 +78,6 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
             $this->dispatchService->updateRequest($request);
         }
 
-        // Clear personal data of the recipients if a person identifier is set
-        $request->clearPersonalDataOfRecipientsIfNeeded();
-
         return $request;
     }
 

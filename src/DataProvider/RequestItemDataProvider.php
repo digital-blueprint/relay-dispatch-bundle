@@ -51,14 +51,6 @@ final class RequestItemDataProvider extends AbstractController implements ItemDa
             $request->setName('');
         }
 
-        // It seems a PUT request to Request uses RequestItemDataProvider::getItem to fetch the data,
-        // so the data personal data of the recipient is also removed in the database!
-        // We want to prevent that, the data should only be cleared in the output of the API.
-        if (!(($context['item_operation_name'] === 'put') && (strpos($context['request_uri'], '/dispatch/requests/') === 0))) {
-            // Clear personal data of the recipients if a person identifier is set
-            $request->clearPersonalDataOfRecipientsIfNeeded();
-        }
-
         return $request;
     }
 }
