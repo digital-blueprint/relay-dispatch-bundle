@@ -693,8 +693,9 @@ class DispatchService implements LoggerAwareInterface
 
         $response = $this->doPreAddressingSoapRequest($requestRecipient->getGivenName(), $requestRecipient->getFamilyName(), $requestRecipient->getBirthDate());
 
-        $addressingResults = $response->getAddressingResults()->getAddressingResult();
-        $requestRecipient->setElectronicallyDeliverable(count($addressingResults) > 0);
+        $addressingResults = $response->getAddressingResults();
+        $addressingResultData = $addressingResults->getAddressingResult() ?? [];
+        $requestRecipient->setElectronicallyDeliverable(count($addressingResultData) > 0);
     }
 
     public function doDualDeliveryStatusRequestSoapRequest(RequestRecipient $recipient): bool
