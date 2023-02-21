@@ -37,7 +37,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     iri="https://schema.org/Status",
  *     shortName="DispatchDeliveryStatusChange",
  *     normalizationContext={
- *         "groups" = {"DispatchDeliveryStatusChange:output", "DispatchRequest:output"},
+ *         "groups" = {"DispatchDeliveryStatusChange:output"},
  *         "jsonld_embed_context" = true
  *     }
  * )
@@ -69,14 +69,14 @@ class DeliveryStatusChange
      * @ORM\Id
      * @ORM\Column(type="string", length=50)
      * @ApiProperty(identifier=true)
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
      * @ApiProperty(iri="https://schema.org/dateCreated")
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
      *
      * @var \DateTimeInterface
      */
@@ -104,7 +104,7 @@ class DeliveryStatusChange
     /**
      * @ORM\Column(type="integer")
      * @ApiProperty(iri="https://schema.org/statusType")
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
      *
      * @var int
      */
@@ -113,7 +113,7 @@ class DeliveryStatusChange
     /**
      * @ORM\Column(type="text")
      * @ApiProperty(iri="https://schema.org/description")
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
      *
      * @var string
      */
@@ -129,7 +129,7 @@ class DeliveryStatusChange
     /**
      * @ApiProperty(iri="https://schema.org/fileFormat")
      * @ORM\Column(type="string", length=100)
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequest:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
      *
      * @var string
      */
