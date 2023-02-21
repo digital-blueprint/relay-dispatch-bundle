@@ -21,4 +21,7 @@
 
 # Do status request for an AppDeliveryID
 ./console dbp:relay-dispatch:status-request ADID_relay-dispatch-bundle-f839234020-c4d545db-95d1-4358-b37b-fcca31680c9e
+
+# Do status request for an AppDeliveryID and output the response xml
+./console dbp:relay-dispatch:status-request ADID_relay-dispatch-bundle-f839234020-c4d545db-95d1-4358-b37b-fcca31680c9e --output-response-xml
 ```
