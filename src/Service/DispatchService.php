@@ -772,13 +772,17 @@ class DispatchService implements LoggerAwareInterface
         return true;
     }
 
-    public function doDualDeliveryStatusRequestSoapRequestForAppDeliveryId(string $appDeliveryId): DualNotificationRequestType
+    public function doDualDeliveryStatusRequestSoapRequestForAppDeliveryId(string $appDeliveryId, bool $printResponseXml = false): DualNotificationRequestType
     {
         $service = $this->dd->getClient();
         $statusRequest = new StatusRequestType(null, $appDeliveryId);
 
         try {
             $response = $service->dualStatusRequestOperation($statusRequest);
+
+            if ($printResponseXml) {
+                echo $service->getPrettyLastResponse();
+            }
         } catch (\Exception $e) {
             throw ApiError::withDetails(
                 Response::HTTP_INTERNAL_SERVER_ERROR,
