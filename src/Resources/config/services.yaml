@@ -50,6 +50,6 @@ services:
     autowire: true
     autoconfigure: true
 
-  Dbp\Relay\DispatchBundle\Serializer\RequestRecipientNormalizer:
+  Dbp\Relay\DispatchBundle\Serializer\EntityNormalizer:
     autowire: true
     autoconfigure: true

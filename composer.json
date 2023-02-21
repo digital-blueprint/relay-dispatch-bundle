@@ -9,7 +9,7 @@
         "ext-soap": "*",
         "api-platform/core": "^2.6",
         "dbp/relay-base-person-bundle": "^0.2.1",
-        "dbp/relay-core-bundle": "^0.1.73",
+        "dbp/relay-core-bundle": "^0.1.78",
         "guzzlehttp/guzzle": "^7.0",
         "symfony/framework-bundle": "^5.2",
         "symfony/orm-pack": "^2.2",

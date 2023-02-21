@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
-use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
-use Dbp\Relay\DispatchBundle\Serializer\RequestRecipientNormalizer;
+use Dbp\Relay\CoreBundle\Authorization\AuthorizationConfigDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -65,14 +64,13 @@ class Configuration implements ConfigurationInterface
 
     private function getAuthNode(): NodeDefinition
     {
-        return AuthorizationService::getAuthorizationConfigNodeDefinition([
-            [self::ROLE_USER, 'false', 'Returns true if the user is allowed to use the dispatch API.'],
-            [self::ROLE_GROUP_READER_METADATA, 'false', 'Returns true if the user has read access for the given group, limited to metadata.'],
-            [self::ROLE_GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.'],
-            [self::ROLE_GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.'],
-        ], [
-            [self::ATTRIBUTE_GROUPS, '[]', 'Returns an array of available group IDs.'],
-        ]);
+        return AuthorizationConfigDefinition::create()
+        ->addRole(self::ROLE_USER, 'false', 'Returns true if the user is allowed to use the dispatch API.')
+        ->addRole(self::ROLE_GROUP_READER_METADATA, 'false', 'Returns true if the user has read access for the given group, limited to metadata.')
+        ->addRole(self::ROLE_GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.')
+        ->addRole(self::ROLE_GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.')
+        ->addAttribute(self::ATTRIBUTE_GROUPS, 'false', 'Returns an array of available group IDs.')
+        ->getNodeDefinition();
     }
 
     public function getConfigTreeBuilder(): TreeBuilder
@@ -110,16 +108,16 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->append($this->getGroupNode())
             ->append($this->getAuthNode())
-            ->append(RequestRecipientNormalizer::getAttributeAccessConfigNodeDefinition([
-                'DispatchRequestRecipient' => [
-                    'addressCountry',
-                    'postalCode',
-                    'addressLocality',
-                    'streetAddress',
-                    'buildingNumber',
-                    'birthDate',
-                ],
-            ]))
+//            ->append(RequestRecipientNormalizer::getAttributeAccessConfigNodeDefinition([
+//                'DispatchRequestRecipient' => [
+//                    'addressCountry',
+//                    'postalCode',
+//                    'addressLocality',
+//                    'streetAddress',
+//                    'buildingNumber',
+//                    'birthDate',
+//                ],
+//            ]))
             ->end();
 
         return $treeBuilder;
