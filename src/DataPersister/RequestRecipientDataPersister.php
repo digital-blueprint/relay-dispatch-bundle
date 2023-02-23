@@ -51,6 +51,26 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         $request = $this->dispatchService->getRequestById($requestRecipient->getDispatchRequestIdentifier());
 
         $this->auth->checkCanWrite($request->getGroupId());
+
+        // On PUT requests, we need to check if the person identifier has been changed to an empty string.
+        // If so, we need to clear the birthdate, street address, postal code, address locality and address country
+        // in the database to prevent the user from being able to see the previously hidden personal data of the person.
+        if ($context['item_operation_name'] === 'put') {
+            $pastRequestRecipient = $context['previous_data'];
+            assert($pastRequestRecipient instanceof RequestRecipient);
+
+            $personIdentifier = trim($requestRecipient->getPersonIdentifier() ?? '');
+            $pastPersonIdentifier = trim($pastRequestRecipient->getPersonIdentifier() ?? '');
+
+            if ($personIdentifier === '' && $pastPersonIdentifier !== $personIdentifier) {
+                $requestRecipient->setBirthDate(null);
+                $requestRecipient->setStreetAddress('');
+                $requestRecipient->setPostalCode('');
+                $requestRecipient->setAddressLocality('');
+                $requestRecipient->setAddressCountry('');
+            }
+        }
+
         $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
 
         return $requestRecipient;
