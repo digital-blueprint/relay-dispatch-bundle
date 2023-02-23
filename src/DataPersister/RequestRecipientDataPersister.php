@@ -55,7 +55,8 @@ class RequestRecipientDataPersister extends AbstractController implements Contex
         // On PUT requests, we need to check if the person identifier has been changed to an empty string.
         // If so, we need to clear the birthdate, street address, postal code, address locality and address country
         // in the database to prevent the user from being able to see the previously hidden personal data of the person.
-        if ($context['item_operation_name'] === 'put') {
+        $itemOperationName = $context['item_operation_name'] ?? '';
+        if ($itemOperationName === 'put') {
             $pastRequestRecipient = $context['previous_data'];
             assert($pastRequestRecipient instanceof RequestRecipient);
 
