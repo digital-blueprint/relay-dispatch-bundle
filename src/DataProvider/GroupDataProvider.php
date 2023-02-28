@@ -41,10 +41,11 @@ class GroupDataProvider extends AbstractDataProvider
     protected function getPage(int $currentPageNumber, int $maxNumItemsPerPage, array $filters = [], array $options = []): array
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         if (!$this->auth->getCanUse()) {
             return [];
         }
-        $this->auth->checkCanUse();
+
         // No auth check needed, the service only returns groups to which we have access to
         return $this->groupService->getGroups($currentPageNumber, $maxNumItemsPerPage, $options);
     }

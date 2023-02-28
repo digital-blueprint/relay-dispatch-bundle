@@ -292,7 +292,7 @@ class Request
     /**
      * @ORM\OneToMany(targetEntity="RequestFile", mappedBy="request")
      * @ORM\OrderBy({"dateCreated" = "ASC"})
-     * @Groups({"DispatchRequest:output"})
+     * @Groups({"DispatchRequest:output:files"})
      */
     private $files;
 

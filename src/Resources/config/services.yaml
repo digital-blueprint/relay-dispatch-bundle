@@ -49,7 +49,3 @@ services:
   Dbp\Relay\DispatchBundle\Service\HealthCheck:
     autowire: true
     autoconfigure: true
-
-  Dbp\Relay\DispatchBundle\Serializer\EntityNormalizer:
-    autowire: true
-    autoconfigure: true
