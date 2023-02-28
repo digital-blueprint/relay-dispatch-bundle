@@ -32,6 +32,11 @@ services:
     autowire: true
     autoconfigure: true
 
+  Dbp\Relay\DispatchBundle\Authorization\EntityNormalizer:
+    autowire: true
+    autoconfigure: true
+
+
   Dbp\Relay\DispatchBundle\Service\DualDeliveryService:
     autowire: true
     autoconfigure: true

@@ -291,11 +291,17 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.85",
+            "version": "v0.1.88",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.tugraz.at/dbp/relay/dbp-relay-core-bundle",
-                "reference": "bdc54d89a521c81d747fd6d47fa19fe1ad67292f"
+                "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
+                "reference": "3da7929f4f8efb6bd6cef0fbd9a64bb2d5c7e407"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/3da7929f4f8efb6bd6cef0fbd9a64bb2d5c7e407",
+                "reference": "3da7929f4f8efb6bd6cef0fbd9a64bb2d5c7e407",
+                "shasum": ""
             },
             "require": {
                 "api-platform/core": "^2.6.8 <2.7.0",
@@ -360,7 +366,11 @@
                 "AGPL-3.0-or-later"
             ],
             "description": "The core bundle of the Relay API gateway",
-            "time": "2023-02-28T08:11:50+00:00"
+            "support": {
+                "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.88"
+            },
+            "time": "2023-02-28T11:30:57+00:00"
         },
         {
             "name": "doctrine/annotations",

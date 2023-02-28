@@ -6,19 +6,13 @@ namespace Dbp\Relay\DispatchBundle\Authorization;
 
 use Dbp\Relay\CoreBundle\Authorization\AbstractAuthorizationService;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
-use Dbp\Relay\CoreBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
-use Dbp\Relay\DispatchBundle\Entity\Request;
-use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthorizationService extends AbstractAuthorizationService
 {
     /** @var string An alias variable name for the group data variable that can be used in group role expressions */
     private const GROUP_DATA_ALIAS = 'currentGroup';
-
-    private const REQUEST_NORMALIZER_ALREADY_CALLED = self::class.'.request';
-    private const RECIPIENT_NORMALIZER_ALREADY_CALLED = self::class.'.recipient';
 
     /**
      * Check if the user can access the application at all.
@@ -124,50 +118,6 @@ class AuthorizationService extends AbstractAuthorizationService
             }
         }
         throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @return array|string|int|float|bool|\ArrayObject|null
-     */
-    public function normalize($object, $format = null, array $context = [])
-    {
-        if ($object instanceof Request) {
-            if ($this->getCanReadContent($object->getGroupId())) {
-                self::showAttributes($context, 'DispatchRequest', ['files']);
-            }
-            $context[self::REQUEST_NORMALIZER_ALREADY_CALLED] = true;
-        } elseif ($object instanceof RequestRecipient) {
-            if (Tools::isNullOrEmpty($object->getPersonIdentifier())) {
-                $attributesToShow = [
-                    'addressCountry',
-                    'postalCode',
-                    'addressLocality',
-                    'streetAddress',
-                    'buildingNumber',
-                ];
-
-                if ($this->getCanReadContent($object->getDispatchRequest()->getGroupId())) {
-                    $attributesToShow[] = 'birthDate';
-                }
-
-                self::showAttributes($context, 'DispatchRequestRecipient', $attributesToShow);
-            }
-            $context[self::RECIPIENT_NORMALIZER_ALREADY_CALLED] = true;
-        }
-
-        return $this->normalizer->normalize($object, $format, $context);
-    }
-
-    /**
-     *  {@inheritdoc}
-     */
-    public function supportsNormalization($data, $format = null, array $context = []): bool
-    {
-        return
-            ($data instanceof RequestRecipient && isset($context[self::RECIPIENT_NORMALIZER_ALREADY_CALLED]) === false) ||
-            ($data instanceof Request && isset($context[self::REQUEST_NORMALIZER_ALREADY_CALLED]) === false);
     }
 
     /**

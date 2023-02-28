@@ -127,7 +127,7 @@ class Request
     /**
      * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="https://schema.org/name")
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     * @Groups({"DispatchRequest:output:name", "DispatchRequest:input"})
      * @Assert\Length(
      *     max=255,
      *     maxMessage="Only {{ limit }} letters are allowed"
