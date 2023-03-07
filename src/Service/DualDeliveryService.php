@@ -169,13 +169,13 @@ class DualDeliveryService implements LoggerAwareInterface
             return null;
         }
 
-        $statusID = (string)$status->StatusID;
-        $statusText = (string)$status->StatusText;
-        $date = (string)$status->Datum;
-        $area = (string)$status->Abgabebereich;
-        $barcode = (string)$status->Barcode;
+        $statusID = (string) $status->StatusID;
+        $statusText = (string) $status->StatusText;
+        $date = (string) $status->Datum;
+        $area = (string) $status->Abgabebereich;
+        $barcode = (string) $status->Barcode;
 
-        return 'Status: ' . $statusID . ' (' . $statusText . ")\nDate: " . $date . "\nDelivery Area: " . $area . "\nBarcode: " . $barcode;
+        return 'Status: '.$statusID.' ('.$statusText.")\nDate: ".$date."\nDelivery Area: ".$area."\nBarcode: ".$barcode;
     }
 
     /**

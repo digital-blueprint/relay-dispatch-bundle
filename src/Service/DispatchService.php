@@ -768,7 +768,7 @@ class DispatchService implements LoggerAwareInterface
                 $unclaimedDescription = DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response);
 
                 if ($unclaimedDescription !== null) {
-                    $description .= "\n" . $unclaimedDescription;
+                    $description .= "\n".$unclaimedDescription;
                 }
             }
         }
