@@ -138,6 +138,47 @@ class DualDeliveryService implements LoggerAwareInterface
     }
 
     /**
+     * Returns the description of the status change for unclaimed documents.
+     */
+    public static function getDeliveryNotificationForUnclaimedDescription(DualNotificationRequestType $request): ?string
+    {
+        // Check for PostalNotification (from postal delivery)
+        $notification = $request->getResult()->getNotificationChannel()->getPostalNotification();
+
+        if (!$notification) {
+            return null;
+        }
+
+        $scannedData = $notification->getScannedData();
+
+        if (!$scannedData) {
+            return null;
+        }
+
+        $metaData = $scannedData->getExtractedMetaData();
+
+        if (!$metaData) {
+            return null;
+        }
+
+        $xml = new \SimpleXMLElement($metaData->getAny());
+
+        $status = $xml->SendungStatus;
+
+        if (!$status) {
+            return null;
+        }
+
+        $statusID = (string)$status->StatusID;
+        $statusText = (string)$status->StatusText;
+        $date = (string)$status->Datum;
+        $area = (string)$status->Abgabebereich;
+        $barcode = (string)$status->Barcode;
+
+        return 'Status: ' . $statusID . ' (' . $statusText . ")\nDate: " . $date . "\nDelivery Area: " . $area . "\nBarcode: " . $barcode;
+    }
+
+    /**
      * Fetches the PDF from the EDeliveryNotification.
      */
     public static function getPdfFromEDeliveryNotification(EDeliveryNotificationType $notification): ?string

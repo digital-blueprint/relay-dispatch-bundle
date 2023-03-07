@@ -758,9 +758,20 @@ class DispatchService implements LoggerAwareInterface
             );
         }
 
-        $file = $status === DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6 ?
-            DualDeliveryService::getPdfFromDeliveryNotification($response) : null;
         $description = $this->getDeliveryStatusChangeDescription($response);
+
+        $file = null;
+        if ($status === DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6) {
+            $file = DualDeliveryService::getPdfFromDeliveryNotification($response);
+
+            if ($file === null) {
+                $unclaimedDescription = DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response);
+
+                if ($unclaimedDescription !== null) {
+                    $description .= "\n" . $unclaimedDescription;
+                }
+            }
+        }
 
         $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(), $status, $description, $file);
 
