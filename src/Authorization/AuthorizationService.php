@@ -7,6 +7,7 @@ namespace Dbp\Relay\DispatchBundle\Authorization;
 use Dbp\Relay\CoreBundle\Authorization\AbstractAuthorizationService;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
+use Dbp\Relay\DispatchBundle\Entity\Group;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthorizationService extends AbstractAuthorizationService
@@ -64,13 +65,26 @@ class AuthorizationService extends AbstractAuthorizationService
     }
 
     /**
+     * Check if the user has write access in at least one group.
+     */
+    public function checkCanWriteSomething(): void
+    {
+        foreach ($this->getAllGroupIds() as $groupId) {
+            if ($this->getCanWrite($groupId)) {
+                return;
+            }
+        }
+        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
+    }
+
+    /**
      * Returns if the user can write in the group.
      */
-    public function getCanWrite(string $groupId): bool
+    public function getCanWrite(string $groupId, bool $validate = true): bool
     {
         // XXX: should we check isValidGroup() in all cases?
         // At least check it here where we input data into the system
-        if (!$this->isValidGroup($groupId)) {
+        if ($validate && !$this->isValidGroup($groupId)) {
             return false;
         }
 
@@ -107,43 +121,63 @@ class AuthorizationService extends AbstractAuthorizationService
     }
 
     /**
-     * Check if the user has write access in at least one group.
+     * @return string[]
      */
-    public function checkCanWriteSomething(): void
+    public function getGroupRolesForCurrentUser(string $groupId): array
     {
-        $groups = $this->getGroups();
-        foreach ($groups as $id) {
-            if ($this->getCanWrite($id)) {
-                return;
-            }
+        $groupData = new GroupData($groupId);
+        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData)) {
+            return [
+                Group::ROLE_WRITE,
+                Group::ROLE_READ_CONTENT,
+                Group::ROLE_READ_METADATA,
+            ];
+        } elseif ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData)) {
+            return [
+                Group::ROLE_READ_CONTENT,
+                Group::ROLE_READ_METADATA,
+            ];
+        } elseif ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_METADATA, $groupData)) {
+            return [
+                Group::ROLE_READ_METADATA,
+            ];
         }
-        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
-    }
 
-    /**
-     * Returns if the group ID is valid.
-     */
-    private function isValidGroup(string $groupId): bool
-    {
-        return in_array($groupId, $this->getGroups(), true);
+        return [];
     }
 
     /**
      * Returns all groups the user has some kind of access to.
+     * WARNING: This function may cause performance issues! Try to avoid it.
      *
      * @return string[]
      */
-    public function getGroups(): array
+    public function getGroupIdsForCurrentUser(): array
     {
-        $allGroups = $this->getAttribute(Configuration::ATTRIBUTE_GROUPS);
-        $groups = [];
-        foreach ($allGroups as $id) {
-            if ($this->getCanReadMetadata($id)) {
-                $groups[] = $id;
+        $groupIds = [];
+        foreach ($this->getAllGroupIds() as $groupId) {
+            if ($this->getCanReadMetadata($groupId)) {
+                $groupIds[] = $groupId;
             }
         }
 
-        return $groups;
+        return $groupIds;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getAllGroupIds(): array
+    {
+        return (array) $this->getAttribute(Configuration::ATTRIBUTE_GROUPS, []);
+    }
+
+    /**
+     * Returns if the group ID is in the list of groups.
+     */
+    private function isValidGroup(string $groupId): bool
+    {
+        return in_array($groupId, $this->getAllGroupIds(), true);
     }
 
     private function isGrantedGroupRole(string $roleName, GroupData $groupData): bool

@@ -32,6 +32,7 @@ class GroupDataProvider extends AbstractDataProvider
     protected function getItemById($id, array $options = []): object
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $this->auth->checkCanUse();
         $this->auth->checkCanReadMetadata($id);
 
@@ -42,11 +43,11 @@ class GroupDataProvider extends AbstractDataProvider
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        // No 'access denied' needed, the service only returns groups to which we have access to
         if (!$this->auth->getCanUse()) {
             return [];
         }
 
-        // No auth check needed, the service only returns groups to which we have access to
         return $this->groupService->getGroups($currentPageNumber, $maxNumItemsPerPage, $options);
     }
 }

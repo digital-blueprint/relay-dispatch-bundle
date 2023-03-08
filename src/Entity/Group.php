@@ -42,9 +42,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Group
 {
-    public const ACCESS_RIGHT_READ_METADATA = 'rm';
-    public const ACCESS_RIGHT_READ_CONTENT = 'rc';
-    public const ACCESS_RIGHT_WRITE = 'w';
+    public const ROLE_READ_METADATA = 'rm';
+    public const ROLE_READ_CONTENT = 'rc';
+    public const ROLE_WRITE = 'w';
 
     /**
      * @ApiProperty(identifier=true)
@@ -95,35 +95,12 @@ class Group
     private $country;
 
     /**
-     * @deprecated by $accessRights
      * @ApiProperty
      * @Groups({"DispatchGroup:output"})
      *
-     * @var bool
+     * @var string[]
      */
-    private $mayRead;
-
-    /**
-     * @deprecated by $accessRights
-     * @ApiProperty
-     * @Groups({"DispatchGroup:output"})
-     *
-     * @var bool
-     */
-    private $mayWrite;
-
-    /**
-     * @ApiProperty
-     * @Groups({"DispatchGroup:output"})
-     *
-     * @var array
-     */
-    private $accessRights;
-
-    public function __construct()
-    {
-        $this->accessRights = [];
-    }
+    private $accessRights = [];
 
     public function setIdentifier(string $identifier): void
     {
@@ -185,34 +162,13 @@ class Group
         $this->country = $country;
     }
 
-    /**
-     * @deprecated
-     */
-    public function getMayRead(): bool
+    public function addGroupRole(string $groupRole): void
     {
-        //return $this->mayRead;
-        return
-            in_array(self::ACCESS_RIGHT_READ_METADATA, $this->accessRights, true) ||
-            in_array(self::ACCESS_RIGHT_READ_CONTENT, $this->accessRights, true) ||
-            in_array(self::ACCESS_RIGHT_WRITE, $this->accessRights, true);
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getMayWrite(): bool
-    {
-        //return $this->mayWrite;
-        return in_array(self::ACCESS_RIGHT_WRITE, $this->accessRights, true);
-    }
-
-    public function addAccessRight(string $accessRight): void
-    {
-        if (!in_array($accessRight, $this->accessRights, true) ?? (
-            $accessRight === self::ACCESS_RIGHT_READ_CONTENT ||
-            $accessRight === self::ACCESS_RIGHT_READ_METADATA ||
-            $accessRight === self::ACCESS_RIGHT_WRITE)) {
-            $this->accessRights[] = $accessRight;
+        if (!in_array($groupRole, $this->accessRights, true) ?? (
+            $groupRole === self::ROLE_READ_CONTENT ||
+            $groupRole === self::ROLE_READ_METADATA ||
+            $groupRole === self::ROLE_WRITE)) {
+            $this->accessRights[] = $groupRole;
         }
     }
 

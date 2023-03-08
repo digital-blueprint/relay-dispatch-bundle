@@ -49,7 +49,7 @@ class GroupService implements LoggerAwareInterface
 
     public function getGroups(int $currentPageNumber, int $maxNumItemsPerPage, array $options = []): array
     {
-        $groups = $this->auth->getGroups();
+        $groups = $this->auth->getGroupIdsForCurrentUser();
         $groupsMyAccess = [];
         foreach (array_slice($groups, Pagination::getFirstItemIndex($currentPageNumber, $maxNumItemsPerPage), $maxNumItemsPerPage) as $groupId) {
             $groupsMyAccess[] = $this->createGroup($groupId);
@@ -74,15 +74,6 @@ class GroupService implements LoggerAwareInterface
         $group = new Group();
         $group->setIdentifier($entity->getIdentifier());
         $group->setName($entity->getName());
-        if ($this->auth->getCanReadMetadata($groupId)) {
-            $group->addAccessRight(Group::ACCESS_RIGHT_READ_METADATA);
-        }
-        if ($this->auth->getCanReadContent($groupId)) {
-            $group->addAccessRight(Group::ACCESS_RIGHT_READ_CONTENT);
-        }
-        if ($this->auth->getCanWrite($groupId)) {
-            $group->addAccessRight(Group::ACCESS_RIGHT_WRITE);
-        }
         $group->setStreet($entity->getLocalDataValue(
                 $this->getAddressAttributes()[Configuration::GROUP_STREET_ATTRIBUTE]) ?? '');
         $group->setPostalCode($entity->getLocalDataValue(
@@ -91,6 +82,10 @@ class GroupService implements LoggerAwareInterface
                 $this->getAddressAttributes()[Configuration::GROUP_LOCALITY_ATTRIBUTE]) ?? '');
         $group->setCountry($entity->getLocalDataValue(
                 $this->getAddressAttributes()[Configuration::GROUP_COUNTRY_ATTRIBUTE]) ?? '');
+
+        foreach ($this->auth->getGroupRolesForCurrentUser($groupId) as $groupRole) {
+            $group->addGroupRole($groupRole);
+        }
 
         return $group;
     }
