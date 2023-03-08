@@ -47,6 +47,43 @@ class StatusRequestTest extends TestCase
   </soap:Body>
 </soap:Envelope>';
 
+    private static $DELIVERY_NOTIFICATION_RESPONSE_POSTAL = '<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns2:StatusResponse xmlns="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#" xmlns:ns2="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#" xmlns:ns3="http://reference.e-government.gv.at/namespace/zustellung/msg" xmlns:ns4="http://reference.e-government.gv.at/namespace/persondata/20020228#" xmlns:ns5="http://www.w3.org/2000/09/xmldsig#" xmlns:ns6="urn:oasis:names:tc:SAML:1.0:assertion" xmlns:ns7="uri:general.additional.params/20130121#" xmlns:ns8="http://reference.e-government.gv.at/namespace/persondata/20130121#" xmlns:ns9="http://reference.bbgdual.dualdelivery.at/namespace/persondata/20170308#" xmlns:ns10="http://www.ebinterface.at/schema/4p0/" xmlns:ns11="http://www.ebinterface.at/schema/4p0/extensions/sv" xmlns:ns12="http://www.ebinterface.at/schema/4p0/extensions/ext" xmlns:ns13="http://www.e-zustellung.at/namespaces/zuse_20090922" xmlns:ns14="http://reference.e-government.gv.at/namespace/zustellung/dual_ca/20130121#" xmlns:ns15="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#" version="1.0">
+      <AppDeliveryID>887f3616-2512-484f</AppDeliveryID>
+      <DualDeliveryID>23398411</DualDeliveryID>
+      <ns2:Result>
+        <ns2:NotificationChannel>
+          <ns2:PostalNotification>
+            <ns2:Printtime>2023-02-02T00:00:00Z</ns2:Printtime>
+            <ns2:PostalDeliveryTime>2023-02-03T00:00:00Z</ns2:PostalDeliveryTime>
+            <ns2:ServiceDeliveryTime>2023-02-01T14:15:04.000+01:00</ns2:ServiceDeliveryTime>
+            <ns2:Sheets>6</ns2:Sheets>
+            <ns2:AdditonalPrintResults>
+              <ns2:PropertyValuePrintResultSet>
+                <Parameter>
+                  <Property>SendingServiceMessageID</Property>
+                  <Value>BA00BUTU80230000000014</Value>
+                </Parameter>
+              </ns2:PropertyValuePrintResultSet>
+            </ns2:AdditonalPrintResults>
+            <ns2:ScannedData>
+              <ns2:BinaryDocument MIMEType="application/pdf">
+                <Content>SV9BTV9BX1BERg==</Content>
+              </ns2:BinaryDocument>
+            </ns2:ScannedData>
+          </ns2:PostalNotification>
+        </ns2:NotificationChannel>
+      </ns2:Result>
+      <Status>
+        <Code>P6</Code>
+        <Text>AllNotificationsReceived</Text>
+      </Status>
+    </ns2:StatusResponse>
+  </soap:Body>
+</soap:Envelope>';
+
     private static $DELIVERY_NOTIFICATION_RESPONSE_NOT_CLAIMED = '<?xml version="1.0"?>
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
@@ -145,6 +182,21 @@ class StatusRequestTest extends TestCase
 
         $this->assertSame('887b3816-2212-434f', $response->getAppDeliveryID());
         $this->assertSame('2398411', $response->getDualDeliveryID());
+        $this->assertSame('P6', $response->getStatus()->getCode());
+        $this->assertSame('AllNotificationsReceived', $response->getStatus()->getText());
+        $this->assertSame('I_AM_A_PDF', DualDeliveryService::getPdfFromDeliveryNotification($response));
+        $this->assertSame('', DualDeliveryService::getErrorTextFromStatusResponse($response));
+    }
+
+    public function testStatusRequestDeliveryNotificationPostal()
+    {
+        $service = $this->getMockService(self::$DELIVERY_NOTIFICATION_RESPONSE_POSTAL);
+
+        $request = new StatusRequestType();
+        $response = $service->dualStatusRequestOperation($request);
+
+        $this->assertSame('887f3616-2512-484f', $response->getAppDeliveryID());
+        $this->assertSame('23398411', $response->getDualDeliveryID());
         $this->assertSame('P6', $response->getStatus()->getCode());
         $this->assertSame('AllNotificationsReceived', $response->getStatus()->getText());
         $this->assertSame('I_AM_A_PDF', DualDeliveryService::getPdfFromDeliveryNotification($response));
