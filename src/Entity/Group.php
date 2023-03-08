@@ -95,6 +95,24 @@ class Group
     private $country;
 
     /**
+     * @deprecated by $accessRights
+     * @ApiProperty
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var bool
+     */
+    private $mayRead;
+
+    /**
+     * @deprecated by $accessRights
+     * @ApiProperty
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var bool
+     */
+    private $mayWrite;
+
+    /**
      * @ApiProperty
      * @Groups({"DispatchGroup:output"})
      *
@@ -175,5 +193,24 @@ class Group
     public function getAccessRights(): array
     {
         return $this->accessRights;
+    }
+
+    /**
+     * @deprecated
+     */
+    public function getMayRead(): bool
+    {
+        return
+            in_array(self::ROLE_READ_METADATA, $this->accessRights, true) ||
+            in_array(self::ROLE_READ_CONTENT, $this->accessRights, true) ||
+            in_array(self::ROLE_WRITE, $this->accessRights, true);
+    }
+
+    /**
+     * @deprecated
+     */
+    public function getMayWrite(): bool
+    {
+        return in_array(self::ROLE_WRITE, $this->accessRights, true);
     }
 }
