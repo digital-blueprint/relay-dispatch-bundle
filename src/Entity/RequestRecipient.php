@@ -8,8 +8,10 @@ date_default_timezone_set('UTC');
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -54,13 +56,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     itemOperations={
  *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-recipients/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         },
- *         "put" = {
  *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
  *             "path" = "/dispatch/request-recipients/{identifier}",
  *             "openapi_context" = {
@@ -526,5 +521,23 @@ class RequestRecipient
             $this->getPostalCode() !== '' &&
             $this->getAddressLocality() !== '' &&
             $this->getAddressCountry() !== '';
+    }
+
+    public function postValidityCheck(): void
+    {
+        // If there is a person identifier, then there must not be any other personal data set
+        if ($this->personIdentifier &&
+            (
+                $this->givenName ||
+                $this->familyName ||
+                $this->streetAddress ||
+                $this->buildingNumber ||
+                $this->postalCode ||
+                $this->addressLocality ||
+                $this->addressCountry
+            )
+        ) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'A request recipient can\'t contain a personIdentifier and personal data together!', 'dispatch:request-recipient-person-identifier-and-person-data-set');
+        }
     }
 }
