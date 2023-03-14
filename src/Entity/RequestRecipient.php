@@ -38,8 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                                 "addressLocality" = "Graz",
  *                                 "streetAddress" = "Am Grund",
  *                                 "buildingNumber" = "1",
- *                                 "birthDate" = "1980-01-01",
- *                                 "personIdentifier" = "/base/people/0800fc577294c34"
+ *                                 "birthDate" = "1980-01-01"
  *                             },
  *                         }
  *                     }
@@ -534,7 +533,8 @@ class RequestRecipient
                 $this->buildingNumber ||
                 $this->postalCode ||
                 $this->addressLocality ||
-                $this->addressCountry
+                $this->addressCountry ||
+                $this->birthDate
             )
         ) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'A request recipient can\'t contain a personIdentifier and personal data together!', 'dispatch:request-recipient-person-identifier-and-person-data-set');
