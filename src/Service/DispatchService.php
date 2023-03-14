@@ -649,7 +649,11 @@ class DispatchService implements LoggerAwareInterface
 //        dump($this->baseUrl);
 //        dump($this->cert);
 //        dump($this->certPassword);
-        $response = $service->dualDeliveryPreAddressingRequestOperation($request);
+        try {
+            $response = $service->dualDeliveryPreAddressingRequestOperation($request);
+        } catch (\Exception $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'PreAddressing request failed!', 'dispatch:request-pre-addressing-failed', ['message' => $e->getMessage()]);
+        }
 
 //        dump($response);
 //        dump($service->getPrettyLastRequest());
