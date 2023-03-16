@@ -7,39 +7,41 @@ Created via `./bin/console config:dump-reference DbpRelayDispatchBundle | sed '/
 ```yaml
 # Default configuration for "DbpRelayDispatchBundle"
 dbp_relay_dispatch:
-    # The database DSN
-    database_url:         ~ # Required
-    # The base URL for the SOAP service of the dual delivery service provider
-    service_url:          ~ # Required
-    # The sender profile identifier, as specified/required by your service provider
-    sender_profile:       ~ # Required
-    # The sender profile version, as specified/required by your service provider
-    sender_profile_version: ~ # Required
-    # The client certificate in PEM format
-    cert:                 ~
-    # The password of the client certificate
-    cert_password:        ~
-    group:
-        iri_template:         /base/organizations/%s
-        address_attributes:
-            street:               streetAddress
-            locality:             addressLocality
-            postal_code:          postalCode
-            country:              addressCountry
-    authorization:
-        roles:
-            # Returns true if the user is allowed to use the dispatch API.
-            ROLE_USER:            'false'
-            # Returns true if the user has read access for the given group, limited to metadata.
-            ROLE_GROUP_READER_METADATA: 'false'
-            # Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.
-            ROLE_GROUP_READER_CONTENT: 'false'
-            # Returns true if the user has write access for the given group. Implies all reader roles.
-            ROLE_GROUP_WRITER:    'false'
-        attributes:
-            # Returns an array of available group IDs.
-            GROUPS:               'false'
-        entities:             []
+  # The database DSN
+  database_url:         ~ # Required
+  # The base URL for the SOAP service of the dual delivery service provider
+  service_url:          ~ # Required
+  # The sender profile identifier, as specified/required by your service provider
+  sender_profile:       ~ # Required
+  # The sender profile version, as specified/required by your service provider
+  sender_profile_version: ~ # Required
+  # The client certificate in PEM format
+  cert:                 ~
+  # The password of the client certificate
+  cert_password:        ~
+  group:
+    iri_template:         /base/organizations/%s
+    address_attributes:
+      street:               streetAddress
+      locality:             addressLocality
+      postal_code:          postalCode
+      country:              addressCountry
+  authorization:
+    roles:
+      # Returns true if the user is allowed to use the dispatch API.
+      ROLE_USER:            'false'
+      # Returns true if the user has read access for the given group, limited to metadata.
+      ROLE_GROUP_READER_METADATA: 'false'
+      # Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.
+      ROLE_GROUP_READER_CONTENT: 'false'
+      # Returns true if the user has write access for the given group. Implies all reader roles.
+      ROLE_GROUP_WRITER:    'false'
+      # Returns true if the user has write access for the given group and can read recipient addresses. Implies all reader/writer roles.
+      ROLE_GROUP_WRITER_ADDRESS: 'false'
+    attributes:
+      # Returns an array of available group IDs.
+      GROUPS:               'false'
+    entities:             []
 ```
 
 ## Client Certificate Tips

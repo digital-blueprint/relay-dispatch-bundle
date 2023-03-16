@@ -88,7 +88,17 @@ class AuthorizationService extends AbstractAuthorizationService
             return false;
         }
 
-        return $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, new GroupData($groupId));
+        return $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, new GroupData($groupId)) ||
+                $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_ADDRESS, new GroupData($groupId));
+    }
+
+    /**
+     * Returns true if the user can read the internal addresses of recipients for the given group.
+     * This means the addresses which the user hasn't entered themselves, but are provided by the backend.
+     */
+    public function canReadInternalAddresses(string $groupId): bool
+    {
+        return $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_ADDRESS, new GroupData($groupId));
     }
 
     /**
@@ -97,7 +107,8 @@ class AuthorizationService extends AbstractAuthorizationService
     public function getCanReadMetadata(string $groupId): bool
     {
         $groupData = new GroupData($groupId);
-        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData) ||
+        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_ADDRESS, $groupData) ||
+            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData) ||
             $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData) ||
             $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_METADATA, $groupData)) {
             return true;
@@ -112,7 +123,8 @@ class AuthorizationService extends AbstractAuthorizationService
     public function getCanReadContent(string $groupId): bool
     {
         $groupData = new GroupData($groupId);
-        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData) ||
+        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_ADDRESS, $groupData) ||
+            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData) ||
             $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData)) {
             return true;
         }
@@ -126,7 +138,7 @@ class AuthorizationService extends AbstractAuthorizationService
     public function getGroupRolesForCurrentUser(string $groupId): array
     {
         $groupData = new GroupData($groupId);
-        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData)) {
+        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_ADDRESS, $groupData) || $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData)) {
             return [
                 Group::ROLE_WRITE,
                 Group::ROLE_READ_CONTENT,

@@ -49,6 +49,8 @@ Each group expression receives a `group` object as a subject, in addition to the
 
 * `ROLE_GROUP_WRITER`: Allows the user to create, change and submit requests for the specified group. This role implies `ROLE_GROUP_READER_CONTENT`.
 
+* `ROLE_GROUP_WRITER_ADDRESS`: This is an extension of the `ROLE_GROUP_WRITER` which also allows reading and adjusting the recipient address in case it was provided by the system. This role is only needed in case the data quality of the addresses is not guaranteed to be good and a manual review/adjustments may be needed. This role implies `ROLE_GROUP_WRITER`.
+
 ## Attributes
 
 * `GROUPS`: This attribute needs to contain an array of group IDs that are available for all users.

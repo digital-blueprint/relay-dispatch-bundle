@@ -15,6 +15,7 @@ class Configuration implements ConfigurationInterface
     public const ROLE_GROUP_READER_METADATA = 'ROLE_GROUP_READER_METADATA';
     public const ROLE_GROUP_READER_CONTENT = 'ROLE_GROUP_READER_CONTENT';
     public const ROLE_GROUP_WRITER = 'ROLE_GROUP_WRITER';
+    public const ROLE_GROUP_WRITER_ADDRESS = 'ROLE_GROUP_WRITER_ADDRESS';
     public const ROLE_USER = 'ROLE_USER';
 
     /** Attributes */
@@ -69,6 +70,7 @@ class Configuration implements ConfigurationInterface
         ->addRole(self::ROLE_GROUP_READER_METADATA, 'false', 'Returns true if the user has read access for the given group, limited to metadata.')
         ->addRole(self::ROLE_GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.')
         ->addRole(self::ROLE_GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.')
+        ->addRole(self::ROLE_GROUP_WRITER_ADDRESS, 'false', 'Returns true if the user has write access for the given group and can read recipient addresses. Implies all reader/writer roles.')
         ->addAttribute(self::ATTRIBUTE_GROUPS, 'false', 'Returns an array of available group IDs.')
         ->getNodeDefinition();
     }
