@@ -27,19 +27,19 @@ dbp_relay_dispatch:
             postal_code:          postalCode
             country:              addressCountry
     authorization:
-        rights:
+        roles:
             # Returns true if the user is allowed to use the dispatch API.
-            USER:                 'false'
+            ROLE_USER:            'false'
             # Returns true if the user has read access for the given group, limited to metadata.
-            GROUP_READER_METADATA: 'false'
+            ROLE_GROUP_READER_METADATA: 'false'
             # Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.
-            GROUP_READER_CONTENT: 'false'
+            ROLE_GROUP_READER_CONTENT: 'false'
             # Returns true if the user has write access for the given group. Implies all reader roles.
-            GROUP_WRITER:         'false'
+            ROLE_GROUP_WRITER:    'false'
         attributes:
             # Returns an array of available group IDs.
-            GROUPS:               '[]'
-
+            GROUPS:               'false'
+        entities:             []
 ```
 
 ## Client Certificate Tips
