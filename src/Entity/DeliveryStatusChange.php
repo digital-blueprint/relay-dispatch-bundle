@@ -69,14 +69,14 @@ class DeliveryStatusChange
      * @ORM\Id
      * @ORM\Column(type="string", length=50)
      * @ApiProperty(identifier=true)
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
      * @ApiProperty(iri="https://schema.org/dateCreated")
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var \DateTimeInterface
      */
@@ -104,7 +104,7 @@ class DeliveryStatusChange
     /**
      * @ORM\Column(type="integer")
      * @ApiProperty(iri="https://schema.org/statusType")
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var int
      */
@@ -113,7 +113,7 @@ class DeliveryStatusChange
     /**
      * @ORM\Column(type="text")
      * @ApiProperty(iri="https://schema.org/description")
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var string
      */

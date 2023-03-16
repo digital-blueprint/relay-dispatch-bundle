@@ -159,6 +159,11 @@ class DispatchService implements LoggerAwareInterface
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'Request was not found!', 'dispatch:request-not-found');
         }
 
+        foreach ($request->getRecipients() as $recipient) {
+            // Set the last status change manually, doctrine doesn't seem to be able to do this automatically without troubles
+            $recipient->setLastStatusChange($this->getLastStatusChange($recipient));
+        }
+
         return $request;
     }
 
@@ -192,6 +197,9 @@ class DispatchService implements LoggerAwareInterface
         if (!$requestRecipient) {
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestRecipient was not found!', 'dispatch:request-recipient-not-found');
         }
+
+        // Set the last status change manually, doctrine doesn't seem to be able to do this automatically without troubles
+        $requestRecipient->setLastStatusChange($this->getLastStatusChange($requestRecipient));
 
         return $requestRecipient;
     }

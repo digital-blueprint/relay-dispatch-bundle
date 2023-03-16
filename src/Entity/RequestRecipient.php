@@ -286,6 +286,14 @@ class RequestRecipient
     private $electronicallyDeliverable;
 
     /**
+     * @ApiProperty
+     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
+     *
+     * @var ?DeliveryStatusChange
+     */
+    private $lastStatusChange;
+
+    /**
      * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="requestRecipient")
      * @ORM\OrderBy({"orderId" = "DESC"})
      * @ApiProperty
@@ -539,5 +547,21 @@ class RequestRecipient
         ) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'A request recipient can\'t contain a personIdentifier and personal data together!', 'dispatch:request-recipient-person-identifier-and-person-data-set');
         }
+    }
+
+    /**
+     * @return DeliveryStatusChange|null
+     */
+    public function getLastStatusChange(): ?DeliveryStatusChange
+    {
+        return $this->lastStatusChange;
+    }
+
+    /**
+     * @param DeliveryStatusChange|null $lastStatusChange
+     */
+    public function setLastStatusChange(?DeliveryStatusChange $lastStatusChange): void
+    {
+        $this->lastStatusChange = $lastStatusChange;
     }
 }
