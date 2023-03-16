@@ -111,6 +111,14 @@ class DeliveryStatusChange
     private $statusType;
 
     /**
+     * @ApiProperty(iri="https://schema.org/statusType")
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
+     *
+     * @var string
+     */
+    private $dispatchStatus;
+
+    /**
      * @ORM\Column(type="text")
      * @ApiProperty(iri="https://schema.org/description")
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
@@ -263,5 +271,44 @@ class DeliveryStatusChange
             self::STATUS_DUAL_DELIVERY_STATUS_P10,
             self::STATUS_DUAL_DELIVERY_STATUS_P12,
         ], true);
+    }
+
+    public function getDispatchStatus(): string
+    {
+        if (in_array($this->statusType, [
+            self::STATUS_SOAP_ERROR,
+            self::STATUS_DUAL_DELIVERY_REQUEST_FAILED,
+            self::STATUS_STATUS_REQUEST_FAILED,
+            self::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND,
+            self::STATUS_DUAL_DELIVERY_STATUS_P8,
+            self::STATUS_DUAL_DELIVERY_STATUS_P9,
+            self::STATUS_DUAL_DELIVERY_STATUS_P12,
+        ], true)) {
+            return 'failure';
+        }
+
+        if (in_array($this->statusType, [
+            self::STATUS_DUAL_DELIVERY_STATUS_P6,
+            self::STATUS_DUAL_DELIVERY_STATUS_P10,
+        ], true)) {
+            return 'success';
+        }
+
+        if (in_array($this->statusType, [
+            self::STATUS_SUBMITTED,
+            self::STATUS_IN_PROGRESS,
+            self::STATUS_DUAL_DELIVERY_REQUEST_SUCCESS,
+            self::STATUS_DUAL_DELIVERY_STATUS_P1,
+            self::STATUS_DUAL_DELIVERY_STATUS_P2,
+            self::STATUS_DUAL_DELIVERY_STATUS_P3,
+            self::STATUS_DUAL_DELIVERY_STATUS_P4,
+            self::STATUS_DUAL_DELIVERY_STATUS_P5,
+            self::STATUS_DUAL_DELIVERY_STATUS_P7,
+            self::STATUS_DUAL_DELIVERY_STATUS_P11,
+        ], true)) {
+            return 'pending';
+        }
+
+        return 'unknown';
     }
 }

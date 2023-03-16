@@ -32,4 +32,5 @@ Currently, this bundle only supports talking to "Dual Delivery" service provider
 * [Configuration](./config.md)
 * [Authorization](./authz.md)
 * [Database](./database.md)
+* [API](./api.md)
 * [CLI Commands](./cli.md)
