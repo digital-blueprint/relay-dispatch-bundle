@@ -47,30 +47,55 @@ class TestSeedCommand extends Command
         $this
             ->setDescription('Test seed command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')
-            ->addArgument('person-id', InputArgument::REQUIRED, 'person-id')
             ->addOption('submit', 's', InputOption::VALUE_NONE, 'Submit request after creation')
             ->addOption('direct', 'd', InputOption::VALUE_NONE, 'When submitting don\'t use the queue, but submit directly')
-            ->addOption('output-request-xml', null, InputOption::VALUE_NONE, 'Output the request XML (only works when sending directly)');
+            ->addOption('output-request-xml', null, InputOption::VALUE_NONE, 'Output the request XML (only works when sending directly)')
+            ->addOption('recipient-given-name', null, InputOption::VALUE_OPTIONAL, 'Recipient given name')
+            ->addOption('recipient-family-name', null, InputOption::VALUE_OPTIONAL, 'Recipient family name')
+            ->addOption('recipient-birth-date', null, InputOption::VALUE_OPTIONAL, 'Recipient birth date')
+            ->addOption('recipient-street-address', null, InputOption::VALUE_OPTIONAL, 'Recipient street address')
+            ->addOption('recipient-building-number', null, InputOption::VALUE_OPTIONAL, 'Recipient building number')
+            ->addOption('recipient-postal-code', null, InputOption::VALUE_OPTIONAL, 'Recipient postal code')
+            ->addOption('recipient-address-locality', null, InputOption::VALUE_OPTIONAL, 'Recipient address locality')
+            ->addOption('recipient-address-country', null, InputOption::VALUE_OPTIONAL, 'Recipient address country', 'AT')
+            ->addOption('recipient-person-id', null, InputOption::VALUE_OPTIONAL, 'Recipient person identifier')
+            ->addOption('request-person-id', null, InputOption::VALUE_REQUIRED, 'Request person identifier');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $action = $input->getArgument('action');
-        $personId = $input->getArgument('person-id');
-        $person = $this->personProvider->getPerson($personId);
         $doSubmit = (bool) $input->getOption('submit');
         $isDirect = (bool) $input->getOption('submit');
         $isOutputRequestXml = (bool) $input->getOption('output-request-xml');
+        $recipientGivenName = $input->getOption('recipient-given-name') ?? '';
+        $recipientFamilyName = $input->getOption('recipient-family-name') ?? '';
+        $recipientBirthDate = $input->getOption('recipient-birth-date');
+        $recipientStreetAddress = $input->getOption('recipient-street-address') ?? '';
+        $recipientBuildingNumber = $input->getOption('recipient-building-number') ?? '';
+        $recipientPostalCode = $input->getOption('recipient-postal-code') ?? '';
+        $recipientAddressLocality = $input->getOption('recipient-address-locality') ?? '';
+        $recipientAddressCountry = $input->getOption('recipient-address-country');
+
+        $recipientPersonId = $input->getOption('recipient-person-id');
+        if ($recipientPersonId) {
+            $person = $this->personProvider->getPerson($recipientPersonId);
+            $recipientGivenName = $person->getGivenName();
+            $recipientFamilyName = $person->getFamilyName();
+            $recipientBirthDate = $person->getBirthDate();
+        }
+
+        $requestPersonId = $input->getOption('request-person-id');
 
         switch ($action) {
             case 'create':
-                $name = 'Test '.$person->getGivenName().' '.$person->getFamilyName().' '.rand(1000, 9999);
+                $name = 'Test '.$recipientGivenName.' '.$recipientFamilyName.' '.rand(1000, 9999);
                 $output->writeln('Generating request "'.$name.'" with a recipient and a file...');
 
                 $request = new Request();
                 $request->setName($name);
                 $request->setGroupId('11072');
-                $request->setPersonIdentifier($personId);
+                $request->setPersonIdentifier($requestPersonId);
                 $request->setSenderFullName('Hans Tester');
                 $request->setSenderOrganizationName('Test Organisation');
                 $request->setSenderStreetAddress('Musterstrasse');
@@ -86,20 +111,21 @@ class TestSeedCommand extends Command
 
                 // You can't use the person identifier to fetch the rest of the person data without the permission of the person
                 // {"message":"access to local data attribute 'streetAddress' denied","errorId":"","errorDetails":[]}
-//                $requestRecipient->setPersonIdentifier($personId);
+//                $requestRecipient->setPersonIdentifier($recipientPersonId);
 
-                $requestRecipient->setGivenName($person->getGivenName());
-                $requestRecipient->setFamilyName($person->getFamilyName());
-                $requestRecipient->setBirthDate(new \DateTime($person->getBirthDate()));
-//                $requestRecipient->setStreetAddress('Musterstrasse');
-//                $requestRecipient->setBuildingNumber((string) rand(10, 99));
-//                $requestRecipient->setPostalCode((string) rand(1000, 9999));
-//                $requestRecipient->setAddressLocality('Musterstadt');
-                $requestRecipient->setStreetAddress('');
-                $requestRecipient->setBuildingNumber('');
-                $requestRecipient->setPostalCode('');
-                $requestRecipient->setAddressLocality('');
-                $requestRecipient->setAddressCountry('AT');
+                $requestRecipient->setGivenName($recipientGivenName);
+                $requestRecipient->setFamilyName($recipientFamilyName);
+
+                if ($recipientBirthDate) {
+                    $requestRecipient->setBirthDate(new \DateTime($recipientBirthDate));
+                }
+
+                $requestRecipient->setStreetAddress($recipientStreetAddress);
+                $requestRecipient->setBuildingNumber($recipientBuildingNumber);
+                $requestRecipient->setPostalCode($recipientPostalCode);
+                $requestRecipient->setAddressLocality($recipientAddressLocality);
+                $requestRecipient->setAddressCountry($recipientAddressCountry);
+
                 $requestRecipient = $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
                 $output->writeln('isElectronicallyDeliverable: '.($requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no'));
                 $output->writeln('isPostalDeliverable: '.($requestRecipient->isPostalDeliverable() ? 'yes' : 'no'));
