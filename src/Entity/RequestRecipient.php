@@ -549,17 +549,11 @@ class RequestRecipient
         }
     }
 
-    /**
-     * @return DeliveryStatusChange|null
-     */
     public function getLastStatusChange(): ?DeliveryStatusChange
     {
         return $this->lastStatusChange;
     }
 
-    /**
-     * @param DeliveryStatusChange|null $lastStatusChange
-     */
     public function setLastStatusChange(?DeliveryStatusChange $lastStatusChange): void
     {
         $this->lastStatusChange = $lastStatusChange;
