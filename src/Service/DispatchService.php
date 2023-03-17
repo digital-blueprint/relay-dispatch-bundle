@@ -763,7 +763,7 @@ class DispatchService implements LoggerAwareInterface
             ]);
 
             throw ApiError::withDetails(
-                Response::HTTP_INTERNAL_SERVER_ERROR, 'StatusRequest request failed!', 'dispatch:dual-delivery-request-failed', [
+                Response::HTTP_INTERNAL_SERVER_ERROR, 'StatusRequest request failed!', 'dispatch:status-request-failed', [
                     'recipient-id' => $recipient->getIdentifier(),
                     'message' => 'StatusCode not found',
                 ]
