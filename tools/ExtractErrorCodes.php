@@ -2,6 +2,8 @@
 <?php
 /**
  * This script is used to extract all error codes from the codebase.
+ * Only works if the "ApiError::withDetails" method is used in one line.
+ * You need to do a "ApiError::withDetails\(\n" regex search to find other occurrences.
  *
  * To put the output in the clipboard, in the project root run:
  * php ./tools/ExtractErrorCodes.php | xclip -sel c
