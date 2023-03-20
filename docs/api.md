@@ -16,15 +16,15 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 ## Error Codes
 
 | relay:errorId                                                      | Status code | Description                                                                        |
-| ------------------------------------------------------------------ | ----------- | ---------------------------------------------------------------------------------- |
+| ------------------------------------------------------------------ | ----------- |------------------------------------------------------------------------------------|
 | `dispatch:request-file-missing-request-identifier`                 | `400`       | `Missing "dispatchRequestIdentifier"!`                                             |
 | `dispatch:request-submitted-read-only`                             | `400`       | `Submitted requests cannot be modified!`                                           |
 | `dispatch:request-file-missing-file`                               | `400`       | `No file with parameter key "file" was received!`                                  |
-| `dispatch:request-file-upload-error`                               | `400`       | `$uploadedFile->getErrorMessage()`                                                 |
+| `dispatch:request-file-upload-error`                               | `400`       |                                                                                    |
 | `dispatch:request-file-only-pdf-files-allowed`                     | `415`       | `Only PDF files can be added!`                                                     |
 | `dispatch:request-file-empty-files-not-allowed`                    | `400`       | `Empty files cannot be added!`                                                     |
-| `dispatch:request-recipient-person-identifier-and-person-data-set` | `400`       | `A request recipient can\t contain a personIdentifier and personal data together!` |
-| `dispatch:current-person-not-found`                                | `403`       | `"Current person wasnt found!"`                                                    |
+| `dispatch:request-recipient-person-identifier-and-person-data-set` | `400`       | `A request recipient can't contain a personIdentifier and personal data together!` |
+| `dispatch:current-person-not-found`                                | `403`       | `Current person wasnt found!`                                                      |
 | `dispatch:request-not-found`                                       | `404`       | `Request was not found!`                                                           |
 | `dispatch:request-status-change-not-found`                         | `404`       | `DeliveryStatusChange was not found!`                                              |
 | `dispatch:request-recipient-not-found`                             | `404`       | `RequestRecipient was not found!`                                                  |
