@@ -41,7 +41,10 @@ class EntityNormalizer extends AbstractEntityDeNormalizer
                     ];
             }
         } elseif ($entity instanceof RequestRecipient) {
-            if (Tools::isNullOrEmpty($entity->getPersonIdentifier())) {
+            // personal address of recipients is returned if
+            // - it was entered manually by a user (i.e. person identifier is not set) OR
+            // - the current user has write and read personal address permissions for the group
+            if (Tools::isNullOrEmpty($entity->getPersonIdentifier()) || $this->authoriziationService->canReadInternalAddresses($entity->getDispatchRequest()->getGroupId())) {
                 $attributesToShow = [
                     'addressCountry',
                     'postalCode',
@@ -49,10 +52,12 @@ class EntityNormalizer extends AbstractEntityDeNormalizer
                     'streetAddress',
                     'buildingNumber',
                 ];
+            }
 
-                if ($this->authoriziationService->getCanReadContent($entity->getDispatchRequest()->getGroupId())) {
-                    $attributesToShow[] = 'birthDate';
-                }
+            // birthdate of recipients is returned if
+            // - it was entered manually by a user (i.e. person identifier is not set) AND the current user at least has content read permissions for the group
+            if (Tools::isNullOrEmpty($entity->getPersonIdentifier()) && $this->authoriziationService->getCanReadContent($entity->getDispatchRequest()->getGroupId())) {
+                $attributesToShow[] = 'birthDate';
             }
         }
 
