@@ -45,6 +45,7 @@ class Group
     public const ROLE_READ_METADATA = 'rm';
     public const ROLE_READ_CONTENT = 'rc';
     public const ROLE_WRITE = 'w';
+    public const ROLE_WRITE_READ_ADDRESS = 'wra';
 
     /**
      * @ApiProperty(identifier=true)
@@ -185,7 +186,8 @@ class Group
         if (!in_array($groupRole, $this->accessRights, true) ?? (
             $groupRole === self::ROLE_READ_CONTENT ||
             $groupRole === self::ROLE_READ_METADATA ||
-            $groupRole === self::ROLE_WRITE)) {
+            $groupRole === self::ROLE_WRITE ||
+            $groupRole === self::ROLE_WRITE_READ_ADDRESS)) {
             $this->accessRights[] = $groupRole;
         }
     }
