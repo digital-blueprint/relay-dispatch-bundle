@@ -367,7 +367,7 @@ class DispatchService implements LoggerAwareInterface
 
         $options = [];
         // TODO: make address attribute names configurable (see Group address attributes)
-        LocalData::addIncludeParameter($options, ['streetAddress', 'addressLocality', 'postalCode', 'addressCountry']);
+        LocalData::requestLocalDataAttributes($options, ['streetAddress', 'addressLocality', 'postalCode', 'addressCountry']);
 
         // This already throws an exception if the person is not found
         $person = $this->personProvider->getPerson($personIdentifier, $options);

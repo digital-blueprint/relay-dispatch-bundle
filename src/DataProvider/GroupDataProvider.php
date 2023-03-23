@@ -13,9 +13,8 @@ class GroupDataProvider extends AbstractDataProvider
 {
     /** @var GroupService */
     private $groupService;
-    /**
-     * @var AuthorizationService
-     */
+
+    /** @var AuthorizationService */
     private $auth;
 
     public function __construct(GroupService $groupService, AuthorizationService $auth)
@@ -29,10 +28,13 @@ class GroupDataProvider extends AbstractDataProvider
         return Group::class;
     }
 
-    protected function getItemById($id, array $options = []): object
+    protected function isUserGrantedOperationAccess(int $operation): bool
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        return $this->isUserAuthenticated();
+    }
 
+    protected function getItemById($id, array $filters = [], array $options = []): object
+    {
         $this->auth->checkCanUse();
         $this->auth->checkCanReadMetadata($id);
 
@@ -41,9 +43,7 @@ class GroupDataProvider extends AbstractDataProvider
 
     protected function getPage(int $currentPageNumber, int $maxNumItemsPerPage, array $filters = [], array $options = []): array
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        // No 'access denied' needed, the service only returns groups to which we have access to
+        // No 'access denied' needed, the service only returns groups to which the authenticated user has access to
         if (!$this->auth->getCanUse()) {
             return [];
         }
