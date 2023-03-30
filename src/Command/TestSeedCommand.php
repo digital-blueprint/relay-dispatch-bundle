@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Command;
 
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
+use Dbp\Relay\CoreBundle\LocalData\LocalData;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
@@ -79,10 +80,12 @@ class TestSeedCommand extends Command
 
         $recipientPersonId = $input->getOption('recipient-person-id');
         if ($recipientPersonId) {
-            $person = $this->personProvider->getPerson($recipientPersonId);
+            $options = [];
+            LocalData::requestLocalDataAttributes($options, ['birthDate']);
+            $person = $this->personProvider->getPerson($recipientPersonId, $options);
             $recipientGivenName = $person->getGivenName();
             $recipientFamilyName = $person->getFamilyName();
-            $recipientBirthDate = $person->getBirthDate();
+            $recipientBirthDate = $person->getLocalDataValue('birthDate');
         }
 
         $requestPersonId = $input->getOption('request-person-id');
