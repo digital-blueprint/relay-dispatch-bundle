@@ -377,15 +377,16 @@ class DispatchService implements LoggerAwareInterface
         $requestRecipient->setGivenName($person->getGivenName());
         $requestRecipient->setFamilyName($person->getFamilyName());
         try {
-            $birthDate = $person->getBirthDate() ? new \DateTime($person->getBirthDate()) : null;
+            $birthDateString = $localData['birthDate'];
+            $birthDate = !Tools::isNullOrEmpty($birthDateString) ? new \DateTime($birthDateString) : null;
         } catch (\Exception $e) {
             $birthDate = null;
         }
         $requestRecipient->setBirthDate($birthDate);
-        $requestRecipient->setStreetAddress($localData['streetAddress'][0] ?? '');
-        $requestRecipient->setPostalCode($localData['postalCode'][0] ?? '');
-        $requestRecipient->setAddressLocality($localData['addressLocality'][0] ?? '');
-        $requestRecipient->setAddressCountry($localData['addressCountry'][0] ?? '');
+        $requestRecipient->setStreetAddress($localData['streetAddress'] ?? '');
+        $requestRecipient->setPostalCode($localData['postalCode'] ?? '');
+        $requestRecipient->setAddressLocality($localData['addressLocality'] ?? '');
+        $requestRecipient->setAddressCountry($localData['addressCountry'] ?? '');
     }
 
     public function handleRequestRecipientStorage(RequestRecipient $requestRecipient): RequestRecipient
