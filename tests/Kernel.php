@@ -59,5 +59,9 @@ class Kernel extends BaseKernel
             'sender_profile' => 'foobar',
             'sender_profile_version' => '42.42',
         ]);
+
+        $container->extension('api_platform', [
+            'metadata_backward_compatibility_layer' => false,
+        ]);
     }
 }
