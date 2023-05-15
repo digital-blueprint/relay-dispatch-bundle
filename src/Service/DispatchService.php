@@ -268,6 +268,15 @@ class DispatchService implements LoggerAwareInterface
             ->getRepository(Request::class)
             ->findBy(['groupId' => $groupId]);
 
+        // We need to load the last status changes for every request of each recipient
+        // https://plan.tugraz.at/task/39365
+        foreach ($requests as $request) {
+            foreach ($request->getRecipients() as $recipient) {
+                // Set the last status change manually, doctrine doesn't seem to be able to do this automatically without troubles
+                $recipient->setLastStatusChange($this->getLastStatusChange($recipient));
+            }
+        }
+
         return $requests;
     }
 
