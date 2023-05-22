@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.3.2
+
+- minor cleanups
+
 # 0.3.1
 
 - request: load last status changes for each recipient of all requests
