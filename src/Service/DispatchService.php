@@ -46,7 +46,6 @@ use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Dbp\Relay\DispatchBundle\Traits\DOMMethodsTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LogLevel;
@@ -72,11 +71,6 @@ class DispatchService implements LoggerAwareInterface
      * @var EntityManagerInterface
      */
     private $em;
-
-    /**
-     * @var ?CacheItemPoolInterface
-     */
-    private $cachePool;
 
     /**
      * @var MessageBusInterface
@@ -123,11 +117,6 @@ class DispatchService implements LoggerAwareInterface
         $this->certPassword = $config['cert_password'] ?? '';
         $this->cert = $config['cert'] ?? '';
         $this->url = $config['service_url'];
-    }
-
-    public function setCache(?CacheItemPoolInterface $cachePool)
-    {
-        $this->cachePool = $cachePool;
     }
 
     private function getCurrentPerson(): Person

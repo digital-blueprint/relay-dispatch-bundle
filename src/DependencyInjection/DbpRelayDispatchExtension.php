@@ -9,7 +9,6 @@ use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Dbp\Relay\DispatchBundle\Service\DualDeliveryService;
 use Dbp\Relay\DispatchBundle\Service\GroupService;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -41,12 +40,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         );
         $loader->load('services.yaml');
 
-        $cacheDef = $container->register('dbp.relay.cache.dispatch', FilesystemAdapter::class);
-        $cacheDef->setArguments(['dispatch', 3600, '%kernel.cache_dir%/dbp/dispatch']);
-        $cacheDef->addTag('cache.pool');
-
         $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\DispatchService');
-        $definition->addMethodCall('setCache', [$cacheDef]);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
 
         $definition = $container->getDefinition(AuthorizationService::class);
