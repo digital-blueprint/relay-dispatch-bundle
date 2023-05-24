@@ -71,7 +71,7 @@ class Configuration implements ConfigurationInterface
         ->addPolicy(self::ROLE_GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.')
         ->addPolicy(self::ROLE_GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.')
         ->addPolicy(self::ROLE_GROUP_WRITER_READ_ADDRESS, 'false', 'Returns true if the user has write access for the given group and can read recipient addresses. Implies all reader/writer roles.')
-        ->addAttribute(self::ATTRIBUTE_GROUPS, 'false', 'Returns an array of available group IDs.')
+        ->addAttribute(self::ATTRIBUTE_GROUPS, '[]', 'Returns an array of available group IDs.')
         ->getNodeDefinition();
     }
 
@@ -110,16 +110,6 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->append($this->getGroupNode())
             ->append($this->getAuthNode())
-//            ->append(RequestRecipientNormalizer::getAttributeAccessConfigNodeDefinition([
-//                'DispatchRequestRecipient' => [
-//                    'addressCountry',
-//                    'postalCode',
-//                    'addressLocality',
-//                    'streetAddress',
-//                    'buildingNumber',
-//                    'birthDate',
-//                ],
-//            ]))
             ->end();
 
         return $treeBuilder;
