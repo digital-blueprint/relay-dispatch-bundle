@@ -68,14 +68,14 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
         // Set reference number if not set
         $request->checkAndUpdateReferenceNumber();
 
-        if ($request->getIdentifier() === '') {
-            $this->dispatchService->createRequest($request);
-        } else {
+        if (($context['item_operation_name'] ?? null) === 'put') {
             if ($request->isSubmitted()) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
             }
 
             $this->dispatchService->updateRequest($request);
+        } else {
+            $this->dispatchService->createRequest($request);
         }
 
         return $request;
