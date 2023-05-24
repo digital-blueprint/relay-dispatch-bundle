@@ -7,8 +7,9 @@ namespace Dbp\Relay\DispatchBundle\Controller;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class PostSubmitRequest extends BaseDispatchController
+class PostSubmitRequest extends AbstractController
 {
     /**
      * @var DispatchService

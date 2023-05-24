@@ -8,12 +8,13 @@ use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-final class CreateRequestFileAction extends BaseDispatchController
+final class CreateRequestFileAction extends AbstractController
 {
     /**
      * @var DispatchService
@@ -39,7 +40,8 @@ final class CreateRequestFileAction extends BaseDispatchController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();
 
-        $dispatchRequestIdentifier = self::requestGet($request, 'dispatchRequestIdentifier');
+        /** @var ?string */
+        $dispatchRequestIdentifier = $request->request->get('dispatchRequestIdentifier');
 
         if ($dispatchRequestIdentifier === null) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Missing "dispatchRequestIdentifier"!', 'dispatch:request-file-missing-request-identifier');
