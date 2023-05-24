@@ -43,7 +43,6 @@ use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
-use Dbp\Relay\DispatchBundle\Traits\DOMMethodsTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerAwareInterface;
@@ -60,7 +59,6 @@ use Symfony\Component\Uid\Uuid;
 class DispatchService implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
-    use DOMMethodsTrait;
 
     /**
      * @var PersonProviderInterface
