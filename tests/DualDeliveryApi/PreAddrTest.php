@@ -17,7 +17,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Dua
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\ProcessingProfile as VendoProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\ProcessingProfile as VendoProcessingProfile;
 use PHPUnit\Framework\TestCase;
 
 class PreAddrTest extends TestCase

@@ -22,7 +22,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\Person
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PersonNameType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PhysicalPersonType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPersonData\PostalAddressType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
+use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\DeliveryQuality;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase

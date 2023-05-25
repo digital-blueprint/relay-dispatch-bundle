@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo;
 
 /**
  * Also see zusemsg-2.1.0, page 21 ("Zustell-Metainformation").

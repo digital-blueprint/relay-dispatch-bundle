@@ -35,8 +35,8 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Dua
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\MetaData as PreMetaData;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\DeliveryQuality;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo\ProcessingProfile as VendoProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\DeliveryQuality;
+use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\ProcessingProfile as VendoProcessingProfile;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Dbp\Relay\DispatchBundle\Entity\Request;

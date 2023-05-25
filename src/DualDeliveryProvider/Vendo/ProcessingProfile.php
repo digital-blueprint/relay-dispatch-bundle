@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Vendo;
+namespace Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo;
 
 /**
  * All diese Profile werden sowohl für Zustellungen verwendet
