@@ -15,22 +15,22 @@ class DualNotificationRequestType
     protected $AppDeliveryID = null;
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $DualDeliveryID = null;
 
     /**
-     * @var Result
+     * @var ?Result
      */
     protected $Result = null;
 
     /**
-     * @var AdditionalResults
+     * @var ?AdditionalResults
      */
     protected $AdditionalResults = null;
 
     /**
-     * @var ManipulatedPayloadsType
+     * @var ?ManipulatedPayloadsType
      */
     protected $ManipulatedPayloads = null;
 
@@ -44,14 +44,7 @@ class DualNotificationRequestType
      */
     protected $version = null;
 
-    /**
-     * @param string            $AppDeliveryID
-     * @param string            $DualDeliveryID
-     * @param AdditionalResults $AdditionalResults
-     * @param StatusType        $Status
-     * @param string            $version
-     */
-    public function __construct($AppDeliveryID, $DualDeliveryID, $AdditionalResults, $Status, $version)
+    public function __construct(string $AppDeliveryID, string $DualDeliveryID, AdditionalResults $AdditionalResults, StatusType $Status, string $version)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->DualDeliveryID = $DualDeliveryID;
@@ -60,129 +53,73 @@ class DualNotificationRequestType
         $this->version = $version;
     }
 
-    /**
-     * @return string
-     */
-    public function getAppDeliveryID()
+    public function getAppDeliveryID(): string
     {
         return $this->AppDeliveryID;
     }
 
-    /**
-     * @return DualNotificationRequestType
-     */
-    public function setAppDeliveryID(string $AppDeliveryID)
+    public function setAppDeliveryID(string $AppDeliveryID): void
     {
         $this->AppDeliveryID = $AppDeliveryID;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDualDeliveryID()
+    public function getDualDeliveryID(): ?string
     {
         return $this->DualDeliveryID;
     }
 
-    /**
-     * @return DualNotificationRequestType
-     */
-    public function setDualDeliveryID(string $DualDeliveryID)
+    public function setDualDeliveryID(string $DualDeliveryID): void
     {
         $this->DualDeliveryID = $DualDeliveryID;
-
-        return $this;
     }
 
-    /**
-     * @return ?Result
-     */
-    public function getResult()
+    public function getResult(): ?Result
     {
         return $this->Result;
     }
 
-    /**
-     * @return DualNotificationRequestType
-     */
-    public function setResult(Result $Result)
+    public function setResult(Result $Result): void
     {
         $this->Result = $Result;
-
-        return $this;
     }
 
-    /**
-     * @return AdditionalResults
-     */
-    public function getAdditionalResults()
+    public function getAdditionalResults(): ?AdditionalResults
     {
         return $this->AdditionalResults;
     }
 
-    /**
-     * @return DualNotificationRequestType
-     */
-    public function setAdditionalResults(AdditionalResults $AdditionalResults)
+    public function setAdditionalResults(AdditionalResults $AdditionalResults): void
     {
         $this->AdditionalResults = $AdditionalResults;
-
-        return $this;
     }
 
-    /**
-     * @return ManipulatedPayloadsType
-     */
-    public function getManipulatedPayloads()
+    public function getManipulatedPayloads(): ?ManipulatedPayloadsType
     {
         return $this->ManipulatedPayloads;
     }
 
-    /**
-     * @return DualNotificationRequestType
-     */
-    public function setManipulatedPayloads(ManipulatedPayloadsType $ManipulatedPayloads)
+    public function setManipulatedPayloads(ManipulatedPayloadsType $ManipulatedPayloads): void
     {
         $this->ManipulatedPayloads = $ManipulatedPayloads;
-
-        return $this;
     }
 
-    /**
-     * @return StatusType
-     */
-    public function getStatus()
+    public function getStatus(): StatusType
     {
         return $this->Status;
     }
 
-    /**
-     * @return DualNotificationRequestType
-     */
-    public function setStatus(StatusType $Status)
+    public function setStatus(StatusType $Status): void
     {
         $this->Status = $Status;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @return DualNotificationRequestType
-     */
-    public function setVersion(string $version)
+    public function setVersion(string $version): void
     {
         $this->version = $version;
-
-        return $this;
     }
 }
