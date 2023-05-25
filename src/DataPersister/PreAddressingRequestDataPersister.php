@@ -7,7 +7,6 @@ namespace Dbp\Relay\DispatchBundle\DataPersister;
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
-use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -53,20 +52,6 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
         $preAddressingRequest->setIdentifier((string) Uuid::v4());
 
         $this->dispatchService->doPreAddressingSoapRequestForPreAddressingRequest($preAddressingRequest);
-//        $requestRecipient = new RequestRecipient();
-//        $requestRecipient->setGivenName($preAddressingRequest->getGivenName());
-//        $requestRecipient->setFamilyName($preAddressingRequest->getFamilyName());
-//        $requestRecipient->setBirthDate($preAddressingRequest->getBirthDate());
-//
-//        $xmlString = $this->dispatchService->generatePreAddressingAPIXML($requestRecipient);
-//        $response = $this->dispatchService->doPreAddressingAPIRequest($xmlString);
-//
-        ////        dump($response);
-//        if ($response) {
-//            dump($response->getHeaders());
-//            dump($response->getStatusCode());
-//            dump($response->getBody()->getContents());
-//        }
 
         return $preAddressingRequest;
     }

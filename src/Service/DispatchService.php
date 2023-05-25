@@ -600,7 +600,6 @@ class DispatchService implements LoggerAwareInterface
     public function handleRequestSubmissionMessage(RequestSubmissionMessage $message)
     {
         $request = $message->getRequest();
-//        dump($request);
 
         try {
             // Do Vendo API request
@@ -627,10 +626,7 @@ class DispatchService implements LoggerAwareInterface
         $senderProfile = $this->dd->getSenderProfile();
         $sender = new SenderType($senderProfile);
         $recipientData = new PersonDataType($physicalPerson);
-//        $parameters = new ParametersType(new ParameterType('bla', 'foo'));
         $recipientType = new RecipientType($recipientData);
-
-//        $channels = new DeliveryChannels(new DeliveryChannelSetType());
         $channels = null;
 
         $recipients = new Recipients([new Recipient($recipientId, $recipientType)]);
@@ -650,20 +646,12 @@ class DispatchService implements LoggerAwareInterface
             $channels,
             '1.0'
         );
-//        dump($request);
-//        dump('baseUrl');
-//        dump($this->baseUrl);
-//        dump($this->cert);
-//        dump($this->certPassword);
+
         try {
             $response = $service->dualDeliveryPreAddressingRequestOperation($request);
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'PreAddressing request failed!', 'dispatch:request-pre-addressing-failed', ['message' => $e->getMessage()]);
         }
-
-//        dump($response);
-//        dump($service->getPrettyLastRequest());
-//        dump($service->getPrettyLastResponse());
 
         if ($response->getStatus()->getText() !== 'SUCCESS') {
             /* @var ErrorType[] $errors */
@@ -734,14 +722,7 @@ class DispatchService implements LoggerAwareInterface
             );
         }
 
-//        dump('baseUrl');
-//        dump($this->baseUrl);
-//        dump($response);
-//        dump($service->getPrettyLastRequest());
-//        dump($service->getPrettyLastResponse());
-
         $code = $response->getStatus()->getCode();
-//        $response->getResult()->getNotificationChannel()->getNotificationChannelSet()
         $status = $this->getStatusForCode($code);
 
         $lastStatusChange = $this->getLastStatusChange($recipient);
@@ -851,8 +832,6 @@ class DispatchService implements LoggerAwareInterface
 
         /** @var RequestFile[] $files */
         $files = $dispatchRequest->getFiles();
-//        dump('$files');
-//        dump($files);
 
         // For some reasons files are not loaded by default
         if (count($files) === 0) {
@@ -862,8 +841,6 @@ class DispatchService implements LoggerAwareInterface
             ]);
         }
 
-//        dump('$files2');
-//        dump($files);
         foreach ($files as $file) {
             $payloadAttrs = new PayloadAttributesType($file->getName(), $file->getFileFormat());
             $payloadAttrs->setSize($file->getContentSize());
@@ -889,10 +866,6 @@ class DispatchService implements LoggerAwareInterface
             $doc = new BinaryDocumentType($content);
             $dualDeliveryPayloads[] = new PayloadType($payloadAttrs, $doc);
         }
-
-//        $recipients = new Recipients($recipients);
-//        $applicationId = new ApplicationID($profile, '1.0');
-//        $meta->setApplicationID($applicationId);
 
         //
         // Set sender data with organization and address
@@ -983,7 +956,6 @@ class DispatchService implements LoggerAwareInterface
             $dualDeliveryRecipient = new RecipientType($personData);
 
             $id = $recipient->getAppDeliveryID();
-//            $id = $recipient->getAppDeliveryID().'-pbek-'.rand(100000, 999999);
             $meta = new DualDeliveryMetaData(
                 $id,
                 null,
@@ -997,9 +969,8 @@ class DispatchService implements LoggerAwareInterface
                 null,
                 true
             );
-//            dump($dualDeliveryRecipients);
+
             $request = new DualDeliveryRequest($sender, null, $dualDeliveryRecipient, $meta, null, $dualDeliveryPayloads, '1.0');
-//            dump($request);
 
             try {
                 $response = $service->dualDeliveryRequestOperation($request);
@@ -1026,15 +997,6 @@ class DispatchService implements LoggerAwareInterface
                     ]
                 );
             }
-
-//            dump('baseUrl');
-//            dump($this->baseUrl);
-//            dump($this->cert);
-//            dump($this->certPassword);
-
-//            dump($response);
-//            dump($service->getPrettyLastRequest());
-//            dump($service->getPrettyLastResponse());
 
             if ($response->getStatus()->getText() !== 'SUCCESS') {
                 /* @var ErrorType[] $errors */
@@ -1078,8 +1040,7 @@ class DispatchService implements LoggerAwareInterface
                 ->getQuery();
 
             try {
-                $result = $query->execute();
-//                dump($result);
+                $query->execute();
             } catch (\Exception $e) {
                 throw ApiError::withDetails(
                     Response::HTTP_INTERNAL_SERVER_ERROR, 'DualDeliveryId of RequestRecipient could not be updated after DualDelivery request!',
@@ -1091,22 +1052,6 @@ class DispatchService implements LoggerAwareInterface
                     ]
                 );
             }
-
-//            $recipient->setDualDeliveryID($response->getDualDeliveryID());
-//
-//            try {
-//                $this->em->persist($recipient);
-//                $this->em->flush();
-//            } catch (\Exception $e) {
-//                throw ApiError::withDetails(
-//                    Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be update after DualDelivery request!',
-//                    'dispatch:request-recipient-not-updated', [
-//                        'request-id' => $dispatchRequest->getIdentifier(),
-//                        'recipient-id' => $recipient->getIdentifier(),
-//                        'message' => $e->getMessage(),
-//                    ]
-//                );
-//            }
 
             $this->doDualDeliveryStatusRequestSoapRequest($recipient);
         }
@@ -1193,7 +1138,6 @@ class DispatchService implements LoggerAwareInterface
             try {
                 $this->doDualDeliveryStatusRequestSoapRequest($recipient);
             } catch (\Exception $e) {
-//                dump($e);
                 $this->logWarning('Error while doing status request!', [
                     'recipient-id' => $recipient->getIdentifier(),
                     'exception' => $e,
@@ -1227,8 +1171,7 @@ class DispatchService implements LoggerAwareInterface
             ->getQuery();
 
         try {
-            $result = $query->execute();
-//            dump($result);
+            $query->execute();
         } catch (\Exception $e) {
             throw ApiError::withDetails(
                 Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryEndDate of RequestRecipient could not be set!',

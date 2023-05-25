@@ -10,7 +10,6 @@ use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 class RequestDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
@@ -21,19 +20,13 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
     private $dispatchService;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var AuthorizationService
      */
     private $auth;
 
-    public function __construct(DispatchService $dispatchService, RequestStack $requestStack, AuthorizationService $auth)
+    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
     {
         $this->dispatchService = $dispatchService;
-        $this->requestStack = $requestStack;
         $this->auth = $auth;
     }
 

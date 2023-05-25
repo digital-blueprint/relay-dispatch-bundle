@@ -38,8 +38,6 @@ final class DeliveryStatusChangeItemDataProvider extends AbstractController impl
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();
 
-        $filters = $context['filters'] ?? [];
-
         $deliveryStatusChange = $this->dispatchService->getDeliveryStatusChangeById($id);
         $requestRecipient = $this->dispatchService->getRequestRecipientById($deliveryStatusChange->getDispatchRequestRecipientIdentifier());
         $request = $this->dispatchService->getRequestById($requestRecipient->getDispatchRequestIdentifier());

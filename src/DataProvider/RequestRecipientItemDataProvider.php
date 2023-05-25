@@ -38,8 +38,6 @@ final class RequestRecipientItemDataProvider extends AbstractController implemen
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();
 
-        $filters = $context['filters'] ?? [];
-
         $requestRecipient = $this->dispatchService->getRequestRecipientById($id);
         $request = $this->dispatchService->getRequestById($requestRecipient->getDispatchRequestIdentifier());
         $this->auth->checkCanReadMetadata($request->getGroupId());
