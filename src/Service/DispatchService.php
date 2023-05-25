@@ -44,7 +44,6 @@ use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LogLevel;
@@ -97,14 +96,12 @@ class DispatchService implements LoggerAwareInterface
 
     public function __construct(
         PersonProviderInterface $personProvider,
-        ManagerRegistry $managerRegistry,
+        EntityManagerInterface $em,
         MessageBusInterface $bus,
         DualDeliveryService $dd
     ) {
         $this->personProvider = $personProvider;
-        $manager = $managerRegistry->getManager('dbp_relay_dispatch_bundle');
-        assert($manager instanceof EntityManagerInterface);
-        $this->em = $manager;
+        $this->em = $em;
         $this->bus = $bus;
         $this->dd = $dd;
         $this->logger = new NullLogger();
