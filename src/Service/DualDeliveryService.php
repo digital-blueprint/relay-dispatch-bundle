@@ -120,17 +120,24 @@ class DualDeliveryService implements LoggerAwareInterface
 
     public static function getPdfFromDeliveryNotification(DualNotificationRequestType $request): ?string
     {
-        // Check for EDeliveryNotification (from eDelivery)
-        $notification = $request->getResult()->getNotificationChannel()->getEDeliveryNotification();
+        $result = $request->getResult();
+        if ($result === null) {
+            return null;
+        }
+        $notificationChannel = $request->getResult()->getNotificationChannel();
+        if ($notificationChannel === null) {
+            return null;
+        }
 
-        if ($notification) {
+        // Check for EDeliveryNotification (from eDelivery)
+        $notification = $notificationChannel->getEDeliveryNotification();
+        if ($notification !== null) {
             return self::getPdfFromEDeliveryNotification($notification);
         }
 
         // Check for PostalNotification (from postal delivery)
-        $notification = $request->getResult()->getNotificationChannel()->getPostalNotification();
-
-        if ($notification) {
+        $notification = $notificationChannel->getPostalNotification();
+        if ($notification !== null) {
             return self::getPdfFromPostalDeliveryNotification($notification);
         }
 
@@ -142,8 +149,17 @@ class DualDeliveryService implements LoggerAwareInterface
      */
     public static function getDeliveryNotificationForUnclaimedDescription(DualNotificationRequestType $request): ?string
     {
+        $result = $request->getResult();
+        if ($result === null) {
+            return null;
+        }
+        $notificationChannel = $request->getResult()->getNotificationChannel();
+        if ($notificationChannel === null) {
+            return null;
+        }
+
         // Check for PostalNotification (from postal delivery)
-        $notification = $request->getResult()->getNotificationChannel()->getPostalNotification();
+        $notification = $notificationChannel->getPostalNotification();
 
         if (!$notification) {
             return null;

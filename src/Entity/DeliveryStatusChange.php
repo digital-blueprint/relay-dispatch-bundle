@@ -8,6 +8,7 @@ date_default_timezone_set('UTC');
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\Vendo;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -50,20 +51,6 @@ class DeliveryStatusChange
     public const STATUS_DUAL_DELIVERY_REQUEST_FAILED = 4;
     public const STATUS_DUAL_DELIVERY_REQUEST_SUCCESS = 5;
     public const STATUS_STATUS_REQUEST_FAILED = 10;
-    // TODO: Those seem very Vendo-specific
-    public const STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND = 20;
-    public const STATUS_DUAL_DELIVERY_STATUS_P1 = 21;
-    public const STATUS_DUAL_DELIVERY_STATUS_P2 = 22;
-    public const STATUS_DUAL_DELIVERY_STATUS_P3 = 23;
-    public const STATUS_DUAL_DELIVERY_STATUS_P4 = 24;
-    public const STATUS_DUAL_DELIVERY_STATUS_P5 = 25;
-    public const STATUS_DUAL_DELIVERY_STATUS_P6 = 26;
-    public const STATUS_DUAL_DELIVERY_STATUS_P7 = 27;
-    public const STATUS_DUAL_DELIVERY_STATUS_P8 = 28;
-    public const STATUS_DUAL_DELIVERY_STATUS_P9 = 29;
-    public const STATUS_DUAL_DELIVERY_STATUS_P10 = 30;
-    public const STATUS_DUAL_DELIVERY_STATUS_P11 = 31;
-    public const STATUS_DUAL_DELIVERY_STATUS_P12 = 32;
 
     /**
      * @ORM\Id
@@ -258,19 +245,12 @@ class DeliveryStatusChange
 
     /**
      * Checks if a dual delivery status is final.
-     * TODO: Those seem very Vendo-specific.
      */
     public function isFinalDualDeliveryStatus(): bool
     {
         return in_array($this->statusType, [
-            self::STATUS_DUAL_DELIVERY_REQUEST_FAILED,
-            self::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND,
-            self::STATUS_DUAL_DELIVERY_STATUS_P5,
-            self::STATUS_DUAL_DELIVERY_STATUS_P6,
-            self::STATUS_DUAL_DELIVERY_STATUS_P9,
-            self::STATUS_DUAL_DELIVERY_STATUS_P10,
-            self::STATUS_DUAL_DELIVERY_STATUS_P12,
-        ], true);
+            self::STATUS_DUAL_DELIVERY_REQUEST_FAILED, ], true) ||
+            Vendo::isFinalStatus($this->statusType);
     }
 
     public function getDispatchStatus(): string
@@ -279,18 +259,11 @@ class DeliveryStatusChange
             self::STATUS_SOAP_ERROR,
             self::STATUS_DUAL_DELIVERY_REQUEST_FAILED,
             self::STATUS_STATUS_REQUEST_FAILED,
-            self::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND,
-            self::STATUS_DUAL_DELIVERY_STATUS_P8,
-            self::STATUS_DUAL_DELIVERY_STATUS_P9,
-            self::STATUS_DUAL_DELIVERY_STATUS_P12,
-        ], true)) {
+        ], true) || Vendo::isFailureStatus($this->statusType)) {
             return 'failure';
         }
 
-        if (in_array($this->statusType, [
-            self::STATUS_DUAL_DELIVERY_STATUS_P6,
-            self::STATUS_DUAL_DELIVERY_STATUS_P10,
-        ], true)) {
+        if (Vendo::isSuccessStatus($this->statusType)) {
             return 'success';
         }
 
@@ -298,14 +271,7 @@ class DeliveryStatusChange
             self::STATUS_SUBMITTED,
             self::STATUS_IN_PROGRESS,
             self::STATUS_DUAL_DELIVERY_REQUEST_SUCCESS,
-            self::STATUS_DUAL_DELIVERY_STATUS_P1,
-            self::STATUS_DUAL_DELIVERY_STATUS_P2,
-            self::STATUS_DUAL_DELIVERY_STATUS_P3,
-            self::STATUS_DUAL_DELIVERY_STATUS_P4,
-            self::STATUS_DUAL_DELIVERY_STATUS_P5,
-            self::STATUS_DUAL_DELIVERY_STATUS_P7,
-            self::STATUS_DUAL_DELIVERY_STATUS_P11,
-        ], true)) {
+        ], true) || Vendo::isPendingStatus($this->statusType)) {
             return 'pending';
         }
 

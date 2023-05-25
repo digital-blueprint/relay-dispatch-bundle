@@ -482,7 +482,7 @@ class DispatchService implements LoggerAwareInterface
     public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = '', string $file = null): DeliveryStatusChange
     {
         if (!$description) {
-            $description = self::getStatusTypeDescription($statusType);
+            $description = Vendo::getStatusTypeDescription($statusType);
         }
 
         $deliveryStatusChange = new DeliveryStatusChange();
@@ -721,7 +721,7 @@ class DispatchService implements LoggerAwareInterface
         }
 
         $code = $response->getStatus()->getCode();
-        $status = $this->getStatusForCode($code);
+        $status = Vendo::getStatusForCode($code);
 
         $lastStatusChange = $this->getLastStatusChange($recipient);
 
@@ -748,18 +748,10 @@ class DispatchService implements LoggerAwareInterface
         }
 
         $description = $this->getDeliveryStatusChangeDescription($response);
-
-        $file = null;
-        if ($status === DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6) {
-            $file = DualDeliveryService::getPdfFromDeliveryNotification($response);
-
-            if ($file === null) {
-                $unclaimedDescription = DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response);
-
-                if ($unclaimedDescription !== null) {
-                    $description .= "\n".$unclaimedDescription;
-                }
-            }
+        $file = DualDeliveryService::getPdfFromDeliveryNotification($response);
+        $unclaimedDescription = DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response);
+        if ($unclaimedDescription !== null) {
+            $description .= "\n".$unclaimedDescription;
         }
 
         $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(), $status, $description, $file);
@@ -800,10 +792,10 @@ class DispatchService implements LoggerAwareInterface
     public function getDeliveryStatusChangeDescription(DualNotificationRequestType $response): string
     {
         $code = $response->getStatus()->getCode();
-        $status = $this->getStatusForCode($code);
+        $status = Vendo::getStatusForCode($code);
 
         // First get the static status description
-        $description = self::getStatusTypeDescription($status);
+        $description = Vendo::getStatusTypeDescription($status);
 
         // Try to add the status text from the response
         $statusText = $response->getStatus()->getText();
@@ -1059,77 +1051,6 @@ class DispatchService implements LoggerAwareInterface
         }
 
         return true;
-    }
-
-    protected function getStatusForCode(string $code): int
-    {
-        $statusType = 0;
-
-        switch ($code) {
-            case '17':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND;
-                break;
-            case 'P1':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P1;
-                break;
-            case 'P2':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P2;
-                break;
-            case 'P3':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P3;
-                break;
-            case 'P4':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P4;
-                break;
-            case 'P5':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P5;
-                break;
-            case 'P6':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6;
-                break;
-            case 'P7':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P7;
-                break;
-            case 'P8':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P8;
-                break;
-            case 'P9':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P9;
-                break;
-            case 'P10':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P10;
-                break;
-            case 'P11':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P11;
-                break;
-            case 'P12':
-                $statusType = DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P12;
-                break;
-        }
-
-        return $statusType;
-    }
-
-    public static function getStatusTypeDescription(int $status): string
-    {
-        // The P* codes are textual explanation for status code from DeliveryQuality_ProcessingProfile_Statuswerte_v1.1.0.xlsx
-        $descriptions = [
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_APPLICATION_ID_NOT_FOUND => 'ApplicationID wurde nicht gefunden',
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P1 => 'P1: Addressierbarkeit wird geprüft',
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P2 => 'P2: Datenanreicherung des Geschäftsfalles',
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P3 => 'P3: Geschäftsfall wird zugestellt',
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P4 => "P4: Geschäftsfall teilweise zugestellt\nDer Geschäftsfall wurde von der Applikation an den Zustellservice übertragen. Keine Bestätigung vom Zustelldienst erhalten, ein erneuter Versuch erfolgt.",
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P5 => "P5: Geschäftsfall erfolgreich übermittelt\nDer Geschäftsfall wurde von der Applikation an den Zustellservice übertragen.",
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P6 => 'P6: Alle Nachweise erhalten von allen Kanälen',
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P7 => 'P7: Geschäftfall wird verarbeitet',
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P8 => "P8: Empfänger konnte nicht ermittelt werden\nnegative Antwort vom zentralen Adressverzeichnis (Zustellkopf), mit den übergebenen Informationen konnte keine eindeutige Person identifiziert werden",
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P9 => "P9: Zustellung konnte nicht erfolgreich verarbeitet/zugestellt werden\nMögliche Gründe: fehlende Adressierungsmerkmale, keine Fristgerechte Antwort von Druckstrasse erhalten.",
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P10 => "P10: Geschäftfall erfolgreich zugestellt\nGeschäftsfall ist beim Empfängerpostfach am Zustelldienst hinterlegt bzw. von der Druckstrasse produziert worden.",
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P11 => 'P11: Nachweise befindet sich im Zulauf',
-            DeliveryStatusChange::STATUS_DUAL_DELIVERY_STATUS_P12 => 'P12: Fehler aufgetreten, bitte kontaktieren Sie den Support',
-        ];
-
-        return $descriptions[$status] ?? '';
     }
 
     public function doStatusRequests()

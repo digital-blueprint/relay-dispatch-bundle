@@ -18,4 +18,13 @@ class DualDeliveryProviderTest extends TestCase
         $this->assertTrue(Vendo::isValidGZForSubmission(str_repeat('a', 25)));
         $this->assertTrue(Vendo::isValidGZForSubmission('ok'));
     }
+
+    public function testStatus()
+    {
+        $status = Vendo::getStatusForCode('P6');
+        $this->assertTrue(Vendo::isFinalStatus($status));
+        $this->assertTrue(Vendo::isSuccessStatus($status));
+        $this->assertFalse(Vendo::isPendingStatus($status));
+        $this->assertFalse(Vendo::isFailureStatus($status));
+    }
 }

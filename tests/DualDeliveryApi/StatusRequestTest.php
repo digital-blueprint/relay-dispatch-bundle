@@ -171,6 +171,9 @@ class StatusRequestTest extends TestCase
         $this->assertSame('132478', $response->getDualDeliveryID());
         $this->assertSame('P3', $response->getStatus()->getCode());
         $this->assertSame('InDelivery', $response->getStatus()->getText());
+
+        $this->assertNull(DualDeliveryService::getPdfFromDeliveryNotification($response));
+        $this->assertNull(DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response));
     }
 
     public function testStatusRequestDeliveryNotificationEDelivery()
@@ -186,6 +189,8 @@ class StatusRequestTest extends TestCase
         $this->assertSame('AllNotificationsReceived', $response->getStatus()->getText());
         $this->assertSame('I_AM_A_PDF', DualDeliveryService::getPdfFromDeliveryNotification($response));
         $this->assertSame('', DualDeliveryService::getErrorTextFromStatusResponse($response));
+
+        $this->assertNull(DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response));
     }
 
     public function testStatusRequestDeliveryNotificationPostal()
@@ -201,6 +206,8 @@ class StatusRequestTest extends TestCase
         $this->assertSame('AllNotificationsReceived', $response->getStatus()->getText());
         $this->assertSame('I_AM_A_PDF', DualDeliveryService::getPdfFromDeliveryNotification($response));
         $this->assertSame('', DualDeliveryService::getErrorTextFromStatusResponse($response));
+
+        $this->assertNull(DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response));
     }
 
     public function testStatusRequestDeliveryNotificationUnclaimed()
@@ -214,6 +221,8 @@ class StatusRequestTest extends TestCase
         $this->assertSame('P6', $response->getStatus()->getCode());
         $this->assertSame("Status: 2459 (nicht behoben)\nDate: 2023-02-14\nDelivery Area: PP 8006\nBarcode: BA00BUTU80230000000008", $unclaimedDescription);
         $this->assertSame('', DualDeliveryService::getErrorTextFromStatusResponse($response));
+
+        $this->assertNull(DualDeliveryService::getPdfFromDeliveryNotification($response));
     }
 
     public function testStatusRequestErrorText()
@@ -228,5 +237,8 @@ class StatusRequestTest extends TestCase
         $this->assertSame('P9', $response->getStatus()->getCode());
         $this->assertSame('Error', $response->getStatus()->getText());
         $this->assertSame('I am an error text.', DualDeliveryService::getErrorTextFromStatusResponse($response));
+
+        $this->assertNull(DualDeliveryService::getPdfFromDeliveryNotification($response));
+        $this->assertNull(DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response));
     }
 }
