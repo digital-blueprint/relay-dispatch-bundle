@@ -37,6 +37,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Rec
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\Recipients;
 use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\DeliveryQuality;
 use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\ProcessingProfile as VendoProcessingProfile;
+use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\Vendo;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Dbp\Relay\DispatchBundle\Entity\Request;
@@ -921,6 +922,10 @@ class DispatchService implements LoggerAwareInterface
         // New information 2023-01-16: A GZ is mandatory for postal delivery, max 25 chars
         $dispatchRequest->checkAndUpdateReferenceNumber();
         $gz = $dispatchRequest->getReferenceNumber();
+
+        if (!Vendo::isValidGZForSubmission($gz)) {
+            throw new \RuntimeException('invalid GZ');
+        }
 
         /** @var RequestRecipient $recipient */
         foreach ($dispatchRequest->getRecipients() as $recipient) {
