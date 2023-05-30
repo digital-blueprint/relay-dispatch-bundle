@@ -18,6 +18,7 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\Dual
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\StatusRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingResponseType;
+use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\ApiProvider as VendoApiProvider;
 use DOMDocument;
 
 class DualDeliveryClient extends \SoapClient
@@ -279,53 +280,30 @@ class DualDeliveryClient extends \SoapClient
         ],
     ];
 
-    // Some vendors have special requirements that are not part of the spec, instead of makeing everything
-    // configurable we just note a list of quirks here and apply them based on the domain of the SOAP endpoint
-    private const QUIRKS = [
-        [
-            'domains' => ['dual.vendo.at', 'dualtest.vendo.at'],
-            'operation_path_mapping' => [
-                'dualStatusRequestOperation' => '/mprs-polling/services10/DDPollingServiceProcessor',
-                'dualDeliveryCancellationRequestOperation' => '/mprs-polling/services10/DDPollingServiceProcessor',
-                'dualNotificationRequestOperation' => '/mprs-polling/services10/DDPollingServiceProcessor',
-                'dualDeliveryRequestOperation' => '/mprs-core/services10/DDWebServiceProcessor',
-                'dualDeliveryPreAddressingRequestOperation' => '/mprs-core/services10/DDAddressingProcessor',
-                // Looks like the bulk APIs aren't supported
-                'dualNotificationBulkRequestOperation' => null,
-                'dualDeliveryBulkRequestOperation' => null,
-            ],
-            'stream_context_options' => [
-                'ssl' => [
-                    // vendo gives errors sometimes if 1.3 is used, they recommended restricting to 1.2
-                    'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
-                ],
-            ],
-        ],
-    ];
-
-    private $activeQuirks;
+    /**
+     * @var string
+     */
     private $origLocation;
 
-    private static function getQuirksForLocation(string $location): array
+    /**
+     * @var ApiProviderInterface
+     */
+    private $provider;
+
+    private static function getProviderForLocation(string $location): ApiProviderInterface
     {
         $host = parse_url($location, PHP_URL_HOST);
         if ($host === false) {
-            throw new \RuntimeException();
+            throw new \RuntimeException('failed to parse location');
         }
-        foreach (self::QUIRKS as $quirk) {
-            if (in_array($host, $quirk['domains'], true)) {
-                $quirk['host'] = $host;
-
-                return $quirk;
+        $providers = [new VendoApiProvider()];
+        foreach ($providers as $provider) {
+            if (in_array($host, $provider->getDomains(), true)) {
+                return $provider;
             }
         }
-        // default no quirks
-        return [
-            'host' => $host,
-            'domains' => [],
-            'operation_path_mapping' => [],
-            'stream_context_options' => [],
-        ];
+
+        return new FallbackApiProvider();
     }
 
     public function getPrettyLastRequest(): string
@@ -372,7 +350,7 @@ class DualDeliveryClient extends \SoapClient
         $options['classmap'] = $this->getClassMap();
 
         $this->origLocation = $location;
-        $this->activeQuirks = self::getQuirksForLocation($location);
+        $this->provider = self::getProviderForLocation($location);
 
         $wsdl_path = dirname(__FILE__).DIRECTORY_SEPARATOR.'wsdl'.DIRECTORY_SEPARATOR.'DualeZustellung.wsdl';
 
@@ -381,7 +359,7 @@ class DualDeliveryClient extends \SoapClient
             'cache_wsdl' => WSDL_CACHE_NONE,
             'location' => $location,
             'trace' => $trace,
-            'stream_context' => stream_context_create($this->activeQuirks['stream_context_options']),
+            'stream_context' => stream_context_create($this->provider->getStreamContextOptions()),
         ], $options);
 
         // If you have a .p12 file convert it to PEM using:
@@ -398,32 +376,20 @@ class DualDeliveryClient extends \SoapClient
         \SoapClient::__construct($wsdl_path, $options);
     }
 
-    private function setLocation(string $name): void
-    {
-        // This sets the location based on the SOAP function call name
-        $mapping = $this->activeQuirks['operation_path_mapping'];
-        $host = $this->activeQuirks['host'];
-        if (array_key_exists($name, $mapping)) {
-            $path = $mapping[$name];
-            // In case the mapping value is null, assume it's not supported
-            if ($path === null) {
-                throw new \SoapFault('', $host." doesn't provide ".$name);
-            }
-        } else {
-            $path = '';
-        }
-        $newLocation = rtrim($this->origLocation, '/').$path;
-        $this->__setLocation($newLocation);
-    }
-
     /*
      * @return mixed
      */
-    private function callInternal(string $name, array $args)
+    private function callInternal(string $operationName, array $args)
     {
-        $this->setLocation($name);
+        // This sets the location based on the SOAP function call name
+        $operationPath = $this->provider->getPathForOperation($operationName);
+        if ($operationPath === null) {
+            throw new \SoapFault('Server', get_class($this->provider)." doesn't provide ".$operationName);
+        }
+        $newLocation = rtrim($this->origLocation, '/').$operationPath;
+        $this->__setLocation($newLocation);
 
-        return $this->__soapCall($name, $args);
+        return $this->__soapCall($operationName, $args);
     }
 
     public function dualDeliveryRequestOperation(DualDeliveryRequest $DualDeliveryRequest): DualDeliveryResponse
