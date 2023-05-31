@@ -1,5 +1,13 @@
 # Changelog
 
+# 0.3.3
+
+* Fix default value for the GROUPS config option
+* Various internal cleanups with the goal to make it possible to support multiple service providers in the future
+* Add a basic health check for the bundle authorization configuration. This checks for problems
+like syntax errors and usage of invalid variables, methods and more.
+* Work around 400 errors on "/dispatch/requests/{identifier}/submit" requests caused by the upgrade to api-platform 2.7
+
 # 0.3.2
 
 - minor cleanups
