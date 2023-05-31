@@ -183,6 +183,18 @@ class AuthorizationService extends AbstractAuthorizationService
         return $groupIds;
     }
 
+    public function validateConfiguration()
+    {
+        $testGroupId = '0';
+
+        $this->getCanUse();
+        $this->getCanReadMetadata($testGroupId);
+        $this->getCanReadContent($testGroupId);
+        $this->getCanWrite($testGroupId);
+        $this->canReadInternalAddresses($testGroupId);
+        $this->getAllGroupIds();
+    }
+
     /**
      * @return string[]
      */
