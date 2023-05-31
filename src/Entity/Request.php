@@ -83,8 +83,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             "method" = "POST",
  *             "path" = "/dispatch/requests/{identifier}/submit",
  *             "controller" = PostSubmitRequest::class,
- *             "read" = false,
- *             "write" = false,
+ *             "defaults" = {
+ *                 "_api_persist" = false,
+ *                 "_api_receive" = false,
+ *             },
  *             "openapi_context" = {
  *                 "tags" = {"Dispatch"},
  *                 "summary" = "Submits the request.",
