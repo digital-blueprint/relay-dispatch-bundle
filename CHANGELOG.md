@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.3.4
+
+* Fix PUT request for the /dispatch/requests/{identifier} endpoint
+
 # 0.3.3
 
 * Fix default value for the GROUPS config option
