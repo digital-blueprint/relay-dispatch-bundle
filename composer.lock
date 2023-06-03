@@ -309,16 +309,16 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.105",
+            "version": "v0.1.106",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "b722b9a0dd66e406ad749376633763f6496068a9"
+                "reference": "f606b306c2041e71a20dc2cd4f99a01157db1921"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/b722b9a0dd66e406ad749376633763f6496068a9",
-                "reference": "b722b9a0dd66e406ad749376633763f6496068a9",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/f606b306c2041e71a20dc2cd4f99a01157db1921",
+                "reference": "f606b306c2041e71a20dc2cd4f99a01157db1921",
                 "shasum": ""
             },
             "require": {
@@ -386,9 +386,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.105"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.106"
             },
-            "time": "2023-05-23T12:30:21+00:00"
+            "time": "2023-06-01T15:06:12+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -831,16 +831,16 @@
         },
         {
             "name": "doctrine/deprecations",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de"
+                "reference": "8cffffb2218e01f3b370bf763e00e81697725259"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de",
-                "reference": "0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/8cffffb2218e01f3b370bf763e00e81697725259",
+                "reference": "8cffffb2218e01f3b370bf763e00e81697725259",
                 "shasum": ""
             },
             "require": {
@@ -868,9 +868,9 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/v1.0.0"
+                "source": "https://github.com/doctrine/deprecations/tree/v1.1.0"
             },
-            "time": "2022-05-02T15:47:09+00:00"
+            "time": "2023-05-29T18:55:17+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -2227,16 +2227,16 @@
         },
         {
             "name": "kevinrob/guzzle-cache-middleware",
-            "version": "v4.1.0",
+            "version": "v4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kevinrob/guzzle-cache-middleware.git",
-                "reference": "8528f8c040c333480cbf885ef669dfb33a21f1e8"
+                "reference": "0e12dccf3c811a18bb2f6c93882c5b5727e1b859"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kevinrob/guzzle-cache-middleware/zipball/8528f8c040c333480cbf885ef669dfb33a21f1e8",
-                "reference": "8528f8c040c333480cbf885ef669dfb33a21f1e8",
+                "url": "https://api.github.com/repos/Kevinrob/guzzle-cache-middleware/zipball/0e12dccf3c811a18bb2f6c93882c5b5727e1b859",
+                "reference": "0e12dccf3c811a18bb2f6c93882c5b5727e1b859",
                 "shasum": ""
             },
             "require": {
@@ -2306,9 +2306,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Kevinrob/guzzle-cache-middleware/issues",
-                "source": "https://github.com/Kevinrob/guzzle-cache-middleware/tree/v4.1.0"
+                "source": "https://github.com/Kevinrob/guzzle-cache-middleware/tree/v4.1.1"
             },
-            "time": "2023-05-26T10:54:58+00:00"
+            "time": "2023-05-31T07:04:24+00:00"
         },
         {
             "name": "laminas/laminas-code",
