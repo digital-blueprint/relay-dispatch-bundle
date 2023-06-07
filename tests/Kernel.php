@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle;
+use ApiPlatform\Symfony\Bundle\ApiPlatformBundle;
 use Dbp\Relay\BasePersonBundle\DbpRelayBasePersonBundle;
 use Dbp\Relay\CoreBundle\DbpRelayCoreBundle;
 use Dbp\Relay\DispatchBundle\DbpRelayDispatchBundle;

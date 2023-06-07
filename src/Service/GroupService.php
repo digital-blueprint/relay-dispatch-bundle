@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Service;
 
-use ApiPlatform\Core\Api\IriConverterInterface;
+use ApiPlatform\Api\IriConverterInterface;
 use Dbp\Relay\CoreBundle\Entity\NamedEntityInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\CoreBundle\LocalData\LocalData;
@@ -62,7 +62,7 @@ class GroupService implements LoggerAwareInterface
     {
         $filters = [LocalData::INCLUDE_PARAMETER_NAME => implode(LocalData::SEPARATOR, $this->getAddressAttributes())];
 
-        $entity = $this->iriConverter->getItemFromIri(sprintf($this->config[Configuration::GROUP_DATA_IRI_TEMPLATE], $groupId),
+        $entity = $this->iriConverter->getResourceFromIri(sprintf($this->config[Configuration::GROUP_DATA_IRI_TEMPLATE], $groupId),
             ['filters' => $filters]);
 
         if ($entity instanceof NamedEntityInterface === false ||
