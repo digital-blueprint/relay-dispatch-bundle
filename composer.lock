@@ -250,16 +250,16 @@
         },
         {
             "name": "dbp/relay-base-person-bundle",
-            "version": "v0.2.18",
+            "version": "v0.2.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-base-person-bundle.git",
-                "reference": "782312ca5edcdeb8cef0dc5664dede9f152187ef"
+                "reference": "7e7579e687846ab148789304b889be8ebf5c4403"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-base-person-bundle/zipball/782312ca5edcdeb8cef0dc5664dede9f152187ef",
-                "reference": "782312ca5edcdeb8cef0dc5664dede9f152187ef",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-base-person-bundle/zipball/7e7579e687846ab148789304b889be8ebf5c4403",
+                "reference": "7e7579e687846ab148789304b889be8ebf5c4403",
                 "shasum": ""
             },
             "require": {
@@ -303,22 +303,22 @@
             ],
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-base-person-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-base-person-bundle/tree/v0.2.18"
+                "source": "https://github.com/digital-blueprint/relay-base-person-bundle/tree/v0.2.19"
             },
-            "time": "2023-05-09T13:34:44+00:00"
+            "time": "2023-06-20T08:50:31+00:00"
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.113",
+            "version": "v0.1.114",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "fec3bb48d3258853548d08cecfe9c0fa6db10685"
+                "reference": "781ff512a3901e76d5a6ab1829e289a9e86eb632"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/fec3bb48d3258853548d08cecfe9c0fa6db10685",
-                "reference": "fec3bb48d3258853548d08cecfe9c0fa6db10685",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/781ff512a3901e76d5a6ab1829e289a9e86eb632",
+                "reference": "781ff512a3901e76d5a6ab1829e289a9e86eb632",
                 "shasum": ""
             },
             "require": {
@@ -386,9 +386,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.113"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.114"
             },
-            "time": "2023-06-07T06:22:09+00:00"
+            "time": "2023-06-19T09:58:38+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -9369,16 +9369,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.19",
+            "version": "1.10.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "af5a296ff02610c1bfb4ddfac9fd4a08657b9046"
+                "reference": "b2a30186be2e4d97dce754ae4e65eb0ec2f04eb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/af5a296ff02610c1bfb4ddfac9fd4a08657b9046",
-                "reference": "af5a296ff02610c1bfb4ddfac9fd4a08657b9046",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b2a30186be2e4d97dce754ae4e65eb0ec2f04eb5",
+                "reference": "b2a30186be2e4d97dce754ae4e65eb0ec2f04eb5",
                 "shasum": ""
             },
             "require": {
@@ -9427,7 +9427,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-14T15:26:58+00:00"
+            "time": "2023-06-21T20:07:58+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
