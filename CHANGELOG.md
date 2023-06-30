@@ -1,8 +1,12 @@
 # Changelog
 
-# 0.3.5
+# 0.3.6
 
 - request: enforce non-empty name and reference number and add error handling
+
+# 0.3.5
+
+- TODO: @tobiasgv
 
 # 0.3.4
 
