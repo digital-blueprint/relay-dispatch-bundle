@@ -16,7 +16,7 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 ## Error Codes
 
 | relay:errorId                                                      | Status code | Description                                                                        |
-| ------------------------------------------------------------------ | ----------- |------------------------------------------------------------------------------------|
+|--------------------------------------------------------------------|-------------|------------------------------------------------------------------------------------|
 | `dispatch:request-file-missing-request-identifier`                 | `400`       | `Missing "dispatchRequestIdentifier"!`                                             |
 | `dispatch:request-submitted-read-only`                             | `400`       | `Submitted requests cannot be modified!`                                           |
 | `dispatch:request-file-missing-file`                               | `400`       | `No file with parameter key "file" was received!`                                  |
@@ -47,3 +47,4 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 | `dispatch:dual-delivery-request-failed`                            | `500`       | `DualDelivery request failed!`                                                     |
 | `dispatch:request-recipient-not-updated`                           | `500`       | `DualDelivery request failed!`                                                     |
 | `dispatch:request-recipient-delivery-end-date-not-set`             | `500`       | `DeliveryEndDate of RequestRecipient could not be set!`                            |
+| `dispatch:invalid-reference-number`                                | `400`       | `referenceNumber wasn't set correctly!`                                            |

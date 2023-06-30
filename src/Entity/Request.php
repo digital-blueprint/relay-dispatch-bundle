@@ -134,6 +134,7 @@ class Request
      *     max=255,
      *     maxMessage="Only {{ limit }} letters are allowed"
      * )
+     * @Assert\NotBlank()
      *
      * @var string
      */
@@ -279,6 +280,7 @@ class Request
      *     max=25,
      *     maxMessage="Only {{ limit }} letters are allowed"
      * )
+     * @Assert\NotBlank()
      *
      * @var string
      */
