@@ -6,7 +6,7 @@
 
 # 0.3.5
 
-- TODO: @tobiasgv
+- replaced deprecate ApiPlatform classes that will be removed in ApiPlatform version 3
 
 # 0.3.4
 
