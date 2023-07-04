@@ -47,4 +47,5 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 | `dispatch:dual-delivery-request-failed`                            | `500`       | `DualDelivery request failed!`                                                     |
 | `dispatch:request-recipient-not-updated`                           | `500`       | `DualDelivery request failed!`                                                     |
 | `dispatch:request-recipient-delivery-end-date-not-set`             | `500`       | `DeliveryEndDate of RequestRecipient could not be set!`                            |
-| `dispatch:invalid-reference-number`                                | `400`       | `referenceNumber wasn't set correctly!`                                            |
+| `dispatch:request-invalid-reference-number`                        | `400`       | `referenceNumber wasn't set correctly!`                                            |
+| `dispatch:request-name-empty`                                      | `400`       | `name must not be empty!`                                                          |

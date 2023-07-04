@@ -916,7 +916,7 @@ class DispatchService implements LoggerAwareInterface
         $gz = $dispatchRequest->getReferenceNumber();
 
         if (!Vendo::isValidGZForSubmission($gz)) {
-            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, "referenceNumber wasn't set correctly!", 'dispatch:invalid-reference-number');
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, "referenceNumber wasn't set correctly!", 'dispatch:request-invalid-reference-number');
         }
 
         /** @var RequestRecipient $recipient */
@@ -949,7 +949,7 @@ class DispatchService implements LoggerAwareInterface
 
             // The entity doesn't allow empty names, this check is just for old data or if whitespaces were sent
             if ($name === '') {
-                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'name must not be empty!');
+                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, "name must not be empty!", 'dispatch:request-name-empty');
             }
 
             $dualDeliveryRecipient = new RecipientType($personData);
