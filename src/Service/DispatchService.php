@@ -949,7 +949,7 @@ class DispatchService implements LoggerAwareInterface
 
             // The entity doesn't allow empty names, this check is just for old data or if whitespaces were sent
             if ($name === '') {
-                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, "name must not be empty!", 'dispatch:request-name-empty');
+                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'name must not be empty!', 'dispatch:request-name-empty');
             }
 
             $dualDeliveryRecipient = new RecipientType($personData);
