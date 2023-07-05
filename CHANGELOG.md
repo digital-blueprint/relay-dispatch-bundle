@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.3.7
+
+- request: allow empty request name and referenceNumber and improve error handling
+
 # 0.3.6
 
 - request: enforce non-empty name and reference number and add error handling
