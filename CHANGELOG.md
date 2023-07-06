@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.4.0
+
+- add: blob and file-storage settings
+
 # 0.3.7
 
 - request: allow empty request name and referenceNumber and improve error handling
