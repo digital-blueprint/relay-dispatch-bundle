@@ -19,6 +19,12 @@ dbp_relay_dispatch:
   cert:                 ~
   # The password of the client certificate
   cert_password:        ~
+  # The way files are persisted. Can be "database" or "blob". Defaults to "database"
+  file_storage:         database
+  # Bucket id for blob storage
+  blob_bucket_id:       ~
+  # Secret key for blob storage
+  blob_key:             ~
   group:
     iri_template:         /base/organizations/%s
     address_attributes:

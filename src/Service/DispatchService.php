@@ -94,6 +94,18 @@ class DispatchService implements LoggerAwareInterface
      * @var DualDeliveryService
      */
     private $dd;
+    /**
+     * @var mixed
+     */
+    private $fileStorage;
+    /**
+     * @var mixed
+     */
+    private $blobKey;
+    /**
+     * @var mixed
+     */
+    private $blobBucketId;
 
     public function __construct(
         PersonProviderInterface $personProvider,
@@ -113,6 +125,9 @@ class DispatchService implements LoggerAwareInterface
         $this->certPassword = $config['cert_password'] ?? '';
         $this->cert = $config['cert'] ?? '';
         $this->url = $config['service_url'];
+        $this->fileStorage = $config['file_storage'];
+        $this->blobKey = $config['blob_key'] ?? '';
+        $this->blobBucketId = $config['blob_bucket_id'] ?? '';
     }
 
     private function getCurrentPerson(): Person
@@ -458,6 +473,11 @@ class DispatchService implements LoggerAwareInterface
         $requestFile->setDispatchRequestIdentifier($dispatchRequestIdentifier);
         $request = $this->getRequestById($requestFile->getDispatchRequestIdentifier());
         $requestFile->setRequest($request);
+
+        // TODO: Implement file storage in blob
+//        dump($this->fileStorage);
+//        dump($this->blobKey);
+//        dump($this->blobBucketId);
 
         $requestFile->setIdentifier((string) Uuid::v4());
         $requestFile->setName($uploadedFile instanceof UploadedFile ? $uploadedFile->getClientOriginalName() : $uploadedFile->getFilename());
