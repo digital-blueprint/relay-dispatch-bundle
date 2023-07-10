@@ -19,6 +19,10 @@
     {
       "matchPackageNames": ["api-platform/core"],
       "allowedVersions": "<2.7"
+    },
+    {
+      "matchPackagePrefixes": ["web-token/"],
+      "allowedVersions": "<3"
     }
   ]
 }
