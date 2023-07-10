@@ -10,26 +10,15 @@
   "lockFileMaintenance": {
     "enabled": true
   },
+  "constraintsFiltering": "strict",
   "packageRules": [
     {
       "matchPackagePrefixes": ["symfony/"],
       "allowedVersions": "<6"
     },
     {
-      "matchPackageNames": ["friendsofphp/php-cs-fixer"],
-      "allowedVersions": "<3.5.0"
-    },
-    {
-      "matchPackageNames": ["vimeo/psalm"],
-      "allowedVersions": "<5"
-    },
-    {
       "matchPackageNames": ["api-platform/core"],
       "allowedVersions": "<2.7"
-    },
-    {
-      "matchPackageNames": ["phpunit/phpunit"],
-      "allowedVersions": "<10"
     }
   ]
 }
