@@ -40,6 +40,9 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         );
         $loader->load('services.yaml');
 
+        $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\BlobService');
+        $definition->addMethodCall('setConfig', [$mergedConfig]);
+
         $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\DispatchService');
         $definition->addMethodCall('setConfig', [$mergedConfig]);
 

@@ -94,30 +94,33 @@ class DispatchService implements LoggerAwareInterface
      * @var DualDeliveryService
      */
     private $dd;
+
     /**
      * @var mixed
      */
     private $fileStorage;
+
     /**
-     * @var mixed
+     * @var BlobService
      */
-    private $blobKey;
-    /**
-     * @var mixed
-     */
-    private $blobBucketId;
+    private $blobService;
+
+    public const FILE_STORAGE_DATABASE = 'database';
+    public const FILE_STORAGE_BLOB = 'blob';
 
     public function __construct(
         PersonProviderInterface $personProvider,
         EntityManagerInterface $em,
         MessageBusInterface $bus,
-        DualDeliveryService $dd
+        DualDeliveryService $dd,
+        BlobService $blobService
     ) {
         $this->personProvider = $personProvider;
         $this->em = $em;
         $this->bus = $bus;
         $this->dd = $dd;
         $this->logger = new NullLogger();
+        $this->blobService = $blobService;
     }
 
     public function setConfig(array $config)
@@ -126,8 +129,6 @@ class DispatchService implements LoggerAwareInterface
         $this->cert = $config['cert'] ?? '';
         $this->url = $config['service_url'];
         $this->fileStorage = $config['file_storage'];
-        $this->blobKey = $config['blob_key'] ?? '';
-        $this->blobBucketId = $config['blob_bucket_id'] ?? '';
     }
 
     private function getCurrentPerson(): Person
@@ -473,16 +474,23 @@ class DispatchService implements LoggerAwareInterface
         $request = $this->getRequestById($requestFile->getDispatchRequestIdentifier());
         $requestFile->setRequest($request);
 
-        // TODO: Implement file storage in blob
-//        dump($this->fileStorage);
-//        dump($this->blobKey);
-//        dump($this->blobBucketId);
+        $fileName = $uploadedFile instanceof UploadedFile ? $uploadedFile->getClientOriginalName() : $uploadedFile->getFilename();
+
+        // TODO: Remove this when blob storage is implemented
+        $this->fileStorage = self::FILE_STORAGE_DATABASE;
+        dump($this->fileStorage);
+
+        if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
+            $this->blobService->uploadRequestFile($dispatchRequestIdentifier, $fileName, $data);
+            // TODO: Store blob id in database
+        } else {
+            $requestFile->setData($data);
+            $requestFile->setFileFormat($uploadedFile->getMimeType());
+            $requestFile->setContentSize($uploadedFile->getSize());
+        }
 
         $requestFile->setIdentifier((string) Uuid::v4());
-        $requestFile->setName($uploadedFile instanceof UploadedFile ? $uploadedFile->getClientOriginalName() : $uploadedFile->getFilename());
-        $requestFile->setData($data);
-        $requestFile->setFileFormat($uploadedFile->getMimeType());
-        $requestFile->setContentSize($uploadedFile->getSize());
+        $requestFile->setName($fileName);
         try {
             $requestFile->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         } catch (\Exception $e) {

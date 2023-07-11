@@ -15,6 +15,10 @@ services:
     arguments:
       $em: '@doctrine.orm.dbp_relay_dispatch_bundle_entity_manager'
 
+  Dbp\Relay\DispatchBundle\Service\BlobService:
+    autowire: true
+    autoconfigure: true
+
   Dbp\Relay\DispatchBundle\Service\GroupService:
     autowire: true
     autoconfigure: true
