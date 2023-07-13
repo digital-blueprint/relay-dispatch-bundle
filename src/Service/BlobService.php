@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Service;
 
 use Dbp\Relay\CoreBundle\Exception\ApiError;
-use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Helpers\BlobSignatureTools;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Uid\Uuid;
 
 class BlobService implements LoggerAwareInterface
 {
@@ -53,8 +50,8 @@ class BlobService implements LoggerAwareInterface
         $this->blobBucketId = $config['blob_bucket_id'] ?? '';
     }
 
-
-    public function createBlobSignature(string $dispatchRequestIdentifier, string $fileName, string $fileData): string {
+    public function createBlobSignature(string $dispatchRequestIdentifier, string $fileName, string $fileData): string
+    {
         $payload = [
             'bucketID' => $this->blobBucketId,
             'creationTime' => date('U'),
@@ -105,14 +102,14 @@ class BlobService implements LoggerAwareInterface
                 'action' => 'CREATEONE',
                 'fileName' => $fileName,
                 'fileHash' => hash('sha256', $fileData),
-                'sig' => $token
+                'sig' => $token,
             ],
             'form_params' => [
                 'file' => $fileData,
                 'prefix' => $this->getPrefix($dispatchRequestIdentifier),
                 'fileName' => $fileName,
                 'bucketID' => $this->blobBucketId,
-            ]
+            ],
         ]);
 
         dump($url);
@@ -122,10 +119,6 @@ class BlobService implements LoggerAwareInterface
         return '';
     }
 
-    /**
-     * @param string $dispatchRequestIdentifier
-     * @return string
-     */
     protected function getPrefix(string $dispatchRequestIdentifier): string
     {
         return 'Request/'.$dispatchRequestIdentifier;
