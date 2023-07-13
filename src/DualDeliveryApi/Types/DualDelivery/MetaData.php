@@ -27,6 +27,12 @@ class MetaData
     protected $Subject = null;
 
     /**
+     * Über dieses Element kann eine Geschäftszahl bzw. ein Geschäftskennzeichen
+     * für Anzeige und Druck mitgegeben werden, welches eine leichtere Lesbarkeit auf
+     * Ausdrucken bzw. Benachrichtigungen gewährleisten soll. Im Gegensatz zur
+     * AppDeliveryID ist in diesem Fall die technische Eindeutigkeit über das duale
+     * Zustellservice nicht zwingend erforderlich.
+     *
      * @var ?string
      */
     protected $GZ = null;

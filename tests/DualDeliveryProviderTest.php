@@ -11,6 +11,7 @@ class DualDeliveryProviderTest extends TestCase
 {
     public function testVendo()
     {
+        $this->assertFalse(Vendo::isValidGZForSubmission(null));
         $this->assertFalse(Vendo::isValidGZForSubmission(''));
         $this->assertFalse(Vendo::isValidGZForSubmission(' '));
         $this->assertFalse(Vendo::isValidGZForSubmission(str_repeat('a', 26)));

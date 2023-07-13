@@ -280,7 +280,7 @@ class Request
      *     maxMessage="Only {{ limit }} letters are allowed"
      * )
      *
-     * @var string
+     * @var ?string
      */
     private $referenceNumber;
 
@@ -465,7 +465,7 @@ class Request
         $this->files = $files;
     }
 
-    public function getReferenceNumber(): string
+    public function getReferenceNumber(): ?string
     {
         return $this->referenceNumber;
     }
@@ -473,15 +473,5 @@ class Request
     public function setReferenceNumber(string $referenceNumber): void
     {
         $this->referenceNumber = $referenceNumber;
-    }
-
-    public function checkAndUpdateReferenceNumber()
-    {
-        $this->referenceNumber = trim($this->referenceNumber ?? '');
-
-        // Set reference number if not set
-        if ($this->referenceNumber === '') {
-            $this->referenceNumber = '-';
-        }
     }
 }

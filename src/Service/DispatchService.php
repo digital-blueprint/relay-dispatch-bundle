@@ -612,6 +612,16 @@ class DispatchService implements LoggerAwareInterface
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request has no recipients!', 'dispatch:request-has-no-recipients');
         }
 
+        $gz = $request->getReferenceNumber();
+        if (!Vendo::isValidGZForSubmission($gz)) {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, "referenceNumber wasn't set correctly!", 'dispatch:request-invalid-reference-number');
+        }
+
+        $name = $request->getName();
+        if (trim($name) === '') {
+            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'name must not be empty!', 'dispatch:request-name-empty');
+        }
+
         if ($request->getFiles()->count() === 0) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Request has no files!', 'dispatch:request-has-no-files');
         }
@@ -934,18 +944,7 @@ class DispatchService implements LoggerAwareInterface
         $processingProfile = new ProcessingProfile(VendoProcessingProfile::ZUSE_PRINT_HYBRID_DD, '1.0');
         // TODO: Allow to set this via config/request (STRETCH_GOAL)
         $deliveryQuality = DeliveryQuality::RSA;
-        // GZ: Über dieses Element kann eine Geschäftszahl bzw. ein Geschäftskennzeichen
-        // für Anzeige und Druck mitgegeben werden, welches eine leichtere Lesbarkeit auf
-        // Ausdrucken bzw. Benachrichtigungen gewährleisten soll. Im Gegensatz zur
-        // AppDeliveryID ist in diesem Fall die technische Eindeutigkeit über das duale
-        // Zustellservice nicht zwingend erforderlich.
-        // New information 2023-01-16: A GZ is mandatory for postal delivery, max 25 chars
-        $dispatchRequest->checkAndUpdateReferenceNumber();
         $gz = $dispatchRequest->getReferenceNumber();
-
-        if (!Vendo::isValidGZForSubmission($gz)) {
-            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, "referenceNumber wasn't set correctly!", 'dispatch:request-invalid-reference-number');
-        }
 
         /** @var RequestRecipient $recipient */
         foreach ($dispatchRequest->getRecipients() as $recipient) {
@@ -973,12 +972,7 @@ class DispatchService implements LoggerAwareInterface
 //            }
 
             $personData = new PersonDataType($physicalPerson, $address);
-            $name = trim($dispatchRequest->getName());
-
-            // The entity doesn't allow empty names, this check is just for old data or if whitespaces were sent
-            if ($name === '') {
-                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'name must not be empty!', 'dispatch:request-name-empty');
-            }
+            $name = $dispatchRequest->getName();
 
             $dualDeliveryRecipient = new RecipientType($personData);
 

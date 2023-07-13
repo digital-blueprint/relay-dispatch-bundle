@@ -58,9 +58,6 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
         // Only allow if we can write within the given group
         $this->auth->checkCanWrite($request->getGroupId());
 
-        // Set reference number if not set
-        $request->checkAndUpdateReferenceNumber();
-
         if ($context['operation']->getMethod() === 'PUT') {
             if ($request->isSubmitted()) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');

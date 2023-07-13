@@ -195,12 +195,12 @@ class Vendo
     }
 
     /**
-     * Whether the GZ (MetaData::GZ) is valid.
+     * Whether the GZ (MetaData::GZ) is valid. null means there is no GZ.
      */
-    public static function isValidGZForSubmission(string $gz): bool
+    public static function isValidGZForSubmission(?string $gz): bool
     {
         // New information from Vendo 2023-01-16: A GZ is mandatory for postal delivery, max 25 chars
-        if (trim($gz) === '') {
+        if ($gz === null || trim($gz) === '') {
             return false;
         }
         if (mb_strlen($gz) > 25) {
