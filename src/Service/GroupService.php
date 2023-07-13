@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Service;
 
 use ApiPlatform\Api\IriConverterInterface;
+use Dbp\Relay\CoreBundle\Entity\NamedEntityInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\CoreBundle\LocalData\LocalData;
 use Dbp\Relay\CoreBundle\LocalData\LocalDataAwareInterface;
-use Dbp\Relay\CoreBundle\Rest\Entity\NamedEntityInterface;
-use Dbp\Relay\CoreBundle\Rest\Query\Pagination\Pagination;
-use Dbp\Relay\CoreBundle\Rest\Query\Parameters;
+use Dbp\Relay\CoreBundle\Pagination\Pagination;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
 use Dbp\Relay\DispatchBundle\Entity\Group;
@@ -61,8 +60,7 @@ class GroupService implements LoggerAwareInterface
 
     private function createGroup(string $groupId): Group
     {
-        $filters = [];
-        Parameters::setIncludeLocal($filters, LocalData::getQueryParameterFromLocalDataAttributes($this->getAddressAttributes()));
+        $filters = [LocalData::INCLUDE_PARAMETER_NAME => implode(LocalData::SEPARATOR, $this->getAddressAttributes())];
 
         $entity = $this->iriConverter->getResourceFromIri(sprintf($this->config[Configuration::GROUP_DATA_IRI_TEMPLATE], $groupId),
             ['filters' => $filters]);

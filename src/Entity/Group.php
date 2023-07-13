@@ -4,8 +4,42 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+/**
+ * @ApiResource(
+ *     collectionOperations={
+ *         "get" = {
+ *             "path" = "/dispatch/groups",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "openapi_context" = {
+ *                 "tags" = {"Dispatch"}
+ *             }
+ *         }
+ *     },
+ *     itemOperations={
+ *         "get" = {
+ *             "path" = "/dispatch/groups/{identifier}",
+ *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "openapi_context" = {
+ *                 "tags" = {"Dispatch"},
+ *                 "parameters" = {
+ *                     {"name" = "identifier", "in" = "path", "description" = "Resource identifier", "required" = true, "type" = "string", "example" = "1190"}
+ *                 }
+ *             }
+ *         },
+ *     },
+ *     iri="http://schema.org/Organization",
+ *     shortName="DispatchGroup",
+ *     description="A group",
+ *     normalizationContext={
+ *         "jsonld_embed_context" = true,
+ *         "groups" = {"DispatchGroup:output"}
+ *     }
+ * )
+ */
 class Group
 {
     public const ROLE_READ_METADATA = 'rm';
@@ -14,6 +48,7 @@ class Group
     public const ROLE_WRITE_READ_ADDRESS = 'wra';
 
     /**
+     * @ApiProperty(identifier=true)
      * @Groups({"DispatchGroup:output"})
      *
      * @var string
@@ -21,6 +56,7 @@ class Group
     private $identifier;
 
     /**
+     * @ApiProperty(iri="https://schema.org/name")
      * @Groups({"DispatchGroup:output"})
      *
      * @var string
@@ -28,6 +64,7 @@ class Group
     private $name;
 
     /**
+     * @ApiProperty(iri="https://schema.org/streetAddress")
      * @Groups({"DispatchGroup:output"})
      *
      * @var string
@@ -35,6 +72,7 @@ class Group
     private $street;
 
     /**
+     * @ApiProperty(iri="https://schema.org/addressLocality")
      * @Groups({"DispatchGroup:output"})
      *
      * @var string
@@ -42,6 +80,7 @@ class Group
     private $locality;
 
     /**
+     * @ApiProperty(iri="https://schema.org/postalCode")
      * @Groups({"DispatchGroup:output"})
      *
      * @var string
@@ -49,6 +88,7 @@ class Group
     private $postalCode;
 
     /**
+     * @ApiProperty(iri="https://schema.org/addressCountry")
      * @Groups({"DispatchGroup:output"})
      *
      * @var string
@@ -56,6 +96,25 @@ class Group
     private $country;
 
     /**
+     * @deprecated by $accessRights
+     * @ApiProperty
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var bool
+     */
+    private $mayRead;
+
+    /**
+     * @deprecated by $accessRights
+     * @ApiProperty
+     * @Groups({"DispatchGroup:output"})
+     *
+     * @var bool
+     */
+    private $mayWrite;
+
+    /**
+     * @ApiProperty
      * @Groups({"DispatchGroup:output"})
      *
      * @var string[]
@@ -136,5 +195,24 @@ class Group
     public function getAccessRights(): array
     {
         return $this->accessRights;
+    }
+
+    /**
+     * @deprecated
+     */
+    public function getMayRead(): bool
+    {
+        return
+            in_array(self::ROLE_READ_METADATA, $this->accessRights, true) ||
+            in_array(self::ROLE_READ_CONTENT, $this->accessRights, true) ||
+            in_array(self::ROLE_WRITE, $this->accessRights, true);
+    }
+
+    /**
+     * @deprecated
+     */
+    public function getMayWrite(): bool
+    {
+        return in_array(self::ROLE_WRITE, $this->accessRights, true);
     }
 }
