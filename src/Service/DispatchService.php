@@ -353,10 +353,7 @@ class DispatchService implements LoggerAwareInterface
             $request->setPersonIdentifier($personId);
         }
 
-        try {
-            $request->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
-        } catch (\Exception $e) {
-        }
+        $request->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
 
         try {
             $this->em->persist($request);
@@ -427,10 +424,7 @@ class DispatchService implements LoggerAwareInterface
         $requestRecipient->setAppDeliveryID($this->dd->createAppDeliveryID());
         $requestRecipient->setRequest($request);
         $requestRecipient->setRecipientId('');
-        try {
-            $requestRecipient->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
-        } catch (\Exception $e) {
-        }
+        $requestRecipient->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
 
         try {
             $this->em->persist($requestRecipient);
@@ -492,10 +486,7 @@ class DispatchService implements LoggerAwareInterface
 
         $requestFile->setIdentifier((string) Uuid::v4());
         $requestFile->setName($fileName);
-        try {
-            $requestFile->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
-        } catch (\Exception $e) {
-        }
+        $requestFile->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
 
         try {
             $this->em->persist($requestFile);
@@ -521,10 +512,7 @@ class DispatchService implements LoggerAwareInterface
         $deliveryStatusChange->setRequestRecipient($requestRecipient);
 
         $deliveryStatusChange->setIdentifier((string) Uuid::v4());
-        try {
-            $deliveryStatusChange->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
-        } catch (\Exception $e) {
-        }
+        $deliveryStatusChange->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
 
         $deliveryStatusChange->setStatusType($statusType);
         $deliveryStatusChange->setDescription($description);
@@ -563,11 +551,7 @@ class DispatchService implements LoggerAwareInterface
      */
     public function submitRequest(Request $request, bool $direct = false, bool $printRequestXml = false)
     {
-        try {
-            $request->setDateSubmitted(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
-        } catch (\Exception $e) {
-            $request->setDateSubmitted(new \DateTimeImmutable('now'));
-        }
+        $request->setDateSubmitted(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
         $this->updateRequest($request);
 
         $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_SUBMITTED, 'Request submitted');
