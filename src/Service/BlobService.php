@@ -95,7 +95,7 @@ class BlobService implements LoggerAwareInterface
             'fileHash' => hash('sha256', $fileData),
         ];
 
-        $urlPart = '/blob/files' . '?'.http_build_query($queryParams);
+        $urlPart = '/blob/files'.'?'.http_build_query($queryParams);
 
         dump($urlPart);
 
@@ -124,9 +124,9 @@ class BlobService implements LoggerAwareInterface
 //                ],
                 'multipart' => [
                     [
-                        'name'     => 'file',
+                        'name' => 'file',
                         'contents' => $fileData,
-                        'filename' => $fileName
+                        'filename' => $fileName,
                     ],
                 ],
                 'query' => [
