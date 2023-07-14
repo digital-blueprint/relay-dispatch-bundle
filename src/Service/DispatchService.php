@@ -483,7 +483,7 @@ class DispatchService implements LoggerAwareInterface
 
         if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
             $this->blobService->uploadRequestFile($dispatchRequestIdentifier, $fileName, $data);
-        // TODO: Store blob id in database
+            // TODO: Store blob id in database
         } else {
             $requestFile->setData($data);
             $requestFile->setFileFormat($uploadedFile->getMimeType());

@@ -33,6 +33,7 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 | `dispatch:request-not-created`                                     | `500`       | `Request could not be updated!`                                                    |
 | `dispatch:request-recipient-not-created`                           | `500`       | `RequestRecipient could not be created!`                                           |
 | `dispatch:request-file-not-created`                                | `500`       | `RequestFile could not be created!`                                                |
+| `dispatch:request-file-blob-upload-error`                          | `500`       | `RequestFile could not be uploaded to Blob service!`                               |
 | `dispatch:request-status-not-created`                              | `500`       | `DeliveryStatusChange could not be created!`                                       |
 | `dispatch:request-already-submitted`                               | `400`       | `Request was already submitted!`                                                   |
 | `dispatch:request-has-no-recipients`                               | `400`       | `Request has no recipients!`                                                       |

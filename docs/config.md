@@ -21,6 +21,8 @@ dbp_relay_dispatch:
   cert_password:        ~
   # The way files are persisted. Can be "database" or "blob". Defaults to "database"
   file_storage:         database
+  # Base URL of blob storage API
+  blob_base_url:       ~
   # Bucket id for blob storage
   blob_bucket_id:       ~
   # Secret key for blob storage
