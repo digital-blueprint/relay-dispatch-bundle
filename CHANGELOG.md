@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.4.1
+
+- add: "blob_base_url" setting and start of blob file storage implementation
+
 # 0.4.0
 
 - add: blob and file-storage settings
