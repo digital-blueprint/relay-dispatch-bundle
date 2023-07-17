@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87ee8a26b5ff714f8c616ce9988d9050",
+    "content-hash": "5e01f8fe8b9ae619090d5b02a30e17fa",
     "packages": [
         {
             "name": "api-platform/core",
@@ -369,16 +369,16 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "dev-main",
+            "version": "v0.1.115",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "e50ddbe94049b98b4f4f8b2979ad18e341cd78cf"
+                "reference": "b9c5ca9b1b543895bc3c58d697c14fba1778b800"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/e50ddbe94049b98b4f4f8b2979ad18e341cd78cf",
-                "reference": "e50ddbe94049b98b4f4f8b2979ad18e341cd78cf",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/b9c5ca9b1b543895bc3c58d697c14fba1778b800",
+                "reference": "b9c5ca9b1b543895bc3c58d697c14fba1778b800",
                 "shasum": ""
             },
             "require": {
@@ -426,7 +426,6 @@
                 "symfony/phpunit-bridge": "^5.4.11",
                 "vimeo/psalm": "^4.27"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "hooks": {
@@ -447,9 +446,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/filtering"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.115"
             },
-            "time": "2023-07-10T06:56:12+00:00"
+            "time": "2023-07-17T09:43:13+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -12114,18 +12113,9 @@
             "time": "2015-12-17T08:42:14+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "dbp/relay-core-bundle",
-            "version": "dev-main",
-            "alias": "0.1.114",
-            "alias_normalized": "0.1.114.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "dbp/relay-core-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
