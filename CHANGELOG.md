@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.2
+
+- don't set a request to "submitted" if submission requirements fail
+- minor cleanup
+
 ## 0.4.1
 
 - add: "blob_base_url" setting and start of blob file storage implementation
