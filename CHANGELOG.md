@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.3
+
+- Adjust for core-bundle API changes
+- Fix URL signatures for blob storage for files containing spaces in some cases
+
 ## 0.4.2
 
 - don't set a request to "submitted" if submission requirements fail
