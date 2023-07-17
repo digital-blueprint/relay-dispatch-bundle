@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DataProvider;
 
-use Dbp\Relay\CoreBundle\DataProvider\AbstractDataProvider;
+use Dbp\Relay\CoreBundle\Rest\AbstractDataProvider;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
-use Dbp\Relay\DispatchBundle\Entity\Group;
 use Dbp\Relay\DispatchBundle\Service\GroupService;
 
 class GroupDataProvider extends AbstractDataProvider
@@ -19,18 +18,15 @@ class GroupDataProvider extends AbstractDataProvider
 
     public function __construct(GroupService $groupService, AuthorizationService $auth)
     {
+        parent::__construct();
+
         $this->groupService = $groupService;
         $this->auth = $auth;
     }
 
-    protected function getResourceClass(): string
-    {
-        return Group::class;
-    }
-
     protected function isUserGrantedOperationAccess(int $operation): bool
     {
-        return $this->isUserAuthenticated();
+        return $this->isAuthenticated();
     }
 
     protected function getItemById($id, array $filters = [], array $options = []): object
