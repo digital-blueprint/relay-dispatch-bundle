@@ -95,7 +95,8 @@ class BlobService implements LoggerAwareInterface
             'fileHash' => hash('sha256', $fileData),
         ];
 
-        $urlPart = '/blob/files'.'?'.http_build_query($queryParams);
+        // It's mandatory that "%20" is used instead of "+" for spaces in the query string, otherwise the checksum will be invalid.
+        $urlPart = '/blob/files'.'?'.http_build_query($queryParams, "", "&", PHP_QUERY_RFC3986);
 
         dump($urlPart);
 
