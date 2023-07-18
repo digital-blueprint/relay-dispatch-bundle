@@ -474,14 +474,14 @@ class DispatchService implements LoggerAwareInterface
         $this->fileStorage = self::FILE_STORAGE_DATABASE;
         dump($this->fileStorage);
 
+        // Store the blob file identifier as "data" in the database
         if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
-            $this->blobService->uploadRequestFile($dispatchRequestIdentifier, $fileName, $data);
-        // TODO: Store blob id in database
-        } else {
-            $requestFile->setData($data);
-            $requestFile->setFileFormat($uploadedFile->getMimeType());
-            $requestFile->setContentSize($uploadedFile->getSize());
+            $data = $this->blobService->uploadRequestFile($dispatchRequestIdentifier, $fileName, $data);
         }
+
+        $requestFile->setData($data);
+        $requestFile->setFileFormat($uploadedFile->getMimeType());
+        $requestFile->setContentSize($uploadedFile->getSize());
 
         $requestFile->setIdentifier((string) Uuid::v4());
         $requestFile->setName($fileName);
