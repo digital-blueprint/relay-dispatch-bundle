@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Service;
 
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Helpers\BlobSignatureTools;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -74,6 +75,14 @@ class BlobService implements LoggerAwareInterface
     private function generateSha256ChecksumFromUrl($url): string
     {
         return hash('sha256', $url);
+    }
+
+    public function downloadRequestFile(RequestFile $requestFile): string
+    {
+        // TODO: implement
+        $blobIdentifier = $requestFile->getData();
+
+        return 'TODO';
     }
 
     // TODO: Move to PHP library (in a more general version)

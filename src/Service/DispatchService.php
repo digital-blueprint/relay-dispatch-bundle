@@ -220,6 +220,16 @@ class DispatchService implements LoggerAwareInterface
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestFile was not found!', 'dispatch:request-file-not-found');
         }
 
+        if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
+            $blobIdentifier = $requestFile->getData();
+
+            if (strlen($blobIdentifier) > 50) {
+                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile has invalid blob identifier!', 'dispatch:request-file-blob-identifier-invalid');
+            }
+
+            $requestFile->setData($this->blobService->downloadRequestFile($requestFile));
+        }
+
         return $requestFile;
     }
 
