@@ -137,7 +137,7 @@ class RequestFile
      *
      * @var string
      */
-    private $contentUrl;
+    private $contentUrl = '';
 
     /**
      * @ORM\Column(type="binary", length=209715200)
@@ -229,6 +229,7 @@ class RequestFile
      */
     public function setData($data): void
     {
+        $this->contentUrl = '';
         $this->data = $data;
     }
 
@@ -244,7 +245,16 @@ class RequestFile
 
     public function getContentUrl(): string
     {
-        return Tools::getDataURI($this->getData(), $this->fileFormat);
+        if ($this->contentUrl === '') {
+            $this->contentUrl = Tools::getDataURI($this->getData(), $this->fileFormat);
+        }
+
+        return $this->contentUrl;
+    }
+
+    public function setContentUrl(string $contentUrl): void
+    {
+        $this->contentUrl = $contentUrl;
     }
 
     public function getFileFormat(): string

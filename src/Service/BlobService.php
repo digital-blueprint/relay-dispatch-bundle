@@ -77,12 +77,38 @@ class BlobService implements LoggerAwareInterface
         return hash('sha256', $url);
     }
 
-    public function downloadRequestFile(RequestFile $requestFile): string
+    public function downloadRequestFileAsContentUrl(RequestFile $requestFile): string
     {
-        // TODO: implement
         $blobIdentifier = $requestFile->getData();
 
-        return 'TODO';
+        $queryParams = [
+            'bucketID' => $this->blobBucketId,
+            'creationTime' => date('U'),
+            'action' => 'GETONE',
+            'binary' => 1,
+        ];
+
+        $url = $this->getSignedBlobFilesUrl($queryParams, $blobIdentifier);
+
+        // https://github.com/digital-blueprint/relay-blob-bundle/blob/main/doc/api.md
+        $client = new Client();
+        try {
+            $r = $client->request('GET', $url);
+        } catch (GuzzleException $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be downloaded from Blob!', 'dispatch:request-file-blob-download-error', ['message' => $e->getMessage()]);
+        }
+
+        $result = $r->getBody()->getContents();
+        $jsonData = json_decode($result, true);
+
+        dump($jsonData);
+        $contentUrl = $jsonData['contentUrl'] ?? '';
+
+        if ($contentUrl === '') {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be downloaded from Blob!', 'dispatch:request-file-blob-download-error', ['message' => 'No contentUrl returned from Blob!']);
+        }
+
+        return $contentUrl;
     }
 
     // TODO: Move to PHP library (in a more general version)
@@ -97,21 +123,11 @@ class BlobService implements LoggerAwareInterface
             'fileHash' => hash('sha256', $fileData),
         ];
 
-        // It's mandatory that "%20" is used instead of "+" for spaces in the query string, otherwise the checksum will be invalid!
-        $urlPart = '/blob/files'.'?'.http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986);
-
-        $checksum = $this->generateSha256ChecksumFromUrl($urlPart);
-        $payload = [
-            'cs' => $checksum,
-        ];
-
-        $token = $this->createBlobSignature($payload);
+        $url = $this->getSignedBlobFilesUrl($queryParams);
 
         // Post to Blob
         // https://github.com/digital-blueprint/relay-blob-bundle/blob/main/doc/api.md
         $client = new Client();
-        $url = $this->blobBaseUrl.$urlPart.'&sig='.$token;
-
         try {
             $r = $client->request('POST', $url, [
                 'multipart' => [
@@ -121,18 +137,9 @@ class BlobService implements LoggerAwareInterface
                         'filename' => $fileName,
                     ],
                 ],
-                'query' => [
-                    'bucketID' => $this->blobBucketId,
-                    'creationTime' => date('U'),
-                    'prefix' => $this->getPrefix($dispatchRequestIdentifier),
-                    'action' => 'CREATEONE',
-                    'fileName' => $fileName,
-                    'fileHash' => hash('sha256', $fileData),
-                    'sig' => $token,
-                ],
             ]);
         } catch (GuzzleException $e) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not uploaded to Blob!', 'dispatch:request-file-blob-upload-error', ['message' => $e->getMessage()]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be uploaded to Blob!', 'dispatch:request-file-blob-upload-error', ['message' => $e->getMessage()]);
         }
 
         $result = $r->getBody()->getContents();
@@ -140,7 +147,7 @@ class BlobService implements LoggerAwareInterface
         $identifier = $jsonData['identifier'] ?? '';
 
         if ($identifier === '') {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not uploaded to Blob!', 'dispatch:request-file-blob-upload-error', ['message' => 'No identifier returned from Blob!']);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be uploaded to Blob!', 'dispatch:request-file-blob-upload-error', ['message' => 'No identifier returned from Blob!']);
         }
 
         // Return the blob file ID
@@ -150,5 +157,27 @@ class BlobService implements LoggerAwareInterface
     protected function getPrefix(string $dispatchRequestIdentifier): string
     {
         return 'Request/'.$dispatchRequestIdentifier;
+    }
+
+    protected function getSignedBlobFilesUrl(array $queryParams, string $blobIdentifier = ''): string
+    {
+        $path = '/blob/files';
+
+        if ($blobIdentifier !== '') {
+            $path .= '/'.urlencode($blobIdentifier);
+        }
+
+        // It's mandatory that "%20" is used instead of "+" for spaces in the query string, otherwise the checksum will be invalid!
+        $urlPart = $path.'?'.http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986);
+
+        $checksum = $this->generateSha256ChecksumFromUrl($urlPart);
+
+        $payload = [
+            'cs' => $checksum,
+        ];
+
+        $token = $this->createBlobSignature($payload);
+
+        return $this->blobBaseUrl.$urlPart.'&sig='.$token;
     }
 }

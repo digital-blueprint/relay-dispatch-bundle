@@ -129,6 +129,9 @@ class DispatchService implements LoggerAwareInterface
         $this->cert = $config['cert'] ?? '';
         $this->url = $config['service_url'];
         $this->fileStorage = $config['file_storage'];
+
+        // TODO: Remove this when blob storage is implemented
+        $this->fileStorage = self::FILE_STORAGE_DATABASE;
     }
 
     private function getCurrentPerson(): Person
@@ -227,7 +230,7 @@ class DispatchService implements LoggerAwareInterface
                 throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile has invalid blob identifier!', 'dispatch:request-file-blob-identifier-invalid');
             }
 
-            $requestFile->setData($this->blobService->downloadRequestFile($requestFile));
+            $requestFile->setContentUrl($this->blobService->downloadRequestFileAsContentUrl($requestFile));
         }
 
         return $requestFile;
@@ -479,10 +482,6 @@ class DispatchService implements LoggerAwareInterface
         $requestFile->setRequest($request);
 
         $fileName = $uploadedFile instanceof UploadedFile ? $uploadedFile->getClientOriginalName() : $uploadedFile->getFilename();
-
-        // TODO: Remove this when blob storage is implemented
-        $this->fileStorage = self::FILE_STORAGE_DATABASE;
-        dump($this->fileStorage);
 
         // Store the blob file identifier as "data" in the database
         if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
