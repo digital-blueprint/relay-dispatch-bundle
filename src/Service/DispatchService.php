@@ -340,6 +340,10 @@ class DispatchService implements LoggerAwareInterface
             ->getRepository(Request::class)
             ->find($request->getIdentifier());
 
+        if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
+            $this->blobService->deleteBlobFilesByRequest($request);
+        }
+
         $this->em->remove($request);
         $this->em->flush();
     }
@@ -548,7 +552,7 @@ class DispatchService implements LoggerAwareInterface
             ->find($identifier);
 
         if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
-            $this->blobService->deleteRequestFile($requestFile);
+            $this->blobService->deleteBlobFileByRequestFile($requestFile);
         }
 
         $this->em->remove($requestFile);

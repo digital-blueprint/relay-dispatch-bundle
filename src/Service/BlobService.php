@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Service;
 
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Helpers\BlobSignatureTools;
 use GuzzleHttp\Client;
@@ -77,9 +78,10 @@ class BlobService implements LoggerAwareInterface
         return hash('sha256', $url);
     }
 
-    public function deleteRequestFile(RequestFile $requestFile): void
+    public function deleteBlobFileByRequestFile(RequestFile $requestFile): void
     {
         $blobIdentifier = $requestFile->getData();
+        $requestFileIdentifier = $requestFile->getIdentifier();
 
         $queryParams = [
             'bucketID' => $this->blobBucketId,
@@ -94,13 +96,42 @@ class BlobService implements LoggerAwareInterface
         try {
             $r = $client->request('DELETE', $url);
         } catch (GuzzleException $e) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['message' => $e->getMessage()]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-file-identifier' => $requestFileIdentifier, 'message' => $e->getMessage()]);
         }
 
         $statusCode = $r->getStatusCode();
 
         if ($statusCode !== 204) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['message' => 'Blob returned status code '.$statusCode]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-file-identifier' => $requestFileIdentifier, 'message' => 'Blob returned status code '.$statusCode]);
+        }
+    }
+
+    public function deleteBlobFilesByRequest(Request $request): void
+    {
+        $dispatchRequestIdentifier = $request->getIdentifier();
+        $queryParams = [
+            'bucketID' => $this->blobBucketId,
+            'creationTime' => date('U'),
+            'prefix' => $this->getPrefix($dispatchRequestIdentifier),
+            'action' => 'DELETEALL',
+        ];
+
+        $url = $this->getSignedBlobFilesUrl($queryParams);
+
+        // https://github.com/digital-blueprint/relay-blob-bundle/blob/main/doc/api.md
+        $client = new Client();
+        try {
+            $r = $client->request('DELETE', $url);
+        } catch (GuzzleException $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => $e->getMessage()]);
+        }
+
+        $statusCode = $r->getStatusCode();
+
+        dump($statusCode);
+
+        if ($statusCode !== 204) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => 'Blob returned status code '.$statusCode]);
         }
     }
 
