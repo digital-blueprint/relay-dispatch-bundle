@@ -77,6 +77,33 @@ class BlobService implements LoggerAwareInterface
         return hash('sha256', $url);
     }
 
+    public function deleteRequestFile(RequestFile $requestFile): void
+    {
+        $blobIdentifier = $requestFile->getData();
+
+        $queryParams = [
+            'bucketID' => $this->blobBucketId,
+            'creationTime' => date('U'),
+            'action' => 'DELETEONE',
+        ];
+
+        $url = $this->getSignedBlobFilesUrl($queryParams, $blobIdentifier);
+
+        // https://github.com/digital-blueprint/relay-blob-bundle/blob/main/doc/api.md
+        $client = new Client();
+        try {
+            $r = $client->request('DELETE', $url);
+        } catch (GuzzleException $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['message' => $e->getMessage()]);
+        }
+
+        $statusCode = $r->getStatusCode();
+
+        if ($statusCode !== 204) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['message' => 'Blob returned status code ' . $statusCode]);
+        }
+    }
+
     public function downloadRequestFileAsContentUrl(RequestFile $requestFile): string
     {
         $blobIdentifier = $requestFile->getData();
@@ -101,7 +128,6 @@ class BlobService implements LoggerAwareInterface
         $result = $r->getBody()->getContents();
         $jsonData = json_decode($result, true);
 
-        dump($jsonData);
         $contentUrl = $jsonData['contentUrl'] ?? '';
 
         if ($contentUrl === '') {
