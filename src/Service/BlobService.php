@@ -100,7 +100,7 @@ class BlobService implements LoggerAwareInterface
         $statusCode = $r->getStatusCode();
 
         if ($statusCode !== 204) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['message' => 'Blob returned status code ' . $statusCode]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['message' => 'Blob returned status code '.$statusCode]);
         }
     }
 
