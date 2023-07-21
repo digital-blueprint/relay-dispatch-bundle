@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.4
+
+- add: more blob storage implementation and documentation
+
 ## 0.4.3
 
 - Adjust for core-bundle API changes
