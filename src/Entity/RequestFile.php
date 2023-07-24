@@ -164,6 +164,20 @@ class RequestFile
      */
     private $contentSize;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     *
+     * @var string
+     */
+    private $fileStorageSystem;
+
+    /**
+     * @ORM\Column(type="string", length=1000)
+     *
+     * @var string
+     */
+    private $fileStorageIdentifier;
+
     public function getIdentifier(): string
     {
         return (string) $this->identifier;
@@ -270,5 +284,25 @@ class RequestFile
     public function setRequest(Request $request): void
     {
         $this->request = $request;
+    }
+
+    public function getFileStorageSystem(): string
+    {
+        return $this->fileStorageSystem;
+    }
+
+    public function setFileStorageSystem(string $fileStorageSystem): void
+    {
+        $this->fileStorageSystem = $fileStorageSystem;
+    }
+
+    public function getFileStorageIdentifier(): string
+    {
+        return $this->fileStorageIdentifier;
+    }
+
+    public function setFileStorageIdentifier(string $fileStorageIdentifier): void
+    {
+        $this->fileStorageIdentifier = $fileStorageIdentifier;
     }
 }
