@@ -223,8 +223,8 @@ class DispatchService implements LoggerAwareInterface
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'RequestFile was not found!', 'dispatch:request-file-not-found');
         }
 
-        if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
-            $blobIdentifier = $requestFile->getData();
+        if ($requestFile->getFileStorageSystem() === self::FILE_STORAGE_BLOB) {
+            $blobIdentifier = $requestFile->getFileStorageIdentifier();
 
             if (strlen($blobIdentifier) > 50) {
                 throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile has invalid blob identifier!', 'dispatch:request-file-blob-identifier-invalid');
@@ -492,10 +492,11 @@ class DispatchService implements LoggerAwareInterface
         if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
             $fileStorageIdentifier = $this->blobService->uploadRequestFile($dispatchRequestIdentifier, $fileName, $data);
             $requestFile->setFileStorageIdentifier($fileStorageIdentifier);
-        } else {
-            $requestFile->setData($data);
+            // We don't want to store the file content in the database
+            $data = '';
         }
 
+        $requestFile->setData($data);
         $requestFile->setFileFormat($uploadedFile->getMimeType());
         $requestFile->setContentSize($uploadedFile->getSize());
 
@@ -554,7 +555,7 @@ class DispatchService implements LoggerAwareInterface
             ->getRepository(RequestFile::class)
             ->find($identifier);
 
-        if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
+        if ($requestFile->getFileStorageSystem() === self::FILE_STORAGE_BLOB) {
             $this->blobService->deleteBlobFileByRequestFile($requestFile);
         }
 

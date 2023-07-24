@@ -80,7 +80,7 @@ class BlobService implements LoggerAwareInterface
 
     public function deleteBlobFileByRequestFile(RequestFile $requestFile): void
     {
-        $blobIdentifier = $requestFile->getData();
+        $blobIdentifier = $requestFile->getFileStorageIdentifier();
         $requestFileIdentifier = $requestFile->getIdentifier();
 
         $queryParams = [
@@ -137,7 +137,7 @@ class BlobService implements LoggerAwareInterface
 
     public function downloadRequestFileAsContentUrl(RequestFile $requestFile): string
     {
-        $blobIdentifier = $requestFile->getData();
+        $blobIdentifier = $requestFile->getFileStorageIdentifier();
 
         $queryParams = [
             'bucketID' => $this->blobBucketId,
