@@ -119,18 +119,24 @@ class BlobService implements LoggerAwareInterface
         $url = $this->getSignedBlobFilesUrl($queryParams);
 
         // https://github.com/digital-blueprint/relay-blob-bundle/blob/main/doc/api.md
+        // We send a DELETE request to the blob service to delete all files with the given prefix,
+        // regardless if we have files in dispatch or not, we just want to make sure that the blob files are deleted
         $client = new Client();
         try {
             $r = $client->request('DELETE', $url);
         } catch (GuzzleException $e) {
+            // 404 errors are ok, because the files might not exist anymore
+            if ($e->getCode() === 404) {
+                return;
+            }
+
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => $e->getMessage()]);
         }
 
         $statusCode = $r->getStatusCode();
 
-        dump($statusCode);
-
-        if ($statusCode !== 204) {
+        // 404 errors are ok, because the files might not exist anymore
+        if ($statusCode !== 204 && $statusCode !== 404) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => 'Blob returned status code '.$statusCode]);
         }
     }
