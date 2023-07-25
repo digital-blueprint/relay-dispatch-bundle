@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.7
+
+- fix: ignore 404 error when removing blob files by prefix
+
 ## 0.4.6
 
 - fix: blob content url loading
