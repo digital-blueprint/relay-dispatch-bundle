@@ -60,7 +60,8 @@ class TestSeedCommand extends Command
             ->addOption('recipient-address-locality', null, InputOption::VALUE_OPTIONAL, 'Recipient address locality')
             ->addOption('recipient-address-country', null, InputOption::VALUE_OPTIONAL, 'Recipient address country', 'AT')
             ->addOption('recipient-person-id', null, InputOption::VALUE_OPTIONAL, 'Recipient person identifier')
-            ->addOption('request-person-id', null, InputOption::VALUE_REQUIRED, 'Request person identifier');
+            ->addOption('request-person-id', null, InputOption::VALUE_REQUIRED, 'Request person identifier')
+            ->addOption('request-reference-number', null, InputOption::VALUE_OPTIONAL, 'Request reference number', date('YmdHis'));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -89,6 +90,7 @@ class TestSeedCommand extends Command
         }
 
         $requestPersonId = $input->getOption('request-person-id');
+        $requestReferenceNumber = $input->getOption('request-reference-number');
 
         switch ($action) {
             case 'create':
@@ -106,6 +108,7 @@ class TestSeedCommand extends Command
                 $request->setSenderPostalCode((string) rand(1000, 9999));
                 $request->setSenderAddressLocality('Musterstadt');
                 $request->setSenderAddressCountry('AT');
+                $request->setReferenceNumber($requestReferenceNumber);
                 $request = $this->dispatchService->createRequest($request);
 
                 $requestRecipient = new RequestRecipient();
