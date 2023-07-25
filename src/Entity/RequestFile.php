@@ -224,10 +224,20 @@ class RequestFile
     }
 
     /**
-     * @return resource|string|int|false
+     * @return resource|string|int|false|null
+     * @throws \Exception
      */
     public function getData()
     {
+        // If the file is stored in the blob storage system, the contentUrl should already be set at that time
+        if ($this->fileStorageSystem === 'blob') {
+            if ($this->contentUrl === '') {
+                return null;
+            }
+
+            return Tools::dataUriToBinary($this->contentUrl);
+        }
+
         if (is_resource($this->data)) {
             rewind($this->data);
             $this->data = stream_get_contents($this->data);

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Helpers;
 
+use Exception;
+
 class Tools
 {
     /**
@@ -12,6 +14,25 @@ class Tools
     public static function getDataURI(string $data, string $mime): string
     {
         return 'data:'.$mime.';base64,'.base64_encode($data);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function dataUriToBinary($dataUri) {
+        $dataUriParts = explode(',', $dataUri, 2);
+
+        if (count($dataUriParts) !== 2) {
+            throw new Exception('Invalid Data URI format');
+        }
+
+        $data = base64_decode($dataUriParts[1]);
+
+        if ($data === false) {
+            throw new Exception('Failed to decode base64 data');
+        }
+
+        return $data;
     }
 
     /**
