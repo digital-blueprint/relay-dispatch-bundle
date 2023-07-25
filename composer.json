@@ -5,10 +5,12 @@
     "require": {
         "php": ">=7.3",
         "ext-dom": "*",
+        "ext-json": "*",
         "ext-simplexml": "*",
         "ext-soap": "*",
         "api-platform/core": "^2.7.11",
         "dbp/relay-base-person-bundle": "^0.2.15",
+        "dbp/relay-blob-library": "^0.1.0",
         "dbp/relay-core-bundle": "^0.1.115",
         "guzzlehttp/guzzle": "^7.0",
         "symfony/framework-bundle": "^5.2",
@@ -17,8 +19,7 @@
         "symfony/validator": "^5.4",
         "web-token/jwt-key-mgmt": "^2.2",
         "web-token/jwt-signature": "^2.2",
-        "web-token/jwt-signature-algorithm-hmac": "^2.2",
-        "ext-json": "*"
+        "web-token/jwt-signature-algorithm-hmac": "^2.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
