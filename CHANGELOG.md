@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.5
+
+- add: blob storage data loading and persisting handling and enable blob storage
+
 ## 0.4.4
 
 - add: more blob storage implementation and documentation
