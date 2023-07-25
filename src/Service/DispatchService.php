@@ -129,9 +129,6 @@ class DispatchService implements LoggerAwareInterface
         $this->cert = $config['cert'] ?? '';
         $this->url = $config['service_url'];
         $this->fileStorage = $config['file_storage'];
-
-        // TODO: Remove this when blob storage is implemented
-        $this->fileStorage = self::FILE_STORAGE_DATABASE;
     }
 
     private function getCurrentPerson(): Person
