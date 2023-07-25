@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.6
+
+- fix: blob content url loading
+
 ## 0.4.5
 
 - add: blob storage data loading and persisting handling and enable blob storage
