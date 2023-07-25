@@ -19,14 +19,15 @@ class Tools
     /**
      * @throws Exception
      */
-    public static function dataUriToBinary($dataUri) {
+    public static function dataUriToBinary($dataUri)
+    {
         $dataUriParts = explode(',', $dataUri, 2);
 
         if (count($dataUriParts) !== 2) {
             throw new Exception('Invalid Data URI format');
         }
 
-        $data = base64_decode($dataUriParts[1]);
+        $data = base64_decode($dataUriParts[1], true);
 
         if ($data === false) {
             throw new Exception('Failed to decode base64 data');

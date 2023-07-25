@@ -225,6 +225,7 @@ class RequestFile
 
     /**
      * @return resource|string|int|false|null
+     *
      * @throws \Exception
      */
     public function getData()
