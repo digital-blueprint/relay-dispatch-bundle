@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Service;
 
+use Dbp\Relay\BlobLibrary\Helpers\BlobSignatureTools;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
-use Dbp\Relay\DispatchBundle\Helpers\BlobSignatureTools;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerAwareInterface;
