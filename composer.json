@@ -16,10 +16,7 @@
         "symfony/framework-bundle": "^5.2",
         "symfony/orm-pack": "^2.2",
         "symfony/uid": "^5.4",
-        "symfony/validator": "^5.4",
-        "web-token/jwt-key-mgmt": "^2.2",
-        "web-token/jwt-signature": "^2.2",
-        "web-token/jwt-signature-algorithm-hmac": "^2.2"
+        "symfony/validator": "^5.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
