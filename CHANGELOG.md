@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.9
+
+- composer: fix content hash
+
 ## 0.4.8
 
 - use: \Dbp\Relay\BlobLibrary\Api\BlobApi from dbp/relay-blob-library
