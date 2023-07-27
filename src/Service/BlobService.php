@@ -63,7 +63,7 @@ class BlobService implements LoggerAwareInterface
         $blobIdentifier = $requestFile->getFileStorageIdentifier();
 
         try {
-            $this->blobApi->deleteBlobFileByIdentifier($blobIdentifier);
+            $this->blobApi->deleteFileByIdentifier($blobIdentifier);
         } catch (Error $e) {
             $requestFileIdentifier = $requestFile->getIdentifier();
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-file-identifier' => $requestFileIdentifier, 'message' => $e->getMessage()]);
@@ -75,7 +75,7 @@ class BlobService implements LoggerAwareInterface
         $dispatchRequestIdentifier = $request->getIdentifier();
 
         try {
-            $this->blobApi->deleteBlobFilesByPrefix($this->getPrefix($dispatchRequestIdentifier));
+            $this->blobApi->deleteFilesByPrefix($this->getPrefix($dispatchRequestIdentifier));
         } catch (Error $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => $e->getMessage()]);
         }
