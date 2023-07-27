@@ -6,12 +6,12 @@
 
 ## 0.4.8
 
-- use: \Dbp\Relay\BlobLibrary\Api\BlobApi from dbp/relay-blob-library
+- use: `\Dbp\Relay\BlobLibrary\Api\BlobApi` from `dbp/relay-blob-library`
 
 ## 0.4.7
 
 - fix: ignore 404 error when removing blob files by prefix
-- use: dbp/relay-blob-library
+- use: `dbp/relay-blob-library`
 
 ## 0.4.6
 
@@ -37,7 +37,7 @@
 
 ## 0.4.1
 
-- add: "blob_base_url" setting and start of blob file storage implementation
+- add: `blob_base_url` setting and start of blob file storage implementation
 
 ## 0.4.0
 
@@ -57,7 +57,7 @@
 
 ## 0.3.4
 
-- Fix PUT request for the /dispatch/requests/{identifier} endpoint
+- Fix PUT request for the `/dispatch/requests/{identifier}` endpoint
 
 ## 0.3.3
 
@@ -65,7 +65,7 @@
 - Various internal cleanups with the goal to make it possible to support multiple service providers in the future
 - Add a basic health check for the bundle authorization configuration. This checks for problems
 like syntax errors and usage of invalid variables, methods and more.
-- Work around 400 errors on "/dispatch/requests/{identifier}/submit" requests caused by the upgrade to api-platform 2.7
+- Work around 400 errors on `/dispatch/requests/{identifier}/submit` requests caused by the upgrade to api-platform 2.7
 
 ## 0.3.2
 
