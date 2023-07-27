@@ -2,7 +2,8 @@
 
 [GitHub](https://github.com/digital-blueprint/relay-dispatch-bundle) |
 [Packagist](https://packagist.org/packages/dbp/relay-dispatch-bundle) |
-[Frontend Application](https://github.com/digital-blueprint/dispatch-frontend)
+[Frontend Application](https://github.com/digital-blueprint/dispatch-frontend) |
+[Changelog](https://github.com/digital-blueprint/relay-dispatch-bundle/blob/main/CHANGELOG.md)
 
 [![Test](https://github.com/digital-blueprint/relay-dispatch-bundle/actions/workflows/test.yml/badge.svg)](https://github.com/digital-blueprint/relay-dispatch-bundle/actions/workflows/test.yml)
 
