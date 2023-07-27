@@ -58,24 +58,6 @@ class BlobService implements LoggerAwareInterface
         $this->blobApi = new BlobApi($this->blobBaseUrl, $this->blobBucketId, $this->blobKey);
     }
 
-    public function createBlobSignature($payload): string
-    {
-//        $payload = [
-//            'bucketID' => $this->blobBucketId,
-//            'creationTime' => date('U'),
-//            'prefix' => $this->getPrefix($dispatchRequestIdentifier),
-//            'filename' => $fileName,
-//            'file' => hash('sha256', $fileData),
-//            'metadata' => [],
-//        ];
-
-        try {
-            return $this->blobApi->createBlobSignature($payload);
-        } catch (Error $e) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be signed for blob storage!', 'dispatch:request-file-blob-signature-failure', ['message' => $e->getMessage()]);
-        }
-    }
-
     public function deleteBlobFileByRequestFile(RequestFile $requestFile): void
     {
         $blobIdentifier = $requestFile->getFileStorageIdentifier();
