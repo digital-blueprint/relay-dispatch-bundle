@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.10
+
+- refactor: method names for `dbp/relay-blob-library` version 0.1.2
+
 ## 0.4.9
 
 - composer: fix content hash
