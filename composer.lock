@@ -310,21 +310,21 @@
         },
         {
             "name": "dbp/relay-base-person-bundle",
-            "version": "v0.2.21",
+            "version": "v0.2.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-base-person-bundle.git",
-                "reference": "d5f09ec049de57126273abadb748319759c3c0a2"
+                "reference": "9ff1bef5631468a374d1ee8c9bd2cc6170b740a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-base-person-bundle/zipball/d5f09ec049de57126273abadb748319759c3c0a2",
-                "reference": "d5f09ec049de57126273abadb748319759c3c0a2",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-base-person-bundle/zipball/9ff1bef5631468a374d1ee8c9bd2cc6170b740a8",
+                "reference": "9ff1bef5631468a374d1ee8c9bd2cc6170b740a8",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^2.7.11",
-                "dbp/relay-core-bundle": "^0.1.115",
+                "dbp/relay-core-bundle": "^0.1.116",
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^7.0",
                 "nelmio/cors-bundle": "^2.1.0",
@@ -363,22 +363,22 @@
             ],
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-base-person-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-base-person-bundle/tree/v0.2.21"
+                "source": "https://github.com/digital-blueprint/relay-base-person-bundle/tree/v0.2.22"
             },
-            "time": "2023-07-18T07:27:16+00:00"
+            "time": "2023-07-24T09:28:47+00:00"
         },
         {
             "name": "dbp/relay-blob-library",
-            "version": "v0.1.3",
+            "version": "v0.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-blob-library.git",
-                "reference": "6fc2fb9288121d45de171e665e919e0e58c5f8e7"
+                "reference": "1c0afa4dbb47c04c94fbedf42feea63172d60825"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-blob-library/zipball/6fc2fb9288121d45de171e665e919e0e58c5f8e7",
-                "reference": "6fc2fb9288121d45de171e665e919e0e58c5f8e7",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-blob-library/zipball/1c0afa4dbb47c04c94fbedf42feea63172d60825",
+                "reference": "1c0afa4dbb47c04c94fbedf42feea63172d60825",
                 "shasum": ""
             },
             "require": {
@@ -419,22 +419,22 @@
             "description": "PHP helper library for interaction with the relay-blob-bundle.",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-blob-library/issues",
-                "source": "https://github.com/digital-blueprint/relay-blob-library/tree/v0.1.3"
+                "source": "https://github.com/digital-blueprint/relay-blob-library/tree/v0.1.4"
             },
-            "time": "2023-07-28T07:52:01+00:00"
+            "time": "2023-07-28T12:12:30+00:00"
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.115",
+            "version": "v0.1.118",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "b9c5ca9b1b543895bc3c58d697c14fba1778b800"
+                "reference": "8a0ab1e88dfdd50b20a8be9e8e37dd2280566fcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/b9c5ca9b1b543895bc3c58d697c14fba1778b800",
-                "reference": "b9c5ca9b1b543895bc3c58d697c14fba1778b800",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/8a0ab1e88dfdd50b20a8be9e8e37dd2280566fcd",
+                "reference": "8a0ab1e88dfdd50b20a8be9e8e37dd2280566fcd",
                 "shasum": ""
             },
             "require": {
@@ -502,9 +502,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.115"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.118"
             },
-            "time": "2023-07-17T09:43:13+00:00"
+            "time": "2023-07-27T11:57:08+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -8445,16 +8445,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.6.1",
+            "version": "v3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd"
+                "reference": "5cf942bbab3df42afa918caeba947f1b690af64b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
-                "reference": "7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5cf942bbab3df42afa918caeba947f1b690af64b",
+                "reference": "5cf942bbab3df42afa918caeba947f1b690af64b",
                 "shasum": ""
             },
             "require": {
@@ -8500,7 +8500,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.6.1"
+                "source": "https://github.com/twigphp/Twig/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -8512,7 +8512,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-08T12:52:13+00:00"
+            "time": "2023-07-26T07:16:09+00:00"
         },
         {
             "name": "web-token/jwt-core",
