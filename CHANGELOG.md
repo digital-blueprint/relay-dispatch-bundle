@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.11
+
+- update: `dbp/relay-blob-library` to version 0.1.7 to handle the breaking changes in blob bundle version 0.1.14
+
 ## 0.4.10
 
 - refactor: method names for `dbp/relay-blob-library` version 0.1.2
