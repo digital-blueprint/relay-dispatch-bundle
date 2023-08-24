@@ -139,6 +139,20 @@ class DeliveryStatusChange
     private $fileContentUrl;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     *
+     * @var string
+     */
+    private $fileStorageSystem;
+
+    /**
+     * @ORM\Column(type="string", length=1000)
+     *
+     * @var string
+     */
+    private $fileStorageIdentifier;
+
+    /**
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -207,7 +221,16 @@ class DeliveryStatusChange
 
     public function getFileContentUrl(): string
     {
-        return Tools::getDataURI($this->getFileData(), $this->fileFormat);
+        if ($this->fileStorageSystem !== 'blob' && $this->fileContentUrl === '') {
+            $this->fileContentUrl = Tools::getDataURI($this->getFileData(), $this->fileFormat);
+        }
+
+        return $this->fileContentUrl;
+    }
+
+    public function setFileContentUrl(string $contentUrl): void
+    {
+        $this->fileContentUrl = $contentUrl;
     }
 
     public function getFileFormat(): string
@@ -221,10 +244,19 @@ class DeliveryStatusChange
     }
 
     /**
-     * @return resource|string|int|false
+     * @return resource|string|int|false|null
      */
     public function getFileData()
     {
+        // If the file is stored in the blob storage system, the contentUrl should already be set at that time
+        if ($this->fileStorageSystem === 'blob') {
+            if ($this->fileContentUrl === '') {
+                return null;
+            }
+
+            return Tools::dataUriToBinary($this->fileContentUrl);
+        }
+
         if (is_resource($this->fileData)) {
             rewind($this->fileData);
             $this->fileData = stream_get_contents($this->fileData);
@@ -240,7 +272,28 @@ class DeliveryStatusChange
      */
     public function setFileData($data): void
     {
+        $this->fileContentUrl = '';
         $this->fileData = $data;
+    }
+
+    public function getFileStorageSystem(): string
+    {
+        return $this->fileStorageSystem;
+    }
+
+    public function setFileStorageSystem(string $fileStorageSystem): void
+    {
+        $this->fileStorageSystem = $fileStorageSystem;
+    }
+
+    public function getFileStorageIdentifier(): string
+    {
+        return $this->fileStorageIdentifier;
+    }
+
+    public function setFileStorageIdentifier(string $fileStorageIdentifier): void
+    {
+        $this->fileStorageIdentifier = $fileStorageIdentifier;
     }
 
     /**

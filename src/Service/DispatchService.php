@@ -531,6 +531,7 @@ class DispatchService implements LoggerAwareInterface
         $deliveryStatusChange->setDescription($description);
 
         if ($file) {
+            $deliveryStatusChange->setFileStorageSystem($this->fileStorage);
             $deliveryStatusChange->setFileFormat(DualDeliveryService::DOCUMENT_MIME_TYPE);
             $deliveryStatusChange->setFileData($file);
         }
