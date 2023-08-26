@@ -5570,19 +5570,20 @@
         },
         {
             "name": "symfony/orm-pack",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/orm-pack.git",
-                "reference": "498e2f554a1a0ac0a776cd348c9150a186383075"
+                "reference": "13b7bcec955f163e3cbf6b24773b9ad3127213e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/498e2f554a1a0ac0a776cd348c9150a186383075",
-                "reference": "498e2f554a1a0ac0a776cd348c9150a186383075",
+                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/13b7bcec955f163e3cbf6b24773b9ad3127213e2",
+                "reference": "13b7bcec955f163e3cbf6b24773b9ad3127213e2",
                 "shasum": ""
             },
             "require": {
+                "doctrine/annotations": "*",
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/doctrine-migrations-bundle": "*",
                 "doctrine/orm": "*"
@@ -5595,7 +5596,7 @@
             "description": "A pack for the Doctrine ORM",
             "support": {
                 "issues": "https://github.com/symfony/orm-pack/issues",
-                "source": "https://github.com/symfony/orm-pack/tree/v2.3.0"
+                "source": "https://github.com/symfony/orm-pack/tree/v2.3.1"
             },
             "funding": [
                 {
@@ -5611,7 +5612,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-05T14:15:35+00:00"
+            "time": "2023-08-21T09:10:49+00:00"
         },
         {
             "name": "symfony/password-hasher",
