@@ -425,16 +425,16 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.122",
+            "version": "v0.1.123",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "3f6eb70336e2dd69dbb5f6cab0aefdebd67c1cf8"
+                "reference": "dae5d078114e2d367556aca9fe523bdf48072501"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/3f6eb70336e2dd69dbb5f6cab0aefdebd67c1cf8",
-                "reference": "3f6eb70336e2dd69dbb5f6cab0aefdebd67c1cf8",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/dae5d078114e2d367556aca9fe523bdf48072501",
+                "reference": "dae5d078114e2d367556aca9fe523bdf48072501",
                 "shasum": ""
             },
             "require": {
@@ -502,9 +502,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.122"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.123"
             },
-            "time": "2023-08-09T12:12:55+00:00"
+            "time": "2023-08-24T12:09:37+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -5570,19 +5570,20 @@
         },
         {
             "name": "symfony/orm-pack",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/orm-pack.git",
-                "reference": "498e2f554a1a0ac0a776cd348c9150a186383075"
+                "reference": "13b7bcec955f163e3cbf6b24773b9ad3127213e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/498e2f554a1a0ac0a776cd348c9150a186383075",
-                "reference": "498e2f554a1a0ac0a776cd348c9150a186383075",
+                "url": "https://api.github.com/repos/symfony/orm-pack/zipball/13b7bcec955f163e3cbf6b24773b9ad3127213e2",
+                "reference": "13b7bcec955f163e3cbf6b24773b9ad3127213e2",
                 "shasum": ""
             },
             "require": {
+                "doctrine/annotations": "*",
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/doctrine-migrations-bundle": "*",
                 "doctrine/orm": "*"
@@ -5595,7 +5596,7 @@
             "description": "A pack for the Doctrine ORM",
             "support": {
                 "issues": "https://github.com/symfony/orm-pack/issues",
-                "source": "https://github.com/symfony/orm-pack/tree/v2.3.0"
+                "source": "https://github.com/symfony/orm-pack/tree/v2.3.1"
             },
             "funding": [
                 {
@@ -5611,7 +5612,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-05T14:15:35+00:00"
+            "time": "2023-08-21T09:10:49+00:00"
         },
         {
             "name": "symfony/password-hasher",
