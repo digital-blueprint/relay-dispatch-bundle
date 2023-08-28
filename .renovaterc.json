@@ -17,8 +17,8 @@
       "allowedVersions": "<6"
     },
     {
-      "matchPackageNames": ["api-platform/core"],
-      "allowedVersions": "<2.7"
+      "matchPackagePrefixes": ["symfony/orm-pack"],
+      "allowedVersions": "<2.4"
     },
     {
       "matchPackagePrefixes": ["web-token/"],
