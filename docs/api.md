@@ -27,6 +27,8 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 | `dispatch:current-person-not-found`                                | `403`       | `Current person wasnt found!`                                                      |
 | `dispatch:request-not-found`                                       | `404`       | `Request was not found!`                                                           |
 | `dispatch:request-status-change-not-found`                         | `404`       | `DeliveryStatusChange was not found!`                                              |
+| `dispatch:delivery-status-change-blob-identifier-invalid`          | `500`       | `DeliveryStatusChange has invalid blob identifier!`                                |
+| `dispatch:delivery-status-change-blob-download-error`              | `500`       | `File of the DeliveryStatusChange could not be downloaded from Blob!`              |
 | `dispatch:request-recipient-not-found`                             | `404`       | `RequestRecipient was not found!`                                                  |
 | `dispatch:request-file-not-found`                                  | `404`       | `RequestFile was not found!`                                                       |
 | `dispatch:request-files-not-found`                                 | `404`       | `RequestFiles were not found!`                                                     |

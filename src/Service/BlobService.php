@@ -7,8 +7,10 @@ namespace Dbp\Relay\DispatchBundle\Service;
 use Dbp\Relay\BlobLibrary\Api\BlobApi;
 use Dbp\Relay\BlobLibrary\Helpers\Error;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
+use Exception;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,7 +77,7 @@ class BlobService implements LoggerAwareInterface
         $dispatchRequestIdentifier = $request->getIdentifier();
 
         try {
-            $this->blobApi->deleteFilesByPrefix($this->getPrefix($dispatchRequestIdentifier));
+            $this->blobApi->deleteFilesByPrefix($this->getRequestFileBlobPrefix($dispatchRequestIdentifier));
         } catch (Error $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => $e->getMessage()]);
         }
@@ -94,10 +96,23 @@ class BlobService implements LoggerAwareInterface
         return $contentUrl;
     }
 
+    public function downloadDeliveryStatusChangeFileAsContentUrl(DeliveryStatusChange $deliveryStatusChange): string
+    {
+        $blobIdentifier = $deliveryStatusChange->getFileStorageIdentifier();
+
+        try {
+            $contentUrl = $this->blobApi->downloadFileAsContentUrlByIdentifier($blobIdentifier);
+        } catch (Error $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'File of the DeliveryStatusChange could not be downloaded from Blob!', 'dispatch:delivery-status-change-blob-download-error', ['message' => $e->getMessage()]);
+        }
+
+        return $contentUrl;
+    }
+
     public function uploadRequestFile(string $dispatchRequestIdentifier, string $fileName, string $fileData): string
     {
         try {
-            $identifier = $this->blobApi->uploadFile($dispatchRequestIdentifier, $fileName, $fileData);
+            $identifier = $this->blobApi->uploadFile($this->getRequestFileBlobPrefix($dispatchRequestIdentifier), $fileName, $fileData);
         } catch (Error $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be uploaded to Blob!', 'dispatch:request-file-blob-upload-error', ['message' => $e->getMessage()]);
         }
@@ -106,8 +121,30 @@ class BlobService implements LoggerAwareInterface
         return $identifier;
     }
 
-    protected function getPrefix(string $dispatchRequestIdentifier): string
+    /**
+     * @throws Exception
+     */
+    public function uploadDeliveryStatusChangeFile(string $deliveryStatusChangeIdentifier, string $fileName, string $fileData): string
     {
-        return 'Request/'.$dispatchRequestIdentifier;
+        try {
+            $identifier = $this->blobApi->uploadFile($this->getDeliveryStatusChangeBlobPrefix($deliveryStatusChangeIdentifier), $fileName, $fileData);
+        } catch (Error $e) {
+            // We don't care a lot about what exception we're throwing here,
+            // because we will just store the file in the database if there is any issue
+            throw new Exception($e->getMessage());
+        }
+
+        // Return the blob file ID
+        return $identifier;
+    }
+
+    protected function getRequestFileBlobPrefix(string $identifier): string
+    {
+        return 'request-file-'.$identifier;
+    }
+
+    protected function getDeliveryStatusChangeBlobPrefix(string $identifier): string
+    {
+        return 'delivery-status-change-'.$identifier;
     }
 }

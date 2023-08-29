@@ -183,6 +183,16 @@ class DispatchService implements LoggerAwareInterface
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'DeliveryStatusChange was not found!', 'dispatch:request-status-change-not-found');
         }
 
+        if ($deliveryStatusChange->getFileStorageSystem() === self::FILE_STORAGE_BLOB) {
+            $blobIdentifier = $deliveryStatusChange->getFileStorageIdentifier();
+
+            if (strlen($blobIdentifier) > 50) {
+                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange has invalid blob identifier!', 'dispatch:delivery-status-change-blob-identifier-invalid');
+            }
+
+            $deliveryStatusChange->setFileContentUrl($this->blobService->downloadDeliveryStatusChangeFileAsContentUrl($deliveryStatusChange));
+        }
+
         return $deliveryStatusChange;
     }
 
@@ -511,7 +521,7 @@ class DispatchService implements LoggerAwareInterface
         return $requestFile;
     }
 
-    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = '', string $file = null): DeliveryStatusChange
+    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = '', string $fileData = null): DeliveryStatusChange
     {
         if (!$description) {
             $description = Vendo::getStatusTypeDescription($statusType);
@@ -530,10 +540,36 @@ class DispatchService implements LoggerAwareInterface
         $deliveryStatusChange->setStatusType($statusType);
         $deliveryStatusChange->setDescription($description);
 
-        if ($file) {
-            $deliveryStatusChange->setFileStorageSystem($this->fileStorage);
+        if ($fileData) {
+            $fileStorage = $this->fileStorage;
+
+            // Store the blob file identifier in the database
+            if ($fileStorage === self::FILE_STORAGE_BLOB) {
+                try {
+                    $fileStorageIdentifier = $this->blobService->uploadDeliveryStatusChangeFile(
+                        $deliveryStatusChange->getIdentifier(),
+                        'receipt.pdf',
+                        $fileData
+                    );
+
+                    $deliveryStatusChange->setFileStorageIdentifier($fileStorageIdentifier);
+
+                    // We don't want to store the file content in the database
+                    $fileData = '';
+                } catch (\Exception $e) {
+                    // We will just use the database to store the file if there are any issues with blob
+                    $fileStorage = self::FILE_STORAGE_DATABASE;
+
+                    $this->logError('Storing file of DeliveryStatusChange to blob failed!', [
+                        'delivery-status-change-identifier' => $deliveryStatusChange->getIdentifier(),
+                        'error-message' => $e->getMessage(),
+                    ]);
+                }
+            }
+
+            $deliveryStatusChange->setFileStorageSystem($fileStorage);
             $deliveryStatusChange->setFileFormat(DualDeliveryService::DOCUMENT_MIME_TYPE);
-            $deliveryStatusChange->setFileData($file);
+            $deliveryStatusChange->setFileData($fileData);
         }
 
         try {
