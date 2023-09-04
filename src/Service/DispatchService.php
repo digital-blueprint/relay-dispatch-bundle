@@ -478,6 +478,10 @@ class DispatchService implements LoggerAwareInterface
             ->getRepository(RequestRecipient::class)
             ->find($identifier);
 
+        if ($requestRecipient->getFileStorageSystem() === self::FILE_STORAGE_BLOB) {
+            $this->blobService->deleteBlobFileByRequestFile($requestFile);
+        }
+
         $this->em->remove($requestRecipient);
         $this->em->flush();
     }
@@ -546,8 +550,9 @@ class DispatchService implements LoggerAwareInterface
             // Store the blob file identifier in the database
             if ($fileStorage === self::FILE_STORAGE_BLOB) {
                 try {
+                    $request = $requestRecipient->getDispatchRequest();
                     $fileStorageIdentifier = $this->blobService->uploadDeliveryStatusChangeFile(
-                        $deliveryStatusChange->getIdentifier(),
+                        $request->getIdentifier(),
                         'receipt.pdf',
                         $fileData
                     );

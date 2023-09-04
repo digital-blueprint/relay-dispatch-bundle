@@ -77,7 +77,8 @@ class BlobService implements LoggerAwareInterface
         $dispatchRequestIdentifier = $request->getIdentifier();
 
         try {
-            $this->blobApi->deleteFilesByPrefix($this->getRequestFileBlobPrefix($dispatchRequestIdentifier));
+            // This will delete blob files for request files and delivery status changes
+            $this->blobApi->deleteFilesByPrefix($this->getBlobPrefix($dispatchRequestIdentifier));
         } catch (Error $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => $e->getMessage()]);
         }
@@ -124,13 +125,13 @@ class BlobService implements LoggerAwareInterface
     /**
      * @throws Exception
      */
-    public function uploadDeliveryStatusChangeFile(string $deliveryStatusChangeIdentifier, string $fileName, string $fileData): string
+    public function uploadDeliveryStatusChangeFile(string $dispatchRequestIdentifier, string $fileName, string $fileData): string
     {
         try {
-            $identifier = $this->blobApi->uploadFile($this->getDeliveryStatusChangeBlobPrefix($deliveryStatusChangeIdentifier), $fileName, $fileData);
+            $identifier = $this->blobApi->uploadFile($this->getDeliveryStatusChangeBlobPrefix($dispatchRequestIdentifier), $fileName, $fileData);
         } catch (Error $e) {
-            // We don't care a lot about what exception we're throwing here,
-            // because we will just store the file in the database if there is any issue
+            // We don't care a lot about what exception we're throwing here, because we will just
+            // store the file in the database if there are any issues with the blob storage
             throw new Exception($e->getMessage());
         }
 
@@ -138,13 +139,20 @@ class BlobService implements LoggerAwareInterface
         return $identifier;
     }
 
-    protected function getRequestFileBlobPrefix(string $identifier): string
+    protected function getBlobPrefix(string $dispatchRequestIdentifier): string
     {
-        return 'request-file-'.$identifier;
+        return 'request-'.$dispatchRequestIdentifier;
     }
 
-    protected function getDeliveryStatusChangeBlobPrefix(string $identifier): string
+    protected function getRequestFileBlobPrefix(string $dispatchRequestIdentifier): string
     {
-        return 'delivery-status-change-'.$identifier;
+        return $this->getBlobPrefix($dispatchRequestIdentifier);
+    }
+
+    protected function getDeliveryStatusChangeBlobPrefix(string $dispatchRequestIdentifier): string
+    {
+        // In the end we decided to use the same method as for request files,
+        // because we want to optimize for deleting requests
+        return $this->getBlobPrefix($dispatchRequestIdentifier);
     }
 }
