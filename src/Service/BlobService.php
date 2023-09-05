@@ -72,6 +72,18 @@ class BlobService implements LoggerAwareInterface
         }
     }
 
+    public function deleteBlobFileByDeliveryStatusChange(DeliveryStatusChange $statusChange): void
+    {
+        $blobIdentifier = $statusChange->getFileStorageIdentifier();
+
+        try {
+            $this->blobApi->deleteFileByIdentifier($blobIdentifier);
+        } catch (Error $e) {
+            $identifier = $statusChange->getIdentifier();
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange file could not be deleted from Blob!', 'dispatch:delivery-status-change-file-blob-delete-error', ['delivery-status-change-identifier' => $identifier, 'message' => $e->getMessage()]);
+        }
+    }
+
     public function deleteBlobFilesByRequest(Request $request): void
     {
         $dispatchRequestIdentifier = $request->getIdentifier();

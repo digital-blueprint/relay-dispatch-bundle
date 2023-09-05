@@ -478,8 +478,20 @@ class DispatchService implements LoggerAwareInterface
             ->getRepository(RequestRecipient::class)
             ->find($identifier);
 
-        if ($requestRecipient->getFileStorageSystem() === self::FILE_STORAGE_BLOB) {
-            $this->blobService->deleteBlobFileByRequestFile($requestFile);
+        // Note that currently there is no way to remove a request recipient from a request
+        // when the request was already sent
+        // DeliveryStatusChange entities should only be present when the request was already sent
+        if ($this->fileStorage === self::FILE_STORAGE_BLOB) {
+            /** @var DeliveryStatusChange[] $statusChanges */
+            $statusChanges = $requestRecipient->getStatusChanges();
+
+            foreach ($statusChanges as $statusChange) {
+                // Check if the file storage system is really blob, because it could be database
+                // if there were any issues with blob
+                if ($statusChange->getFileStorageSystem() === self::FILE_STORAGE_BLOB) {
+                    $this->blobService->deleteBlobFileByDeliveryStatusChange($statusChange);
+                }
+            }
         }
 
         $this->em->remove($requestRecipient);
