@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.12
+
+- add: blob integration for delivery status change files
+
 ## 0.4.11
 
 - update: `dbp/relay-blob-library` to version 0.1.7 to handle the breaking changes in blob bundle version 0.1.14
