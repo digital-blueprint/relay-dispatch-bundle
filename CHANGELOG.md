@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.13
+
+- fix: content URL loading for status changes when file is stored in database
+
 ## 0.4.12
 
 - add: blob integration for delivery status change files

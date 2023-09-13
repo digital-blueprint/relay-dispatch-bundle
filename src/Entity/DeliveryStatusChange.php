@@ -221,11 +221,16 @@ class DeliveryStatusChange
 
     public function getFileContentUrl(): string
     {
-        if ($this->fileStorageSystem !== 'blob' && $this->fileContentUrl === '') {
+        if ($this->fileStorageSystem !== 'blob' && !$this->isFileContentUrlSet()) {
             $this->fileContentUrl = Tools::getDataURI($this->getFileData(), $this->fileFormat);
         }
 
         return $this->fileContentUrl;
+    }
+
+    public function isFileContentUrlSet(): bool
+    {
+        return $this->fileContentUrl !== '' && $this->fileContentUrl !== null;
     }
 
     public function setFileContentUrl(string $contentUrl): void
