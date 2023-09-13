@@ -270,11 +270,16 @@ class RequestFile
 
     public function getContentUrl(): string
     {
-        if ($this->fileStorageSystem !== 'blob' && $this->contentUrl === '') {
+        if ($this->fileStorageSystem !== 'blob' && !$this->isContentUrlSet()) {
             $this->contentUrl = Tools::getDataURI($this->getData(), $this->fileFormat);
         }
 
         return $this->contentUrl;
+    }
+
+    public function isContentUrlSet(): bool
+    {
+        return $this->contentUrl !== '' && $this->contentUrl !== null;
     }
 
     public function setContentUrl(string $contentUrl): void
