@@ -21,8 +21,8 @@ dbp_relay_dispatch:
   cert_password:        ~
   # The way files are persisted. Can be "database" or "blob". Defaults to "database"
   file_storage:         database
-  # Base URL of blob storage API
-  blob_base_url:       ~
+  # Base URL for blob storage API
+  blob_base_url:        ~
   # Bucket id for blob storage
   blob_bucket_id:       ~
   # Secret key for blob storage
@@ -35,7 +35,7 @@ dbp_relay_dispatch:
       postal_code:          postalCode
       country:              addressCountry
   authorization:
-    roles:
+    policies:
       # Returns true if the user is allowed to use the dispatch API.
       ROLE_USER:            'false'
       # Returns true if the user has read access for the given group, limited to metadata.
@@ -45,10 +45,10 @@ dbp_relay_dispatch:
       # Returns true if the user has write access for the given group. Implies all reader roles.
       ROLE_GROUP_WRITER:    'false'
       # Returns true if the user has write access for the given group and can read recipient addresses. Implies all reader/writer roles.
-      ROLE_GROUP_WRITER_ADDRESS: 'false'
+      ROLE_GROUP_WRITER_READ_ADDRESS: 'false'
     attributes:
       # Returns an array of available group IDs.
-      GROUPS:               'false'
+      GROUPS:               '[]'
     entities:             []
 ```
 
