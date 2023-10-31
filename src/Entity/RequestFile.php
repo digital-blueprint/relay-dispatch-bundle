@@ -75,12 +75,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     iri="https://schema.org/DigitalDocument",
  *     shortName="DispatchRequestFile",
  *     normalizationContext={
- *         "groups" = {"DispatchRequestFile:output", "DispatchRequest:output"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchRequestFile:output", "DispatchRequest:output"}
  *     },
  *     denormalizationContext={
- *         "groups" = {"DispatchRequestFile:input"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchRequestFile:input"}
  *     }
  * )
  */

@@ -107,12 +107,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     iri="https://schema.org/Action",
  *     shortName="DispatchRequest",
  *     normalizationContext={
- *         "groups" = {"DispatchRequest:output"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchRequest:output"}
  *     },
  *     denormalizationContext={
- *         "groups" = {"DispatchRequest:input"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchRequest:input"}
  *     }
  * )
  */

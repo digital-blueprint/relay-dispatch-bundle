@@ -72,12 +72,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     iri="https://schema.org/Person",
  *     shortName="DispatchRequestRecipient",
  *     normalizationContext={
- *         "groups" = {"DispatchRequestRecipient:output"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchRequestRecipient:output"}
  *     },
  *     denormalizationContext={
- *         "groups" = {"DispatchRequestRecipient:input"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchRequestRecipient:input"}
  *     }
  * )
  */

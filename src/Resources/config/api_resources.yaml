@@ -4,7 +4,7 @@ resources:
     shortName: 'DispatchGroup'
     normalizationContext:
       groups: ['DispatchGroup:output']
-      jsonld_embed_context: true
+
     operations:
       ApiPlatform\Metadata\Get:
         provider: Dbp\Relay\DispatchBundle\DataProvider\GroupDataProvider

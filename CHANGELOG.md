@@ -1,5 +1,7 @@
 # Changelog
 
+- JSON-LD contexts are no longer embedded in the API responses, they have to be fetched separately.
+
 ## 0.4.13
 
 - fix: content URL loading for status changes when file is stored in database

@@ -38,8 +38,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     iri="https://schema.org/Status",
  *     shortName="DispatchDeliveryStatusChange",
  *     normalizationContext={
- *         "groups" = {"DispatchDeliveryStatusChange:output"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchDeliveryStatusChange:output"}
  *     }
  * )
  */

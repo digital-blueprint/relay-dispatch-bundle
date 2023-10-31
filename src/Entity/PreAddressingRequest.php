@@ -50,12 +50,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     iri="https://schema.org/Action",
  *     shortName="DispatchPreAddressingRequest",
  *     normalizationContext={
- *         "groups" = {"DispatchPreAddressingRequest:output"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchPreAddressingRequest:output"}
  *     },
  *     denormalizationContext={
- *         "groups" = {"DispatchPreAddressingRequest:input"},
- *         "jsonld_embed_context" = true
+ *         "groups" = {"DispatchPreAddressingRequest:input"}
  *     }
  * )
  */
