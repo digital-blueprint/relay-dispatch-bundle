@@ -3876,16 +3876,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.28",
+            "version": "v5.4.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "f4f71842f24c2023b91237c72a365306f3c58827"
+                "reference": "11ac5f154e0e5c4c77af83ad11ead9165280b92a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/f4f71842f24c2023b91237c72a365306f3c58827",
-                "reference": "f4f71842f24c2023b91237c72a365306f3c58827",
+                "url": "https://api.github.com/repos/symfony/console/zipball/11ac5f154e0e5c4c77af83ad11ead9165280b92a",
+                "reference": "11ac5f154e0e5c4c77af83ad11ead9165280b92a",
                 "shasum": ""
             },
             "require": {
@@ -3955,7 +3955,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.28"
+                "source": "https://github.com/symfony/console/tree/v5.4.31"
             },
             "funding": [
                 {
@@ -3971,7 +3971,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-07T06:12:30+00:00"
+            "time": "2023-10-31T07:58:33+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -4131,16 +4131,16 @@
         },
         {
             "name": "symfony/doctrine-bridge",
-            "version": "v5.4.30",
+            "version": "v5.4.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/doctrine-bridge.git",
-                "reference": "b7cb6a9121181c725aa626fc0d5ea964fc004a3c"
+                "reference": "e82ccb815ac20fd6579e1f42f924071f20fa4264"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/doctrine-bridge/zipball/b7cb6a9121181c725aa626fc0d5ea964fc004a3c",
-                "reference": "b7cb6a9121181c725aa626fc0d5ea964fc004a3c",
+                "url": "https://api.github.com/repos/symfony/doctrine-bridge/zipball/e82ccb815ac20fd6579e1f42f924071f20fa4264",
+                "reference": "e82ccb815ac20fd6579e1f42f924071f20fa4264",
                 "shasum": ""
             },
             "require": {
@@ -4227,7 +4227,7 @@
             "description": "Provides integration for Doctrine with various Symfony components",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/doctrine-bridge/tree/v5.4.30"
+                "source": "https://github.com/symfony/doctrine-bridge/tree/v5.4.31"
             },
             "funding": [
                 {
@@ -4243,7 +4243,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-27T12:07:07+00:00"
+            "time": "2023-10-31T07:58:33+00:00"
         },
         {
             "name": "symfony/doctrine-messenger",
@@ -7251,16 +7251,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v5.4.30",
+            "version": "v5.4.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "ceadb4e08830e69738d313b667cfb426269f67f6"
+                "reference": "15574cfa408a6082b6d66c2b6922f95db6cab26d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/ceadb4e08830e69738d313b667cfb426269f67f6",
-                "reference": "ceadb4e08830e69738d313b667cfb426269f67f6",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/15574cfa408a6082b6d66c2b6922f95db6cab26d",
+                "reference": "15574cfa408a6082b6d66c2b6922f95db6cab26d",
                 "shasum": ""
             },
             "require": {
@@ -7334,7 +7334,7 @@
             "description": "Handles serializing and deserializing data structures, including object graphs, into array structures or other formats like XML and JSON.",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/serializer/tree/v5.4.30"
+                "source": "https://github.com/symfony/serializer/tree/v5.4.31"
             },
             "funding": [
                 {
@@ -7350,7 +7350,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-25T18:53:19+00:00"
+            "time": "2023-10-31T07:58:33+00:00"
         },
         {
             "name": "symfony/service-contracts",
