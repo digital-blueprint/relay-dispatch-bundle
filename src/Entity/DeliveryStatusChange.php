@@ -6,8 +6,6 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 date_default_timezone_set('UTC');
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\Vendo;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,32 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity
  *
  * @ORM\Table(name="dispatch_delivery_status_changes")
- *
- * @ApiResource(
- *     collectionOperations={
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-status-changes",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         }
- *     },
- *     itemOperations={
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-status-changes/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         },
- *     },
- *     iri="https://schema.org/Status",
- *     shortName="DispatchDeliveryStatusChange",
- *     normalizationContext={
- *         "groups" = {"DispatchDeliveryStatusChange:output"}
- *     }
- * )
  */
 class DeliveryStatusChange
 {
@@ -58,16 +30,12 @@ class DeliveryStatusChange
      *
      * @ORM\Column(type="string", length=50)
      *
-     * @ApiProperty(identifier=true)
-     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
-     *
-     * @ApiProperty(iri="https://schema.org/dateCreated")
      *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
@@ -80,8 +48,6 @@ class DeliveryStatusChange
      *
      * @ORM\JoinColumn(name="dispatch_request_recipient_identifier", referencedColumnName="identifier")
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchDeliveryStatusChange:output"})
      *
      * @var RequestRecipient
@@ -90,8 +56,6 @@ class DeliveryStatusChange
 
     /**
      * @ORM\Column(type="string", length=50)
-     *
-     * @ApiProperty(iri="https://schema.org/identifier")
      *
      * @Groups({"DispatchDeliveryStatusChange:output"})
      *
@@ -102,8 +66,6 @@ class DeliveryStatusChange
     /**
      * @ORM\Column(type="integer")
      *
-     * @ApiProperty(iri="https://schema.org/statusType")
-     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var int
@@ -111,8 +73,6 @@ class DeliveryStatusChange
     private $statusType;
 
     /**
-     * @ApiProperty(iri="https://schema.org/statusType")
-     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var string
@@ -121,8 +81,6 @@ class DeliveryStatusChange
 
     /**
      * @ORM\Column(type="text")
-     *
-     * @ApiProperty(iri="https://schema.org/description")
      *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
@@ -138,8 +96,6 @@ class DeliveryStatusChange
     private $fileData;
 
     /**
-     * @ApiProperty(iri="https://schema.org/fileFormat")
-     *
      * @ORM\Column(type="string", length=100)
      *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
@@ -149,8 +105,6 @@ class DeliveryStatusChange
     private $fileFormat;
 
     /**
-     * @ApiProperty(iri="http://schema.org/contentUrl")
-     *
      * @Groups({"DispatchDeliveryStatusChange:output"})
      *
      * @var string

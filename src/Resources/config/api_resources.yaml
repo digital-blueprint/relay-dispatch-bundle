@@ -32,3 +32,43 @@ resources:
       country:
         iri: 'https://schema.org/addressCountry'
       accessRights:
+
+  Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange:
+    types: ['https://schema.org/Status']
+    shortName: 'DispatchDeliveryStatusChange'
+    normalizationContext:
+      groups: ['DispatchDeliveryStatusChange:output']
+
+    operations:
+      ApiPlatform\Metadata\Get:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\DeliveryStatusChangeProvider
+        uriTemplate: '/dispatch/request-status-changes/{identifier}'
+        openapiContext:
+          tags: ["Dispatch"]
+
+      ApiPlatform\Metadata\GetCollection:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\DeliveryStatusChangeProvider
+        uriTemplate: '/dispatch/request-status-changes'
+        openapiContext:
+          tags: ['Dispatch']
+
+    properties:
+      identifier:
+        identifier: true
+      dateCreated:
+        iri: 'https://schema.org/dateCreated'
+      requestRecipient:
+      dispatchRequestRecipientIdentifier:
+        iri: 'https://schema.org/identifier'
+      statusType:
+        iri: 'https://schema.org/statusType'
+      dispatchStatus:
+        iri: 'https://schema.org/statusType'
+      description:
+        iri: 'https://schema.org/description'
+      fileFormat:
+        iri: 'https://schema.org/fileFormat'
+      fileContentUrl:
+        iri: 'http://schema.org/contentUrl'
