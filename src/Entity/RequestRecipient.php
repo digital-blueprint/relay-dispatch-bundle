@@ -6,8 +6,6 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 date_default_timezone_set('UTC');
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,67 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  *
  * @ORM\Table(name="dispatch_request_recipients")
- *
- * @ApiResource(
- *     collectionOperations={
- *         "post" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-recipients",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"},
- *                 "requestBody" = {
- *                     "content" = {
- *                         "application/json" = {
- *                             "schema" = {"type" = "object"},
- *                             "example" = {
- *                                 "dispatchRequestIdentifier" = "4d553985-d44f-404f-acf3-cd0eac7ae9c2",
- *                                 "givenName" = "Max",
- *                                 "familyName" = "Mustermann",
- *                                 "addressCountry" = "AT",
- *                                 "postalCode" = "8010",
- *                                 "addressLocality" = "Graz",
- *                                 "streetAddress" = "Am Grund",
- *                                 "buildingNumber" = "1",
- *                                 "birthDate" = "1980-01-01"
- *                             },
- *                         }
- *                     }
- *                 },
- *             }
- *         },
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-recipients",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         }
- *     },
- *     itemOperations={
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-recipients/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         },
- *         "delete" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-recipients/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         }
- *     },
- *     iri="https://schema.org/Person",
- *     shortName="DispatchRequestRecipient",
- *     normalizationContext={
- *         "groups" = {"DispatchRequestRecipient:output"}
- *     },
- *     denormalizationContext={
- *         "groups" = {"DispatchRequestRecipient:input"}
- *     }
- * )
  */
 class RequestRecipient
 {
@@ -88,16 +25,12 @@ class RequestRecipient
      *
      * @ORM\Column(type="string", length=50)
      *
-     * @ApiProperty(identifier=true)
-     *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
-     *
-     * @ApiProperty(iri="https://schema.org/dateCreated")
      *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
@@ -110,8 +43,6 @@ class RequestRecipient
      *
      * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequestRecipient:output"})
      *
      * @var Request
@@ -120,8 +51,6 @@ class RequestRecipient
 
     /**
      * @ORM\Column(type="string", length=50)
-     *
-     * @ApiProperty(iri="https://schema.org/identifier")
      *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
      *
@@ -139,8 +68,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @ApiProperty(iri="https://schema.org/givenName")
-     *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      *
      * @Assert\Length(
@@ -154,8 +81,6 @@ class RequestRecipient
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
-     * @ApiProperty(iri="https://schema.org/familyName")
      *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      *
@@ -171,8 +96,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=2)
      *
-     * @ApiProperty(iri="https://schema.org/addressCountry")
-     *
      * @Groups({"DispatchRequestRecipient:output:addressCountry", "DispatchRequestRecipient:input"})
      *
      * @Assert\Length(
@@ -186,8 +109,6 @@ class RequestRecipient
 
     /**
      * @ORM\Column(type="string", length=20)
-     *
-     * @ApiProperty(iri="https://schema.org/postalCode")
      *
      * @Groups({"DispatchRequestRecipient:output:postalCode", "DispatchRequestRecipient:input"})
      *
@@ -203,8 +124,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=120)
      *
-     * @ApiProperty(iri="https://schema.org/addressLocality")
-     *
      * @Groups({"DispatchRequestRecipient:output:addressLocality", "DispatchRequestRecipient:input"})
      *
      * @Assert\Length(
@@ -218,8 +137,6 @@ class RequestRecipient
 
     /**
      * @ORM\Column(type="string", length=120)
-     *
-     * @ApiProperty(iri="https://schema.org/streetAddress")
      *
      * @Groups({"DispatchRequestRecipient:output:streetAddress", "DispatchRequestRecipient:input"})
      *
@@ -235,8 +152,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=10)
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequestRecipient:output:buildingNumber", "DispatchRequestRecipient:input"})
      *
      * @Assert\Length(
@@ -251,8 +166,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="date")
      *
-     * @ApiProperty(iri="http://schema.org/birthDate")
-     *
      * @Groups({"DispatchRequestRecipient:output:birthDate", "DispatchRequestRecipient:input"})
      * I could not find an Assert that doesn't cause an error to do proper checks
      *
@@ -263,8 +176,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="string", length=50)
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequestRecipient:output"})
      *
      * @var string
@@ -273,8 +184,6 @@ class RequestRecipient
 
     /**
      * @ORM\Column(type="string", length=100)
-     *
-     * @ApiProperty
      *
      * @Groups({"DispatchRequestRecipient:output"})
      *
@@ -285,8 +194,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="datetime")
      *
-     * @ApiProperty(iri="https://schema.org/endDate")
-     *
      * @Groups({"DispatchRequestRecipient:output"})
      *
      * @var \DateTimeInterface|null
@@ -295,8 +202,6 @@ class RequestRecipient
 
     /**
      * @ORM\Column(type="string", length=100)
-     *
-     * @ApiProperty(iri="https://schema.org/identifier")
      *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
      *
@@ -312,8 +217,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="boolean")
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var bool
@@ -323,8 +226,6 @@ class RequestRecipient
     /**
      * @ORM\Column(type="boolean")
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var bool
@@ -332,8 +233,6 @@ class RequestRecipient
     private $electronicallyDeliverable;
 
     /**
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var ?DeliveryStatusChange
@@ -344,8 +243,6 @@ class RequestRecipient
      * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="requestRecipient")
      *
      * @ORM\OrderBy({"orderId" = "DESC"})
-     *
-     * @ApiProperty
      *
      * @Groups({"DispatchRequestRecipient:output"})
      */
