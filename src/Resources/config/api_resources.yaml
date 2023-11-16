@@ -7,13 +7,13 @@ resources:
 
     operations:
       ApiPlatform\Metadata\Get:
-        provider: Dbp\Relay\DispatchBundle\DataProvider\GroupDataProvider
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\GroupProvider
         uriTemplate: '/dispatch/groups/{identifier}'
         openapiContext:
           tags: ["Dispatch"]
 
       ApiPlatform\Metadata\GetCollection:
-        provider: Dbp\Relay\DispatchBundle\DataProvider\GroupDataProvider
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\GroupProvider
         uriTemplate: '/dispatch/groups'
         openapiContext:
           tags: ['Dispatch']

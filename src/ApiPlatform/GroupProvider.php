@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DataProvider;
+namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
 use Dbp\Relay\CoreBundle\Rest\AbstractDataProvider;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Service\GroupService;
 
-class GroupDataProvider extends AbstractDataProvider
+class GroupProvider extends AbstractDataProvider
 {
     /** @var GroupService */
     private $groupService;
