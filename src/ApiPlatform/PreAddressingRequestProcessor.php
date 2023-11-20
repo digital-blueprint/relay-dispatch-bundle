@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DataPersister;
+namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
-use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\State\ProcessorInterface;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\Uid\Uuid;
 
-class PreAddressingRequestDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
+class PreAddressingRequestProcessor extends AbstractController implements ProcessorInterface
 {
     /**
      * @var DispatchService
@@ -29,20 +30,15 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
         $this->auth = $auth;
     }
 
-    public function supports($data, array $context = []): bool
-    {
-        return $data instanceof PreAddressingRequest;
-    }
-
-    /**
-     * @param mixed $data
-     *
-     * @return PreAddressingRequest
-     */
-    public function persist($data, array $context = [])
+    public function process($data, Operation $operation, array $uriVariables = [], array $context = []): PreAddressingRequest
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();
+
+        if (!$operation instanceof Post) {
+            throw new \RuntimeException('not implemented');
+        }
+
         // Users only need pre-addressing if they can create new delivery requests, so only if
         // they have the right to write something in at elast one group.
         $this->auth->checkCanWriteSomething();
@@ -54,18 +50,5 @@ class PreAddressingRequestDataPersister extends AbstractController implements Co
         $this->dispatchService->doPreAddressingSoapRequestForPreAddressingRequest($preAddressingRequest);
 
         return $preAddressingRequest;
-    }
-
-    /**
-     * @param mixed $data
-     *
-     * @return void
-     */
-    public function remove($data, array $context = [])
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
-
-        throw new MethodNotAllowedHttpException([]);
     }
 }

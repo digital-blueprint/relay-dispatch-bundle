@@ -160,3 +160,52 @@ resources:
       electronicallyDeliverable:
       lastStatusChange:
       statusChanges:
+
+  Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest:
+    types: ['https://schema.org/Action']
+    shortName: 'DispatchPreAddressingRequest'
+    normalizationContext:
+      groups: ['DispatchPreAddressingRequest:output']
+    denormalizationContext:
+      groups: ["DispatchPreAddressingRequest:input"]
+
+    operations:
+      ApiPlatform\Metadata\Get:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\PreAddressingRequestProvider
+        uriTemplate: '/dispatch/pre-addressing-requests/{identifier}'
+        openapiContext:
+          tags: ["Dispatch"]
+
+      ApiPlatform\Metadata\GetCollection:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\PreAddressingRequestProvider
+        uriTemplate: '/dispatch/pre-addressing-requests'
+        openapiContext:
+          tags: ['Dispatch']
+
+      ApiPlatform\Metadata\Post:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        processor: Dbp\Relay\DispatchBundle\ApiPlatform\PreAddressingRequestProcessor
+        uriTemplate: '/dispatch/pre-addressing-requests'
+        openapiContext:
+          tags: ['Dispatch']
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: "object"
+                  example:
+                    givenName: "Max"
+                    familyName: "Mustermann"
+                    birthDate: "1980-01-01"
+
+    properties:
+      identifier:
+        identifier: true
+      givenName:
+        iri: 'https://schema.org/givenName'
+      familyName:
+        iri: 'https://schema.org/familyName'
+      birthDate:
+        iri: 'http://schema.org/birthDate'

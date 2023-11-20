@@ -6,69 +6,17 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 date_default_timezone_set('UTC');
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ApiResource(
- *     collectionOperations={
- *         "post" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/pre-addressing-requests",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"},
- *                 "requestBody" = {
- *                     "content" = {
- *                         "application/json" = {
- *                             "schema" = {"type" = "object"},
- *                             "example" = {
- *                                 "givenName" = "Max",
- *                                 "familyName" = "Mustermann",
- *                                 "birthDate" = "1980-01-01"
- *                             },
- *                         }
- *                     }
- *                 },
- *             }
- *         },
- *     },
- *     itemOperations={
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/pre-addressing-requests/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         },
- *     },
- *     iri="https://schema.org/Action",
- *     shortName="DispatchPreAddressingRequest",
- *     normalizationContext={
- *         "groups" = {"DispatchPreAddressingRequest:output"}
- *     },
- *     denormalizationContext={
- *         "groups" = {"DispatchPreAddressingRequest:input"}
- *     }
- * )
- */
 class PreAddressingRequest
 {
     /**
-     * @ApiProperty(identifier=true)
-     *
      * @Groups({"DispatchPreAddressingRequest:output"})
      */
     private $identifier;
 
     /**
-     * @ApiProperty(iri="https://schema.org/givenName")
-     *
      * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input", "DispatchRequest:output"})
      *
      * @Assert\Length(
@@ -81,8 +29,6 @@ class PreAddressingRequest
     private $givenName;
 
     /**
-     * @ApiProperty(iri="https://schema.org/familyName")
-     *
      * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input", "DispatchRequest:output"})
      *
      * @Assert\Length(
@@ -95,8 +41,6 @@ class PreAddressingRequest
     private $familyName;
 
     /**
-     * @ApiProperty(iri="http://schema.org/birthDate")
-     *
      * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input"})
      * I could not find an Assert that doesn't cause an error to do proper checks
      *
