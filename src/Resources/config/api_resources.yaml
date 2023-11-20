@@ -209,3 +209,70 @@ resources:
         iri: 'https://schema.org/familyName'
       birthDate:
         iri: 'http://schema.org/birthDate'
+
+  Dbp\Relay\DispatchBundle\Entity\RequestFile:
+    types: ['https://schema.org/DigitalDocument']
+    shortName: 'DispatchRequestFile'
+    normalizationContext:
+      groups: ['DispatchRequestFile:output', 'DispatchRequest:output']
+    denormalizationContext:
+      groups: ["DispatchRequestFile:input"]
+
+    operations:
+      ApiPlatform\Metadata\Get:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\RequestFileProvider
+        uriTemplate: '/dispatch/request-files/{identifier}'
+        openapiContext:
+          tags: ["Dispatch"]
+
+      ApiPlatform\Metadata\Delete:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\RequestFileProvider
+        processor: Dbp\Relay\DispatchBundle\ApiPlatform\RequestFileProcessor
+        uriTemplate: '/dispatch/request-files/{identifier}'
+        openapiContext:
+          tags: ["Dispatch"]
+
+      ApiPlatform\Metadata\Post:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        controller: Dbp\Relay\DispatchBundle\ApiPlatform\CreateRequestFileAction
+        uriTemplate: "/dispatch/request-files"
+        method: 'POST'
+        deserialize: false
+        openapiContext:
+          tags: ["Dispatch"]
+          responses:
+            415:
+              description: "Unsupported Media Type - Only PDF files can be added!"
+          requestBody:
+            content:
+              multipart/form-data:
+                schema:
+                  type: "object"
+                  required: ["file", "dispatchRequestIdentifier"]
+                  properties:
+                    dispatchRequestIdentifier:
+                      description: "ID of the request"
+                      type: "string"
+                      example: "4d553985-d44f-404f-acf3-cd0eac7ae9c2"
+                    file:
+                      type: "string"
+                      format: "binary"
+
+    properties:
+      identifier:
+        identifier: true
+      dateCreated:
+        iri: 'https://schema.org/dateCreated'
+      request:
+      dispatchRequestIdentifier:
+        iri: "https://schema.org/identifier"
+      name:
+        iri: 'https://schema.org/name'
+      contentUrl:
+        iri: 'http://schema.org/contentUrl'
+      fileFormat:
+        iri: 'https://schema.org/fileFormat'
+      contentSize:
+        iri: 'https://schema.org/contentSize'

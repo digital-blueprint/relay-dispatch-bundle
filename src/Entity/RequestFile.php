@@ -6,9 +6,6 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 date_default_timezone_set('UTC');
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
-use Dbp\Relay\DispatchBundle\Controller\CreateRequestFileAction;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -17,72 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity
  *
  * @ORM\Table(name="dispatch_request_files")
- *
- * @ApiResource(
- *     collectionOperations={
- *         "post" = {
- *             "method" = "POST",
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-files",
- *             "controller" = CreateRequestFileAction::class,
- *             "deserialize" = false,
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"},
- *                 "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                     "dispatchRequestIdentifier" = {"description" = "ID of the request", "type" = "string", "example" = "4d553985-d44f-404f-acf3-cd0eac7ae9c2"},
- *                                     "file" = {"type" = "string", "format" = "binary"}
- *                                 },
- *                                 "required" = {"file", "dispatchRequestIdentifier"},
- *                             }
- *                         }
- *                     }
- *                 },
- *                 "responses" = {
- *                     "415" = {
- *                         "description" = "Unsupported Media Type - Only PDF files can be added!",
- *                         "content" = {}
- *                     }
- *                 }
- *             }
- *         },
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-files",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         }
- *     },
- *     itemOperations={
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-files/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         },
- *         "delete" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/request-files/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         }
- *     },
- *     iri="https://schema.org/DigitalDocument",
- *     shortName="DispatchRequestFile",
- *     normalizationContext={
- *         "groups" = {"DispatchRequestFile:output", "DispatchRequest:output"}
- *     },
- *     denormalizationContext={
- *         "groups" = {"DispatchRequestFile:input"}
- *     }
- * )
  */
 class RequestFile
 {
@@ -91,16 +22,12 @@ class RequestFile
      *
      * @ORM\Column(type="string", length=50)
      *
-     * @ApiProperty(identifier=true)
-     *
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
-     *
-     * @ApiProperty(iri="https://schema.org/dateCreated")
      *
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      *
@@ -113,8 +40,6 @@ class RequestFile
      *
      * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequestFile:output"})
      *
      * @var Request
@@ -123,8 +48,6 @@ class RequestFile
 
     /**
      * @ORM\Column(type="string", length=50)
-     *
-     * @ApiProperty(iri="https://schema.org/identifier")
      *
      * @Groups({"DispatchRequestFile:output", "DispatchRequestFile:input"})
      *
@@ -135,8 +58,6 @@ class RequestFile
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @ApiProperty(iri="https://schema.org/name")
-     *
      * @Groups({"DispatchRequestFile:output", "DispatchRequestFile:input", "DispatchRequest:output"})
      *
      * @var string
@@ -144,8 +65,6 @@ class RequestFile
     private $name;
 
     /**
-     * @ApiProperty(iri="http://schema.org/contentUrl")
-     *
      * @Groups({"DispatchRequestFile:output"})
      *
      * @var string
@@ -160,8 +79,6 @@ class RequestFile
     private $data;
 
     /**
-     * @ApiProperty(iri="https://schema.org/fileFormat")
-     *
      * @ORM\Column(type="string", length=100)
      *
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
@@ -172,8 +89,6 @@ class RequestFile
 
     /**
      * @ORM\Column(type="integer")
-     *
-     * @ApiProperty(iri="https://schema.org/contentSize")
      *
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      *

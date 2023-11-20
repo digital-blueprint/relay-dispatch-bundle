@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\Controller;
+namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
