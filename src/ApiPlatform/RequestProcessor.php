@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\DataPersister;
+namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
-use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use ApiPlatform\Metadata\DeleteOperationInterface;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\State\ProcessorInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Request;
@@ -12,7 +16,7 @@ use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class RequestDataPersister extends AbstractController implements ContextAwareDataPersisterInterface
+class RequestProcessor extends AbstractController implements ProcessorInterface
 {
     /**
      * @var DispatchService
@@ -30,17 +34,12 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
         $this->auth = $auth;
     }
 
-    public function supports($data, array $context = []): bool
-    {
-        return $data instanceof Request;
-    }
-
     /**
      * @param mixed $data
      *
-     * @return Request
+     * @return Request|void
      */
-    public function persist($data, array $context = [])
+    public function process($data, Operation $operation, array $uriVariables = [], array $context = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();
@@ -54,42 +53,26 @@ class RequestDataPersister extends AbstractController implements ContextAwareDat
 
         $request = $data;
         assert($request instanceof Request);
-
-        // Only allow if we can write within the given group
         $this->auth->checkCanWrite($request->getGroupId());
 
-        if ($context['operation']->getMethod() === 'PUT') {
+        if ($operation instanceof DeleteOperationInterface) {
             if ($request->isSubmitted()) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
             }
 
-            $this->dispatchService->updateRequest($request);
-        } else {
-            $this->dispatchService->createRequest($request);
+            $this->dispatchService->removeRequestById($request->getIdentifier());
+
+            return;
+        } elseif ($operation instanceof Put) {
+            if ($request->isSubmitted()) {
+                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+            }
+
+            return $this->dispatchService->updateRequest($request);
+        } elseif ($operation instanceof Post) {
+            return $this->dispatchService->createRequest($request);
         }
 
-        return $request;
-    }
-
-    /**
-     * @param mixed $data
-     *
-     * @return void
-     */
-    public function remove($data, array $context = [])
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
-
-        $request = $data;
-        assert($request instanceof Request);
-
-        $this->auth->checkCanWrite($request->getGroupId());
-
-        if ($request->isSubmitted()) {
-            throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
-        }
-
-        $this->dispatchService->removeRequestById($request->getIdentifier());
+        throw new \RuntimeException('not implemented');
     }
 }

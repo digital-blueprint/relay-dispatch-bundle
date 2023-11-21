@@ -1,14 +1,4 @@
 services:
-  Dbp\Relay\DispatchBundle\DataPersister\:
-    resource: '../../DataPersister'
-    autowire: true
-    autoconfigure: true
-
-  Dbp\Relay\DispatchBundle\DataProvider\:
-    resource: '../../DataProvider'
-    autowire: true
-    autoconfigure: true
-
   Dbp\Relay\DispatchBundle\ApiPlatform\:
     resource: '../../ApiPlatform'
     autowire: true
@@ -25,12 +15,6 @@ services:
     autoconfigure: true
 
   Dbp\Relay\DispatchBundle\Service\GroupService:
-    autowire: true
-    autoconfigure: true
-
-  Dbp\Relay\DispatchBundle\Controller\:
-    tags: ['controller.service_arguments']
-    resource: '../../Controller'
     autowire: true
     autoconfigure: true
 

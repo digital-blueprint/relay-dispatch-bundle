@@ -276,3 +276,124 @@ resources:
         iri: 'https://schema.org/fileFormat'
       contentSize:
         iri: 'https://schema.org/contentSize'
+
+  Dbp\Relay\DispatchBundle\Entity\Request:
+    types: ['https://schema.org/Action']
+    shortName: 'DispatchRequest'
+    normalizationContext:
+      groups: ['DispatchRequest:output']
+    denormalizationContext:
+      groups: ["DispatchRequest:input"]
+
+    operations:
+      ApiPlatform\Metadata\Get:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProvider
+        uriTemplate: '/dispatch/requests/{identifier}'
+        openapiContext:
+          tags: ["Dispatch"]
+
+      ApiPlatform\Metadata\Put:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProvider
+        processor: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProcessor
+        uriTemplate: '/dispatch/requests/{identifier}'
+        openapiContext:
+          tags: ["Dispatch"]
+
+      ApiPlatform\Metadata\Delete:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProvider
+        processor: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProcessor
+        uriTemplate: '/dispatch/requests/{identifier}'
+        openapiContext:
+          tags: ["Dispatch"]
+
+      ApiPlatform\Metadata\Post:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        processor: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProcessor
+        uriTemplate: "/dispatch/requests"
+        openapiContext:
+          tags: ["Dispatch"]
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: "object"
+                  example:
+                    name: "Aussendung 42"
+                    senderFullName: "Max Mustermann"
+                    senderOrganizationName: "Studienservice TU Graz"
+                    senderAddressCountry: "AT"
+                    senderPostalCode: "8010"
+                    senderAddressLocality: "Graz"
+                    senderStreetAddress: "Am Grund"
+                    senderBuildingNumber: "1"
+                    groupId: "11072"
+                    referenceNumber: "GZ-2023/01-13"
+
+      ApiPlatform\Metadata\GetCollection:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProvider
+        uriTemplate: '/dispatch/requests'
+        openapiContext:
+          tags: ['Dispatch']
+          parameters:
+            - name: "groupId"
+              in: "query"
+              description: 'The group ID for which to fetch requests'
+              required: true
+              type: "string"
+
+      post_submit:
+        security: 'is_granted("IS_AUTHENTICATED_FULLY")'
+        class: ApiPlatform\Metadata\Post
+        method: POST
+        uriTemplate: "/dispatch/requests/{identifier}/submit"
+        controller: Dbp\Relay\DispatchBundle\ApiPlatform\PostSubmitRequest
+        read: false
+        write: false
+        deserialize: false
+        validate: false
+        openapiContext:
+          summary: "Submits the request."
+          tags: ["Dispatch"]
+          parameters:
+            - name: "identifier"
+              in: "path"
+              description: 'ID of the request'
+              required: true
+              type: "string"
+              example: "4d553985-d44f-404f-acf3-cd0eac7ae9c2"
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: "object"
+                  example: '{}'
+
+    properties:
+      identifier:
+        identifier: true
+      name:
+        iri: 'https://schema.org/name'
+      dateCreated:
+        iri: 'https://schema.org/dateCreated'
+      personIdentifier:
+        iri: 'https://schema.org/identifier'
+      senderFullName:
+        iri: 'https://schema.org/alternateName'
+      senderOrganizationName:
+        iri: 'https://schema.org/alternateName'
+      dateSubmitted:
+      senderAddressCountry:
+        iri: 'https://schema.org/addressCountry'
+      senderPostalCode:
+        iri: 'https://schema.org/postalCode'
+      senderAddressLocality:
+        iri: 'https://schema.org/addressLocality'
+      senderStreetAddress:
+        iri: 'https://schema.org/streetAddress'
+      senderBuildingNumber:
+      groupId:
+      referenceNumber:

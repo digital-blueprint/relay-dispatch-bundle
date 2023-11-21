@@ -6,9 +6,6 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 date_default_timezone_set('UTC');
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
-use Dbp\Relay\DispatchBundle\Controller\PostSubmitRequest;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -18,103 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  *
  * @ORM\Table(name="dispatch_requests")
- *
- * @ApiResource(
- *     collectionOperations={
- *         "post" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/requests",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"},
- *                 "requestBody" = {
- *                     "content" = {
- *                         "application/json" = {
- *                             "schema" = {"type" = "object"},
- *                             "example" = {
- *                                 "name" = "Aussendung 42",
- *                                 "senderFullName" = "Max Mustermann",
- *                                 "senderOrganizationName" = "Studienservice TU Graz",
- *                                 "senderAddressCountry" = "AT",
- *                                 "senderPostalCode" = "8010",
- *                                 "senderAddressLocality" = "Graz",
- *                                 "senderStreetAddress" = "Am Grund",
- *                                 "senderBuildingNumber" = "1",
- *                                 "groupId" = "11072",
- *                                 "referenceNumber" = "GZ-2023/01-13"
- *                             },
- *                         }
- *                     }
- *                 },
- *             }
- *         },
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/requests",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"},
- *                 "parameters" = {
- *                     {"name" = "groupId", "in" = "query", "description" = "The group ID for which to fetch requests", "type" = "string", "required" = true},
- *                 }
- *             },
- *         }
- *     },
- *     itemOperations={
- *         "get" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/requests/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         },
- *         "put" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/requests/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         },
- *         "delete" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "path" = "/dispatch/requests/{identifier}",
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"}
- *             },
- *         },
- *         "post_submit" = {
- *             "security" = "is_granted('IS_AUTHENTICATED_FULLY')",
- *             "method" = "POST",
- *             "path" = "/dispatch/requests/{identifier}/submit",
- *             "controller" = PostSubmitRequest::class,
- *             "defaults" = {
- *                 "_api_persist" = false,
- *                 "_api_receive" = false,
- *             },
- *             "openapi_context" = {
- *                 "tags" = {"Dispatch"},
- *                 "summary" = "Submits the request.",
- *                 "requestBody" = {
- *                     "content" = {
- *                         "application/json" = {
- *                             "schema" = {"type" = "object"},
- *                             "example" = {}
- *                         }
- *                     }
- *                 },
- *                 "parameters" = {
- *                     {"name" = "identifier", "in" = "path", "description" = "ID of the request", "required" = true, "type" = "string", "example" = "4d553985-d44f-404f-acf3-cd0eac7ae9c2"},
- *                 }
- *             },
- *         },
- *     },
- *     iri="https://schema.org/Action",
- *     shortName="DispatchRequest",
- *     normalizationContext={
- *         "groups" = {"DispatchRequest:output"}
- *     },
- *     denormalizationContext={
- *         "groups" = {"DispatchRequest:input"}
- *     }
- * )
  */
 class Request
 {
@@ -123,16 +23,12 @@ class Request
      *
      * @ORM\Column(type="string", length=50)
      *
-     * @ApiProperty(identifier=true)
-     *
      * @Groups({"DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
-     * @ApiProperty(iri="https://schema.org/name")
      *
      * @Groups({"DispatchRequest:output:name", "DispatchRequest:input"})
      *
@@ -148,8 +44,6 @@ class Request
     /**
      * @ORM\Column(type="datetime")
      *
-     * @ApiProperty(iri="https://schema.org/dateCreated")
-     *
      * @Groups({"DispatchRequest:output"})
      *
      * @var \DateTimeInterface
@@ -159,8 +53,6 @@ class Request
     /**
      * @ORM\Column(type="string", length=50)
      *
-     * @ApiProperty(iri="https://schema.org/identifier")
-     *
      * @Groups({"DispatchRequest:output"})
      *
      * @var string
@@ -169,8 +61,6 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
-     * @ApiProperty(iri="https://schema.org/alternateName")
      *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
@@ -186,8 +76,6 @@ class Request
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @ApiProperty(iri="https://schema.org/alternateName")
-     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
      * @Assert\Length(
@@ -202,8 +90,6 @@ class Request
     /**
      * @ORM\Column(type="datetime")
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequest:output"})
      *
      * @var \DateTimeInterface
@@ -212,8 +98,6 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=2)
-     *
-     * @ApiProperty(iri="https://schema.org/addressCountry")
      *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
@@ -229,8 +113,6 @@ class Request
     /**
      * @ORM\Column(type="string", length=20)
      *
-     * @ApiProperty(iri="https://schema.org/postalCode")
-     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
      * @Assert\Length(
@@ -244,8 +126,6 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=120)
-     *
-     * @ApiProperty(iri="https://schema.org/addressLocality")
      *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
@@ -261,8 +141,6 @@ class Request
     /**
      * @ORM\Column(type="string", length=120)
      *
-     * @ApiProperty(iri="https://schema.org/streetAddress")
-     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
      * @Assert\Length(
@@ -277,8 +155,6 @@ class Request
     /**
      * @ORM\Column(type="string", length=10)
      *
-     * @ApiProperty
-     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
      * @Assert\Length(
@@ -292,8 +168,6 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
-     * @ApiProperty
      *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
@@ -310,8 +184,6 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=25)
-     *
-     * @ApiProperty
      *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
      *
