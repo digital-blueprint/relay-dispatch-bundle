@@ -11,7 +11,7 @@ class AttributeType extends AttributeDesignatorType
     /**
      * @var mixed
      */
-    protected $AttributeValue = null;
+    protected $AttributeValue;
 
     /**
      * @param string $AttributeName

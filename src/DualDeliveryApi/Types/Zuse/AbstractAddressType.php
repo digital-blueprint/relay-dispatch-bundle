@@ -9,7 +9,7 @@ class AbstractAddressType
     /**
      * @var ?string
      */
-    protected $Id = null;
+    protected $Id;
 
     public function __construct(?string $Id)
     {

@@ -11,17 +11,17 @@ class SignaturePropertyType
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @var AnyURI
      */
-    protected $Target = null;
+    protected $Target;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @param string $any

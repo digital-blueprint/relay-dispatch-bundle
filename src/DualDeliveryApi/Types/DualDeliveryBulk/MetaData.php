@@ -13,32 +13,32 @@ class MetaData
     /**
      * @var ?ApplicationID
      */
-    protected $ApplicationID = null;
+    protected $ApplicationID;
 
     /**
      * @var ?string
      */
-    protected $GZ = null;
+    protected $GZ;
 
     /**
      * @var ?AdditionalMetaData
      */
-    protected $AdditionalMetaData = null;
+    protected $AdditionalMetaData;
 
     /**
      * @var ?bool
      */
-    protected $TestCase = null;
+    protected $TestCase;
 
     /**
      * @var ?ProcessingProfile
      */
-    protected $ProcessingProfile = null;
+    protected $ProcessingProfile;
 
     /**
      * @var ?bool
      */
-    protected $Asynchronous = null;
+    protected $Asynchronous;
 
     public function __construct(?ApplicationID $ApplicationID, ?string $GZ, ?AdditionalMetaData $AdditionalMetaData, ?bool $TestCase, ?ProcessingProfile $ProcessingProfile, ?bool $Asynchronous)
     {

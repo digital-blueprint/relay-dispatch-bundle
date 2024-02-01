@@ -11,17 +11,17 @@ class DualNotificationResponses
     /**
      * @var DualNotificationResponseType
      */
-    protected $DualNotificationResponse = null;
+    protected $DualNotificationResponse;
 
     /**
      * @var string
      */
-    protected $ApplicationDeliveryID = null;
+    protected $ApplicationDeliveryID;
 
     /**
      * @var ?int
      */
-    protected $DualZSID = null;
+    protected $DualZSID;
 
     public function __construct(DualNotificationResponseType $DualNotificationResponse, string $ApplicationDeliveryID, ?int $DualZSID)
     {

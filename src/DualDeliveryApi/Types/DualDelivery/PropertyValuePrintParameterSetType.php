@@ -9,7 +9,7 @@ class PropertyValuePrintParameterSetType extends AdditionalPrintParameterSetType
     /**
      * @var ParameterType[]
      */
-    protected $Parameter = null;
+    protected $Parameter;
 
     /**
      * @param ParameterType[] $Parameter

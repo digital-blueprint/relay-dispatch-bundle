@@ -9,22 +9,22 @@ class DiscountType
     /**
      * @var date
      */
-    protected $PaymentDate = null;
+    protected $PaymentDate;
 
     /**
      * @var Decimal2Type
      */
-    protected $BaseAmount = null;
+    protected $BaseAmount;
 
     /**
      * @var PercentageType
      */
-    protected $Percentage = null;
+    protected $Percentage;
 
     /**
      * @var Decimal2Type
      */
-    protected $Amount = null;
+    protected $Amount;
 
     /**
      * @param date           $PaymentDate

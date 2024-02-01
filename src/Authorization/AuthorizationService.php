@@ -88,8 +88,8 @@ class AuthorizationService extends AbstractAuthorizationService
             return false;
         }
 
-        return $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, new GroupData($groupId)) ||
-                $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_READ_ADDRESS, new GroupData($groupId));
+        return $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, new GroupData($groupId))
+                || $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_READ_ADDRESS, new GroupData($groupId));
     }
 
     /**
@@ -107,10 +107,10 @@ class AuthorizationService extends AbstractAuthorizationService
     public function getCanReadMetadata(string $groupId): bool
     {
         $groupData = new GroupData($groupId);
-        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_READ_ADDRESS, $groupData) ||
-            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData) ||
-            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData) ||
-            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_METADATA, $groupData)) {
+        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_READ_ADDRESS, $groupData)
+            || $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData)
+            || $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData)
+            || $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_METADATA, $groupData)) {
             return true;
         }
 
@@ -123,9 +123,9 @@ class AuthorizationService extends AbstractAuthorizationService
     public function getCanReadContent(string $groupId): bool
     {
         $groupData = new GroupData($groupId);
-        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_READ_ADDRESS, $groupData) ||
-            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData) ||
-            $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData)) {
+        if ($this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER_READ_ADDRESS, $groupData)
+            || $this->isGrantedGroupRole(Configuration::ROLE_GROUP_WRITER, $groupData)
+            || $this->isGrantedGroupRole(Configuration::ROLE_GROUP_READER_CONTENT, $groupData)) {
             return true;
         }
 

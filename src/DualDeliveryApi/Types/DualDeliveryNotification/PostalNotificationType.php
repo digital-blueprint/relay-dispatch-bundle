@@ -9,67 +9,67 @@ class PostalNotificationType extends NotificationChannelSetType
     /**
      * @var ?int
      */
-    protected $Pages = null;
+    protected $Pages;
 
     /**
      * @var ?string
      */
-    protected $Printtime = null;
+    protected $Printtime;
 
     /**
      * @var ?string
      */
-    protected $PrintType = null;
+    protected $PrintType;
 
     /**
      * @var ?string
      */
-    protected $Weight = null;
+    protected $Weight;
 
     /**
      * @var ?string
      */
-    protected $EnvelopeType = null;
+    protected $EnvelopeType;
 
     /**
      * @var ?string
      */
-    protected $PostalDeliveryTime = null;
+    protected $PostalDeliveryTime;
 
     /**
      * @var ?string
      */
-    protected $ServiceDeliveryTime = null;
+    protected $ServiceDeliveryTime;
 
     /**
      * @var ?int
      */
-    protected $Sheets = null;
+    protected $Sheets;
 
     /**
      * @var ?int
      */
-    protected $PaymentForms = null;
+    protected $PaymentForms;
 
     /**
      * @var Costs
      */
-    protected $Costs = null;
+    protected $Costs;
 
     /**
      * @var ?AdditonalPrintResults
      */
-    protected $AdditonalPrintResults = null;
+    protected $AdditonalPrintResults;
 
     /**
      * @var ?DelivererInformation
      */
-    protected $DelivererInformation = null;
+    protected $DelivererInformation;
 
     /**
      * @var ?ScannedData
      */
-    protected $ScannedData = null;
+    protected $ScannedData;
 
     public function __construct()
     {

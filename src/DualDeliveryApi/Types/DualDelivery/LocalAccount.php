@@ -9,12 +9,12 @@ class LocalAccount
     /**
      * @var string
      */
-    protected $BLZ = null;
+    protected $BLZ;
 
     /**
      * @var string
      */
-    protected $AccountNr = null;
+    protected $AccountNr;
 
     public function __construct(string $BLZ, string $AccountNr)
     {

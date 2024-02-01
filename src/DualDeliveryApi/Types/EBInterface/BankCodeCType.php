@@ -9,12 +9,12 @@ class BankCodeCType
     /**
      * @var int
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var CountryCodeType
      */
-    protected $BankCodeType = null;
+    protected $BankCodeType;
 
     /**
      * @param int             $_

@@ -9,17 +9,17 @@ class ParameterType
     /**
      * @var string
      */
-    protected $Property = null;
+    protected $Property;
 
     /**
      * @var ?string
      */
-    protected $Value = null;
+    protected $Value;
 
     /**
      * @var ?string
      */
-    protected $Type = null;
+    protected $Type;
 
     public function __construct(string $Property, ?string $Value)
     {

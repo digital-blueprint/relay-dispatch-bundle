@@ -9,22 +9,22 @@ class MetaData
     /**
      * @var string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var ?ApplicationID
      */
-    protected $ApplicationID = null;
+    protected $ApplicationID;
 
     /**
      * @var string
      */
-    protected $DeliveryQuality = null;
+    protected $DeliveryQuality;
 
     /**
      * @var ?string
      */
-    protected $Subject = null;
+    protected $Subject;
 
     /**
      * Über dieses Element kann eine Geschäftszahl bzw. ein Geschäftskennzeichen
@@ -35,54 +35,54 @@ class MetaData
      *
      * @var ?string
      */
-    protected $GZ = null;
+    protected $GZ;
 
     /**
      * @var ?Payments
      */
-    protected $Payments = null;
+    protected $Payments;
 
     /**
      * @var ?AdditionalMetaData
      */
-    protected $AdditionalMetaData = null;
+    protected $AdditionalMetaData;
 
     /**
      * @var ?bool
      */
-    protected $TestCase = null;
+    protected $TestCase;
 
     /**
      * @var ?ProcessingProfile
      */
-    protected $ProcessingProfile = null;
+    protected $ProcessingProfile;
 
     /**
      * @var ?string
      */
-    protected $DocumentClass = null;
+    protected $DocumentClass;
 
     /**
      * @var ?bool
      */
-    protected $Asynchronous = null;
+    protected $Asynchronous;
 
     /**
      * @var ?int
      */
-    protected $BulkId = null;
+    protected $BulkId;
 
     /**
      * @var ?string
      */
-    protected $User = null;
+    protected $User;
 
     /**
      * @var ?string
      */
-    protected $BillingToken = null;
+    protected $BillingToken;
 
-    public function __construct(string $AppDeliveryID, ?ApplicationID $ApplicationID, string $DeliveryQuality, ?string $Subject = null, ?string $GZ = null, ?Payments $Payments = null, ?AdditionalMetaData $AdditionalMetaData = null, ?bool $TestCase = null, ?ProcessingProfile $ProcessingProfile = null, ?string $DocumentClass = null, ?bool $Asynchronous = null, ?int $BulkId = null, ?string $User = null, ?string $BillingToken = null)
+    public function __construct(string $AppDeliveryID, ?ApplicationID $ApplicationID, string $DeliveryQuality, string $Subject = null, string $GZ = null, Payments $Payments = null, AdditionalMetaData $AdditionalMetaData = null, bool $TestCase = null, ProcessingProfile $ProcessingProfile = null, string $DocumentClass = null, bool $Asynchronous = null, int $BulkId = null, string $User = null, string $BillingToken = null)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->ApplicationID = $ApplicationID;

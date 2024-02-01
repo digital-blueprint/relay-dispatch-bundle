@@ -12,37 +12,37 @@ class Success
     /**
      * @var Sender
      */
-    protected $Sender = null;
+    protected $Sender;
 
     /**
      * @var Receiver
      */
-    protected $Receiver = null;
+    protected $Receiver;
 
     /**
      * @var NotificationsPerformed
      */
-    protected $NotificationsPerformed = null;
+    protected $NotificationsPerformed;
 
     /**
      * @var string
      */
-    protected $ConfirmationTimestamp = null;
+    protected $ConfirmationTimestamp;
 
     /**
      * @var AssertionType
      */
-    protected $AuthBlock = null;
+    protected $AuthBlock;
 
     /**
      * @var BinaryConfirmation
      */
-    protected $BinaryConfirmation = null;
+    protected $BinaryConfirmation;
 
     /**
      * @var SignatureType
      */
-    protected $Signature = null;
+    protected $Signature;
 
     public function __construct(Sender $Sender, Receiver $Receiver, NotificationsPerformed $NotificationsPerformed, \DateTimeInterface $ConfirmationTimestamp, AssertionType $AuthBlock, BinaryConfirmation $BinaryConfirmation, SignatureType $Signature)
     {

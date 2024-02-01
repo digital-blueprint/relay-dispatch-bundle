@@ -9,37 +9,37 @@ class DSAKeyValueType
     /**
      * @var CryptoBinary
      */
-    protected $P = null;
+    protected $P;
 
     /**
      * @var CryptoBinary
      */
-    protected $Q = null;
+    protected $Q;
 
     /**
      * @var CryptoBinary
      */
-    protected $J = null;
+    protected $J;
 
     /**
      * @var CryptoBinary
      */
-    protected $G = null;
+    protected $G;
 
     /**
      * @var CryptoBinary
      */
-    protected $Y = null;
+    protected $Y;
 
     /**
      * @var CryptoBinary
      */
-    protected $Seed = null;
+    protected $Seed;
 
     /**
      * @var CryptoBinary
      */
-    protected $PgenCounter = null;
+    protected $PgenCounter;
 
     /**
      * @param CryptoBinary $P

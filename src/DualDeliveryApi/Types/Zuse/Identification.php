@@ -9,12 +9,12 @@ class Identification
     /**
      * @var string
      */
-    protected $Type = null;
+    protected $Type;
 
     /**
      * @var string
      */
-    protected $Value = null;
+    protected $Value;
 
     public function __construct(string $Type, string $Value)
     {

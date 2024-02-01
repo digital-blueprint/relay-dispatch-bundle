@@ -9,12 +9,12 @@ class FurtherIdentificationType
     /**
      * @var AlphaNumIDType
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $IdentificationType = null;
+    protected $IdentificationType;
 
     /**
      * @param AlphaNumIDType $_

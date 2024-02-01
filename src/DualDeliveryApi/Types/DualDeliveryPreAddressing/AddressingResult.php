@@ -11,17 +11,17 @@ class AddressingResult
     /**
      * @var UsedDeliveryChannelType[]
      */
-    protected $DeliveryChannelAddressingResult = null;
+    protected $DeliveryChannelAddressingResult;
 
     /**
      * @var ?string
      */
-    protected $DualDeliveryID = null;
+    protected $DualDeliveryID;
 
     /**
      * @var string
      */
-    protected $RecipientID = null;
+    protected $RecipientID;
 
     /**
      * @param UsedDeliveryChannelType[] $DeliveryChannelAddressingResult

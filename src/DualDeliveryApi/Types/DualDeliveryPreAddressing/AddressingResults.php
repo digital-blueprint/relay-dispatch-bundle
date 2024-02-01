@@ -9,7 +9,7 @@ class AddressingResults
     /**
      * @var ?AddressingResult[]
      */
-    protected $AddressingResult = null;
+    protected $AddressingResult;
 
     /**
      * @param AddressingResult[] $AddressingResult

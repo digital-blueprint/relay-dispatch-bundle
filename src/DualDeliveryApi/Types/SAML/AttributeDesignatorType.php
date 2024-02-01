@@ -11,12 +11,12 @@ class AttributeDesignatorType
     /**
      * @var string
      */
-    protected $AttributeName = null;
+    protected $AttributeName;
 
     /**
      * @var AnyURI
      */
-    protected $AttributeNamespace = null;
+    protected $AttributeNamespace;
 
     /**
      * @param string $AttributeName

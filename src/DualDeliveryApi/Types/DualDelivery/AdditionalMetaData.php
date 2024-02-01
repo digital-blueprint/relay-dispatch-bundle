@@ -9,7 +9,7 @@ class AdditionalMetaData
     /**
      * @var AdditionalMetaDataSetType[]
      */
-    protected $AdditionalMetaDataSet = null;
+    protected $AdditionalMetaDataSet;
 
     /**
      * @param AdditionalMetaDataSetType[] $AdditionalMetaDataSet

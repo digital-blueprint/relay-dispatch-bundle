@@ -9,22 +9,22 @@ class ConditionsType
     /**
      * @var AudienceRestrictionConditionType
      */
-    protected $AudienceRestrictionCondition = null;
+    protected $AudienceRestrictionCondition;
 
     /**
      * @var ConditionAbstractType
      */
-    protected $Condition = null;
+    protected $Condition;
 
     /**
      * @var \DateTime
      */
-    protected $NotBefore = null;
+    protected $NotBefore;
 
     /**
      * @var \DateTime
      */
-    protected $NotOnOrAfter = null;
+    protected $NotOnOrAfter;
 
     /**
      * @param AudienceRestrictionConditionType $AudienceRestrictionCondition

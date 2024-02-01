@@ -13,27 +13,27 @@ class PaymentConditionsType
     /**
      * @var date
      */
-    protected $DueDate = null;
+    protected $DueDate;
 
     /**
      * @var DiscountType
      */
-    protected $Discount = null;
+    protected $Discount;
 
     /**
      * @var Decimal2Type
      */
-    protected $MinimumPayment = null;
+    protected $MinimumPayment;
 
     /**
      * @var string
      */
-    protected $Comment = null;
+    protected $Comment;
 
     /**
      * @var PaymentConditionsExtensionType
      */
-    protected $PaymentConditionsExtension = null;
+    protected $PaymentConditionsExtension;
 
     /**
      * @param date                           $DueDate

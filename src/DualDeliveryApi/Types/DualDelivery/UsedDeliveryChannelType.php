@@ -9,22 +9,22 @@ class UsedDeliveryChannelType
     /**
      * @var string
      */
-    protected $Name = null;
+    protected $Name;
 
     /**
      * @var StatusType
      */
-    protected $Status = null;
+    protected $Status;
 
     /**
      * @var ?ParametersType
      */
-    protected $Parameters = null;
+    protected $Parameters;
 
     /**
      * @var ?ErrorsType
      */
-    protected $Errors = null;
+    protected $Errors;
 
     public function __construct(string $Name, StatusType $Status, ?ParametersType $Parameters, ?ErrorsType $Errors)
     {

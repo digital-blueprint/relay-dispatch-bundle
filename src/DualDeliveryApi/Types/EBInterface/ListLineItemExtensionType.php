@@ -9,12 +9,12 @@ class ListLineItemExtensionType
     /**
      * @var ListLineItemExtensionType
      */
-    protected $ListLineItemExtension = null;
+    protected $ListLineItemExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param ListLineItemExtensionType $ListLineItemExtension

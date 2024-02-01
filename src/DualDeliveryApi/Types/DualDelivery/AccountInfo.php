@@ -9,12 +9,12 @@ class AccountInfo
     /**
      * @var Receiver
      */
-    protected $Receiver = null;
+    protected $Receiver;
 
     /**
      * @var ?Depositor
      */
-    protected $Depositor = null;
+    protected $Depositor;
 
     public function __construct(Receiver $Receiver, ?Depositor $Depositor)
     {

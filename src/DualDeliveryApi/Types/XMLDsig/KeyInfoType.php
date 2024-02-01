@@ -9,47 +9,47 @@ class KeyInfoType
     /**
      * @var string
      */
-    protected $KeyName = null;
+    protected $KeyName;
 
     /**
      * @var KeyValueType
      */
-    protected $KeyValue = null;
+    protected $KeyValue;
 
     /**
      * @var RetrievalMethodType
      */
-    protected $RetrievalMethod = null;
+    protected $RetrievalMethod;
 
     /**
      * @var X509DataType
      */
-    protected $X509Data = null;
+    protected $X509Data;
 
     /**
      * @var PGPDataType
      */
-    protected $PGPData = null;
+    protected $PGPData;
 
     /**
      * @var SPKIDataType
      */
-    protected $SPKIData = null;
+    protected $SPKIData;
 
     /**
      * @var string
      */
-    protected $MgmtData = null;
+    protected $MgmtData;
 
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @param string              $KeyName

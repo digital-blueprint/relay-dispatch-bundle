@@ -9,52 +9,52 @@ class DeliveryRequestType
     /**
      * @var ?string
      */
-    protected $ZbPK = null;
+    protected $ZbPK;
 
     /**
      * @var ?string
      */
-    protected $edID = null;
+    protected $edID;
 
     /**
      * @var ?Identification
      */
-    protected $Identification = null;
+    protected $Identification;
 
     /**
      * @var NotificationAddress
      */
-    protected $NotificationAddress = null;
+    protected $NotificationAddress;
 
     /**
      * @var Sender
      */
-    protected $Sender = null;
+    protected $Sender;
 
     /**
      * @var ?Receiver
      */
-    protected $Receiver = null;
+    protected $Receiver;
 
     /**
      * @var MetaData
      */
-    protected $MetaData = null;
+    protected $MetaData;
 
     /**
      * @var ?DocumentReference
      */
-    protected $DocumentReference = null;
+    protected $DocumentReference;
 
     /**
      * @var ?CustomNotificationIntervals
      */
-    protected $CustomNotificationIntervals = null;
+    protected $CustomNotificationIntervals;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(?string $ZbPK, ?string $edID, ?Identification $Identification, NotificationAddress $NotificationAddress, Sender $Sender, ?Receiver $Receiver, MetaData $MetaData, string $version)
     {

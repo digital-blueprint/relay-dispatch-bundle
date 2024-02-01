@@ -9,72 +9,72 @@ class ListLineItemType
     /**
      * @var int
      */
-    protected $PositionNumber = null;
+    protected $PositionNumber;
 
     /**
      * @var string
      */
-    protected $Description = null;
+    protected $Description;
 
     /**
      * @var ArticleNumberType
      */
-    protected $ArticleNumber = null;
+    protected $ArticleNumber;
 
     /**
      * @var UnitType
      */
-    protected $Quantity = null;
+    protected $Quantity;
 
     /**
      * @var Decimal4Type
      */
-    protected $UnitPrice = null;
+    protected $UnitPrice;
 
     /**
      * @var TaxRateType
      */
-    protected $TaxRate = null;
+    protected $TaxRate;
 
     /**
      * @var bool
      */
-    protected $DiscountFlag = null;
+    protected $DiscountFlag;
 
     /**
      * @var ReductionAndSurchargeListLineItemDetailsType
      */
-    protected $ReductionAndSurchargeListLineItemDetails = null;
+    protected $ReductionAndSurchargeListLineItemDetails;
 
     /**
      * @var DeliveryType
      */
-    protected $Delivery = null;
+    protected $Delivery;
 
     /**
      * @var OrderReferenceDetailType
      */
-    protected $BillersOrderReference = null;
+    protected $BillersOrderReference;
 
     /**
      * @var OrderReferenceDetailType
      */
-    protected $InvoiceRecipientsOrderReference = null;
+    protected $InvoiceRecipientsOrderReference;
 
     /**
      * @var AdditionalInformationType
      */
-    protected $AdditionalInformation = null;
+    protected $AdditionalInformation;
 
     /**
      * @var Decimal2Type
      */
-    protected $LineItemAmount = null;
+    protected $LineItemAmount;
 
     /**
      * @var ListLineItemExtensionType
      */
-    protected $ListLineItemExtension = null;
+    protected $ListLineItemExtension;
 
     /**
      * @param int                                          $PositionNumber

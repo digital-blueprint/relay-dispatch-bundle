@@ -9,19 +9,19 @@ class SenderType
     /**
      * @var SenderProfile
      */
-    protected $SenderProfile = null;
+    protected $SenderProfile;
 
     /**
      * @var ?SenderData
      */
-    protected $SenderData = null;
+    protected $SenderData;
 
     /**
      * @var ?ParametersType
      */
-    protected $Parameters = null;
+    protected $Parameters;
 
-    public function __construct(SenderProfile $SenderProfile, ?SenderData $SenderData = null, ?ParametersType $Parameters = null)
+    public function __construct(SenderProfile $SenderProfile, SenderData $SenderData = null, ParametersType $Parameters = null)
     {
         $this->SenderProfile = $SenderProfile;
         $this->SenderData = $SenderData;

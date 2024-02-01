@@ -12,12 +12,12 @@ class PaymentReferenceType
     /**
      * @var Digit12Type
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var CheckSumType
      */
-    protected $CheckSum = null;
+    protected $CheckSum;
 
     /**
      * @param Digit12Type  $_

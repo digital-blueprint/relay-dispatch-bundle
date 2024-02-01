@@ -9,7 +9,7 @@ class ReductionAndSurchargeType extends ReductionAndSurchargeBaseType
     /**
      * @var TaxRateType
      */
-    protected $TaxRate = null;
+    protected $TaxRate;
 
     /**
      * @param Decimal2Type   $BaseAmount

@@ -11,14 +11,14 @@ class RecipientType
     /**
      * @var PersonDataType
      */
-    protected $RecipientData = null;
+    protected $RecipientData;
 
     /**
      * @var ?ParametersType
      */
-    protected $Parameters = null;
+    protected $Parameters;
 
-    public function __construct(PersonDataType $RecipientData, ?ParametersType $Parameters = null)
+    public function __construct(PersonDataType $RecipientData, ParametersType $Parameters = null)
     {
         $this->RecipientData = $RecipientData;
         $this->Parameters = $Parameters;

@@ -12,27 +12,27 @@ class PresentationDetailsType
     /**
      * @var AnyURI
      */
-    protected $URL = null;
+    protected $URL;
 
     /**
      * @var AnyURI
      */
-    protected $LogoURL = null;
+    protected $LogoURL;
 
     /**
      * @var AlphaNumIDType
      */
-    protected $LayoutID = null;
+    protected $LayoutID;
 
     /**
      * @var bool
      */
-    protected $SuppressZero = null;
+    protected $SuppressZero;
 
     /**
      * @var PresentationDetailsExtensionType
      */
-    protected $PresentationDetailsExtension = null;
+    protected $PresentationDetailsExtension;
 
     /**
      * @param AnyURI                           $URL

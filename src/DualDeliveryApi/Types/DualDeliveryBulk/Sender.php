@@ -13,17 +13,17 @@ class Sender
     /**
      * @var SenderProfile
      */
-    protected $SenderProfile = null;
+    protected $SenderProfile;
 
     /**
      * @var ?SenderData
      */
-    protected $SenderData = null;
+    protected $SenderData;
 
     /**
      * @var ?ParametersType
      */
-    protected $Parameters = null;
+    protected $Parameters;
 
     public function __construct(SenderProfile $SenderProfile, ?SenderData $SenderData, ?ParametersType $Parameters)
     {

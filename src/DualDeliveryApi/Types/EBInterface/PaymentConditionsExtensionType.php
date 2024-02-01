@@ -9,12 +9,12 @@ class PaymentConditionsExtensionType
     /**
      * @var PaymentConditionsExtensionType
      */
-    protected $PaymentConditionsExtension = null;
+    protected $PaymentConditionsExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param PaymentConditionsExtensionType $PaymentConditionsExtension

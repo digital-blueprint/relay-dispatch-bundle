@@ -81,7 +81,7 @@ class RequestTest extends TestCase
         $sender = new SenderType($senderProfile, $senderData);
         $processingProfile = new ProcessingProfile('ZusePrintHybridDD', '1.0');
 
-        $meta = new DualDeliveryMetaData(
+        $meta = new DualDeliveryMetadata(
             'foo-6373a0a778ca1',
             null,
             DeliveryQuality::RSA,

@@ -9,7 +9,7 @@ class CustomType
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @param string $any

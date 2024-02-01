@@ -9,12 +9,12 @@ class RSAKeyValueType
     /**
      * @var CryptoBinary
      */
-    protected $Modulus = null;
+    protected $Modulus;
 
     /**
      * @var CryptoBinary
      */
-    protected $Exponent = null;
+    protected $Exponent;
 
     /**
      * @param CryptoBinary $Modulus

@@ -9,12 +9,12 @@ class ProcessingProfile
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(string $_, string $version)
     {

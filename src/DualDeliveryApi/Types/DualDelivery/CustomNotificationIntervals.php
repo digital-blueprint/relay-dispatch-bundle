@@ -9,7 +9,7 @@ class CustomNotificationIntervals
     /**
      * @var RecipientNotification[]
      */
-    protected $RecipientNotification = null;
+    protected $RecipientNotification;
 
     /**
      * @param RecipientNotification[] $RecipientNotification

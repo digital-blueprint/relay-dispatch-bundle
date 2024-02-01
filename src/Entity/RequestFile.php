@@ -15,7 +15,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="dispatch_request_files")
+ *
  * @ApiResource(
  *     collectionOperations={
  *         "post" = {
@@ -86,15 +88,20 @@ class RequestFile
 {
     /**
      * @ORM\Id
+     *
      * @ORM\Column(type="string", length=50)
+     *
      * @ApiProperty(identifier=true)
+     *
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @ApiProperty(iri="https://schema.org/dateCreated")
+     *
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      *
      * @var \DateTimeInterface
@@ -103,8 +110,11 @@ class RequestFile
 
     /**
      * @ORM\ManyToOne(targetEntity="Request", inversedBy="files")
+     *
      * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
+     *
      * @ApiProperty
+     *
      * @Groups({"DispatchRequestFile:output"})
      *
      * @var Request
@@ -113,7 +123,9 @@ class RequestFile
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
      * @ApiProperty(iri="https://schema.org/identifier")
+     *
      * @Groups({"DispatchRequestFile:output", "DispatchRequestFile:input"})
      *
      * @var string
@@ -122,7 +134,9 @@ class RequestFile
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @ApiProperty(iri="https://schema.org/name")
+     *
      * @Groups({"DispatchRequestFile:output", "DispatchRequestFile:input", "DispatchRequest:output"})
      *
      * @var string
@@ -131,6 +145,7 @@ class RequestFile
 
     /**
      * @ApiProperty(iri="http://schema.org/contentUrl")
+     *
      * @Groups({"DispatchRequestFile:output"})
      *
      * @var string
@@ -146,7 +161,9 @@ class RequestFile
 
     /**
      * @ApiProperty(iri="https://schema.org/fileFormat")
+     *
      * @ORM\Column(type="string", length=100)
+     *
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      *
      * @var string
@@ -155,7 +172,9 @@ class RequestFile
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @ApiProperty(iri="https://schema.org/contentSize")
+     *
      * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
      *
      * @var int

@@ -9,26 +9,26 @@ class DeliveryAddress
     /**
      * @var string
      */
-    protected $StreetName = null;
+    protected $StreetName;
 
     /**
      * @var string
      */
-    protected $BuildingNumber = null;
+    protected $BuildingNumber;
 
     /**
      * Stiege oder näheren Bezeichnung wie z.b. Werkstatt.
      *
      * @var ?string
      */
-    protected $Unit = null;
+    protected $Unit;
 
     /**
      * @var ?string
      */
-    protected $DoorNumber = null;
+    protected $DoorNumber;
 
-    public function __construct(string $StreetName, string $BuildingNumber, ?string $Unit = null, ?string $DoorNumber = null)
+    public function __construct(string $StreetName, string $BuildingNumber, string $Unit = null, string $DoorNumber = null)
     {
         $this->StreetName = $StreetName;
         $this->BuildingNumber = $BuildingNumber;

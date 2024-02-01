@@ -9,7 +9,7 @@ class AdditonalPrintResults
     /**
      * @var AdditionalPrintResultSetType
      */
-    protected $AdditionalPrintResultSet = null;
+    protected $AdditionalPrintResultSet;
 
     /**
      * @param AdditionalPrintResultSetType $AdditionalPrintResultSet

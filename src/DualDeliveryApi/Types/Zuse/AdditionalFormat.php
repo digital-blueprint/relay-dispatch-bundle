@@ -9,12 +9,12 @@ class AdditionalFormat
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $Type = null;
+    protected $Type;
 
     public function __construct(string $_, string $Type)
     {

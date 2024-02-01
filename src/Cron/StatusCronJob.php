@@ -29,7 +29,7 @@ class StatusCronJob implements CronJobInterface
     {
         // Every 3h
         return '0 0,3,6,9,12,15,18,21 * * *';
-//        return '* * * * *';
+        //        return '* * * * *';
     }
 
     public function run(CronOptions $options): void

@@ -9,22 +9,22 @@ class Receiver
     /**
      * @var ?PhysicalPersonType
      */
-    protected $PhysicalPerson = null;
+    protected $PhysicalPerson;
 
     /**
      * @var ?CorporateBodyType
      */
-    protected $CorporateBody = null;
+    protected $CorporateBody;
 
     /**
      * @var mixed
      */
-    protected $MailBox = null;
+    protected $MailBox;
 
     /**
      * @var ?PostalAddressType
      */
-    protected $PostalAddress = null;
+    protected $PostalAddress;
 
     /**
      * @param mixed $MailBox

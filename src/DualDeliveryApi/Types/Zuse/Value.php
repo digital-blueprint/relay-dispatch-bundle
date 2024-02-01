@@ -9,12 +9,12 @@ class Value
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     public function __construct(string $_, ?string $Id)
     {

@@ -9,12 +9,12 @@ class WebserviceURL
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $AlternativeEmail = null;
+    protected $AlternativeEmail;
 
     public function __construct(string $_, string $AlternativeEmail)
     {

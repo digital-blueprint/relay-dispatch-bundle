@@ -11,7 +11,7 @@ class OtherNotificationType extends NotificationChannelSetType
     /**
      * @var ExtensionPointType
      */
-    protected $NotificationInformation = null;
+    protected $NotificationInformation;
 
     public function __construct(ExtensionPointType $NotificationInformation)
     {

@@ -9,22 +9,22 @@ class EMailDeliveryType extends DeliveryChannelSetType
     /**
      * @var ?bool
      */
-    protected $RegMail = null;
+    protected $RegMail;
 
     /**
      * @var ?string
      */
-    protected $RegMailDepositUntil = null;
+    protected $RegMailDepositUntil;
 
     /**
      * @var ?string
      */
-    protected $MailBody = null;
+    protected $MailBody;
 
     /**
      * @var ?string
      */
-    protected $MIMEType = null;
+    protected $MIMEType;
 
     public function getRegMail(): ?bool
     {

@@ -9,12 +9,12 @@ class ReductionAndSurchargeListLineItemDetailsType
     /**
      * @var ReductionAndSurchargeBaseType
      */
-    protected $ReductionListLineItem = null;
+    protected $ReductionListLineItem;
 
     /**
      * @var ReductionAndSurchargeBaseType
      */
-    protected $SurchargeListLineItem = null;
+    protected $SurchargeListLineItem;
 
     /**
      * @param ReductionAndSurchargeBaseType $ReductionListLineItem

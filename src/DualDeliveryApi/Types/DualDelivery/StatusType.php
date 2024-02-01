@@ -9,19 +9,19 @@ class StatusType
     /**
      * @var string
      */
-    protected $Code = null;
+    protected $Code;
 
     /**
      * @var ?string
      */
-    protected $Text = null;
+    protected $Text;
 
     /**
      * @var ?string
      */
-    protected $Timestamp = null;
+    protected $Timestamp;
 
-    public function __construct(string $Code, ?string $Text = null, ?\DateTimeInterface $Timestamp = null)
+    public function __construct(string $Code, string $Text = null, \DateTimeInterface $Timestamp = null)
     {
         $this->Code = $Code;
         $this->Text = $Text;

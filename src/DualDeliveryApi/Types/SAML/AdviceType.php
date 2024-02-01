@@ -12,17 +12,17 @@ class AdviceType
     /**
      * @var stringReferenceType
      */
-    protected $AssertionIDReference = null;
+    protected $AssertionIDReference;
 
     /**
      * @var AssertionType
      */
-    protected $Assertion = null;
+    protected $Assertion;
 
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @param IDReferenceType $AssertionIDReference

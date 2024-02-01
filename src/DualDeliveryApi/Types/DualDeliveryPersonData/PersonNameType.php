@@ -9,24 +9,24 @@ class PersonNameType
     /**
      * @var string
      */
-    protected $GivenName = null;
+    protected $GivenName;
 
     /**
      * @var FamilyName
      */
-    protected $FamilyName = null;
+    protected $FamilyName;
 
     /**
      * @var ?string
      */
-    protected $prefixTitle = null;
+    protected $prefixTitle;
 
     /**
      * @var ?string
      */
-    protected $postfixTitle = null;
+    protected $postfixTitle;
 
-    public function __construct(string $GivenName, FamilyName $FamilyName, ?string $prefixTitle = null, ?string $postfixTitle = null)
+    public function __construct(string $GivenName, FamilyName $FamilyName, string $prefixTitle = null, string $postfixTitle = null)
     {
         $this->GivenName = $GivenName;
         $this->FamilyName = $FamilyName;

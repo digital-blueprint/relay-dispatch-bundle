@@ -9,17 +9,17 @@ class DeliveryRequestStatusACKType
     /**
      * @var string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var string
      */
-    protected $ZSDeliveryID = null;
+    protected $ZSDeliveryID;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(string $AppDeliveryID, string $ZSDeliveryID, string $version)
     {

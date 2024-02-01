@@ -9,57 +9,57 @@ class MetaData
     /**
      * @var ?string
      */
-    protected $Subject = null;
+    protected $Subject;
 
     /**
      * @var ?string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var ?string
      */
-    protected $GZ = null;
+    protected $GZ;
 
     /**
      * @var ?string
      */
-    protected $MZSDeliveryID = null;
+    protected $MZSDeliveryID;
 
     /**
      * @var string
      */
-    protected $DeliveryQuality = null;
+    protected $DeliveryQuality;
 
     /**
      * @var ?bool
      */
-    protected $DeliveryConfirmation = null;
+    protected $DeliveryConfirmation;
 
     /**
      * @var ?DocumentClass
      */
-    protected $DocumentClass = null;
+    protected $DocumentClass;
 
     /**
      * @var ?ReferencesType
      */
-    protected $References = null;
+    protected $References;
 
     /**
      * @var ?string
      */
-    protected $StartNotificationBefore = null;
+    protected $StartNotificationBefore;
 
     /**
      * @var ?string
      */
-    protected $DeliverBefore = null;
+    protected $DeliverBefore;
 
     /**
      * @var ?PrintParameter
      */
-    protected $PrintParameter = null;
+    protected $PrintParameter;
 
     public function __construct(?string $Subject, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $DeliveryQuality, ?bool $DeliveryConfirmation, ?DocumentClass $DocumentClass, ?ReferencesType $References, ?\DateTimeInterface $StartNotificationBefore, ?\DateTimeInterface $DeliverBefore, ?PrintParameter $PrintParameter)
     {

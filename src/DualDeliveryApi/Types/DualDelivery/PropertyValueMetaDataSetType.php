@@ -9,7 +9,7 @@ class PropertyValueMetaDataSetType extends AdditionalMetaDataSetType
     /**
      * @var ParameterType[]
      */
-    protected $Parameter = null;
+    protected $Parameter;
 
     /**
      * @param ParameterType[] $Parameter

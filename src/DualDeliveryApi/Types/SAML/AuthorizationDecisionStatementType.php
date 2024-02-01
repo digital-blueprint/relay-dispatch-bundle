@@ -11,22 +11,22 @@ class AuthorizationDecisionStatementType extends SubjectStatementAbstractType
     /**
      * @var ActionType
      */
-    protected $Action = null;
+    protected $Action;
 
     /**
      * @var EvidenceType
      */
-    protected $Evidence = null;
+    protected $Evidence;
 
     /**
      * @var AnyURI
      */
-    protected $Resource = null;
+    protected $Resource;
 
     /**
      * @var DecisionType
      */
-    protected $Decision = null;
+    protected $Decision;
 
     /**
      * @param SubjectType  $Subject

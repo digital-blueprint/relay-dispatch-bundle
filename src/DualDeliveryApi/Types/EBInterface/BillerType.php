@@ -12,37 +12,37 @@ class BillerType
     /**
      * @var string
      */
-    protected $VATIdentificationNumber = null;
+    protected $VATIdentificationNumber;
 
     /**
      * @var FurtherIdentificationType
      */
-    protected $FurtherIdentification = null;
+    protected $FurtherIdentification;
 
     /**
      * @var AlphaNumIDType
      */
-    protected $ConsolidatorsBillerID = null;
+    protected $ConsolidatorsBillerID;
 
     /**
      * @var AlphaNumIDType
      */
-    protected $InvoiceRecipientsBillerID = null;
+    protected $InvoiceRecipientsBillerID;
 
     /**
      * @var OrderReferenceType
      */
-    protected $OrderReference = null;
+    protected $OrderReference;
 
     /**
      * @var AddressType
      */
-    protected $Address = null;
+    protected $Address;
 
     /**
      * @var BillerExtensionType
      */
-    protected $BillerExtension = null;
+    protected $BillerExtension;
 
     /**
      * @param string                    $VATIdentificationNumber

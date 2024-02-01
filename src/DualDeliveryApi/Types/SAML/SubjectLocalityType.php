@@ -9,12 +9,12 @@ class SubjectLocalityType
     /**
      * @var string
      */
-    protected $IPAddress = null;
+    protected $IPAddress;
 
     /**
      * @var string
      */
-    protected $DNSAddress = null;
+    protected $DNSAddress;
 
     /**
      * @param string $IPAddress

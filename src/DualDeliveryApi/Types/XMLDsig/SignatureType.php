@@ -9,27 +9,27 @@ class SignatureType
     /**
      * @var SignedInfoType
      */
-    protected $SignedInfo = null;
+    protected $SignedInfo;
 
     /**
      * @var SignatureValueType
      */
-    protected $SignatureValue = null;
+    protected $SignatureValue;
 
     /**
      * @var KeyInfoType
      */
-    protected $KeyInfo = null;
+    protected $KeyInfo;
 
     /**
      * @var ObjectType
      */
-    protected $Object = null;
+    protected $Object;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @param SignedInfoType     $SignedInfo

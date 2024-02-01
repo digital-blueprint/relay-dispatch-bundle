@@ -125,10 +125,10 @@ class Group
     public function addGroupRole(string $groupRole): void
     {
         if (!in_array($groupRole, $this->accessRights, true) ?? (
-            $groupRole === self::ROLE_READ_CONTENT ||
-            $groupRole === self::ROLE_READ_METADATA ||
-            $groupRole === self::ROLE_WRITE ||
-            $groupRole === self::ROLE_WRITE_READ_ADDRESS)) {
+            $groupRole === self::ROLE_READ_CONTENT
+            || $groupRole === self::ROLE_READ_METADATA
+            || $groupRole === self::ROLE_WRITE
+            || $groupRole === self::ROLE_WRITE_READ_ADDRESS)) {
             $this->accessRights[] = $groupRole;
         }
     }

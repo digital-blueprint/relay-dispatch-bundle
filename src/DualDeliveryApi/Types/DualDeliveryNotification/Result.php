@@ -11,12 +11,12 @@ class Result
     /**
      * @var NotificationChannel
      */
-    protected $NotificationChannel = null;
+    protected $NotificationChannel;
 
     /**
      * @var ErrorType
      */
-    protected $Error = null;
+    protected $Error;
 
     public function __construct(NotificationChannel $NotificationChannel, ErrorType $Error)
     {

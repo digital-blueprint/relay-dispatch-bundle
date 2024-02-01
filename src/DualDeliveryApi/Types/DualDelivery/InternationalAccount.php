@@ -9,12 +9,12 @@ class InternationalAccount
     /**
      * @var string
      */
-    protected $BIC = null;
+    protected $BIC;
 
     /**
      * @var string
      */
-    protected $IBAN = null;
+    protected $IBAN;
 
     public function __construct(string $BIC, string $IBAN)
     {

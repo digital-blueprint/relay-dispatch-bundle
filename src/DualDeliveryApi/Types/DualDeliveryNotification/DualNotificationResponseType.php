@@ -11,17 +11,17 @@ class DualNotificationResponseType
     /**
      * @var ?string
      */
-    protected $Success = null;
+    protected $Success;
 
     /**
      * @var ErrorType
      */
-    protected $Error = null;
+    protected $Error;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(?string $Success, ErrorType $Error, string $version)
     {

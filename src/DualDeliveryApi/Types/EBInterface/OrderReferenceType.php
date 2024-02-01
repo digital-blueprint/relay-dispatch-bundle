@@ -12,17 +12,17 @@ class OrderReferenceType
     /**
      * @var AlphaNumIDType
      */
-    protected $OrderID = null;
+    protected $OrderID;
 
     /**
      * @var date
      */
-    protected $ReferenceDate = null;
+    protected $ReferenceDate;
 
     /**
      * @var string
      */
-    protected $Description = null;
+    protected $Description;
 
     /**
      * @param AlphaNumIDType $OrderID

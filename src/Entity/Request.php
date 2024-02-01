@@ -16,7 +16,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="dispatch_requests")
+ *
  * @ApiResource(
  *     collectionOperations={
  *         "post" = {
@@ -118,16 +120,22 @@ class Request
 {
     /**
      * @ORM\Id
+     *
      * @ORM\Column(type="string", length=50)
+     *
      * @ApiProperty(identifier=true)
+     *
      * @Groups({"DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @ApiProperty(iri="https://schema.org/name")
+     *
      * @Groups({"DispatchRequest:output:name", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=255,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -139,7 +147,9 @@ class Request
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @ApiProperty(iri="https://schema.org/dateCreated")
+     *
      * @Groups({"DispatchRequest:output"})
      *
      * @var \DateTimeInterface
@@ -148,7 +158,9 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
      * @ApiProperty(iri="https://schema.org/identifier")
+     *
      * @Groups({"DispatchRequest:output"})
      *
      * @var string
@@ -157,8 +169,11 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @ApiProperty(iri="https://schema.org/alternateName")
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=255,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -170,8 +185,11 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @ApiProperty(iri="https://schema.org/alternateName")
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=255,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -183,7 +201,9 @@ class Request
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @ApiProperty
+     *
      * @Groups({"DispatchRequest:output"})
      *
      * @var \DateTimeInterface
@@ -192,8 +212,11 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=2)
+     *
      * @ApiProperty(iri="https://schema.org/addressCountry")
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=2,
      *     maxMessage="Only {{ limit }} letter country codes are allowed"
@@ -205,8 +228,11 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=20)
+     *
      * @ApiProperty(iri="https://schema.org/postalCode")
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=20,
      *     maxMessage="Only {{ limit }} letter postal codes are allowed"
@@ -218,8 +244,11 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=120)
+     *
      * @ApiProperty(iri="https://schema.org/addressLocality")
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=120,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -231,8 +260,11 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=120)
+     *
      * @ApiProperty(iri="https://schema.org/streetAddress")
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=120,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -244,8 +276,11 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=10)
+     *
      * @ApiProperty
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=10,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -257,12 +292,16 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @ApiProperty
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=255,
      *     maxMessage="Only {{ limit }} letters are allowed"
      * )
+     *
      * @Assert\NotNull
      *
      * @var string
@@ -271,8 +310,11 @@ class Request
 
     /**
      * @ORM\Column(type="string", length=25)
+     *
      * @ApiProperty
+     *
      * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
+     *
      * @Assert\Length(
      *     max=25,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -284,14 +326,18 @@ class Request
 
     /**
      * @ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="request")
+     *
      * @ORM\OrderBy({"dateCreated" = "ASC"})
+     *
      * @Groups({"DispatchRequest:output"})
      */
     private $recipients;
 
     /**
      * @ORM\OneToMany(targetEntity="RequestFile", mappedBy="request")
+     *
      * @ORM\OrderBy({"dateCreated" = "ASC"})
+     *
      * @Groups({"DispatchRequest:output:files"})
      */
     private $files;

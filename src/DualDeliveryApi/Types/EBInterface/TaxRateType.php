@@ -12,12 +12,12 @@ class TaxRateType
     /**
      * @var PercentageType
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var TaxCodeType
      */
-    protected $TaxCode = null;
+    protected $TaxCode;
 
     /**
      * @param PercentageType $_

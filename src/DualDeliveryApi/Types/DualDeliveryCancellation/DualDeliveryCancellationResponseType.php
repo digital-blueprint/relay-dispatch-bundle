@@ -12,27 +12,27 @@ class DualDeliveryCancellationResponseType
     /**
      * @var string
      */
-    protected $DualDeliveryID = null;
+    protected $DualDeliveryID;
 
     /**
      * @var string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var StatusType
      */
-    protected $Status = null;
+    protected $Status;
 
     /**
      * @var BulkElements
      */
-    protected $BulkElements = null;
+    protected $BulkElements;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     /**
      * @param string       $DualDeliveryID

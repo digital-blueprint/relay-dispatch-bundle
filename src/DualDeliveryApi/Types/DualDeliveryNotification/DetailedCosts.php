@@ -9,17 +9,17 @@ class DetailedCosts
     /**
      * @var ?float
      */
-    protected $PrintingCosts = null;
+    protected $PrintingCosts;
 
     /**
      * @var ?float
      */
-    protected $HandlingCosts = null;
+    protected $HandlingCosts;
 
     /**
      * @var ?float
      */
-    protected $PostageCosts = null;
+    protected $PostageCosts;
 
     public function __construct(?float $PrintingCosts, ?float $HandlingCosts, ?float $PostageCosts)
     {

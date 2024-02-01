@@ -9,17 +9,17 @@ class ItemListType
     /**
      * @var string
      */
-    protected $HeaderDescription = null;
+    protected $HeaderDescription;
 
     /**
      * @var ListLineItemType
      */
-    protected $ListLineItem = null;
+    protected $ListLineItem;
 
     /**
      * @var string
      */
-    protected $FooterDescription = null;
+    protected $FooterDescription;
 
     /**
      * @param string           $HeaderDescription

@@ -9,12 +9,12 @@ class PayloadType
     /**
      * @var PayloadAttributesType
      */
-    protected $PayloadAttributes = null;
+    protected $PayloadAttributes;
 
     /**
      * @var DocumentType
      */
-    protected $Document = null;
+    protected $Document;
 
     public function __construct(PayloadAttributesType $PayloadAttributes, DocumentType $Document)
     {

@@ -9,62 +9,62 @@ class AddressType
     /**
      * @var AddressIdentifierType
      */
-    protected $AddressIdentifier = null;
+    protected $AddressIdentifier;
 
     /**
      * @var string
      */
-    protected $Salutation = null;
+    protected $Salutation;
 
     /**
      * @var string
      */
-    protected $Name = null;
+    protected $Name;
 
     /**
      * @var string
      */
-    protected $Street = null;
+    protected $Street;
 
     /**
      * @var string
      */
-    protected $POBox = null;
+    protected $POBox;
 
     /**
      * @var string
      */
-    protected $Town = null;
+    protected $Town;
 
     /**
      * @var string
      */
-    protected $ZIP = null;
+    protected $ZIP;
 
     /**
      * @var CountryType
      */
-    protected $Country = null;
+    protected $Country;
 
     /**
      * @var string
      */
-    protected $Phone = null;
+    protected $Phone;
 
     /**
      * @var string
      */
-    protected $Email = null;
+    protected $Email;
 
     /**
      * @var string
      */
-    protected $Contact = null;
+    protected $Contact;
 
     /**
      * @var string
      */
-    protected $AddressExtension = null;
+    protected $AddressExtension;
 
     /**
      * @param AddressIdentifierType $AddressIdentifier

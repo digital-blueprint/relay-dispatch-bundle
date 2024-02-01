@@ -9,32 +9,32 @@ class X509DataType
     /**
      * @var X509IssuerSerialType
      */
-    protected $X509IssuerSerial = null;
+    protected $X509IssuerSerial;
 
     /**
      * @var CryptoBinary
      */
-    protected $X509SKI = null;
+    protected $X509SKI;
 
     /**
      * @var string
      */
-    protected $X509SubjectName = null;
+    protected $X509SubjectName;
 
     /**
      * @var CryptoBinary
      */
-    protected $X509Certificate = null;
+    protected $X509Certificate;
 
     /**
      * @var CryptoBinary
      */
-    protected $X509CRL = null;
+    protected $X509CRL;
 
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @param X509IssuerSerialType $X509IssuerSerial

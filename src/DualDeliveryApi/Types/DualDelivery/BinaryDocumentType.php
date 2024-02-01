@@ -9,7 +9,7 @@ class BinaryDocumentType extends DocumentType
     /**
      * @var string
      */
-    protected $Content = null;
+    protected $Content;
 
     public function __construct(string $Content)
     {

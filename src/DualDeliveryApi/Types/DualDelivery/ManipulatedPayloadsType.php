@@ -9,7 +9,7 @@ class ManipulatedPayloadsType
     /**
      * @var PayloadType[]
      */
-    protected $ManipulatedPayload = null;
+    protected $ManipulatedPayload;
 
     /**
      * @param PayloadType[] $ManipulatedPayload

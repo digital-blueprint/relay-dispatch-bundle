@@ -11,27 +11,27 @@ class Error
     /**
      * @var Sender
      */
-    protected $Sender = null;
+    protected $Sender;
 
     /**
      * @var Receiver
      */
-    protected $Receiver = null;
+    protected $Receiver;
 
     /**
      * @var NotificationsPerformed
      */
-    protected $NotificationsPerformed = null;
+    protected $NotificationsPerformed;
 
     /**
      * @var ErrorInfo
      */
-    protected $ErrorInfo = null;
+    protected $ErrorInfo;
 
     /**
      * @var SignatureType
      */
-    protected $Signature = null;
+    protected $Signature;
 
     public function __construct(Sender $Sender, Receiver $Receiver, NotificationsPerformed $NotificationsPerformed, ErrorInfo $ErrorInfo, SignatureType $Signature)
     {

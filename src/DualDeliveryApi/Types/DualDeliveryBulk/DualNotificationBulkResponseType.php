@@ -9,12 +9,12 @@ class DualNotificationBulkResponseType
     /**
      * @var DualNotificationResponses[]
      */
-    protected $DualNotificationResponses = null;
+    protected $DualNotificationResponses;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     /**
      * @param DualNotificationResponses[] $DualNotificationResponses

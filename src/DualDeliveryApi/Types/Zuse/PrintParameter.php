@@ -9,12 +9,12 @@ class PrintParameter
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @var string
      */
-    protected $profile = null;
+    protected $profile;
 
     public function __construct(string $any, string $profile)
     {

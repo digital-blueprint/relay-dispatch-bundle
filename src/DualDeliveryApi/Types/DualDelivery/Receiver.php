@@ -9,12 +9,12 @@ class Receiver
     /**
      * @var ?InternationalAccount
      */
-    protected $InternationalAccount = null;
+    protected $InternationalAccount;
 
     /**
      * @var ?LocalAccount
      */
-    protected $LocalAccount = null;
+    protected $LocalAccount;
 
     public function __construct(?InternationalAccount $InternationalAccount, ?LocalAccount $LocalAccount)
     {

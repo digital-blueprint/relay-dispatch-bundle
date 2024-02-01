@@ -9,22 +9,22 @@ class ForAttentionOf
     /**
      * @var ?IdentificationType
      */
-    protected $Identification = null;
+    protected $Identification;
 
     /**
      * @var ?string
      */
-    protected $Department = null;
+    protected $Department;
 
     /**
      * @var ?string
      */
-    protected $GivenName = null;
+    protected $GivenName;
 
     /**
      * @var ?FamilyName
      */
-    protected $FamilyName = null;
+    protected $FamilyName;
 
     public function __construct(?IdentificationType $Identification, ?string $Department, ?string $GivenName, ?FamilyName $FamilyName)
     {

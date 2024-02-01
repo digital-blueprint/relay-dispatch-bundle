@@ -9,7 +9,7 @@ class OtherDeliveryType extends DeliveryChannelSetType
     /**
      * @var ExtensionPointType
      */
-    protected $DeliveryInformation = null;
+    protected $DeliveryInformation;
 
     public function __construct(ExtensionPointType $DeliveryInformation)
     {

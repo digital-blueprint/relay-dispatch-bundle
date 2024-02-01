@@ -9,12 +9,12 @@ class InvoiceRecipientExtensionType
     /**
      * @var InvoiceRecipientExtensionType
      */
-    protected $InvoiceRecipientExtension = null;
+    protected $InvoiceRecipientExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param InvoiceRecipientExtensionType $InvoiceRecipientExtension

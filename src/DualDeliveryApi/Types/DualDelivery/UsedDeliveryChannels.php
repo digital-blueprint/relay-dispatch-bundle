@@ -9,7 +9,7 @@ class UsedDeliveryChannels
     /**
      * @var UsedDeliveryChannelType[]
      */
-    protected $UsedDeliveryChannel = null;
+    protected $UsedDeliveryChannel;
 
     /**
      * @param UsedDeliveryChannelType[] $UsedDeliveryChannel

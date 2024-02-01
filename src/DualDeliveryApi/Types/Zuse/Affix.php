@@ -9,17 +9,17 @@ class Affix
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
      * @var ?string
      */
-    protected $position = null;
+    protected $position;
 
     public function __construct(string $_, string $type, ?string $position)
     {

@@ -9,12 +9,12 @@ class SPKIDataType
     /**
      * @var CryptoBinary
      */
-    protected $SPKISexp = null;
+    protected $SPKISexp;
 
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @param CryptoBinary $SPKISexp

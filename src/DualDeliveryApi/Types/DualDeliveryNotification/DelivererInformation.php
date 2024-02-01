@@ -9,12 +9,12 @@ class DelivererInformation
     /**
      * @var string
      */
-    protected $Deliverer = null;
+    protected $Deliverer;
 
     /**
      * @var ?string
      */
-    protected $DelivererReference = null;
+    protected $DelivererReference;
 
     public function __construct(string $Deliverer, ?string $DelivererReference)
     {

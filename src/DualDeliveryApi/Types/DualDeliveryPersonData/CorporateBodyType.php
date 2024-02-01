@@ -9,17 +9,17 @@ class CorporateBodyType extends AbstractPersonType
     /**
      * @var string
      */
-    protected $FullName = null;
+    protected $FullName;
 
     /**
      * @var ?string
      */
-    protected $Organization = null;
+    protected $Organization;
 
     /**
      * @var ?ForAttentionOf
      */
-    protected $ForAttentionOf = null;
+    protected $ForAttentionOf;
 
     public function __construct(string $FullName)
     {

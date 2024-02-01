@@ -9,22 +9,22 @@ class ReferencesType
     /**
      * @var ?string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var ?string
      */
-    protected $GZ = null;
+    protected $GZ;
 
     /**
      * @var ?string
      */
-    protected $MZSDeliveryID = null;
+    protected $MZSDeliveryID;
 
     /**
      * @var ?string
      */
-    protected $ZSDeliveryID = null;
+    protected $ZSDeliveryID;
 
     public function __construct(?string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, ?string $ZSDeliveryID)
     {

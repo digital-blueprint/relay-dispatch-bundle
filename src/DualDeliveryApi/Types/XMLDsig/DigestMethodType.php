@@ -11,12 +11,12 @@ class DigestMethodType
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @var AnyURI
      */
-    protected $Algorithm = null;
+    protected $Algorithm;
 
     /**
      * @param string $any

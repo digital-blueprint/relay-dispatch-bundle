@@ -9,12 +9,12 @@ class X509IssuerSerialType
     /**
      * @var string
      */
-    protected $X509IssuerName = null;
+    protected $X509IssuerName;
 
     /**
      * @var int
      */
-    protected $X509SerialNumber = null;
+    protected $X509SerialNumber;
 
     /**
      * @param string $X509IssuerName

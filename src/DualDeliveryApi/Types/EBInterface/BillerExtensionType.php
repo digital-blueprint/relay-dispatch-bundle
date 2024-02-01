@@ -9,12 +9,12 @@ class BillerExtensionType
     /**
      * @var BillerExtensionType
      */
-    protected $BillerExtension = null;
+    protected $BillerExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param BillerExtensionType $BillerExtension

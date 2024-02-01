@@ -12,37 +12,37 @@ class DualNotificationRequestType
     /**
      * @var string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var ?string
      */
-    protected $DualDeliveryID = null;
+    protected $DualDeliveryID;
 
     /**
      * @var ?Result
      */
-    protected $Result = null;
+    protected $Result;
 
     /**
      * @var ?AdditionalResults
      */
-    protected $AdditionalResults = null;
+    protected $AdditionalResults;
 
     /**
      * @var ?ManipulatedPayloadsType
      */
-    protected $ManipulatedPayloads = null;
+    protected $ManipulatedPayloads;
 
     /**
      * @var StatusType
      */
-    protected $Status = null;
+    protected $Status;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(string $AppDeliveryID, string $DualDeliveryID, AdditionalResults $AdditionalResults, StatusType $Status, string $version)
     {

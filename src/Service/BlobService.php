@@ -135,7 +135,7 @@ class BlobService implements LoggerAwareInterface
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function uploadDeliveryStatusChangeFile(string $dispatchRequestIdentifier, string $fileName, string $fileData): string
     {
@@ -144,7 +144,7 @@ class BlobService implements LoggerAwareInterface
         } catch (Error $e) {
             // We don't care a lot about what exception we're throwing here, because we will just
             // store the file in the database if there are any issues with the blob storage
-            throw new Exception($e->getMessage());
+            throw new \Exception($e->getMessage());
         }
 
         // Return the blob file ID

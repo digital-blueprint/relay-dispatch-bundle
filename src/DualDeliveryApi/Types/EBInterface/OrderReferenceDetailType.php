@@ -12,12 +12,12 @@ class OrderReferenceDetailType
     /**
      * @var AlphaNumIDType
      */
-    protected $OrderID = null;
+    protected $OrderID;
 
     /**
      * @var AlphaNumType
      */
-    protected $OrderPositionNumber = null;
+    protected $OrderPositionNumber;
 
     /**
      * @param AlphaNumIDType $OrderID

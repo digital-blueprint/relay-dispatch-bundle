@@ -9,12 +9,12 @@ class OrderingPartyExtensionType
     /**
      * @var OrderingPartyExtensionType
      */
-    protected $OrderingPartyExtension = null;
+    protected $OrderingPartyExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param OrderingPartyExtensionType $OrderingPartyExtension

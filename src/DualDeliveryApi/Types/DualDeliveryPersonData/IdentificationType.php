@@ -9,17 +9,17 @@ class IdentificationType
     /**
      * @var string
      */
-    protected $Value = null;
+    protected $Value;
 
     /**
      * @var string
      */
-    protected $Type = null;
+    protected $Type;
 
     /**
      * @var ?string
      */
-    protected $Id = null;
+    protected $Id;
 
     public function __construct(string $Value, string $Type, string $Id = null)
     {

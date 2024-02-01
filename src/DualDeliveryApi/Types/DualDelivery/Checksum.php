@@ -9,12 +9,12 @@ class Checksum
     /**
      * @var string
      */
-    protected $AlgorithmID = null;
+    protected $AlgorithmID;
 
     /**
      * @var string
      */
-    protected $Value = null;
+    protected $Value;
 
     public function __construct(string $AlgorithmID, string $Value)
     {

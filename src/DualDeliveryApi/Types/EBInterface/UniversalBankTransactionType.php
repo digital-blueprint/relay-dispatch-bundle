@@ -9,17 +9,17 @@ class UniversalBankTransactionType extends PaymentMethodType
     /**
      * @var AccountType
      */
-    protected $BeneficiaryAccount = null;
+    protected $BeneficiaryAccount;
 
     /**
      * @var PaymentReferenceType
      */
-    protected $PaymentReference = null;
+    protected $PaymentReference;
 
     /**
      * @var bool
      */
-    protected $ConsolidatorPayable = null;
+    protected $ConsolidatorPayable;
 
     /**
      * @param string                     $Comment

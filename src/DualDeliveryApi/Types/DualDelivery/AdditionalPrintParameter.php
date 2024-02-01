@@ -9,7 +9,7 @@ class AdditionalPrintParameter
     /**
      * @var AdditionalPrintParameterSetType[]
      */
-    protected $AdditionalPrintParameterSet = null;
+    protected $AdditionalPrintParameterSet;
 
     /**
      * @param AdditionalPrintParameterSetType[] $AdditionalPrintParameterSet

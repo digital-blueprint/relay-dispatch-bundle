@@ -9,12 +9,12 @@ class VATType
     /**
      * @var string
      */
-    protected $TaxExemption = null;
+    protected $TaxExemption;
 
     /**
      * @var ItemType
      */
-    protected $Item = null;
+    protected $Item;
 
     /**
      * @param string   $TaxExemption

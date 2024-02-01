@@ -9,12 +9,12 @@ class TaxExtensionType
     /**
      * @var TaxExtensionType
      */
-    protected $TaxExtension = null;
+    protected $TaxExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param TaxExtensionType $TaxExtension

@@ -9,17 +9,17 @@ class ItemType
     /**
      * @var Decimal2Type
      */
-    protected $TaxedAmount = null;
+    protected $TaxedAmount;
 
     /**
      * @var TaxRateType
      */
-    protected $TaxRate = null;
+    protected $TaxRate;
 
     /**
      * @var Decimal2Type
      */
-    protected $Amount = null;
+    protected $Amount;
 
     /**
      * @param Decimal2Type $TaxedAmount

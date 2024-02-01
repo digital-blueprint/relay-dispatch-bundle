@@ -11,22 +11,22 @@ class ObjectType
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @var string
      */
-    protected $MimeType = null;
+    protected $MimeType;
 
     /**
      * @var AnyURI
      */
-    protected $Encoding = null;
+    protected $Encoding;
 
     /**
      * @param string $any

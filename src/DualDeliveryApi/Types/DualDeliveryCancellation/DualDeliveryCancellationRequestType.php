@@ -12,22 +12,22 @@ class DualDeliveryCancellationRequestType
     /**
      * @var SenderProfile
      */
-    protected $SenderProfile = null;
+    protected $SenderProfile;
 
     /**
      * @var ApplicationID
      */
-    protected $ApplicationID = null;
+    protected $ApplicationID;
 
     /**
      * @var string
      */
-    protected $DualDeliveryID = null;
+    protected $DualDeliveryID;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     /**
      * @param SenderProfile $SenderProfile

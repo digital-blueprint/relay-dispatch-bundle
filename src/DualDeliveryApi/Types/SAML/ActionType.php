@@ -11,12 +11,12 @@ class ActionType
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var AnyURI
      */
-    protected $Namespace = null;
+    protected $Namespace;
 
     /**
      * @param string $_

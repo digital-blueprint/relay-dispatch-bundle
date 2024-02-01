@@ -9,12 +9,12 @@ class InternetAddressType extends AbstractAddressType
     /**
      * @var ?string
      */
-    protected $Address = null;
+    protected $Address;
 
     /**
      * @var ?bool
      */
-    protected $ReplyToAddress = null;
+    protected $ReplyToAddress;
 
     public function __construct(string $Id, ?string $Address, ?bool $ReplyToAddress)
     {

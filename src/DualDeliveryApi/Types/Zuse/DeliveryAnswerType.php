@@ -9,32 +9,32 @@ class DeliveryAnswerType
     /**
      * @var string
      */
-    protected $DeliveryService = null;
+    protected $DeliveryService;
 
     /**
      * @var string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var string
      */
-    protected $GZ = null;
+    protected $GZ;
 
     /**
      * @var ?string
      */
-    protected $MZSDeliveryID = null;
+    protected $MZSDeliveryID;
 
     /**
      * @var ?string
      */
-    protected $ZSDeliveryID = null;
+    protected $ZSDeliveryID;
 
     /**
      * @var ?bool
      */
-    protected $RelayedViaERV = null;
+    protected $RelayedViaERV;
 
     public function __construct(string $DeliveryService, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $ZSDeliveryID)
     {

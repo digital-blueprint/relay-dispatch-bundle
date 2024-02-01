@@ -9,12 +9,12 @@ class ExtensionPointType
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @var string
      */
-    protected $namespace = null;
+    protected $namespace;
 
     public function __construct(string $any, string $namespace)
     {

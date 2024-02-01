@@ -9,12 +9,12 @@ class Costs
     /**
      * @var float
      */
-    protected $TotalCosts = null;
+    protected $TotalCosts;
 
     /**
      * @var DetailedCosts
      */
-    protected $DetailedCosts = null;
+    protected $DetailedCosts;
 
     public function __construct(float $TotalCosts, DetailedCosts $DetailedCosts)
     {

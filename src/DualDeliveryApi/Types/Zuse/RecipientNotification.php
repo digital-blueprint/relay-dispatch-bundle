@@ -9,12 +9,12 @@ class RecipientNotification
     /**
      * @var string
      */
-    protected $NotificationMethod = null;
+    protected $NotificationMethod;
 
     /**
      * @var string
      */
-    protected $Timestamp = null;
+    protected $Timestamp;
 
     public function __construct(string $NotificationMethod, \DateTimeInterface $Timestamp)
     {

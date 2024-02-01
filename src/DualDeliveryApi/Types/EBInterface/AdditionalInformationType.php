@@ -9,42 +9,42 @@ class AdditionalInformationType
     /**
      * @var AlphaNumType
      */
-    protected $SerialNumber = null;
+    protected $SerialNumber;
 
     /**
      * @var AlphaNumType
      */
-    protected $ChargeNumber = null;
+    protected $ChargeNumber;
 
     /**
      * @var ClassificationType
      */
-    protected $Classification = null;
+    protected $Classification;
 
     /**
      * @var UnitType
      */
-    protected $AlternativeQuantity = null;
+    protected $AlternativeQuantity;
 
     /**
      * @var AlphaNumType
      */
-    protected $Size = null;
+    protected $Size;
 
     /**
      * @var UnitType
      */
-    protected $Weight = null;
+    protected $Weight;
 
     /**
      * @var int
      */
-    protected $Boxes = null;
+    protected $Boxes;
 
     /**
      * @var string
      */
-    protected $Color = null;
+    protected $Color;
 
     /**
      * @param AlphaNumType       $SerialNumber

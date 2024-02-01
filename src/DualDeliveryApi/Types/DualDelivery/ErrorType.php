@@ -9,17 +9,17 @@ class ErrorType
     /**
      * @var string
      */
-    protected $Info = null;
+    protected $Info;
 
     /**
      * @var string
      */
-    protected $Code = null;
+    protected $Code;
 
     /**
      * @var ?string
      */
-    protected $Severity = null;
+    protected $Severity;
 
     public function __construct(string $Info, string $Code)
     {

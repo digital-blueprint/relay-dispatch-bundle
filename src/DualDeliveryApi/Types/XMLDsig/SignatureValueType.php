@@ -9,12 +9,12 @@ class SignatureValueType
     /**
      * @var CryptoBinary
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @param CryptoBinary $_

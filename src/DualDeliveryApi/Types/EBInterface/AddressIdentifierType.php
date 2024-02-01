@@ -9,7 +9,7 @@ class AddressIdentifierType
     /**
      * @var AddressIdentifierTypeType
      */
-    protected $AddressIdentifierType = null;
+    protected $AddressIdentifierType;
 
     /**
      * @param AddressIdentifierTypeType $AddressIdentifierType

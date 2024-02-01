@@ -9,7 +9,7 @@ class GetVersionResponse
     /**
      * @var string
      */
-    protected $Version = null;
+    protected $Version;
 
     public function __construct(string $Version)
     {

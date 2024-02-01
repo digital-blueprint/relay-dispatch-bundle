@@ -9,22 +9,22 @@ class GeneralAditionalPrintParameterType extends AdditionalPrintParameterSetType
     /**
      * @var ?string
      */
-    protected $PostageRange = null;
+    protected $PostageRange;
 
     /**
      * @var ?string
      */
-    protected $PrinterName = null;
+    protected $PrinterName;
 
     /**
      * @var ?string
      */
-    protected $Auflieferort = null;
+    protected $Auflieferort;
 
     /**
      * @var ?string
      */
-    protected $Auflieferdatum = null;
+    protected $Auflieferdatum;
 
     public function __construct(?string $PostageRange)
     {

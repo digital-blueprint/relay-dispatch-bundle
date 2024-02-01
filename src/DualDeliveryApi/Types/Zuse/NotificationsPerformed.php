@@ -9,7 +9,7 @@ class NotificationsPerformed
     /**
      * @var RecipientNotification
      */
-    protected $RecipientNotification = null;
+    protected $RecipientNotification;
 
     public function __construct(RecipientNotification $RecipientNotification)
     {

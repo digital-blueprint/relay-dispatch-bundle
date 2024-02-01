@@ -11,17 +11,17 @@ class Payment
     /**
      * @var ?PaymentForm
      */
-    protected $PaymentForm = null;
+    protected $PaymentForm;
 
     /**
      * @var ?InvoiceType
      */
-    protected $Invoice = null;
+    protected $Invoice;
 
     /**
      * @var bool
      */
-    protected $Printout = null;
+    protected $Printout;
 
     public function __construct(?PaymentForm $PaymentForm, ?InvoiceType $Invoice, bool $Printout)
     {

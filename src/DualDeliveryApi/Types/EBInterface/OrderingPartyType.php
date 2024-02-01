@@ -11,27 +11,27 @@ class OrderingPartyType
     /**
      * @var string
      */
-    protected $VATIdentificationNumber = null;
+    protected $VATIdentificationNumber;
 
     /**
      * @var AlphaNumIDType
      */
-    protected $BillersOrderingPartyID = null;
+    protected $BillersOrderingPartyID;
 
     /**
      * @var OrderReferenceType
      */
-    protected $OrderReference = null;
+    protected $OrderReference;
 
     /**
      * @var AddressType
      */
-    protected $Address = null;
+    protected $Address;
 
     /**
      * @var OrderingPartyExtensionType
      */
-    protected $OrderingPartyExtension = null;
+    protected $OrderingPartyExtension;
 
     /**
      * @param string                     $VATIdentificationNumber

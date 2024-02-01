@@ -9,17 +9,17 @@ class ElectronicDeliveryType extends DeliveryChannelSetType
     /**
      * @var bool
      */
-    protected $RequiresEncryption = null;
+    protected $RequiresEncryption;
 
     /**
      * @var bool
      */
-    protected $DeliveryConfirmation = null;
+    protected $DeliveryConfirmation;
 
     /**
      * @var CustomNotificationIntervals
      */
-    protected $CustomNotificationIntervals = null;
+    protected $CustomNotificationIntervals;
 
     public function getRequiresEncryption(): bool
     {

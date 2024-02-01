@@ -9,17 +9,17 @@ class KeyValueType
     /**
      * @var DSAKeyValueType
      */
-    protected $DSAKeyValue = null;
+    protected $DSAKeyValue;
 
     /**
      * @var RSAKeyValueType
      */
-    protected $RSAKeyValue = null;
+    protected $RSAKeyValue;
 
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @param DSAKeyValueType $DSAKeyValue

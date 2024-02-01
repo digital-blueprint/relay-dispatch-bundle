@@ -9,12 +9,12 @@ class DeliveryExtensionType
     /**
      * @var DeliveryExtensionType
      */
-    protected $DeliveryExtension = null;
+    protected $DeliveryExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param DeliveryExtensionType $DeliveryExtension

@@ -13,27 +13,27 @@ class DualDeliveryBulkResponseType
     /**
      * @var StatusType
      */
-    protected $Status = null;
+    protected $Status;
 
     /**
      * @var ?int
      */
-    protected $BulkId = null;
+    protected $BulkId;
 
     /**
      * @var ?AdditionalMetaData
      */
-    protected $AdditionalMetaData = null;
+    protected $AdditionalMetaData;
 
     /**
      * @var ?ErrorsType
      */
-    protected $Errors = null;
+    protected $Errors;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(StatusType $Status, ?int $BulkId, ?AdditionalMetaData $AdditionalMetaData, ?ErrorsType $Errors, string $version)
     {

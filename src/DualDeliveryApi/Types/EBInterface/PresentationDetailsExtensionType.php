@@ -9,12 +9,12 @@ class PresentationDetailsExtensionType
     /**
      * @var PresentationDetailsExtensionType
      */
-    protected $PresentationDetailsExtension = null;
+    protected $PresentationDetailsExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param PresentationDetailsExtensionType $PresentationDetailsExtension

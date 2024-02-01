@@ -9,12 +9,12 @@ class UnitType
     /**
      * @var Decimal4Type
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $Unit = null;
+    protected $Unit;
 
     /**
      * @param Decimal4Type $_

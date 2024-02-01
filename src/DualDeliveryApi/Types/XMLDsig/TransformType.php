@@ -11,17 +11,17 @@ class TransformType
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @var string
      */
-    protected $XPath = null;
+    protected $XPath;
 
     /**
      * @var AnyURI
      */
-    protected $Algorithm = null;
+    protected $Algorithm;
 
     /**
      * @param string $any

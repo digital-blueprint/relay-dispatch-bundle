@@ -9,22 +9,22 @@ class DeliveryNotificationType extends DeliveryAnswerType
     /**
      * @var Success
      */
-    protected $Success = null;
+    protected $Success;
 
     /**
      * @var Error
      */
-    protected $Error = null;
+    protected $Error;
 
     /**
      * @var AdditionalFormat[]
      */
-    protected $AdditionalFormat = null;
+    protected $AdditionalFormat;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(string $DeliveryService, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $ZSDeliveryID, Success $Success, Error $Error, string $version)
     {

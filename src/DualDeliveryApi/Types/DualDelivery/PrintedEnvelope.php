@@ -9,42 +9,42 @@ class PrintedEnvelope
     /**
      * @var string
      */
-    protected $RsID = null;
+    protected $RsID;
 
     /**
      * @var ?string
      */
-    protected $Spec_Info_Adr = null;
+    protected $Spec_Info_Adr;
 
     /**
      * @var ?string
      */
-    protected $Spec_Info_Top = null;
+    protected $Spec_Info_Top;
 
     /**
      * @var ?string
      */
-    protected $Spec_Info_Center = null;
+    protected $Spec_Info_Center;
 
     /**
      * @var ?string
      */
-    protected $Spec_Info_Bottom = null;
+    protected $Spec_Info_Bottom;
 
     /**
      * @var ?string
      */
-    protected $Name_Row = null;
+    protected $Name_Row;
 
     /**
      * @var ?string
      */
-    protected $Zustellverfuegung = null;
+    protected $Zustellverfuegung;
 
     /**
      * @var ?string
      */
-    protected $ZustellverfuegungErgaenzung = null;
+    protected $ZustellverfuegungErgaenzung;
 
     public function __construct(?string $RsID, ?string $Spec_Info_Adr, ?string $Spec_Info_Top, ?string $Spec_Info_Center, ?string $Spec_Info_Bottom, ?string $Name_Row, ?string $Zustellverfuegung, ?string $ZustellverfuegungErgaenzung)
     {

@@ -9,12 +9,12 @@ class ReductionAndSurchargeDetailsExtensionType
     /**
      * @var ReductionAndSurchargeDetailsExtensionType
      */
-    protected $ReductionAndSurchargeDetailsExtension = null;
+    protected $ReductionAndSurchargeDetailsExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param ReductionAndSurchargeDetailsExtensionType $ReductionAndSurchargeDetailsExtension

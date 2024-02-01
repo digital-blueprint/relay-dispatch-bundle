@@ -9,14 +9,14 @@ class PersonDataType
     /**
      * @var AbstractPersonType
      */
-    protected $Person = null;
+    protected $Person;
 
     /**
      * @var ?AbstractAddressType
      */
-    protected $Address = null;
+    protected $Address;
 
-    public function __construct(AbstractPersonType $Person, ?AbstractAddressType $Address = null)
+    public function __construct(AbstractPersonType $Person, AbstractAddressType $Address = null)
     {
         $this->Person = $Person;
         $this->Address = $Address;

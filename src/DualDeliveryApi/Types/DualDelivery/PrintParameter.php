@@ -11,35 +11,35 @@ class PrintParameter
      *
      * @var ?boolean
      */
-    protected $Color = null;
+    protected $Color;
 
     /**
      * Papierformat: A4, A3, Dynamic (Default=A4).
      *
      * @var ?string
      */
-    protected $PaperFormat = null;
+    protected $PaperFormat;
 
     /**
      * Art des Druckes  (DUP - Duplex, SIM - Simplex).
      *
      * @var ?string
      */
-    protected $PrintType = null;
+    protected $PrintType;
 
     /**
      * Nicht abfallender (OverPrint=false, Defaultwert) oder Abfallender Druck (true).
      *
      * @var ?boolean
      */
-    protected $OverPrint = null;
+    protected $OverPrint;
 
     /**
      * @var ?ParametersType
      */
-    protected $Parameters = null;
+    protected $Parameters;
 
-    public function __construct(string $PrintType, bool $Color = false, string $PaperFormat = 'A4', bool $OverPrint = false, ?ParametersType $Parameters = null)
+    public function __construct(string $PrintType, bool $Color = false, string $PaperFormat = 'A4', bool $OverPrint = false, ParametersType $Parameters = null)
     {
         $this->Color = $Color;
         $this->PaperFormat = $PaperFormat;

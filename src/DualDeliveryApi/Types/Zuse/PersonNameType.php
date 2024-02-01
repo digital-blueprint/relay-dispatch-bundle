@@ -9,12 +9,12 @@ class PersonNameType
     /**
      * @var string
      */
-    protected $GivenName = null;
+    protected $GivenName;
 
     /**
      * @var string
      */
-    protected $FamilyName = null;
+    protected $FamilyName;
 
     public function __construct(string $GivenName, string $FamilyName)
     {

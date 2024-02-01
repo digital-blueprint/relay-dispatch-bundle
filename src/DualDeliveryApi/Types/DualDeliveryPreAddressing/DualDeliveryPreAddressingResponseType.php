@@ -12,32 +12,32 @@ class DualDeliveryPreAddressingResponseType
     /**
      * @var string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var StatusType
      */
-    protected $Status = null;
+    protected $Status;
 
     /**
      * @var ?string
      */
-    protected $DualDeliveryID = null;
+    protected $DualDeliveryID;
 
     /**
      * @var ?AddressingResults
      */
-    protected $AddressingResults = null;
+    protected $AddressingResults;
 
     /**
      * @var ?ErrorsType
      */
-    protected $Errors = null;
+    protected $Errors;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(string $AppDeliveryID, StatusType $Status, ?string $DualDeliveryID, ?ErrorsType $Errors, string $version)
     {

@@ -9,17 +9,17 @@ class PGPDataType
     /**
      * @var CryptoBinary
      */
-    protected $PGPKeyID = null;
+    protected $PGPKeyID;
 
     /**
      * @var CryptoBinary
      */
-    protected $PGPKeyPacket = null;
+    protected $PGPKeyPacket;
 
     /**
      * @var string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @param CryptoBinary $PGPKeyID

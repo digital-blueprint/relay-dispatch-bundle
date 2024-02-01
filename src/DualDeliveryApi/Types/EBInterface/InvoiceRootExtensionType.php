@@ -9,12 +9,12 @@ class InvoiceRootExtensionType
     /**
      * @var InvoiceRootExtensionType
      */
-    protected $InvoiceRootExtension = null;
+    protected $InvoiceRootExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param InvoiceRootExtensionType $InvoiceRootExtension

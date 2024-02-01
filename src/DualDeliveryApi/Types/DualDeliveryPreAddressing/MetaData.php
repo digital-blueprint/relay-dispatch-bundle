@@ -13,39 +13,39 @@ class MetaData
     /**
      * @var string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var ?ApplicationID
      */
-    protected $ApplicationID = null;
+    protected $ApplicationID;
 
     /**
      * @var ?AdditionalMetaData
      */
-    protected $AdditionalMetaData = null;
+    protected $AdditionalMetaData;
 
     /**
      * @var ?bool
      */
-    protected $TestCase = null;
+    protected $TestCase;
 
     /**
      * @var ?ProcessingProfile
      */
-    protected $ProcessingProfile = null;
+    protected $ProcessingProfile;
 
     /**
      * @var ?bool
      */
-    protected $Asynchronous = null;
+    protected $Asynchronous;
 
     /**
      * @var ?bool
      */
-    protected $PreCreateSendings = null;
+    protected $PreCreateSendings;
 
-    public function __construct(string $AppDeliveryID, ?ApplicationID $ApplicationID = null, ?AdditionalMetaData $AdditionalMetaData = null, ?bool $TestCase = null, ?ProcessingProfile $ProcessingProfile = null, ?bool $Asynchronous = null, ?bool $PreCreateSendings = null)
+    public function __construct(string $AppDeliveryID, ApplicationID $ApplicationID = null, AdditionalMetaData $AdditionalMetaData = null, bool $TestCase = null, ProcessingProfile $ProcessingProfile = null, bool $Asynchronous = null, bool $PreCreateSendings = null)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->ApplicationID = $ApplicationID;

@@ -9,12 +9,12 @@ class PaymentMethodType
     /**
      * @var string
      */
-    protected $Comment = null;
+    protected $Comment;
 
     /**
      * @var PaymentMethodExtensionType
      */
-    protected $PaymentMethodExtension = null;
+    protected $PaymentMethodExtension;
 
     /**
      * @param string                     $Comment

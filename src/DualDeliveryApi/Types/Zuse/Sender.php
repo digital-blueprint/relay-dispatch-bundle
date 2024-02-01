@@ -9,27 +9,27 @@ class Sender
     /**
      * @var Organisation
      */
-    protected $Organisation = null;
+    protected $Organisation;
 
     /**
      * @var ?PhysicalPersonType
      */
-    protected $PhysicalPerson = null;
+    protected $PhysicalPerson;
 
     /**
      * @var ?CorporateBodyType
      */
-    protected $CorporateBody = null;
+    protected $CorporateBody;
 
     /**
      * @var ?string
      */
-    protected $MailBox = null;
+    protected $MailBox;
 
     /**
      * @var AbstractAddressType[]
      */
-    protected $Address = null;
+    protected $Address;
 
     /**
      * @param AbstractAddressType[] $Address

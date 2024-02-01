@@ -9,12 +9,12 @@ class SignaturePropertiesType
     /**
      * @var SignaturePropertyType
      */
-    protected $SignatureProperty = null;
+    protected $SignatureProperty;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @param SignaturePropertyType $SignatureProperty

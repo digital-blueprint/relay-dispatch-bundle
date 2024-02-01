@@ -12,32 +12,32 @@ class ReferenceType
     /**
      * @var TransformsType
      */
-    protected $Transforms = null;
+    protected $Transforms;
 
     /**
      * @var DigestMethodType
      */
-    protected $DigestMethod = null;
+    protected $DigestMethod;
 
     /**
      * @var DigestValueType
      */
-    protected $DigestValue = null;
+    protected $DigestValue;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @var AnyURI
      */
-    protected $URI = null;
+    protected $URI;
 
     /**
      * @var AnyURI
      */
-    protected $Type = null;
+    protected $Type;
 
     /**
      * @param TransformsType   $Transforms

@@ -9,12 +9,12 @@ class DetailsExtensionType
     /**
      * @var DetailsExtensionType
      */
-    protected $DetailsExtension = null;
+    protected $DetailsExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param DetailsExtensionType $DetailsExtension

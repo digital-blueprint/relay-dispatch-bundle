@@ -9,9 +9,9 @@ class DeliveryChannels
     /**
      * @var ?DeliveryChannelSetType
      */
-    protected $DeliveryChannelSet = null;
+    protected $DeliveryChannelSet;
 
-    public function __construct(?DeliveryChannelSetType $DeliveryChannelSet = null)
+    public function __construct(DeliveryChannelSetType $DeliveryChannelSet = null)
     {
         $this->DeliveryChannelSet = $DeliveryChannelSet;
     }

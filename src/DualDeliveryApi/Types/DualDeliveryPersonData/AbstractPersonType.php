@@ -9,14 +9,14 @@ class AbstractPersonType
     /**
      * @var IdentificationType[]
      */
-    protected $Identification = null;
+    protected $Identification;
 
     /**
      * @var ?string
      */
-    protected $Id = null;
+    protected $Id;
 
-    public function __construct(?string $Id = null)
+    public function __construct(string $Id = null)
     {
         $this->Id = $Id;
     }

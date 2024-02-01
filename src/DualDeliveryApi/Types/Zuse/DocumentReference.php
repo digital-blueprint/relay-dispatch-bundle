@@ -9,22 +9,22 @@ class DocumentReference
     /**
      * @var string
      */
-    protected $URL = null;
+    protected $URL;
 
     /**
      * @var ?string
      */
-    protected $MimeType = null;
+    protected $MimeType;
 
     /**
      * @var ?string
      */
-    protected $FileName = null;
+    protected $FileName;
 
     /**
      * @var ?string
      */
-    protected $MD5Checksum = null;
+    protected $MD5Checksum;
 
     public function __construct(string $URL, ?string $MimeType, ?string $FileName, ?string $MD5Checksum)
     {

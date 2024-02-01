@@ -9,7 +9,7 @@ class TelcomNumberType
     /**
      * @var string
      */
-    protected $FormattedNumber = null;
+    protected $FormattedNumber;
 
     public function __construct(string $FormattedNumber)
     {

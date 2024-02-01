@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Service;
 
-use DateTimeZone;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
@@ -377,7 +376,7 @@ class DispatchService implements LoggerAwareInterface
             $request->setPersonIdentifier($personId);
         }
 
-        $request->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $request->setDateCreated(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         try {
             $this->em->persist($request);
@@ -447,7 +446,7 @@ class DispatchService implements LoggerAwareInterface
         $requestRecipient->setAppDeliveryID($this->dd->createAppDeliveryID());
         $requestRecipient->setRequest($request);
         $requestRecipient->setRecipientId('');
-        $requestRecipient->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $requestRecipient->setDateCreated(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         try {
             $this->em->persist($requestRecipient);
@@ -525,7 +524,7 @@ class DispatchService implements LoggerAwareInterface
 
         $requestFile->setIdentifier((string) Uuid::v4());
         $requestFile->setName($fileName);
-        $requestFile->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $requestFile->setDateCreated(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         try {
             $this->em->persist($requestFile);
@@ -551,7 +550,7 @@ class DispatchService implements LoggerAwareInterface
         $deliveryStatusChange->setRequestRecipient($requestRecipient);
 
         $deliveryStatusChange->setIdentifier((string) Uuid::v4());
-        $deliveryStatusChange->setDateCreated(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $deliveryStatusChange->setDateCreated(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         $deliveryStatusChange->setStatusType($statusType);
         $deliveryStatusChange->setDescription($description);
@@ -622,7 +621,7 @@ class DispatchService implements LoggerAwareInterface
      */
     public function submitRequest(Request $request, bool $direct = false, bool $printRequestXml = false)
     {
-        $request->setDateSubmitted(new \DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $request->setDateSubmitted(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
         $this->updateRequest($request);
 
         $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_SUBMITTED, 'Request submitted');
@@ -703,7 +702,7 @@ class DispatchService implements LoggerAwareInterface
         // TODO: Dispatch another delayed message if Vendo request failed? (this isn't even possible now since DualDeliveryRequests are made for each recipient)
 
         // Don't update this status, because we are doing a real status request to Vendo before it
-//        $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
+        //        $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
     public function doPreAddressingSoapRequest(string $givenName, string $familyName, \DateTimeInterface $birthDate): DualDeliveryPreAddressingResponseType
@@ -985,7 +984,7 @@ class DispatchService implements LoggerAwareInterface
             // cvc-complex-type.2.4.b: The content of element 'ElectronicAddresses' is not complete.
             // One of '{\\\"http:\\/\\/www.plot.at\\/mprs\\/bean\\/v10\\/core\\\":ElectronicAddress}' is expected.
             // Update 2023-02-23: cbp has fixed the issue now
-//            $senderPostalAddress = null;
+            //            $senderPostalAddress = null;
 
             $senderData = new SenderData($corporateBody, $senderPostalAddress);
         } else {
@@ -995,7 +994,7 @@ class DispatchService implements LoggerAwareInterface
         $sender = new SenderType($senderProfile, $senderData);
 
         // TODO: Allow to set this via request (limited by config, STRETCH_GOAL)
-//        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
+        //        $processingProfile = new ProcessingProfile('ZuseDD', '1.0');
         $processingProfile = new ProcessingProfile(VendoProcessingProfile::ZUSE_PRINT_HYBRID_DD, '1.0');
         // TODO: Allow to set this via config/request (STRETCH_GOAL)
         $deliveryQuality = DeliveryQuality::RSA;
@@ -1019,12 +1018,12 @@ class DispatchService implements LoggerAwareInterface
                 $addressCountry = 'AT';
             }
 
-//            if ($postalCode !== '' && $addressLocality !== '' && $streetAddress !== '' && $addressCountry !== '') {
+            //            if ($postalCode !== '' && $addressLocality !== '' && $streetAddress !== '' && $addressCountry !== '') {
             $address = new PostalAddressType(null, $postalCode, $addressLocality, new DeliveryAddress($streetAddress, $buildingNumber));
             $address->setCountryCode($addressCountry);
-//            } else {
-//                $address = null;
-//            }
+            //            } else {
+            //                $address = null;
+            //            }
 
             $personData = new PersonDataType($physicalPerson, $address);
             $name = $dispatchRequest->getName();
@@ -1032,7 +1031,7 @@ class DispatchService implements LoggerAwareInterface
             $dualDeliveryRecipient = new RecipientType($personData);
 
             $id = $recipient->getAppDeliveryID();
-            $meta = new DualDeliveryMetaData(
+            $meta = new DualDeliveryMetadata(
                 $id,
                 null,
                 $deliveryQuality,
@@ -1172,7 +1171,7 @@ class DispatchService implements LoggerAwareInterface
             ->set('r.deliveryEndDate', ':deliveryEndDate')
             ->where('r.identifier = :identifier')
             ->setParameter('identifier', $recipient->getIdentifier())
-            ->setParameter('deliveryEndDate', new \DateTimeImmutable('now', new DateTimeZone('UTC')))
+            ->setParameter('deliveryEndDate', new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
             ->getQuery();
 
         try {

@@ -9,7 +9,7 @@ class Payments
     /**
      * @var Payment[]
      */
-    protected $Payment = null;
+    protected $Payment;
 
     /**
      * @param Payment[] $Payment

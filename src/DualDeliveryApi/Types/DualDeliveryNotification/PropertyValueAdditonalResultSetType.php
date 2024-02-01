@@ -11,7 +11,7 @@ class PropertyValueAdditonalResultSetType extends AdditonalResultSetType
     /**
      * @var ParameterType[]
      */
-    protected $Parameter = null;
+    protected $Parameter;
 
     /**
      * @param ParameterType[] $Parameter

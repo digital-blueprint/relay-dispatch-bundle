@@ -11,12 +11,12 @@ class InternetAddressType extends AbstractAddressType
     /**
      * @var ?KeyInfoType
      */
-    protected $KeyInfo = null;
+    protected $KeyInfo;
 
     /**
      * @var string
      */
-    protected $Address = null;
+    protected $Address;
 
     public function __construct(string $Id, ?KeyInfoType $KeyInfo, string $Address)
     {

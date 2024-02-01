@@ -9,12 +9,12 @@ class SubjectType
     /**
      * @var NameIdentifierType
      */
-    protected $NameIdentifier = null;
+    protected $NameIdentifier;
 
     /**
      * @var SubjectConfirmationType
      */
-    protected $SubjectConfirmation = null;
+    protected $SubjectConfirmation;
 
     /**
      * @param NameIdentifierType      $NameIdentifier

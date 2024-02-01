@@ -9,7 +9,7 @@ class TransformsType
     /**
      * @var TransformType
      */
-    protected $Transform = null;
+    protected $Transform;
 
     /**
      * @param TransformType $Transform

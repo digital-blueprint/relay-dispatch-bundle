@@ -12,17 +12,17 @@ class AuthorityBindingType
     /**
      * @var QName
      */
-    protected $AuthorityKind = null;
+    protected $AuthorityKind;
 
     /**
      * @var AnyURI
      */
-    protected $Location = null;
+    protected $Location;
 
     /**
      * @var AnyURI
      */
-    protected $Binding = null;
+    protected $Binding;
 
     /**
      * @param QName  $AuthorityKind

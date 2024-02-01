@@ -1,5 +1,7 @@
 #!/usr/bin/env php
 <?php
+
+declare(strict_types=1);
 /**
  * This script is used to extract all error codes from the codebase.
  * Only works if the "ApiError::withDetails" method is used in one line.

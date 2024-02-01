@@ -9,27 +9,27 @@ class DeliveryRequestStatusType extends DeliveryAnswerType
     /**
      * @var DeliveryAnswerType
      */
-    protected $Success = null;
+    protected $Success;
 
     /**
      * @var DeliveryConfirmationType
      */
-    protected $DeliveryConfirmation = null;
+    protected $DeliveryConfirmation;
 
     /**
      * @var DeliveryAnswerType
      */
-    protected $PartialSuccess = null;
+    protected $PartialSuccess;
 
     /**
      * @var Error
      */
-    protected $Error = null;
+    protected $Error;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(string $DeliveryService, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $ZSDeliveryID, DeliveryAnswerType $Success, DeliveryConfirmationType $DeliveryConfirmation, DeliveryAnswerType $PartialSuccess, Error $Error, string $version)
     {

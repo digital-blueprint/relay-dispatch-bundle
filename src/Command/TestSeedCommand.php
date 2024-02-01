@@ -7,7 +7,7 @@ namespace Dbp\Relay\DispatchBundle\Command;
 use Dbp\Relay\BasePersonBundle\API\PersonProviderInterface;
 use Dbp\Relay\CoreBundle\Rest\Options;
 use Dbp\Relay\DispatchBundle\Entity\Request;
-//use Dbp\Relay\DispatchBundle\Entity\RequestFile;
+// use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -117,7 +117,7 @@ class TestSeedCommand extends Command
 
                 // You can't use the person identifier to fetch the rest of the person data without the permission of the person
                 // {"message":"access to local data attribute 'streetAddress' denied","errorId":"","errorDetails":[]}
-//                $requestRecipient->setPersonIdentifier($recipientPersonId);
+                //                $requestRecipient->setPersonIdentifier($recipientPersonId);
 
                 $requestRecipient->setGivenName($recipientGivenName);
                 $requestRecipient->setFamilyName($recipientFamilyName);
@@ -138,14 +138,14 @@ class TestSeedCommand extends Command
 
                 $request->setRequestRecipients(new ArrayCollection([$requestRecipient]));
 
-//                $requestFile = new RequestFile();
-//                $requestFile->setRequest($request);
-//                $requestFile->setName('example.pdf');
-//                $file = file_get_contents(__DIR__ . '/../../tests/DualDeliveryApi/example.pdf');
-//                $requestFile->setData($file);
-//                $requestFile->setContentSize(strlen($file));
-//                $requestFile->setFileFormat('application/pdf');
-//                $this->dispatchService->createRequestFile($requestFile, $request->getIdentifier());
+                //                $requestFile = new RequestFile();
+                //                $requestFile->setRequest($request);
+                //                $requestFile->setName('example.pdf');
+                //                $file = file_get_contents(__DIR__ . '/../../tests/DualDeliveryApi/example.pdf');
+                //                $requestFile->setData($file);
+                //                $requestFile->setContentSize(strlen($file));
+                //                $requestFile->setFileFormat('application/pdf');
+                //                $this->dispatchService->createRequestFile($requestFile, $request->getIdentifier());
                 $file = new File(__DIR__.'/../../tests/DualDeliveryApi/example.pdf');
                 $file = $this->dispatchService->createRequestFile($file, $request->getIdentifier());
                 $request->setRequestFiles(new ArrayCollection([$file]));

@@ -8,7 +8,6 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\DualDeliveryClient;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\StatusType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryBulk\DualNotificationBulkRequestType;
 use PHPUnit\Framework\TestCase;
-use SoapFault;
 
 class DualDeliveryApiTest extends TestCase
 {
@@ -23,7 +22,7 @@ class DualDeliveryApiTest extends TestCase
         $client = new DualDeliveryClient('https://dualtest.vendo.at/');
         $param = new DualNotificationBulkRequestType(
             'foo', null, new StatusType('bar'), null, '1.0');
-        $this->expectException(SoapFault::class);
+        $this->expectException(\SoapFault::class);
         $this->expectExceptionMessageMatches("/doesn't provide dualNotificationBulkRequestOperation/");
         $client->dualNotificationBulkRequestOperation($param);
     }

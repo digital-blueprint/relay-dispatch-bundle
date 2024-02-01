@@ -11,12 +11,12 @@ class Recipient
     /**
      * @var string
      */
-    protected $RecipientID = null;
+    protected $RecipientID;
 
     /**
      * @var RecipientType
      */
-    protected $Recipient = null;
+    protected $Recipient;
 
     public function __construct(?string $RecipientID, RecipientType $Recipient)
     {

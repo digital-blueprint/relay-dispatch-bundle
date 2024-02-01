@@ -9,37 +9,37 @@ class InvoiceRecipientType
     /**
      * @var string
      */
-    protected $VATIdentificationNumber = null;
+    protected $VATIdentificationNumber;
 
     /**
      * @var AlphaNumIDType
      */
-    protected $BillersInvoiceRecipientID = null;
+    protected $BillersInvoiceRecipientID;
 
     /**
      * @var AccountingAreaType
      */
-    protected $AccountingArea = null;
+    protected $AccountingArea;
 
     /**
      * @var string
      */
-    protected $SubOrganizationID = null;
+    protected $SubOrganizationID;
 
     /**
      * @var OrderReferenceType
      */
-    protected $OrderReference = null;
+    protected $OrderReference;
 
     /**
      * @var AddressType
      */
-    protected $Address = null;
+    protected $Address;
 
     /**
      * @var InvoiceRecipientExtensionType
      */
-    protected $InvoiceRecipientExtension = null;
+    protected $InvoiceRecipientExtension;
 
     /**
      * @param string                        $VATIdentificationNumber

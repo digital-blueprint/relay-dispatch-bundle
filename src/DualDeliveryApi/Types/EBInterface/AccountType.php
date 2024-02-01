@@ -9,32 +9,32 @@ class AccountType
     /**
      * @var BankNameType
      */
-    protected $BankName = null;
+    protected $BankName;
 
     /**
      * @var BankCodeCType
      */
-    protected $BankCode = null;
+    protected $BankCode;
 
     /**
      * @var BICType
      */
-    protected $BIC = null;
+    protected $BIC;
 
     /**
      * @var string
      */
-    protected $BankAccountNr = null;
+    protected $BankAccountNr;
 
     /**
      * @var IBANType
      */
-    protected $IBAN = null;
+    protected $IBAN;
 
     /**
      * @var BankAccountOwnerType
      */
-    protected $BankAccountOwner = null;
+    protected $BankAccountOwner;
 
     /**
      * @param BankNameType         $BankName

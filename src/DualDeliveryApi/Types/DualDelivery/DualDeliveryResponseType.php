@@ -9,42 +9,42 @@ class DualDeliveryResponseType
     /**
      * @var string
      */
-    protected $AppDeliveryID = null;
+    protected $AppDeliveryID;
 
     /**
      * @var StatusType
      */
-    protected $Status = null;
+    protected $Status;
 
     /**
      * @var ?string
      */
-    protected $DualDeliveryID = null;
+    protected $DualDeliveryID;
 
     /**
      * @var ?AdditionalMetaData
      */
-    protected $AdditionalMetaData = null;
+    protected $AdditionalMetaData;
 
     /**
      * @var UsedDeliveryChannels
      */
-    protected $UsedDeliveryChannels = null;
+    protected $UsedDeliveryChannels;
 
     /**
      * @var ?ManipulatedPayloadsType
      */
-    protected $ManipulatedPayloads = null;
+    protected $ManipulatedPayloads;
 
     /**
      * @var ?ErrorsType
      */
-    protected $Errors = null;
+    protected $Errors;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(string $AppDeliveryID, StatusType $Status, ?string $DualDeliveryID, ?AdditionalMetaData $AdditionalMetaData, ?ErrorsType $Errors, string $version)
     {

@@ -9,12 +9,12 @@ class ManifestType
     /**
      * @var ReferenceType
      */
-    protected $Reference = null;
+    protected $Reference;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @param ReferenceType $Reference

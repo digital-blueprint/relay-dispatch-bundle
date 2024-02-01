@@ -11,22 +11,22 @@ class DeliveryConfirmationType extends DeliveryAnswerType
     /**
      * @var Sender
      */
-    protected $Sender = null;
+    protected $Sender;
 
     /**
      * @var Receiver
      */
-    protected $Receiver = null;
+    protected $Receiver;
 
     /**
      * @var string
      */
-    protected $DeliveryTimestamp = null;
+    protected $DeliveryTimestamp;
 
     /**
      * @var SignatureType
      */
-    protected $Signature = null;
+    protected $Signature;
 
     public function __construct(string $DeliveryService, string $AppDeliveryID, ?string $GZ, ?string $MZSDeliveryID, string $ZSDeliveryID, Sender $Sender, Receiver $Receiver, \DateTimeInterface $DeliveryTimestamp, SignatureType $Signature)
     {

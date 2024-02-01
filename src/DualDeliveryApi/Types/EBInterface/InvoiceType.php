@@ -17,112 +17,112 @@ class InvoiceType
     /**
      * @var SignatureType
      */
-    protected $Signature = null;
+    protected $Signature;
 
     /**
      * @var AlphaNumIDType
      */
-    protected $InvoiceNumber = null;
+    protected $InvoiceNumber;
 
     /**
      * @var date
      */
-    protected $InvoiceDate = null;
+    protected $InvoiceDate;
 
     /**
      * @var DeliveryType
      */
-    protected $Delivery = null;
+    protected $Delivery;
 
     /**
      * @var BillerType
      */
-    protected $Biller = null;
+    protected $Biller;
 
     /**
      * @var InvoiceRecipientType
      */
-    protected $InvoiceRecipient = null;
+    protected $InvoiceRecipient;
 
     /**
      * @var OrderingPartyType
      */
-    protected $OrderingParty = null;
+    protected $OrderingParty;
 
     /**
      * @var DetailsType
      */
-    protected $Details = null;
+    protected $Details;
 
     /**
      * @var ReductionAndSurchargeDetailsType
      */
-    protected $ReductionAndSurchargeDetails = null;
+    protected $ReductionAndSurchargeDetails;
 
     /**
      * @var TaxType
      */
-    protected $Tax = null;
+    protected $Tax;
 
     /**
      * @var Decimal2Type
      */
-    protected $TotalGrossAmount = null;
+    protected $TotalGrossAmount;
 
     /**
      * @var PaymentMethodType
      */
-    protected $PaymentMethod = null;
+    protected $PaymentMethod;
 
     /**
      * @var PaymentConditionsType
      */
-    protected $PaymentConditions = null;
+    protected $PaymentConditions;
 
     /**
      * @var PresentationDetailsType
      */
-    protected $PresentationDetails = null;
+    protected $PresentationDetails;
 
     /**
      * @var InvoiceRootExtensionType
      */
-    protected $InvoiceRootExtension = null;
+    protected $InvoiceRootExtension;
 
     /**
      * @var string
      */
-    protected $GeneratingSystem = null;
+    protected $GeneratingSystem;
 
     /**
      * @var AlphaNumIDType
      */
-    protected $CancelledOriginalDocument = null;
+    protected $CancelledOriginalDocument;
 
     /**
      * @var DocumentTypeType
      */
-    protected $DocumentType = null;
+    protected $DocumentType;
 
     /**
      * @var CurrencyType
      */
-    protected $InvoiceCurrency = null;
+    protected $InvoiceCurrency;
 
     /**
      * @var bool
      */
-    protected $ManualProcessing = null;
+    protected $ManualProcessing;
 
     /**
      * @var string
      */
-    protected $DocumentTitle = null;
+    protected $DocumentTitle;
 
     /**
      * @var LanguageType
      */
-    protected $Language = null;
+    protected $Language;
 
     /**
      * @param SignatureType                    $Signature

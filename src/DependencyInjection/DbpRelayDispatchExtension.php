@@ -56,9 +56,6 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         $definition->addMethodCall('setConfig', [$mergedConfig]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepend(ContainerBuilder $container): void
     {
         $this->addQueueMessageClass($container, RequestSubmissionMessage::class);

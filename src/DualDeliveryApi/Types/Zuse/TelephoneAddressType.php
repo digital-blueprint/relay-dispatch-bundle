@@ -9,7 +9,7 @@ class TelephoneAddressType extends AbstractAddressType
     /**
      * @var ?TelcomNumberType
      */
-    protected $Number = null;
+    protected $Number;
 
     public function __construct(string $Id, ?TelcomNumberType $Number)
     {

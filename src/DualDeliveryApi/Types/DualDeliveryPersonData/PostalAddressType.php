@@ -11,26 +11,26 @@ class PostalAddressType extends AbstractAddressType
      *
      * @var ?string
      */
-    protected $CountryCode = null;
+    protected $CountryCode;
 
     /**
      * ZIP, compare Postleitzahl.
      *
      * @var string
      */
-    protected $PostalCode = null;
+    protected $PostalCode;
 
     /**
      * compare Gemeinde.
      *
      * @var string
      */
-    protected $Municipality = null;
+    protected $Municipality;
 
     /**
      * @var DeliveryAddress
      */
-    protected $DeliveryAddress = null;
+    protected $DeliveryAddress;
 
     public function __construct(?string $Id, string $PostalCode, string $Municipality, DeliveryAddress $DeliveryAddress)
     {

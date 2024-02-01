@@ -9,7 +9,7 @@ class AdditionalResults
     /**
      * @var AdditonalResultSetType[]
      */
-    protected $AdditonalResultSet = null;
+    protected $AdditonalResultSet;
 
     /**
      * @param AdditonalResultSetType[] $AdditonalResultSet

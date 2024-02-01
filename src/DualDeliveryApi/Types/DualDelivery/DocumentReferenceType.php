@@ -9,7 +9,7 @@ class DocumentReferenceType extends DocumentType
     /**
      * @var string
      */
-    protected $URL = null;
+    protected $URL;
 
     public function __construct(string $URL)
     {

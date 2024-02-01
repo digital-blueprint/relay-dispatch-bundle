@@ -9,17 +9,17 @@ class TaxType
     /**
      * @var VATType
      */
-    protected $VAT = null;
+    protected $VAT;
 
     /**
      * @var OtherTaxType
      */
-    protected $OtherTax = null;
+    protected $OtherTax;
 
     /**
      * @var TaxExtensionType
      */
-    protected $TaxExtension = null;
+    protected $TaxExtension;
 
     /**
      * @param VATType          $VAT

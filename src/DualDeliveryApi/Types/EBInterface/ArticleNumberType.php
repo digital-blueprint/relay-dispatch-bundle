@@ -9,7 +9,7 @@ class ArticleNumberType
     /**
      * @var ArticleNumberTypeType
      */
-    protected $ArticleNumberType = null;
+    protected $ArticleNumberType;
 
     /**
      * @param ArticleNumberTypeType $ArticleNumberType

@@ -9,7 +9,7 @@ class Recipients
     /**
      * @var Recipient[]
      */
-    protected $Recipient = null;
+    protected $Recipient;
 
     /**
      * @param Recipient[] $Recipient

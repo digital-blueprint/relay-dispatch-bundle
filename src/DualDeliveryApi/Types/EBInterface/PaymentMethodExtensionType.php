@@ -9,12 +9,12 @@ class PaymentMethodExtensionType
     /**
      * @var PaymentMethodExtensionType
      */
-    protected $PaymentMethodExtension = null;
+    protected $PaymentMethodExtension;
 
     /**
      * @var CustomType
      */
-    protected $Custom = null;
+    protected $Custom;
 
     /**
      * @param PaymentMethodExtensionType $PaymentMethodExtension

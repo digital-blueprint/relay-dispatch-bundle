@@ -11,7 +11,7 @@ class BinaryDocument extends BinaryDocumentType
     /**
      * @var string
      */
-    protected $MIMEType = null;
+    protected $MIMEType;
 
     public function __construct(string $Content, string $MIMEType)
     {

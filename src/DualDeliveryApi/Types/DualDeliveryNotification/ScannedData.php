@@ -11,12 +11,12 @@ class ScannedData
     /**
      * @var BinaryDocument
      */
-    protected $BinaryDocument = null;
+    protected $BinaryDocument;
 
     /**
      * @var ExtensionPointType
      */
-    protected $ExtractedMetaData = null;
+    protected $ExtractedMetaData;
 
     public function __construct(?BinaryDocument $BinaryDocument, ?ExtensionPointType $ExtractedMetaData)
     {

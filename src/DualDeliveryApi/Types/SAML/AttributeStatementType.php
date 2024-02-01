@@ -9,7 +9,7 @@ class AttributeStatementType extends SubjectStatementAbstractType
     /**
      * @var AttributeType
      */
-    protected $Attribute = null;
+    protected $Attribute;
 
     /**
      * @param SubjectType   $Subject

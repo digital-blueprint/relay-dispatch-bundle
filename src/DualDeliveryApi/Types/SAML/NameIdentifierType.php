@@ -11,17 +11,17 @@ class NameIdentifierType
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $NameQualifier = null;
+    protected $NameQualifier;
 
     /**
      * @var AnyURI
      */
-    protected $Format = null;
+    protected $Format;
 
     /**
      * @param string $_

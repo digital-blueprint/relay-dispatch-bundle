@@ -9,17 +9,17 @@ class ReductionAndSurchargeDetailsType
     /**
      * @var ReductionAndSurchargeType
      */
-    protected $Reduction = null;
+    protected $Reduction;
 
     /**
      * @var ReductionAndSurchargeType
      */
-    protected $Surcharge = null;
+    protected $Surcharge;
 
     /**
      * @var ReductionAndSurchargeDetailsExtensionType
      */
-    protected $ReductionAndSurchargeDetailsExtension = null;
+    protected $ReductionAndSurchargeDetailsExtension;
 
     /**
      * @param ReductionAndSurchargeType                 $Reduction

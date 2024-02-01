@@ -11,12 +11,12 @@ class EDeliveryNotificationType extends NotificationChannelSetType
     /**
      * @var DeliveryNotification
      */
-    protected $DeliveryNotification = null;
+    protected $DeliveryNotification;
 
     /**
      * @var string
      */
-    protected $BinaryDeliveryNotification = null;
+    protected $BinaryDeliveryNotification;
 
     public function __construct(DeliveryNotification $DeliveryNotification, string $BinaryDeliveryNotification)
     {

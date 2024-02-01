@@ -61,13 +61,16 @@ class PreAddressingRequest
 {
     /**
      * @ApiProperty(identifier=true)
+     *
      * @Groups({"DispatchPreAddressingRequest:output"})
      */
     private $identifier;
 
     /**
      * @ApiProperty(iri="https://schema.org/givenName")
+     *
      * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input", "DispatchRequest:output"})
+     *
      * @Assert\Length(
      *     max=255,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -79,7 +82,9 @@ class PreAddressingRequest
 
     /**
      * @ApiProperty(iri="https://schema.org/familyName")
+     *
      * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input", "DispatchRequest:output"})
+     *
      * @Assert\Length(
      *     max=255,
      *     maxMessage="Only {{ limit }} letters are allowed"
@@ -91,8 +96,10 @@ class PreAddressingRequest
 
     /**
      * @ApiProperty(iri="http://schema.org/birthDate")
+     *
      * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input"})
      * I could not find an Assert that doesn't cause an error to do proper checks
+     *
      * @Assert\NotBlank
      *
      * @var \DateTimeInterface
@@ -108,7 +115,7 @@ class PreAddressingRequest
 
     public function __construct()
     {
-//        $this->recipients = new ArrayCollection();
+        //        $this->recipients = new ArrayCollection();
     }
 
     public function getIdentifier(): string

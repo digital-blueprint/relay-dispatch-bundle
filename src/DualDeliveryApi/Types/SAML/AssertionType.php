@@ -13,67 +13,67 @@ class AssertionType
     /**
      * @var ConditionsType
      */
-    protected $Conditions = null;
+    protected $Conditions;
 
     /**
      * @var AdviceType
      */
-    protected $Advice = null;
+    protected $Advice;
 
     /**
      * @var StatementAbstractType
      */
-    protected $Statement = null;
+    protected $Statement;
 
     /**
      * @var SubjectStatementAbstractType
      */
-    protected $SubjectStatement = null;
+    protected $SubjectStatement;
 
     /**
      * @var AuthenticationStatementType
      */
-    protected $AuthenticationStatement = null;
+    protected $AuthenticationStatement;
 
     /**
      * @var AuthorizationDecisionStatementType
      */
-    protected $AuthorizationDecisionStatement = null;
+    protected $AuthorizationDecisionStatement;
 
     /**
      * @var AttributeStatementType
      */
-    protected $AttributeStatement = null;
+    protected $AttributeStatement;
 
     /**
      * @var SignatureType
      */
-    protected $Signature = null;
+    protected $Signature;
 
     /**
      * @var int
      */
-    protected $MajorVersion = null;
+    protected $MajorVersion;
 
     /**
      * @var int
      */
-    protected $MinorVersion = null;
+    protected $MinorVersion;
 
     /**
      * @var stringType
      */
-    protected $AssertionID = null;
+    protected $AssertionID;
 
     /**
      * @var string
      */
-    protected $Issuer = null;
+    protected $Issuer;
 
     /**
      * @var \DateTime
      */
-    protected $IssueInstant = null;
+    protected $IssueInstant;
 
     /**
      * @param ConditionsType                     $Conditions

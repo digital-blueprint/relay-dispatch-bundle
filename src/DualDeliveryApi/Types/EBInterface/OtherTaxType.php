@@ -11,12 +11,12 @@ class OtherTaxType
     /**
      * @var string
      */
-    protected $Comment = null;
+    protected $Comment;
 
     /**
      * @var Decimal2Type
      */
-    protected $Amount = null;
+    protected $Amount;
 
     /**
      * @param string       $Comment

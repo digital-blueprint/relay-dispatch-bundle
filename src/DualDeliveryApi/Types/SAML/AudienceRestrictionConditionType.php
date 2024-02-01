@@ -11,7 +11,7 @@ class AudienceRestrictionConditionType extends ConditionAbstractType
     /**
      * @var AnyURI
      */
-    protected $Audience = null;
+    protected $Audience;
 
     /**
      * @param AnyURI $Audience

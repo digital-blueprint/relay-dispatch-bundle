@@ -9,12 +9,12 @@ class ClassificationType
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * @var string
      */
-    protected $ClassificationSchema = null;
+    protected $ClassificationSchema;
 
     /**
      * @param string $_

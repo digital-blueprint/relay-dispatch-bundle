@@ -9,7 +9,7 @@ class DocumentClass
     /**
      * @var string
      */
-    protected $Namespace = null;
+    protected $Namespace;
 
     public function __construct(string $Namespace)
     {

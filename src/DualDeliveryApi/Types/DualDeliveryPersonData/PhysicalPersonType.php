@@ -9,14 +9,14 @@ class PhysicalPersonType extends AbstractPersonType
     /**
      * @var PersonNameType
      */
-    protected $Name = null;
+    protected $Name;
 
     /**
      * @var ?string
      */
-    protected $DateOfBirth = null;
+    protected $DateOfBirth;
 
-    public function __construct(PersonNameType $Name, ?string $DateOfBirth = null)
+    public function __construct(PersonNameType $Name, string $DateOfBirth = null)
     {
         parent::__construct();
         $this->Name = $Name;

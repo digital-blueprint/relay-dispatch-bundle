@@ -11,22 +11,22 @@ class AuthenticationStatementType extends SubjectStatementAbstractType
     /**
      * @var SubjectLocalityType
      */
-    protected $SubjectLocality = null;
+    protected $SubjectLocality;
 
     /**
      * @var AuthorityBindingType
      */
-    protected $AuthorityBinding = null;
+    protected $AuthorityBinding;
 
     /**
      * @var AnyURI
      */
-    protected $AuthenticationMethod = null;
+    protected $AuthenticationMethod;
 
     /**
      * @var \DateTime
      */
-    protected $AuthenticationInstant = null;
+    protected $AuthenticationInstant;
 
     /**
      * @param SubjectType          $Subject

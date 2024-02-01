@@ -9,17 +9,17 @@ class PostalDeliveryType extends DeliveryChannelSetType
     /**
      * @var ?int
      */
-    protected $Priority = null;
+    protected $Priority;
 
     /**
      * @var ?string
      */
-    protected $EnvelopeFormat = null;
+    protected $EnvelopeFormat;
 
     /**
      * @var ?string
      */
-    protected $PrintType = null;
+    protected $PrintType;
 
     /**
      * @var string
@@ -34,12 +34,12 @@ class PostalDeliveryType extends DeliveryChannelSetType
     /**
      * @var ?PrintedEnvelope
      */
-    protected $PrintedEnvelope = null;
+    protected $PrintedEnvelope;
 
     /**
      * @var ?AdditionalPrintParameter
      */
-    protected $AdditionalPrintParameter = null;
+    protected $AdditionalPrintParameter;
 
     public function __construct(?int $Priority, ?string $EnvelopeFormat, ?AdditionalPrintParameter $AdditionalPrintParameter)
     {

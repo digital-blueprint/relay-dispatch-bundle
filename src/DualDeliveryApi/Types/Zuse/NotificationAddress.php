@@ -9,17 +9,17 @@ class NotificationAddress
     /**
      * @var WebserviceURL
      */
-    protected $WebserviceURL = null;
+    protected $WebserviceURL;
 
     /**
      * @var InternetAddressType
      */
-    protected $Email = null;
+    protected $Email;
 
     /**
      * @var string
      */
-    protected $Type = null;
+    protected $Type;
 
     public function __construct(WebserviceURL $WebserviceURL, InternetAddressType $Email, string $Type)
     {

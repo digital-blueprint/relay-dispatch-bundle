@@ -12,17 +12,17 @@ class ReductionAndSurchargeBaseType
     /**
      * @var Decimal2Type
      */
-    protected $BaseAmount = null;
+    protected $BaseAmount;
 
     /**
      * @var PercentageType
      */
-    protected $Percentage = null;
+    protected $Percentage;
 
     /**
      * @var Decimal2Type
      */
-    protected $Amount = null;
+    protected $Amount;
 
     /**
      * @param Decimal2Type   $BaseAmount

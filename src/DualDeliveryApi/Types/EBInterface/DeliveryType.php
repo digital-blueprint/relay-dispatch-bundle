@@ -12,32 +12,32 @@ class DeliveryType
     /**
      * @var AlphaNumIDType
      */
-    protected $DeliveryID = null;
+    protected $DeliveryID;
 
     /**
      * @var date
      */
-    protected $Date = null;
+    protected $Date;
 
     /**
      * @var PeriodType
      */
-    protected $Period = null;
+    protected $Period;
 
     /**
      * @var AddressType
      */
-    protected $Address = null;
+    protected $Address;
 
     /**
      * @var string
      */
-    protected $Description = null;
+    protected $Description;
 
     /**
      * @var DeliveryExtensionType
      */
-    protected $DeliveryExtension = null;
+    protected $DeliveryExtension;
 
     /**
      * @param AlphaNumIDType        $DeliveryID

@@ -9,27 +9,27 @@ class IdentificationType
     /**
      * @var Value
      */
-    protected $Value = null;
+    protected $Value;
 
     /**
      * @var string
      */
-    protected $Type = null;
+    protected $Type;
 
     /**
      * @var ?string
      */
-    protected $Authority = null;
+    protected $Authority;
 
     /**
      * @var ?string
      */
-    protected $any = null;
+    protected $any;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     public function __construct(Value $Value, string $Type, ?string $Authority, ?string $any, string $Id)
     {

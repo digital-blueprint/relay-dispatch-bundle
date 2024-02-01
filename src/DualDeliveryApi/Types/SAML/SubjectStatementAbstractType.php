@@ -9,7 +9,7 @@ abstract class SubjectStatementAbstractType extends StatementAbstractType
     /**
      * @var SubjectType
      */
-    protected $Subject = null;
+    protected $Subject;
 
     /**
      * @param SubjectType $Subject

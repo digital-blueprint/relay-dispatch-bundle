@@ -12,17 +12,17 @@ class SubjectConfirmationType
     /**
      * @var AnyURI
      */
-    protected $ConfirmationMethod = null;
+    protected $ConfirmationMethod;
 
     /**
      * @var mixed
      */
-    protected $SubjectConfirmationData = null;
+    protected $SubjectConfirmationData;
 
     /**
      * @var KeyInfoType
      */
-    protected $KeyInfo = null;
+    protected $KeyInfo;
 
     /**
      * @param AnyURI      $ConfirmationMethod

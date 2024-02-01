@@ -9,21 +9,21 @@ class FamilyName
     /**
      * @var string
      */
-    protected $_ = null;
+    protected $_;
 
     /**
      * true, false, or undefined (default).
      *
      * @var ?string
      */
-    protected $primary = null;
+    protected $primary;
 
     /**
      * @var ?string
      */
-    protected $prefix = null;
+    protected $prefix;
 
-    public function __construct($_, ?string $primary = null, ?string $prefix = null)
+    public function __construct($_, string $primary = null, string $prefix = null)
     {
         $this->_ = $_;
         $this->primary = $primary;

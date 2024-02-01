@@ -9,7 +9,7 @@ class CountryType
     /**
      * @var CountryCodeType
      */
-    protected $CountryCode = null;
+    protected $CountryCode;
 
     /**
      * @param CountryCodeType $CountryCode

@@ -15,7 +15,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="dispatch_delivery_status_changes")
+ *
  * @ApiResource(
  *     collectionOperations={
  *         "get" = {
@@ -53,15 +55,20 @@ class DeliveryStatusChange
 
     /**
      * @ORM\Id
+     *
      * @ORM\Column(type="string", length=50)
+     *
      * @ApiProperty(identifier=true)
+     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @ApiProperty(iri="https://schema.org/dateCreated")
+     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var \DateTimeInterface
@@ -70,8 +77,11 @@ class DeliveryStatusChange
 
     /**
      * @ORM\ManyToOne(targetEntity="RequestRecipient", inversedBy="statusChanges")
+     *
      * @ORM\JoinColumn(name="dispatch_request_recipient_identifier", referencedColumnName="identifier")
+     *
      * @ApiProperty
+     *
      * @Groups({"DispatchDeliveryStatusChange:output"})
      *
      * @var RequestRecipient
@@ -80,7 +90,9 @@ class DeliveryStatusChange
 
     /**
      * @ORM\Column(type="string", length=50)
+     *
      * @ApiProperty(iri="https://schema.org/identifier")
+     *
      * @Groups({"DispatchDeliveryStatusChange:output"})
      *
      * @var string
@@ -89,7 +101,9 @@ class DeliveryStatusChange
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @ApiProperty(iri="https://schema.org/statusType")
+     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var int
@@ -98,6 +112,7 @@ class DeliveryStatusChange
 
     /**
      * @ApiProperty(iri="https://schema.org/statusType")
+     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var string
@@ -106,7 +121,9 @@ class DeliveryStatusChange
 
     /**
      * @ORM\Column(type="text")
+     *
      * @ApiProperty(iri="https://schema.org/description")
+     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
      *
      * @var string
@@ -122,7 +139,9 @@ class DeliveryStatusChange
 
     /**
      * @ApiProperty(iri="https://schema.org/fileFormat")
+     *
      * @ORM\Column(type="string", length=100)
+     *
      * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
      *
      * @var string
@@ -131,6 +150,7 @@ class DeliveryStatusChange
 
     /**
      * @ApiProperty(iri="http://schema.org/contentUrl")
+     *
      * @Groups({"DispatchDeliveryStatusChange:output"})
      *
      * @var string
@@ -306,8 +326,8 @@ class DeliveryStatusChange
     public function isFinalDualDeliveryStatus(): bool
     {
         return in_array($this->statusType, [
-            self::STATUS_DUAL_DELIVERY_REQUEST_FAILED, ], true) ||
-            Vendo::isFinalStatus($this->statusType);
+            self::STATUS_DUAL_DELIVERY_REQUEST_FAILED, ], true)
+            || Vendo::isFinalStatus($this->statusType);
     }
 
     public function getDispatchStatus(): string

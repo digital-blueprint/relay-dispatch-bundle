@@ -11,12 +11,12 @@ class PeriodType
     /**
      * @var date
      */
-    protected $FromDate = null;
+    protected $FromDate;
 
     /**
      * @var date
      */
-    protected $ToDate = null;
+    protected $ToDate;
 
     /**
      * @param date $FromDate

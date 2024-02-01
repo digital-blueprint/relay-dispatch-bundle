@@ -9,12 +9,12 @@ class ErrorInfo
     /**
      * @var int
      */
-    protected $Code = null;
+    protected $Code;
 
     /**
      * @var string
      */
-    protected $Text = null;
+    protected $Text;
 
     public function __construct(int $Code, string $Text)
     {

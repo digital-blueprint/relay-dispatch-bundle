@@ -9,7 +9,7 @@ class LocalFileReferenceType extends DocumentType
     /**
      * @var string
      */
-    protected $File = null;
+    protected $File;
 
     public function __construct(string $File)
     {

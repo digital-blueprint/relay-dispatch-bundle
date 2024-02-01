@@ -12,32 +12,32 @@ class DualNotificationBulkRequestType
     /**
      * @var string
      */
-    protected $ApplicationDeliveryID = null;
+    protected $ApplicationDeliveryID;
 
     /**
      * @var ?int
      */
-    protected $DualZSID = null;
+    protected $DualZSID;
 
     /**
      * @var ?BulkElements
      */
-    protected $BulkElements = null;
+    protected $BulkElements;
 
     /**
      * @var StatusType
      */
-    protected $Status = null;
+    protected $Status;
 
     /**
      * @var ?ErrorsType
      */
-    protected $Errors = null;
+    protected $Errors;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(string $ApplicationDeliveryID, ?BulkElements $BulkElements, StatusType $Status, ?ErrorsType $Errors, string $version)
     {

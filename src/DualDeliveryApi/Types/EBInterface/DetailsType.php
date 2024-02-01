@@ -9,17 +9,17 @@ class DetailsType
     /**
      * @var string
      */
-    protected $HeaderDescription = null;
+    protected $HeaderDescription;
 
     /**
      * @var ItemListType
      */
-    protected $ItemList = null;
+    protected $ItemList;
 
     /**
      * @var string
      */
-    protected $FooterDescription = null;
+    protected $FooterDescription;
 
     /**
      * @param string       $HeaderDescription

@@ -11,32 +11,32 @@ class DualDeliveryBulkRequestType
     /**
      * @var Sender
      */
-    protected $Sender = null;
+    protected $Sender;
 
     /**
      * @var MetaData
      */
-    protected $MetaData = null;
+    protected $MetaData;
 
     /**
      * @var PayloadType[]
      */
-    protected $Payload = null;
+    protected $Payload;
 
     /**
      * @var ?bool
      */
-    protected $StartBulk = null;
+    protected $StartBulk;
 
     /**
      * @var ?FinishBulk
      */
-    protected $FinishBulk = null;
+    protected $FinishBulk;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     /**
      * @param PayloadType[] $Payload

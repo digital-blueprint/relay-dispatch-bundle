@@ -9,7 +9,7 @@ class ErrorsType
     /**
      * @var ?ErrorType[]
      */
-    protected $Error = null;
+    protected $Error;
 
     /**
      * @param ErrorType[] $Error

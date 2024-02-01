@@ -11,17 +11,17 @@ class RetrievalMethodType
     /**
      * @var TransformsType
      */
-    protected $Transforms = null;
+    protected $Transforms;
 
     /**
      * @var AnyURI
      */
-    protected $URI = null;
+    protected $URI;
 
     /**
      * @var AnyURI
      */
-    protected $Type = null;
+    protected $Type;
 
     /**
      * @param AnyURI $URI

@@ -12,12 +12,12 @@ class EvidenceType
     /**
      * @var stringReferenceType
      */
-    protected $AssertionIDReference = null;
+    protected $AssertionIDReference;
 
     /**
      * @var AssertionType
      */
-    protected $Assertion = null;
+    protected $Assertion;
 
     /**
      * @param IDReferenceType $AssertionIDReference

@@ -9,49 +9,49 @@ class PayloadAttributesType
     /**
      * @var ?string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @var string
      */
-    protected $FileName = null;
+    protected $FileName;
 
     /**
      * @var string
      */
-    protected $MIMEType = null;
+    protected $MIMEType;
 
     /**
      * @var ?int
      */
-    protected $Size = null;
+    protected $Size;
 
     /**
      * @var ?int
      */
-    protected $PageCount = null;
+    protected $PageCount;
 
     /**
      * @var ?Checksum
      */
-    protected $Checksum = null;
+    protected $Checksum;
 
     /**
      * @var ?int
      */
-    protected $Index = null;
+    protected $Index;
 
     /**
      * @var ?ParametersType
      */
-    protected $Parameters = null;
+    protected $Parameters;
 
     /**
      * @var ?PrintParameter
      */
-    protected $PrintParameter = null;
+    protected $PrintParameter;
 
-    public function __construct(string $FileName, string $MIMEType, ?ParametersType $Parameters = null, ?PrintParameter $PrintParameter = null)
+    public function __construct(string $FileName, string $MIMEType, ParametersType $Parameters = null, PrintParameter $PrintParameter = null)
     {
         $this->FileName = $FileName;
         $this->MIMEType = $MIMEType;

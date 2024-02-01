@@ -9,57 +9,57 @@ class PaymentForm
     /**
      * @var string
      */
-    protected $Receiver = null;
+    protected $Receiver;
 
     /**
      * @var ?string
      */
-    protected $ReceiverBank = null;
+    protected $ReceiverBank;
 
     /**
      * @var ?string
      */
-    protected $Amount = null;
+    protected $Amount;
 
     /**
      * @var ?string
      */
-    protected $Purpose = null;
+    protected $Purpose;
 
     /**
      * @var ?string
      */
-    protected $CustomerData = null;
+    protected $CustomerData;
 
     /**
      * @var ?string
      */
-    protected $ReadingArea = null;
+    protected $ReadingArea;
 
     /**
      * @var ?string
      */
-    protected $Currency = null;
+    protected $Currency;
 
     /**
      * @var ?AccountInfo
      */
-    protected $AccountInfo = null;
+    protected $AccountInfo;
 
     /**
      * @var ?string
      */
-    protected $DueDate = null;
+    protected $DueDate;
 
     /**
      * @var ?bool
      */
-    protected $DirectDebit = null;
+    protected $DirectDebit;
 
     /**
      * @var ?ParameterSet
      */
-    protected $ParameterSet = null;
+    protected $ParameterSet;
 
     public function __construct(string $Receiver, ?string $ReceiverBank, ?string $Amount, ?string $Purpose, ?string $CustomerData, ?string $ReadingArea, ?string $Currency, ?AccountInfo $AccountInfo, ?\DateTimeInterface $DueDate, ?bool $DirectDebit, ?ParameterSet $ParameterSet)
     {

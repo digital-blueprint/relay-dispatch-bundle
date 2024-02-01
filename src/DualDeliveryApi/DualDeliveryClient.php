@@ -19,7 +19,6 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\Stat
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingRequestType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryPreAddressing\DualDeliveryPreAddressingResponseType;
 use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\ApiProvider as VendoApiProvider;
-use DOMDocument;
 
 class DualDeliveryClient extends \SoapClient
 {
@@ -308,7 +307,7 @@ class DualDeliveryClient extends \SoapClient
 
     public function getPrettyLastRequest(): string
     {
-        $dom = new DOMDocument();
+        $dom = new \DOMDocument();
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($this->__getLastRequest());
@@ -318,7 +317,7 @@ class DualDeliveryClient extends \SoapClient
 
     public function getPrettyLastResponse(): string
     {
-        $dom = new DOMDocument();
+        $dom = new \DOMDocument();
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($this->__getLastResponse());

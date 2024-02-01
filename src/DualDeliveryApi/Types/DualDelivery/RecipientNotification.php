@@ -9,12 +9,12 @@ class RecipientNotification
     /**
      * @var string
      */
-    protected $NotificationMethod = null;
+    protected $NotificationMethod;
 
     /**
      * @var string
      */
-    protected $TimeSinceDisposal = null;
+    protected $TimeSinceDisposal;
 
     public function __construct(string $NotificationMethod, string $TimeSinceDisposal)
     {

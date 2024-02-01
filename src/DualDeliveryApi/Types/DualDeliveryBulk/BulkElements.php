@@ -11,7 +11,7 @@ class BulkElements
     /**
      * @var DualNotificationRequest[]
      */
-    protected $DualNotificationRequest = null;
+    protected $DualNotificationRequest;
 
     /**
      * @param DualNotificationRequest[] $DualNotificationRequest

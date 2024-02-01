@@ -9,37 +9,37 @@ class DualDeliveryRequestType
     /**
      * @var ?SenderType
      */
-    protected $Sender = null;
+    protected $Sender;
 
     /**
      * @var ?string
      */
-    protected $RecipientID = null;
+    protected $RecipientID;
 
     /**
      * @var ?RecipientType
      */
-    protected $Recipient = null;
+    protected $Recipient;
 
     /**
      * @var MetaData
      */
-    protected $MetaData = null;
+    protected $MetaData;
 
     /**
      * @var DeliveryChannels|null
      */
-    protected $DeliveryChannels = null;
+    protected $DeliveryChannels;
 
     /**
      * @var PayloadType[]
      */
-    protected $Payload = null;
+    protected $Payload;
 
     /**
      * @var string
      */
-    protected $version = null;
+    protected $version;
 
     public function __construct(?SenderType $Sender, ?string $RecipientID, ?RecipientType $Recipient, MetaData $MetaData, ?DeliveryChannels $DeliveryChannels, array $Payload, string $version)
     {

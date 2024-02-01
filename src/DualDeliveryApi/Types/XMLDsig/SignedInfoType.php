@@ -9,22 +9,22 @@ class SignedInfoType
     /**
      * @var CanonicalizationMethodType
      */
-    protected $CanonicalizationMethod = null;
+    protected $CanonicalizationMethod;
 
     /**
      * @var SignatureMethodType
      */
-    protected $SignatureMethod = null;
+    protected $SignatureMethod;
 
     /**
      * @var ReferenceType
      */
-    protected $Reference = null;
+    protected $Reference;
 
     /**
      * @var string
      */
-    protected $Id = null;
+    protected $Id;
 
     /**
      * @param CanonicalizationMethodType $CanonicalizationMethod

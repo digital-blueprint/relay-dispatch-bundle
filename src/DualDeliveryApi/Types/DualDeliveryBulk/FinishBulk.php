@@ -9,7 +9,7 @@ class FinishBulk
     /**
      * @var ?int
      */
-    protected $BulkId = null;
+    protected $BulkId;
 
     public function __construct(?int $BulkId)
     {
