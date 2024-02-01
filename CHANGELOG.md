@@ -1,6 +1,9 @@
 # Changelog
 
+## 0.4.14
+
 - JSON-LD contexts are no longer embedded in the API responses, they have to be fetched separately.
+- Drop support for PHP 7.3
 
 ## 0.4.13
 
