@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "license": "AGPL-3.0-or-later",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "ext-dom": "*",
         "ext-json": "*",
         "ext-simplexml": "*",
@@ -41,7 +41,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.3"
+            "php": "7.4"
         },
         "allow-plugins": {
             "composer/package-versions-deprecated": false
