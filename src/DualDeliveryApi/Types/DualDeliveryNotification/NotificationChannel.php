@@ -21,7 +21,7 @@ class NotificationChannel
      */
     protected $PostalNotification;
 
-    public function __construct(EDeliveryNotificationType $EDeliveryNotification = null, OtherNotificationType $OtherNotification = null, PostalNotificationType $PostalNotification = null)
+    public function __construct(?EDeliveryNotificationType $EDeliveryNotification = null, ?OtherNotificationType $OtherNotification = null, ?PostalNotificationType $PostalNotification = null)
     {
         $this->EDeliveryNotification = $EDeliveryNotification;
         $this->OtherNotification = $OtherNotification;

@@ -28,12 +28,12 @@ final class RequestFileItemDataProvider extends AbstractController implements It
         $this->auth = $auth;
     }
 
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+    public function supports(string $resourceClass, ?string $operationName = null, array $context = []): bool
     {
         return RequestFile::class === $resourceClass;
     }
 
-    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?RequestFile
+    public function getItem(string $resourceClass, $id, ?string $operationName = null, array $context = []): ?RequestFile
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();

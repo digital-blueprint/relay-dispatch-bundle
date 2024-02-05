@@ -28,7 +28,7 @@ class DeliveryAddress
      */
     protected $DoorNumber;
 
-    public function __construct(string $StreetName, string $BuildingNumber, string $Unit = null, string $DoorNumber = null)
+    public function __construct(string $StreetName, string $BuildingNumber, ?string $Unit = null, ?string $DoorNumber = null)
     {
         $this->StreetName = $StreetName;
         $this->BuildingNumber = $BuildingNumber;

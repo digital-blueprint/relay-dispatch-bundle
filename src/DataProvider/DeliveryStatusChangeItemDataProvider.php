@@ -28,12 +28,12 @@ final class DeliveryStatusChangeItemDataProvider extends AbstractController impl
         $this->auth = $auth;
     }
 
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+    public function supports(string $resourceClass, ?string $operationName = null, array $context = []): bool
     {
         return DeliveryStatusChange::class === $resourceClass;
     }
 
-    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?DeliveryStatusChange
+    public function getItem(string $resourceClass, $id, ?string $operationName = null, array $context = []): ?DeliveryStatusChange
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();

@@ -82,7 +82,7 @@ class MetaData
      */
     protected $BillingToken;
 
-    public function __construct(string $AppDeliveryID, ?ApplicationID $ApplicationID, string $DeliveryQuality, string $Subject = null, string $GZ = null, Payments $Payments = null, AdditionalMetaData $AdditionalMetaData = null, bool $TestCase = null, ProcessingProfile $ProcessingProfile = null, string $DocumentClass = null, bool $Asynchronous = null, int $BulkId = null, string $User = null, string $BillingToken = null)
+    public function __construct(string $AppDeliveryID, ?ApplicationID $ApplicationID, string $DeliveryQuality, ?string $Subject = null, ?string $GZ = null, ?Payments $Payments = null, ?AdditionalMetaData $AdditionalMetaData = null, ?bool $TestCase = null, ?ProcessingProfile $ProcessingProfile = null, ?string $DocumentClass = null, ?bool $Asynchronous = null, ?int $BulkId = null, ?string $User = null, ?string $BillingToken = null)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->ApplicationID = $ApplicationID;

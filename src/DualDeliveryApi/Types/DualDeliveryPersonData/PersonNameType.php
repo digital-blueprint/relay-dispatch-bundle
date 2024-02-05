@@ -26,7 +26,7 @@ class PersonNameType
      */
     protected $postfixTitle;
 
-    public function __construct(string $GivenName, FamilyName $FamilyName, string $prefixTitle = null, string $postfixTitle = null)
+    public function __construct(string $GivenName, FamilyName $FamilyName, ?string $prefixTitle = null, ?string $postfixTitle = null)
     {
         $this->GivenName = $GivenName;
         $this->FamilyName = $FamilyName;

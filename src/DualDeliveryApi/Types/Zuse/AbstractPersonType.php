@@ -16,7 +16,7 @@ class AbstractPersonType
      */
     protected $Id;
 
-    public function __construct(string $AbstractSimpleIdentification = null, string $Id = null)
+    public function __construct(?string $AbstractSimpleIdentification = null, ?string $Id = null)
     {
         $this->AbstractSimpleIdentification = $AbstractSimpleIdentification;
         $this->Id = $Id;

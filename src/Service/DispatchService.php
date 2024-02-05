@@ -536,7 +536,7 @@ class DispatchService implements LoggerAwareInterface
         return $requestFile;
     }
 
-    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = '', string $fileData = null): DeliveryStatusChange
+    public function createDeliveryStatusChange(string $requestRecipientIdentifier, int $statusType, string $description = '', ?string $fileData = null): DeliveryStatusChange
     {
         if (!$description) {
             $description = Vendo::getStatusTypeDescription($statusType);

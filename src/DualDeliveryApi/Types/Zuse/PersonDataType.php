@@ -16,7 +16,7 @@ class PersonDataType
      */
     protected $Address;
 
-    public function __construct(AbstractPersonType $Person, AbstractAddressType $Address = null)
+    public function __construct(AbstractPersonType $Person, ?AbstractAddressType $Address = null)
     {
         $this->Person = $Person;
         $this->Address = $Address;

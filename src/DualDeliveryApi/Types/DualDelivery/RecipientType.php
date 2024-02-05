@@ -18,7 +18,7 @@ class RecipientType
      */
     protected $Parameters;
 
-    public function __construct(PersonDataType $RecipientData, ParametersType $Parameters = null)
+    public function __construct(PersonDataType $RecipientData, ?ParametersType $Parameters = null)
     {
         $this->RecipientData = $RecipientData;
         $this->Parameters = $Parameters;
