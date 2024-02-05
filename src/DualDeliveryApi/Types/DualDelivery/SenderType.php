@@ -21,7 +21,7 @@ class SenderType
      */
     protected $Parameters;
 
-    public function __construct(SenderProfile $SenderProfile, SenderData $SenderData = null, ParametersType $Parameters = null)
+    public function __construct(SenderProfile $SenderProfile, ?SenderData $SenderData = null, ?ParametersType $Parameters = null)
     {
         $this->SenderProfile = $SenderProfile;
         $this->SenderData = $SenderData;

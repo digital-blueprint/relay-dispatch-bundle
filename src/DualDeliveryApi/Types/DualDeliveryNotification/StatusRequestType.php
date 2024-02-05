@@ -23,7 +23,7 @@ class StatusRequestType
      */
     protected $DualDeliveryID;
 
-    public function __construct(ApplicationID $ApplicationID = null, string $AppDeliveryID = null, string $DualDeliveryID = null)
+    public function __construct(?ApplicationID $ApplicationID = null, ?string $AppDeliveryID = null, ?string $DualDeliveryID = null)
     {
         $this->ApplicationID = $ApplicationID;
         $this->AppDeliveryID = $AppDeliveryID;

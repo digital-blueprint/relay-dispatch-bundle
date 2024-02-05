@@ -21,7 +21,7 @@ class StatusType
      */
     protected $Timestamp;
 
-    public function __construct(string $Code, string $Text = null, \DateTimeInterface $Timestamp = null)
+    public function __construct(string $Code, ?string $Text = null, ?\DateTimeInterface $Timestamp = null)
     {
         $this->Code = $Code;
         $this->Text = $Text;

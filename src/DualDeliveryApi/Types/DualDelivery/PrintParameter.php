@@ -39,7 +39,7 @@ class PrintParameter
      */
     protected $Parameters;
 
-    public function __construct(string $PrintType, bool $Color = false, string $PaperFormat = 'A4', bool $OverPrint = false, ParametersType $Parameters = null)
+    public function __construct(string $PrintType, bool $Color = false, string $PaperFormat = 'A4', bool $OverPrint = false, ?ParametersType $Parameters = null)
     {
         $this->Color = $Color;
         $this->PaperFormat = $PaperFormat;

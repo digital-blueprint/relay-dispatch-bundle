@@ -33,12 +33,12 @@ final class RequestCollectionDataProvider extends AbstractController implements 
         $this->auth = $auth;
     }
 
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+    public function supports(string $resourceClass, ?string $operationName = null, array $context = []): bool
     {
         return Request::class === $resourceClass;
     }
 
-    public function getCollection(string $resourceClass, string $operationName = null, array $context = []): Paginator
+    public function getCollection(string $resourceClass, ?string $operationName = null, array $context = []): Paginator
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();

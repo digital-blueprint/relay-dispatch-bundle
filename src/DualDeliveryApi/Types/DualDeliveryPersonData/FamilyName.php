@@ -23,7 +23,7 @@ class FamilyName
      */
     protected $prefix;
 
-    public function __construct($_, string $primary = null, string $prefix = null)
+    public function __construct($_, ?string $primary = null, ?string $prefix = null)
     {
         $this->_ = $_;
         $this->primary = $primary;

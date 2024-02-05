@@ -17,7 +17,7 @@ abstract class EntityManagerMigration extends AbstractMigration implements Conta
     /** @var ContainerInterface */
     protected $container;
 
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(?ContainerInterface $container = null)
     {
         $this->container = $container;
     }

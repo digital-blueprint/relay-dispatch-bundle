@@ -21,7 +21,7 @@ class IdentificationType
      */
     protected $Id;
 
-    public function __construct(string $Value, string $Type, string $Id = null)
+    public function __construct(string $Value, string $Type, ?string $Id = null)
     {
         $this->Value = $Value;
         $this->Type = $Type;

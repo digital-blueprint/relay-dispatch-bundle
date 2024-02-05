@@ -45,7 +45,7 @@ class MetaData
      */
     protected $PreCreateSendings;
 
-    public function __construct(string $AppDeliveryID, ApplicationID $ApplicationID = null, AdditionalMetaData $AdditionalMetaData = null, bool $TestCase = null, ProcessingProfile $ProcessingProfile = null, bool $Asynchronous = null, bool $PreCreateSendings = null)
+    public function __construct(string $AppDeliveryID, ?ApplicationID $ApplicationID = null, ?AdditionalMetaData $AdditionalMetaData = null, ?bool $TestCase = null, ?ProcessingProfile $ProcessingProfile = null, ?bool $Asynchronous = null, ?bool $PreCreateSendings = null)
     {
         $this->AppDeliveryID = $AppDeliveryID;
         $this->ApplicationID = $ApplicationID;

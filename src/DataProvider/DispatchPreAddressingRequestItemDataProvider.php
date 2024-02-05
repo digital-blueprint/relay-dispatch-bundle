@@ -23,12 +23,12 @@ final class DispatchPreAddressingRequestItemDataProvider extends AbstractControl
         $this->auth = $auth;
     }
 
-    public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
+    public function supports(string $resourceClass, ?string $operationName = null, array $context = []): bool
     {
         return PreAddressingRequest::class === $resourceClass;
     }
 
-    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?PreAddressingRequest
+    public function getItem(string $resourceClass, $id, ?string $operationName = null, array $context = []): ?PreAddressingRequest
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();
