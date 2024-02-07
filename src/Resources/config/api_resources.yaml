@@ -192,7 +192,7 @@ resources:
           tags: ['Dispatch']
           requestBody:
             content:
-              application/json:
+              application/ld+json:
                 schema:
                   type: "object"
                   example:
@@ -317,7 +317,7 @@ resources:
           tags: ["Dispatch"]
           requestBody:
             content:
-              application/json:
+              application/ld+json:
                 schema:
                   type: "object"
                   example:
@@ -367,7 +367,7 @@ resources:
               example: "4d553985-d44f-404f-acf3-cd0eac7ae9c2"
           requestBody:
             content:
-              application/json:
+              application/ld+json:
                 schema:
                   type: "object"
                   example: '{}'
