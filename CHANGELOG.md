@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.16
+
+- Cleanup
+
 ## 0.4.15
 
 - Port to the new api-platform metadata system. No user visible changes.
