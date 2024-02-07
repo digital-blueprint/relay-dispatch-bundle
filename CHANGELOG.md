@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.15
+
+- Port to the new api-platform metadata system. No user visible changes.
+- Fix some example bodies in the api docs.
+
 ## 0.4.14
 
 - JSON-LD contexts are no longer embedded in the API responses, they have to be fetched separately.
