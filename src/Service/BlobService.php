@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Service;
 
 use Dbp\Relay\BlobLibrary\Api\BlobApi;
-use Dbp\Relay\BlobLibrary\Helpers\Error;
+use Dbp\Relay\BlobLibrary\Api\BlobApiError;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Entity\Request;
@@ -66,7 +66,7 @@ class BlobService implements LoggerAwareInterface
 
         try {
             $this->blobApi->deleteFileByIdentifier($blobIdentifier);
-        } catch (Error $e) {
+        } catch (BlobApiError $e) {
             $requestFileIdentifier = $requestFile->getIdentifier();
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-file-identifier' => $requestFileIdentifier, 'message' => $e->getMessage()]);
         }
@@ -78,7 +78,7 @@ class BlobService implements LoggerAwareInterface
 
         try {
             $this->blobApi->deleteFileByIdentifier($blobIdentifier);
-        } catch (Error $e) {
+        } catch (BlobApiError $e) {
             $identifier = $statusChange->getIdentifier();
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange file could not be deleted from Blob!', 'dispatch:delivery-status-change-file-blob-delete-error', ['delivery-status-change-identifier' => $identifier, 'message' => $e->getMessage()]);
         }
@@ -91,7 +91,7 @@ class BlobService implements LoggerAwareInterface
         try {
             // This will delete blob files for request files and delivery status changes
             $this->blobApi->deleteFilesByPrefix($this->getBlobPrefix($dispatchRequestIdentifier));
-        } catch (Error $e) {
+        } catch (BlobApiError $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => $e->getMessage()]);
         }
     }
@@ -102,7 +102,7 @@ class BlobService implements LoggerAwareInterface
 
         try {
             $contentUrl = $this->blobApi->downloadFileAsContentUrlByIdentifier($blobIdentifier);
-        } catch (Error $e) {
+        } catch (BlobApiError $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be downloaded from Blob!', 'dispatch:request-file-blob-download-error', ['message' => $e->getMessage()]);
         }
 
@@ -115,7 +115,7 @@ class BlobService implements LoggerAwareInterface
 
         try {
             $contentUrl = $this->blobApi->downloadFileAsContentUrlByIdentifier($blobIdentifier);
-        } catch (Error $e) {
+        } catch (BlobApiError $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'File of the DeliveryStatusChange could not be downloaded from Blob!', 'dispatch:delivery-status-change-blob-download-error', ['message' => $e->getMessage()]);
         }
 
@@ -126,7 +126,7 @@ class BlobService implements LoggerAwareInterface
     {
         try {
             $identifier = $this->blobApi->uploadFile($this->getRequestFileBlobPrefix($dispatchRequestIdentifier), $fileName, $fileData);
-        } catch (Error $e) {
+        } catch (BlobApiError $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be uploaded to Blob!', 'dispatch:request-file-blob-upload-error', ['message' => $e->getMessage()]);
         }
 
@@ -141,7 +141,7 @@ class BlobService implements LoggerAwareInterface
     {
         try {
             $identifier = $this->blobApi->uploadFile($this->getDeliveryStatusChangeBlobPrefix($dispatchRequestIdentifier), $fileName, $fileData);
-        } catch (Error $e) {
+        } catch (BlobApiError $e) {
             // We don't care a lot about what exception we're throwing here, because we will just
             // store the file in the database if there are any issues with the blob storage
             throw new \Exception($e->getMessage());
