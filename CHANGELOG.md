@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.17
+
+- Migrate to new BlobApiError class
+
 ## 0.4.16
 
 - Cleanup
