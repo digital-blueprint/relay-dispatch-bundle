@@ -98,7 +98,7 @@ resources:
           tags: ["Dispatch"]
           requestBody:
             content:
-              application/json:
+              application/ld+json:
                 schema:
                   type: "object"
                   example:

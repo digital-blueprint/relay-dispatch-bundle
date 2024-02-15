@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.18
+
+- Use application/ld+json for the API docs examples
+
 ## 0.4.17
 
 - Migrate to new BlobApiError class
