@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.19
+
+- Drop support for PHP 7.4/8.0
+
 ## 0.4.18
 
 - Use application/ld+json for the API docs examples
