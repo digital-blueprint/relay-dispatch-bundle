@@ -12,12 +12,12 @@
         "api-platform/core": "^2.7.11",
         "dbp/relay-base-person-bundle": "^0.2.15",
         "dbp/relay-blob-library": "^0.2.0",
-        "dbp/relay-core-bundle": "^0.1.115",
+        "dbp/relay-core-bundle": "^0.1.142",
         "symfony/framework-bundle": "^5.2",
         "doctrine/orm": "^2.18",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/dbal": "^3.8",
-        "doctrine/collections": "^1.8",
+        "doctrine/collections": "^1.8 || ^2",
         "doctrine/migrations": "^3.5",
         "symfony/uid": "^5.4",
         "symfony/validator": "^5.4",
@@ -31,15 +31,17 @@
         "psr/log": "^1.1.4 || ^2.0 || ^3.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "phpstan/phpstan": "^1.0.0",
-        "phpstan/phpstan-phpunit": "^1.0.0",
-        "phpstan/phpstan-symfony": "^1.2",
-        "phpunit/phpunit": "^9",
-        "symfony/browser-kit": "^5.4",
-        "symfony/http-client": "^5.4",
-        "symfony/phpunit-bridge": "^5.2",
-        "vimeo/psalm": "^4.2.1"
+        "friendsofphp/php-cs-fixer": "^3.50",
+        "phpstan/phpstan": "^1.10.59",
+        "phpstan/phpstan-phpunit": "^1.3.16",
+        "phpstan/phpstan-symfony": "^1.3.7",
+        "phpunit/phpunit": "^9.6.17",
+        "symfony/browser-kit": "^5.4.35",
+        "symfony/http-client": "^5.4.36",
+        "symfony/phpunit-bridge": "^5.4.36",
+        "vimeo/psalm": "^4.30.0",
+        "symfony/error-handler":"^5.4.36",
+        "symfony/monolog-bridge":"^5.4.35"
     },
     "autoload": {
         "psr-4": {
