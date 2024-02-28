@@ -39,7 +39,7 @@
         "symfony/browser-kit": "^5.4.35",
         "symfony/http-client": "^5.4.36",
         "symfony/phpunit-bridge": "^5.4.36",
-        "vimeo/psalm": "^4.30.0",
+        "vimeo/psalm": "^5.22.2",
         "symfony/error-handler":"^5.4.36",
         "symfony/monolog-bridge":"^5.4.35"
     },

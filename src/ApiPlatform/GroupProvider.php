@@ -6,8 +6,12 @@ namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
 use Dbp\Relay\CoreBundle\Rest\AbstractDataProvider;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
+use Dbp\Relay\DispatchBundle\Entity\Group;
 use Dbp\Relay\DispatchBundle\Service\GroupService;
 
+/**
+ * @extends AbstractDataProvider<Group>
+ */
 class GroupProvider extends AbstractDataProvider
 {
     /** @var GroupService */

@@ -12,6 +12,9 @@ use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @implements ProviderInterface<RequestRecipient>
+ */
 final class RequestRecipientProvider extends AbstractController implements ProviderInterface
 {
     /**

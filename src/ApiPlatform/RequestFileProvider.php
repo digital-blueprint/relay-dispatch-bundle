@@ -12,6 +12,9 @@ use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @implements ProviderInterface<RequestFile>
+ */
 final class RequestFileProvider extends AbstractController implements ProviderInterface
 {
     /**

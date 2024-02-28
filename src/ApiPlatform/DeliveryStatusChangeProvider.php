@@ -12,6 +12,9 @@ use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @implements ProviderInterface<DeliveryStatusChange>
+ */
 final class DeliveryStatusChangeProvider extends AbstractController implements ProviderInterface
 {
     /**
