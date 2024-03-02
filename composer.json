@@ -9,7 +9,7 @@
         "ext-simplexml": "*",
         "ext-soap": "*",
         "ext-mbstring": "*",
-        "api-platform/core": "^2.7.11",
+        "api-platform/core": "^3.0.0",
         "dbp/relay-base-person-bundle": "^0.2.15",
         "dbp/relay-blob-library": "^0.2.0",
         "dbp/relay-core-bundle": "^0.1.142",
