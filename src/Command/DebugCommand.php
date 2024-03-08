@@ -12,8 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DebugCommand extends Command
 {
-    protected static $defaultName = 'dbp:relay-dispatch:debug';
-
     /**
      * @var DispatchService
      */
@@ -31,6 +29,7 @@ class DebugCommand extends Command
      */
     protected function configure()
     {
+        $this->setName('dbp:relay-dispatch:debug');
         $this
             ->setDescription('Debug command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: generate-request-status-change|do-api-dualdelivery-request|do-api-status-requests')

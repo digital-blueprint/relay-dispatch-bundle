@@ -19,7 +19,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
 {
     use ExtensionTrait;
 
-    public function loadInternal(array $mergedConfig, ContainerBuilder $container)
+    public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         $pathsToHide = [
             '/dispatch/pre-addressing-requests/{identifier}',

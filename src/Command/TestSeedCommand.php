@@ -20,8 +20,6 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class TestSeedCommand extends Command
 {
-    protected static $defaultName = 'dbp:relay-dispatch:test-seed';
-
     /**
      * @var DispatchService
      */
@@ -45,6 +43,7 @@ class TestSeedCommand extends Command
      */
     protected function configure()
     {
+        $this->setName('dbp:relay-dispatch:test-seed');
         $this
             ->setDescription('Test seed command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')

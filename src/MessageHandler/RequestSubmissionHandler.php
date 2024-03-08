@@ -6,9 +6,8 @@ namespace Dbp\Relay\DispatchBundle\MessageHandler;
 
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class RequestSubmissionHandler implements MessageHandlerInterface
+class RequestSubmissionHandler
 {
     private $api;
 

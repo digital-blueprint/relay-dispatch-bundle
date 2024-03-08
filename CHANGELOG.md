@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.20
+
+- Add support for Symfony 6
+
 ## 0.4.19
 
 - Drop support for PHP 7.4/8.0

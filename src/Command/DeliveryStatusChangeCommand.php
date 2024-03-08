@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class DeliveryStatusChangeCommand extends Command
 {
-    protected static $defaultName = 'dbp:relay-dispatch:delivery-status-change';
-
     /**
      * @var DispatchService
      */
@@ -34,6 +32,7 @@ class DeliveryStatusChangeCommand extends Command
      */
     protected function configure()
     {
+        $this->setName('dbp:relay-dispatch:delivery-status-change');
         $this
             ->setDescription('DeliveryStatusChange command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')

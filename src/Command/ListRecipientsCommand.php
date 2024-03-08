@@ -13,8 +13,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ListRecipientsCommand extends Command
 {
-    protected static $defaultName = 'dbp:relay-dispatch:recipient-list';
-
     /**
      * @var DispatchService
      */
@@ -32,6 +30,7 @@ class ListRecipientsCommand extends Command
      */
     protected function configure()
     {
+        $this->setName('dbp:relay-dispatch:recipient-list');
         $this
             ->setDescription('Outputs a list of recipients')
             ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Limit the number of results', 10)
