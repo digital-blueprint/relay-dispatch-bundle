@@ -6,8 +6,8 @@ namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
 use ApiPlatform\Metadata\DeleteOperationInterface;
 use ApiPlatform\Metadata\Operation;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use ApiPlatform\State\ProcessorInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
@@ -63,7 +63,7 @@ class RequestProcessor extends AbstractController implements ProcessorInterface
             $this->dispatchService->removeRequestById($request->getIdentifier());
 
             return;
-        } elseif ($operation instanceof Put) {
+        } elseif ($operation instanceof Patch) {
             if ($request->isSubmitted()) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
             }

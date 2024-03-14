@@ -293,7 +293,7 @@ resources:
         openapiContext:
           tags: ["Dispatch"]
 
-      ApiPlatform\Metadata\Put:
+      ApiPlatform\Metadata\Patch:
         security: "is_granted('IS_AUTHENTICATED_FULLY')"
         provider: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProvider
         processor: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProcessor
