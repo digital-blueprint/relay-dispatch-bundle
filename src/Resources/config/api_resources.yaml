@@ -298,6 +298,8 @@ resources:
         provider: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProvider
         processor: Dbp\Relay\DispatchBundle\ApiPlatform\RequestProcessor
         uriTemplate: '/dispatch/requests/{identifier}'
+        inputFormats:
+          json: ['application/merge-patch+json']
         openapiContext:
           tags: ["Dispatch"]
 
