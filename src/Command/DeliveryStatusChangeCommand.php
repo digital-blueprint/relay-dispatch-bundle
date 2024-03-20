@@ -39,7 +39,7 @@ class DeliveryStatusChangeCommand extends Command
             ->addArgument('identifier', InputArgument::REQUIRED, 'Identifier of the request recipient or status change')
             ->addOption('status-type', null, InputOption::VALUE_OPTIONAL, 'The status type to set')
             ->addOption('description', null, InputOption::VALUE_OPTIONAL, 'The description to set')
-            ->addOption('with-file', null, InputOption::VALUE_NONE, 'The status type to set');
+            ->addOption('with-file', null, InputOption::VALUE_NONE, 'Wether to attach a file to the status change');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
