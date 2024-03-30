@@ -285,16 +285,16 @@
         },
         {
             "name": "dbp/relay-blob-library",
-            "version": "v0.2.4",
+            "version": "v0.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-blob-library.git",
-                "reference": "e38a6dec456a10b0b97c24202c29da28f7570274"
+                "reference": "cb1124abffb05f09e57566ddb2755d0a605b7a6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-blob-library/zipball/e38a6dec456a10b0b97c24202c29da28f7570274",
-                "reference": "e38a6dec456a10b0b97c24202c29da28f7570274",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-blob-library/zipball/cb1124abffb05f09e57566ddb2755d0a605b7a6d",
+                "reference": "cb1124abffb05f09e57566ddb2755d0a605b7a6d",
                 "shasum": ""
             },
             "require": {
@@ -333,22 +333,22 @@
             "description": "PHP helper library for interaction with the relay-blob-bundle.",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-blob-library/issues",
-                "source": "https://github.com/digital-blueprint/relay-blob-library/tree/v0.2.4"
+                "source": "https://github.com/digital-blueprint/relay-blob-library/tree/v0.2.5"
             },
-            "time": "2024-03-20T11:02:00+00:00"
+            "time": "2024-03-28T14:18:45+00:00"
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.149",
+            "version": "v0.1.150",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "10bb8fe29b9fdb821c65ee464ea65f06d89fa417"
+                "reference": "4c3b7968491893b8554b381f26e425e6fca6591d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/10bb8fe29b9fdb821c65ee464ea65f06d89fa417",
-                "reference": "10bb8fe29b9fdb821c65ee464ea65f06d89fa417",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/4c3b7968491893b8554b381f26e425e6fca6591d",
+                "reference": "4c3b7968491893b8554b381f26e425e6fca6591d",
                 "shasum": ""
             },
             "require": {
@@ -429,9 +429,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.149"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.150"
             },
-            "time": "2024-03-18T15:26:57+00:00"
+            "time": "2024-03-28T12:00:03+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2839,16 +2839,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.26.0",
+            "version": "1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "231e3186624c03d7e7c890ec662b81e6b0405227"
+                "reference": "86e4d5a4b036f8f0be1464522f4c6b584c452757"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/231e3186624c03d7e7c890ec662b81e6b0405227",
-                "reference": "231e3186624c03d7e7c890ec662b81e6b0405227",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/86e4d5a4b036f8f0be1464522f4c6b584c452757",
+                "reference": "86e4d5a4b036f8f0be1464522f4c6b584c452757",
                 "shasum": ""
             },
             "require": {
@@ -2880,9 +2880,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.26.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.27.0"
             },
-            "time": "2024-02-23T16:05:55+00:00"
+            "time": "2024-03-21T13:14:53+00:00"
         },
         {
             "name": "psr/cache",
@@ -8185,16 +8185,16 @@
         },
         {
             "name": "web-token/jwt-library",
-            "version": "3.3.2",
+            "version": "3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-library.git",
-                "reference": "3a377d6cda5c346e8f7f9c6823ff6e1059dde562"
+                "reference": "a9fde8057aa978a4b97436d8875f5bb45a30fb2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-library/zipball/3a377d6cda5c346e8f7f9c6823ff6e1059dde562",
-                "reference": "3a377d6cda5c346e8f7f9c6823ff6e1059dde562",
+                "url": "https://api.github.com/repos/web-token/jwt-library/zipball/a9fde8057aa978a4b97436d8875f5bb45a30fb2e",
+                "reference": "a9fde8057aa978a4b97436d8875f5bb45a30fb2e",
                 "shasum": ""
             },
             "require": {
@@ -8266,7 +8266,7 @@
             ],
             "support": {
                 "issues": "https://github.com/web-token/jwt-library/issues",
-                "source": "https://github.com/web-token/jwt-library/tree/3.3.2"
+                "source": "https://github.com/web-token/jwt-library/tree/3.3.4"
             },
             "funding": [
                 {
@@ -8278,7 +8278,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2024-03-22T12:17:02+00:00"
+            "time": "2024-03-24T09:57:06+00:00"
         },
         {
             "name": "webmozart/assert",
