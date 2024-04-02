@@ -44,6 +44,21 @@ class BlobService implements LoggerAwareInterface
      */
     private $blobApi;
 
+    /**
+     * @var string
+     */
+    private $blobIdpUrl;
+
+    /**
+     * @var string
+     */
+    private $blobOauthClientId;
+
+    /**
+     * @var string
+     */
+    private $blobOauthClientSecret;
+
     public function __construct(UrlGeneratorInterface $router)
     {
         $this->router = $router;
@@ -57,7 +72,19 @@ class BlobService implements LoggerAwareInterface
         $this->blobBaseUrl = $config['blob_base_url'] ?? '';
         $this->blobKey = $config['blob_key'] ?? '';
         $this->blobBucketId = $config['blob_bucket_id'] ?? '';
+
+        $this->blobIdpUrl = $config['blob_idp_url'] ?? '';
+        $this->blobOauthClientId = $config['blob_oauth_client_id'] ?? '';
+        $this->blobOauthClientSecret = $config['blob_oauth_client_secret'] ?? '';
+
         $this->blobApi = new BlobApi($this->blobBaseUrl, $this->blobBucketId, $this->blobKey);
+        if ($this->blobIdpUrl !== '' && $this->blobOauthClientId !== '' && $this->blobOauthClientSecret !== '') {
+            try {
+                $this->blobApi->setOAuth2Token($this->blobIdpUrl, $this->blobOauthClientId, $this->blobOauthClientSecret);
+            } catch (BlobApiError $e) {
+                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'OAuth2 token for blob could not be retrieved!', 'dispatch:get-blob-oauth2-token-error', ['message' => $e->getMessage()]);
+            }
+        }
     }
 
     public function deleteBlobFileByRequestFile(RequestFile $requestFile): void
