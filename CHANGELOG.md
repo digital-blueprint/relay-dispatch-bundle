@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.2
+* Add Blob OAuth support for additional authentication
+
 ## 0.5.1
 
 * Fix the accepted content type for the new PATCH method for compatibility with the upcoming ApiPlatform upgrade
