@@ -35,7 +35,7 @@ final class RequestFileProvider extends AbstractController implements ProviderIn
     /**
      * @return RequestFile|RequestFile[]
      */
-    public function provide(Operation $operation, array $uriVariables = [], array $context = [])
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();
