@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.4
+
+* Add support for api-platform 3.2
+
 ## 0.5.3
 
 *  Work around person provider no longer supporting IRI lookup
