@@ -38,7 +38,7 @@ class EntityNormalizer extends AbstractEntityDeNormalizer
                 $attributesToShow = [
                     'files',
                     'name',
-                    ];
+                ];
             }
         } elseif ($entity instanceof RequestRecipient) {
             // personal address of recipients is returned if
