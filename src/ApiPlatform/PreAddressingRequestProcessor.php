@@ -13,6 +13,9 @@ use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Uid\Uuid;
 
+/**
+ * @implements ProcessorInterface<PreAddressingRequest,mixed>
+ */
 class PreAddressingRequestProcessor extends AbstractController implements ProcessorInterface
 {
     /**

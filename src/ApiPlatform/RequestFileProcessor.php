@@ -14,6 +14,9 @@ use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @implements ProcessorInterface<RequestFile,mixed>
+ */
 class RequestFileProcessor extends AbstractController implements ProcessorInterface
 {
     /**
