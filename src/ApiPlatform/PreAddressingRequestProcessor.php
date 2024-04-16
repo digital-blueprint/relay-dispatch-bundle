@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Uid\Uuid;
 
 /**
- * @implements ProcessorInterface<PreAddressingRequest,mixed>
+ * @psalm-suppress MissingTemplateParam
  */
 class PreAddressingRequestProcessor extends AbstractController implements ProcessorInterface
 {

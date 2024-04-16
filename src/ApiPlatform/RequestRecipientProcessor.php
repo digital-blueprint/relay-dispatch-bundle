@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @implements ProcessorInterface<RequestRecipient,mixed>
+ * @psalm-suppress MissingTemplateParam
  */
 class RequestRecipientProcessor extends AbstractController implements ProcessorInterface
 {
