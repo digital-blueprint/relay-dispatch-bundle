@@ -54,7 +54,7 @@ class StatusRequestCommand extends Command
             $output->writeln('Response XML:');
         }
 
-        $response = $this->dispatchService->doDualDeliveryStatusRequestSoapRequestForAppDeliveryId($appDeliveryId, $isOutputResponseXml);
+        $response = $this->dispatchService->doDualDeliveryStatusRequestSoapRequestForAppDeliveryId($appDeliveryId, $isOutputResponseXml, $responseXml);
         $statusCode = $response->getStatus()->getCode();
 
         if ($isOutputResponseXml) {
@@ -72,6 +72,12 @@ class StatusRequestCommand extends Command
 
             if ($file !== null) {
                 $rows[] = ['DeliveryNotificationFile', Tools::humanFileSize(strlen($file))];
+            }
+
+            $sendingServiceMessageID = DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML($responseXml);
+
+            if ($sendingServiceMessageID !== null) {
+                $rows[] = ['SendingServiceMessageID', $sendingServiceMessageID];
             }
         }
 
