@@ -3,6 +3,7 @@
 ## 0.5.6
 
 * The `SendingServiceMessageID` will now be fetched for StatusChange messages and put into the description field
+* Add POST and DELETE endpoints `/dispatch/request-status-changes/{identifier}/file` for DeliveryStatusChange file upload.
 
 ## 0.5.5
 
@@ -14,7 +15,7 @@
 
 ## 0.5.3
 
-*  Work around person provider no longer supporting IRI lookup
+* Work around person provider no longer supporting IRI lookup
 
 ## 0.5.2
 * Add Blob OAuth support for additional authentication
