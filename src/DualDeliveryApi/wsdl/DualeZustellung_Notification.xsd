@@ -359,23 +359,13 @@ Anmerkung: Im Druckjargon ist ein Blatt eine A3-Format, auf das abhängig von de
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence maxOccurs="unbounded">
-				<xs:element ref="ddn:AdditionalPrintResultSet"/>
+				<xs:element ref="ddn:PropertyValuePrintResultSet"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="AdditionalPrintResultSet" type="ddn:AdditionalPrintResultSetType">
+	<xs:element name="PropertyValuePrintResultSet" type="ddn:PropertyValuePrintResultSetType">
 		<xs:annotation>
 			<xs:documentation>Rückmeldungen von der Druckstraße</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="AdditionalPrintResultSetType">
-		<xs:annotation>
-			<xs:documentation>Gruppe von Parametern</xs:documentation>
-		</xs:annotation>
-	</xs:complexType>
-	<xs:element name="PropertyValuePrintResultSet" type="ddn:PropertyValuePrintResultSetType" substitutionGroup="ddn:AdditionalPrintResultSet">
-		<xs:annotation>
-			<xs:documentation>Property Value Paare für Rückmeldungen von der Druckstraße</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:complexType name="PropertyValuePrintResultSetType">
@@ -383,7 +373,7 @@ Anmerkung: Im Druckjargon ist ein Blatt eine A3-Format, auf das abhängig von de
 			<xs:documentation>Property Value Paare für Rückmeldungen von der Druckstraße</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:extension base="ddn:AdditionalPrintResultSetType">
+			<xs:extension base="ddn:PropertyValuePrintResultSetType">
 				<xs:sequence maxOccurs="unbounded">
 					<xs:element ref="dd:Parameter"/>
 				</xs:sequence>

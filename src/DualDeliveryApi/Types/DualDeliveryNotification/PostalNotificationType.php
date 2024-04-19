@@ -57,7 +57,7 @@ class PostalNotificationType extends NotificationChannelSetType
     protected $Costs;
 
     /**
-     * @var ?AdditonalPrintResults
+     * @var AdditonalPrintResults[]
      */
     protected $AdditonalPrintResults;
 
@@ -187,7 +187,7 @@ class PostalNotificationType extends NotificationChannelSetType
         $this->Costs = $Costs;
     }
 
-    public function getAdditonalPrintResults(): ?AdditonalPrintResults
+    public function getAdditonalPrintResults(): array
     {
         return $this->AdditonalPrintResults;
     }

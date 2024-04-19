@@ -12,6 +12,11 @@ class AdditonalPrintResults
     protected $AdditionalPrintResultSet;
 
     /**
+     * @var PropertyValuePrintResultSetType
+     */
+    protected $PropertyValuePrintResultSet;
+
+    /**
      * @param AdditionalPrintResultSetType $AdditionalPrintResultSet
      */
     public function __construct($AdditionalPrintResultSet)
@@ -22,6 +27,11 @@ class AdditonalPrintResults
     public function getAdditionalPrintResultSet(): AdditionalPrintResultSetType
     {
         return $this->AdditionalPrintResultSet;
+    }
+
+    public function getPropertyValuePrintResultSet(): PropertyValuePrintResultSetType
+    {
+        return $this->PropertyValuePrintResultSet;
     }
 
     public function setAdditionalPrintResultSet(AdditionalPrintResultSetType $AdditionalPrintResultSet): void

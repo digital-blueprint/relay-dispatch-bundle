@@ -74,7 +74,7 @@ class StatusRequestCommand extends Command
                 $rows[] = ['DeliveryNotificationFile', Tools::humanFileSize(strlen($file))];
             }
 
-            $sendingServiceMessageID = DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML($responseXml);
+            $sendingServiceMessageID = DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotification($response);
 
             if ($sendingServiceMessageID !== null) {
                 $rows[] = ['SendingServiceMessageID', $sendingServiceMessageID];

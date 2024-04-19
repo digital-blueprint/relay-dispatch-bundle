@@ -207,6 +207,7 @@ class StatusRequestTest extends TestCase
         $this->assertSame('AllNotificationsReceived', $response->getStatus()->getText());
         $this->assertSame('I_AM_A_PDF', DualDeliveryService::getPdfFromDeliveryNotification($response));
         $this->assertSame('BA00BUTU80230000000014', DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML($xmlContent));
+        $this->assertSame('BA00BUTU80230000000014', DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotification($response));
         $this->assertSame('', DualDeliveryService::getErrorTextFromStatusResponse($response));
 
         $this->assertNull(DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response));

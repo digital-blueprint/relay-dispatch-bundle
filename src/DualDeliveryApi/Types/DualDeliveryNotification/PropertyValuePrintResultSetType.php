@@ -9,31 +9,22 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\ParameterType;
 class PropertyValuePrintResultSetType extends AdditionalPrintResultSetType
 {
     /**
-     * @var ParameterType[]
+     * @var ParameterType
      */
     protected $Parameter;
 
-    /**
-     * @param ParameterType[] $Parameter
-     */
-    public function __construct(array $Parameter)
+    public function __construct(ParameterType $Parameter)
     {
         parent::__construct();
         $this->Parameter = $Parameter;
     }
 
-    /**
-     * @return ParameterType[]
-     */
-    public function getParameter(): array
+    public function getParameter(): ParameterType
     {
         return $this->Parameter;
     }
 
-    /**
-     * @param ParameterType[] $Parameter
-     */
-    public function setParameter(array $Parameter): void
+    public function setParameter(ParameterType $Parameter): void
     {
         $this->Parameter = $Parameter;
     }

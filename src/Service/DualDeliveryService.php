@@ -145,7 +145,8 @@ class DualDeliveryService implements LoggerAwareInterface
     }
 
     /**
-     * Since the SOAP presentation of AdditonalPrintResults is broken this acts as a workaround.
+     * When the SOAP presentation of AdditonalPrintResults (and thus getSendingServiceMessageIDFromDeliveryNotification)
+     * was broken this acted as a workaround.
      */
     public static function getSendingServiceMessageIDFromDeliveryNotificationXML($xmlContent): ?string
     {
@@ -166,8 +167,8 @@ class DualDeliveryService implements LoggerAwareInterface
     }
 
     /**
-     * Use DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML instead.
-     * pbek: Unfortunately the SOAP presentation of AdditonalPrintResults is broken and I didn't spend more time to fix it.
+     * Returns the SendingServiceMessageID from the DualNotificationRequestType.
+     * A lot of SOAP classes and the DualeZustellung_Notification.xsd had to be adapted for this to work!
      */
     public static function getSendingServiceMessageIDFromDeliveryNotification(DualNotificationRequestType $request): ?string
     {
@@ -185,11 +186,18 @@ class DualDeliveryService implements LoggerAwareInterface
             return null;
         }
 
-        var_dump($notification);
-
         $additonalPrintResults = $notification->getAdditonalPrintResults();
 
-        var_dump($additonalPrintResults);
+        foreach ($additonalPrintResults as $result) {
+            // I hope these are really always set, the classes say so
+            $propertyValuePrintResultSet = $result->getPropertyValuePrintResultSet();
+            $parameter = $propertyValuePrintResultSet->getParameter();
+            $property = $parameter->getProperty();
+
+            if ($property === 'SendingServiceMessageID') {
+                return $parameter->getValue();
+            }
+        }
 
         return null;
     }
