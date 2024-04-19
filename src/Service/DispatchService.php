@@ -929,6 +929,9 @@ class DispatchService implements LoggerAwareInterface
             $description .= "\n".$unclaimedDescription;
         }
 
+        // TODO: Find a way to get SendingServiceMessageID with or without SOAP
+//        $sendingServiceMessageID = DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML($responseXml);
+
         $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(), $status, $description, $file);
 
         // Set the end date for the recipient if the status is final
@@ -939,16 +942,17 @@ class DispatchService implements LoggerAwareInterface
         return true;
     }
 
-    public function doDualDeliveryStatusRequestSoapRequestForAppDeliveryId(string $appDeliveryId, bool $printResponseXml = false): DualNotificationRequestType
+    public function doDualDeliveryStatusRequestSoapRequestForAppDeliveryId(string $appDeliveryId, bool $printResponseXml = false, &$responseXml = null): DualNotificationRequestType
     {
         $service = $this->dd->getClient();
         $statusRequest = new StatusRequestType(null, $appDeliveryId);
 
         try {
             $response = $service->dualStatusRequestOperation($statusRequest);
+            $responseXml = $service->getPrettyLastResponse();
 
             if ($printResponseXml) {
-                echo $service->getPrettyLastResponse();
+                echo $responseXml;
             }
         } catch (\Exception $e) {
             throw ApiError::withDetails(

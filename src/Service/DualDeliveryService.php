@@ -145,6 +145,56 @@ class DualDeliveryService implements LoggerAwareInterface
     }
 
     /**
+     * Since the SOAP presentation of AdditonalPrintResults is broken this acts as a workaround.
+     */
+    public static function getSendingServiceMessageIDFromDeliveryNotificationXML($xmlContent): ?string
+    {
+        $xml = simplexml_load_string($xmlContent, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+        $parameters = $xml->xpath('//*[local-name()="Parameter"]');
+
+        foreach ($parameters as $param) {
+            $property = $param->xpath('*[local-name()="Property"]')[0];
+            $value = $param->xpath('*[local-name()="Value"]')[0];
+
+            if ((string) $property === 'SendingServiceMessageID') {
+                return (string) $value;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Use DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML instead.
+     * pbek: Unfortunately the SOAP presentation of AdditonalPrintResults is broken and I didn't spend more time to fix it.
+     */
+    public static function getSendingServiceMessageIDFromDeliveryNotification(DualNotificationRequestType $request): ?string
+    {
+        $result = $request->getResult();
+        if ($result === null) {
+            return null;
+        }
+        $notificationChannel = $request->getResult()->getNotificationChannel();
+        if ($notificationChannel === null) {
+            return null;
+        }
+
+        $notification = $notificationChannel->getPostalNotification();
+        if ($notification === null) {
+            return null;
+        }
+
+        var_dump($notification);
+
+        $additonalPrintResults = $notification->getAdditonalPrintResults();
+
+        var_dump($additonalPrintResults);
+
+        return null;
+    }
+
+    /**
      * Returns the description of the status change for unclaimed documents.
      */
     public static function getDeliveryNotificationForUnclaimedDescription(DualNotificationRequestType $request): ?string

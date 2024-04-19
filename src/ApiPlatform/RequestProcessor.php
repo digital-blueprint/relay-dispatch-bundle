@@ -16,6 +16,9 @@ use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class RequestProcessor extends AbstractController implements ProcessorInterface
 {
     /**

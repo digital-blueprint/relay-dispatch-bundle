@@ -40,7 +40,7 @@ final class RequestProvider extends AbstractController implements ProviderInterf
     /**
      * @return PartialPaginatorInterface|Request
      */
-    public function provide(Operation $operation, array $uriVariables = [], array $context = [])
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();

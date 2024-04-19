@@ -195,7 +195,8 @@ class StatusRequestTest extends TestCase
 
     public function testStatusRequestDeliveryNotificationPostal()
     {
-        $service = $this->getMockService(self::$DELIVERY_NOTIFICATION_RESPONSE_POSTAL);
+        $xmlContent = self::$DELIVERY_NOTIFICATION_RESPONSE_POSTAL;
+        $service = $this->getMockService($xmlContent);
 
         $request = new StatusRequestType();
         $response = $service->dualStatusRequestOperation($request);
@@ -205,6 +206,7 @@ class StatusRequestTest extends TestCase
         $this->assertSame('P6', $response->getStatus()->getCode());
         $this->assertSame('AllNotificationsReceived', $response->getStatus()->getText());
         $this->assertSame('I_AM_A_PDF', DualDeliveryService::getPdfFromDeliveryNotification($response));
+        $this->assertSame('BA00BUTU80230000000014', DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML($xmlContent));
         $this->assertSame('', DualDeliveryService::getErrorTextFromStatusResponse($response));
 
         $this->assertNull(DualDeliveryService::getDeliveryNotificationForUnclaimedDescription($response));

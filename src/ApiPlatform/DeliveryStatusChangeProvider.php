@@ -35,7 +35,7 @@ final class DeliveryStatusChangeProvider extends AbstractController implements P
     /**
      * @return DeliveryStatusChange|array
      */
-    public function provide(Operation $operation, array $uriVariables = [], array $context = [])
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         if (!$operation instanceof CollectionOperationInterface) {
             $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
