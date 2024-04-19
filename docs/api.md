@@ -29,6 +29,7 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 | `dispatch:request-status-change-not-found`                         | `404`       | `DeliveryStatusChange was not found!`                                              |
 | `dispatch:delivery-status-change-blob-identifier-invalid`          | `500`       | `DeliveryStatusChange has invalid blob identifier!`                                |
 | `dispatch:delivery-status-change-blob-download-error`              | `500`       | `File of the DeliveryStatusChange could not be downloaded from Blob!`              |
+| `dispatch:delivery-status-change-wrong-status-error`               | `500`       | `Receipt can not be uploaded in this status!`               |
 | `dispatch:request-recipient-not-found`                             | `404`       | `RequestRecipient was not found!`                                                  |
 | `dispatch:request-file-not-found`                                  | `404`       | `RequestFile was not found!`                                                       |
 | `dispatch:request-files-not-found`                                 | `404`       | `RequestFiles were not found!`                                                     |
@@ -40,6 +41,7 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 | `dispatch:request-file-blob-delete-error`                          | `500`       | `RequestFile could not be deleted from the Blob service!`                          |
 | `dispatch:delivery-status-change-file-blob-delete-error`           | `500`       | `DeliveryStatusChange file could not be deleted from the Blob service!`            |
 | `dispatch:request-status-not-created`                              | `500`       | `DeliveryStatusChange could not be created!`                                       |
+| `dispatch:request-status-file-not-deleted`                         | `500`       | `DeliveryStatusChange file could not be deleted!`                                       |
 | `dispatch:request-already-submitted`                               | `400`       | `Request was already submitted!`                                                   |
 | `dispatch:request-has-no-recipients`                               | `400`       | `Request has no recipients!`                                                       |
 | `dispatch:request-has-no-files`                                    | `400`       | `Request has no files!`                                                            |

@@ -54,6 +54,46 @@ resources:
         openapiContext:
           tags: ['Dispatch']
 
+      ApiPlatform\Metadata\Delete:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        processor: Dbp\Relay\DispatchBundle\ApiPlatform\DeliveryStatusChangeFileProcessor
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\DeliveryStatusChangeFileProvider
+        uriTemplate: '/dispatch/request-status-changes/{identifier}/file'
+        openapiContext:
+          summary: "Removes the DispatchDeliveryStatusChange file resource."
+          tags: ['Dispatch']
+
+      ApiPlatform\Metadata\Post:
+        security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        controller: Dbp\Relay\DispatchBundle\ApiPlatform\UpdateDeliveryStatusChangeFileAction
+        provider: Dbp\Relay\DispatchBundle\ApiPlatform\DeliveryStatusChangeFileProvider
+        uriTemplate: '/dispatch/request-status-changes/{identifier}/file'
+        method: 'POST'
+        deserialize: false
+        openapiContext:
+          tags: ["Dispatch"]
+          responses:
+            415:
+              description: "Unsupported Media Type - Only PDF files can be added!"
+          requestBody:
+            content:
+              multipart/form-data:
+                schema:
+                  type: "object"
+                  required: ["file", "dispatchRequestIdentifier", "fileUploaderIdentifier"]
+                  properties:
+                    dispatchRequestIdentifier:
+                      description: "ID of the request"
+                      type: "string"
+                      example: "4d553985-d44f-404f-acf3-cd0eac7ae9c2"
+                    file:
+                      type: "string"
+                      format: "binary"
+                    fileUploaderIdentifier:
+                      description: "User ID of the file uploader"
+                      type: "string"
+                      example: "F957F2400C941B72"
+
     properties:
       identifier:
         identifier: true

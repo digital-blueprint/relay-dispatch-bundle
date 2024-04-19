@@ -126,6 +126,33 @@ class DeliveryStatusChange
     private $fileStorageIdentifier;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
+     *
+     * @var \DateTimeInterface|null
+     */
+    private $fileDateAdded;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     *
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
+     *
+     * @var string
+     */
+    private $fileUploaderIdentifier;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
+     *
+     * @var bool
+     */
+    private $fileIsUploadedManually;
+
+    /**
      * @ORM\Column(type="integer")
      *
      * @var int
@@ -254,7 +281,7 @@ class DeliveryStatusChange
         $this->fileData = $data;
     }
 
-    public function getFileStorageSystem(): string
+    public function getFileStorageSystem(): ?string
     {
         return $this->fileStorageSystem;
     }
@@ -274,6 +301,36 @@ class DeliveryStatusChange
         $this->fileStorageIdentifier = $fileStorageIdentifier;
     }
 
+    public function getFileDateAdded(): \DateTimeInterface
+    {
+        return $this->fileDateAdded;
+    }
+
+    public function setFileDateAdded(?\DateTimeInterface $fileDateAdded): void
+    {
+        $this->fileDateAdded = $fileDateAdded;
+    }
+
+    public function getFileUploaderIdentifier(): string
+    {
+        return $this->fileUploaderIdentifier;
+    }
+
+    public function setFileUploaderIdentifier(?string $fileUploaderIdentifier): void
+    {
+        $this->fileUploaderIdentifier = $fileUploaderIdentifier;
+    }
+
+    public function getFileIsUploadedManually(): bool
+    {
+        return $this->fileIsUploadedManually;
+    }
+
+    public function setFileIsUploadedManually(?bool $fileIsUploadedManually = null): void
+    {
+        $this->fileIsUploadedManually = $fileIsUploadedManually;
+    }
+
     /**
      * Checks if a dual delivery status is final.
      */
@@ -282,6 +339,14 @@ class DeliveryStatusChange
         return in_array($this->statusType, [
             self::STATUS_DUAL_DELIVERY_REQUEST_FAILED, ], true)
             || Vendo::isFinalStatus($this->statusType);
+    }
+
+    /**
+     * Checks if a dual delivery status is final.
+     */
+    public function isInReceiptUploadAllowedStatus(): bool
+    {
+        return Vendo::isSuccessStatus($this->statusType);
     }
 
     public function getDispatchStatus(): string
