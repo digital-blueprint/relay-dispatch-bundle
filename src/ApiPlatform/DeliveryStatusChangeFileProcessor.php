@@ -12,6 +12,9 @@ use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class DeliveryStatusChangeFileProcessor extends AbstractController implements ProcessorInterface
 {
     /**
