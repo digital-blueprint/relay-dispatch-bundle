@@ -192,7 +192,7 @@ class PostalNotificationType extends NotificationChannelSetType
         return $this->AdditonalPrintResults;
     }
 
-    public function setAdditonalPrintResults(AdditonalPrintResults $AdditonalPrintResults): void
+    public function setAdditonalPrintResults(array $AdditonalPrintResults): void
     {
         $this->AdditonalPrintResults = $AdditonalPrintResults;
     }
