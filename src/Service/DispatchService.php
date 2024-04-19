@@ -930,7 +930,7 @@ class DispatchService implements LoggerAwareInterface
         }
 
         // TODO: Find a way to get SendingServiceMessageID with or without SOAP
-//        $sendingServiceMessageID = DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML($responseXml);
+        //        $sendingServiceMessageID = DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotificationXML($responseXml);
 
         $statusChange = $this->createDeliveryStatusChange($recipient->getIdentifier(), $status, $description, $file);
 
