@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.6
+
+* The `SendingServiceMessageID` will now be fetched for StatusChange messages and put into the description field
+
+## 0.5.5
+
+* Psalm errors were suppress
+
 ## 0.5.4
 
 * Add support for api-platform 3.2
