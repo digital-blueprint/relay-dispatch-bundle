@@ -604,52 +604,50 @@ class DispatchService implements LoggerAwareInterface
 
     public function updateDeliveryStatusChangeFile(DeliveryStatusChange $deliveryStatusChange, string $fileData, string $fileUploaderIdentifier): DeliveryStatusChange
     {
-        if ($fileData) {
-            $fileStorage = $this->fileStorage;
+        $fileStorage = $this->fileStorage;
 
-            $requestRecipient = $this->getRequestRecipientById($deliveryStatusChange->getDispatchRequestRecipientIdentifier());
+        $requestRecipient = $this->getRequestRecipientById($deliveryStatusChange->getDispatchRequestRecipientIdentifier());
 
-            // Store the blob file identifier in the database
-            if ($fileStorage === self::FILE_STORAGE_BLOB) {
-                try {
-                    $request = $requestRecipient->getDispatchRequest();
-                    $fileStorageIdentifier = $this->blobService->uploadDeliveryStatusChangeFile(
-                        $request->getIdentifier(),
-                        'receipt.pdf',
-                        $fileData
-                    );
-
-                    $deliveryStatusChange->setFileStorageIdentifier($fileStorageIdentifier);
-
-                    // We don't want to store the file content in the database
-                    $fileData = '';
-                } catch (\Exception $e) {
-                    // We will just use the database to store the file if there are any issues with blob
-                    $fileStorage = self::FILE_STORAGE_DATABASE;
-
-                    $this->logError('Storing file of DeliveryStatusChange to blob failed!', [
-                        'delivery-status-change-identifier' => $deliveryStatusChange->getIdentifier(),
-                        'error-message' => $e->getMessage(),
-                    ]);
-                }
-            }
-
-            $deliveryStatusChange->setFileStorageSystem($fileStorage);
-            $deliveryStatusChange->setFileFormat(DualDeliveryService::DOCUMENT_MIME_TYPE);
-            $deliveryStatusChange->setFileData($fileData);
-            $deliveryStatusChange->setFileDateAdded(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
-            $deliveryStatusChange->setFileUploaderIdentifier($fileUploaderIdentifier);
-            $deliveryStatusChange->setFileIsUploadedManually(true);
-
+        // Store the blob file identifier in the database
+        if ($fileStorage === self::FILE_STORAGE_BLOB) {
             try {
-                $this->em->persist($deliveryStatusChange);
-                $this->em->flush();
-            } catch (\Exception $e) {
-                throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
-            }
+                $request = $requestRecipient->getDispatchRequest();
+                $fileStorageIdentifier = $this->blobService->uploadDeliveryStatusChangeFile(
+                    $request->getIdentifier(),
+                    'receipt.pdf',
+                    $fileData
+                );
 
-            return $deliveryStatusChange;
+                $deliveryStatusChange->setFileStorageIdentifier($fileStorageIdentifier);
+
+                // We don't want to store the file content in the database
+                $fileData = '';
+            } catch (\Exception $e) {
+                // We will just use the database to store the file if there are any issues with blob
+                $fileStorage = self::FILE_STORAGE_DATABASE;
+
+                $this->logError('Storing file of DeliveryStatusChange to blob failed!', [
+                    'delivery-status-change-identifier' => $deliveryStatusChange->getIdentifier(),
+                    'error-message' => $e->getMessage(),
+                ]);
+            }
         }
+
+        $deliveryStatusChange->setFileStorageSystem($fileStorage);
+        $deliveryStatusChange->setFileFormat(DualDeliveryService::DOCUMENT_MIME_TYPE);
+        $deliveryStatusChange->setFileData($fileData);
+        $deliveryStatusChange->setFileDateAdded(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+        $deliveryStatusChange->setFileUploaderIdentifier($fileUploaderIdentifier);
+        $deliveryStatusChange->setFileIsUploadedManually(true);
+
+        try {
+            $this->em->persist($deliveryStatusChange);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
+        }
+
+        return $deliveryStatusChange;
     }
 
     public function removeDeliveryStatusChangeFileById(string $identifier): void
