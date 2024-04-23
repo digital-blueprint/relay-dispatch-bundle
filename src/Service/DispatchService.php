@@ -1243,7 +1243,7 @@ class DispatchService implements LoggerAwareInterface
         $query = $queryBuilder->select('dsc')
             ->from(DeliveryStatusChange::class, 'dsc')
             ->where('dsc.requestRecipient = :requestRecipient')
-            ->orderBy('dsc.dateCreated', 'DESC')
+            ->orderBy('dsc.orderId', 'DESC')
             ->setMaxResults(1)
             ->setParameter('requestRecipient', $recipient)
             ->getQuery();
