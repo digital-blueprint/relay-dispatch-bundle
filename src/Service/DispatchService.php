@@ -395,11 +395,6 @@ class DispatchService implements LoggerAwareInterface
             return;
         }
 
-        // XXX: the frontend sends an IRI for some reason, and it still worked
-        // by accident before. Work around here until the frontend is fixed.
-        $parts = explode('/', $personIdentifier);
-        $personIdentifier = end($parts);
-
         $options = [];
         Options::requestLocalDataAttributes($options, ['birthDate', 'streetAddress', 'addressLocality', 'postalCode', 'addressCountry']);
 
