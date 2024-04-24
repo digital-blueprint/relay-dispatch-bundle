@@ -61,6 +61,14 @@ class DeliveryStatusChangeCommand extends Command
 
                 $output->writeln('Generating DeliveryStatusChange for request recipient "'.$identifier.'"...');
                 $deliveryStatusChange = $this->dispatchService->createDeliveryStatusChange($identifier, $statusType, $description, $fileData);
+
+                // Set delivery end date if status is final.
+                if ($deliveryStatusChange->isFinalDualDeliveryStatus()) {
+                    $recipient = $deliveryStatusChange->getDispatchRequestRecipient();
+                    $recipient->setDeliveryEndDate(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+                    $this->dispatchService->updateRequestRecipient($recipient);
+                }
+
                 $output->writeln('Identifier: '.$deliveryStatusChange->getIdentifier());
                 break;
             default:
