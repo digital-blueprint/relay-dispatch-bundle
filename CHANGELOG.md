@@ -1,9 +1,14 @@
 # Changelog
 
+## Next
+
+* Removed personalIdentifier workaround
+* Add --set-end-date option to cli command deliveryStatusChange create
+
 ## 0.6.0
 
 * The `SendingServiceMessageID` will now be fetched for StatusChange messages and put into the description field
-* Add POST and DELETE endpoints `/dispatch/request-status-changes/{identifier}/file` for DeliveryStatusChange file upload.
+* Add POST and DELETE endpoints `/dispatch/request-status-changes/{identifier}/file` for DeliveryStatusChange file upload
 
 ## 0.5.5
 
