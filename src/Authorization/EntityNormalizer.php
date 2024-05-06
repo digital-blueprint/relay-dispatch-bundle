@@ -17,6 +17,8 @@ class EntityNormalizer extends AbstractEntityDeNormalizer
 
     public function __construct(AuthorizationService $authorizationService)
     {
+        parent::__construct();
+
         $this->authoriziationService = $authorizationService;
 
         $this->configureEntities([
