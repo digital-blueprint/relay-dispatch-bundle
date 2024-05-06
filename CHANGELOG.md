@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 0.6.1
 
 * Removed personalIdentifier workaround
 * Add --set-end-date option to cli command deliveryStatusChange create
