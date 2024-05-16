@@ -10,104 +10,80 @@ use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(name="dispatch_request_files")
- */
+#[ORM\Table(name: 'dispatch_request_files')]
+#[ORM\Entity]
 class RequestFile
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private $identifier;
 
     /**
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
-     *
      * @var \DateTimeInterface
      */
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private $dateCreated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Request", inversedBy="files")
-     *
-     * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
-     *
-     * @Groups({"DispatchRequestFile:output"})
-     *
      * @var Request
      */
+    #[ORM\JoinColumn(name: 'dispatch_request_identifier', referencedColumnName: 'identifier')]
+    #[ORM\ManyToOne(targetEntity: Request::class, inversedBy: 'files')]
+    #[Groups(['DispatchRequestFile:output'])]
     private $request;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchRequestFile:output", "DispatchRequestFile:input"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchRequestFile:output', 'DispatchRequestFile:input'])]
     private $dispatchRequestIdentifier;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Groups({"DispatchRequestFile:output", "DispatchRequestFile:input", "DispatchRequest:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['DispatchRequestFile:output', 'DispatchRequestFile:input', 'DispatchRequest:output'])]
     private $name;
 
     /**
-     * @Groups({"DispatchRequestFile:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchRequestFile:output'])]
     private $contentUrl = '';
 
     /**
-     * @ORM\Column(type="binary", length=209715200)
-     *
      * @var resource|string|int|false
      */
+    #[ORM\Column(type: 'binary', length: 209715200)]
     private $data;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     *
-     * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private $fileFormat;
 
     /**
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"DispatchRequestFile:output", "DispatchRequest:output"})
-     *
      * @var int
      */
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private $contentSize;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 100)]
     private $fileStorageSystem;
 
     /**
-     * @ORM\Column(type="string", length=1000)
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 1000)]
     private $fileStorageIdentifier;
 
     public function getIdentifier(): string

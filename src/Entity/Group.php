@@ -14,52 +14,45 @@ class Group
     public const ROLE_WRITE_READ_ADDRESS = 'wra';
 
     /**
-     * @Groups({"DispatchGroup:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchGroup:output'])]
     private $identifier;
 
     /**
-     * @Groups({"DispatchGroup:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchGroup:output'])]
     private $name;
 
     /**
-     * @Groups({"DispatchGroup:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchGroup:output'])]
     private $street;
 
     /**
-     * @Groups({"DispatchGroup:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchGroup:output'])]
     private $locality;
 
     /**
-     * @Groups({"DispatchGroup:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchGroup:output'])]
     private $postalCode;
 
     /**
-     * @Groups({"DispatchGroup:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchGroup:output'])]
     private $country;
 
     /**
-     * @Groups({"DispatchGroup:output"})
-     *
      * @var string[]
      */
+    #[Groups(['DispatchGroup:output'])]
     private $accessRights = [];
 
     public function setIdentifier(string $identifier): void

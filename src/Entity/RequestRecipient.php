@@ -13,239 +13,158 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(name="dispatch_request_recipients")
- */
+#[ORM\Table(name: 'dispatch_request_recipients')]
+#[ORM\Entity]
 class RequestRecipient
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $identifier;
 
     /**
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
-     *
      * @var \DateTimeInterface
      */
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $dateCreated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Request", inversedBy="recipients")
-     *
-     * @ORM\JoinColumn(name="dispatch_request_identifier", referencedColumnName="identifier")
-     *
-     * @Groups({"DispatchRequestRecipient:output"})
-     *
      * @var Request
      */
+    #[ORM\JoinColumn(name: 'dispatch_request_identifier', referencedColumnName: 'identifier')]
+    #[ORM\ManyToOne(targetEntity: Request::class, inversedBy: 'recipients')]
+    #[Groups(['DispatchRequestRecipient:output'])]
     private $request;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequestRecipient:input'])]
     private $dispatchRequestIdentifier;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 50)]
     private $recipientId;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
-     *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequestRecipient:input', 'DispatchRequest:output'])]
+    #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $givenName;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
-     *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequestRecipient:input', 'DispatchRequest:output'])]
+    #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $familyName;
 
     /**
-     * @ORM\Column(type="string", length=2)
-     *
-     * @Groups({"DispatchRequestRecipient:output:addressCountry", "DispatchRequestRecipient:input"})
-     *
-     * @Assert\Length(
-     *     max=2,
-     *     maxMessage="Only {{ limit }} letter country codes are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 2)]
+    #[Groups(['DispatchRequestRecipient:output:addressCountry', 'DispatchRequestRecipient:input'])]
+    #[Assert\Length(max: 2, maxMessage: 'Only {{ limit }} letter country codes are allowed')]
     private $addressCountry;
 
     /**
-     * @ORM\Column(type="string", length=20)
-     *
-     * @Groups({"DispatchRequestRecipient:output:postalCode", "DispatchRequestRecipient:input"})
-     *
-     * @Assert\Length(
-     *     max=20,
-     *     maxMessage="Only {{ limit }} letter postal codes are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 20)]
+    #[Groups(['DispatchRequestRecipient:output:postalCode', 'DispatchRequestRecipient:input'])]
+    #[Assert\Length(max: 20, maxMessage: 'Only {{ limit }} letter postal codes are allowed')]
     private $postalCode;
 
     /**
-     * @ORM\Column(type="string", length=120)
-     *
-     * @Groups({"DispatchRequestRecipient:output:addressLocality", "DispatchRequestRecipient:input"})
-     *
-     * @Assert\Length(
-     *     max=120,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 120)]
+    #[Groups(['DispatchRequestRecipient:output:addressLocality', 'DispatchRequestRecipient:input'])]
+    #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $addressLocality;
 
     /**
-     * @ORM\Column(type="string", length=120)
-     *
-     * @Groups({"DispatchRequestRecipient:output:streetAddress", "DispatchRequestRecipient:input"})
-     *
-     * @Assert\Length(
-     *     max=120,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 120)]
+    #[Groups(['DispatchRequestRecipient:output:streetAddress', 'DispatchRequestRecipient:input'])]
+    #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $streetAddress;
 
     /**
-     * @ORM\Column(type="string", length=10)
-     *
-     * @Groups({"DispatchRequestRecipient:output:buildingNumber", "DispatchRequestRecipient:input"})
-     *
-     * @Assert\Length(
-     *     max=10,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 10)]
+    #[Groups(['DispatchRequestRecipient:output:buildingNumber', 'DispatchRequestRecipient:input'])]
+    #[Assert\Length(max: 10, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $buildingNumber;
 
     /**
-     * @ORM\Column(type="date")
-     *
-     * @Groups({"DispatchRequestRecipient:output:birthDate", "DispatchRequestRecipient:input"})
-     * I could not find an Assert that doesn't cause an error to do proper checks
-     *
      * @var \DateTimeInterface
      */
+    #[ORM\Column(type: 'date')]
+    #[Groups(['DispatchRequestRecipient:output:birthDate', 'DispatchRequestRecipient:input'])] // I could not find an Assert that doesn't cause an error to do proper checks
     private $birthDate;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchRequestRecipient:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchRequestRecipient:output'])]
     private $dualDeliveryID;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     *
-     * @Groups({"DispatchRequestRecipient:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(['DispatchRequestRecipient:output'])]
     private $appDeliveryID;
 
     /**
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"DispatchRequestRecipient:output"})
-     *
      * @var \DateTimeInterface|null
      */
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['DispatchRequestRecipient:output'])]
     private $deliveryEndDate;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     *
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequestRecipient:input", "DispatchRequest:output"})
-     *
-     * @Assert\Length(
-     *     max=100,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequestRecipient:input', 'DispatchRequest:output'])]
+    #[Assert\Length(max: 100, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $personIdentifier;
 
     /**
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
-     *
      * @var bool
      */
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $postalDeliverable;
 
     /**
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
-     *
      * @var bool
      */
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $electronicallyDeliverable;
 
     /**
-     * @Groups({"DispatchRequestRecipient:output", "DispatchRequest:output"})
-     *
      * @var ?DeliveryStatusChange
      */
+    #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $lastStatusChange;
 
-    /**
-     * @ORM\OneToMany(targetEntity="DeliveryStatusChange", mappedBy="requestRecipient")
-     *
-     * @ORM\OrderBy({"orderId" = "DESC"})
-     *
-     * @Groups({"DispatchRequestRecipient:output"})
-     */
+    #[ORM\OneToMany(targetEntity: DeliveryStatusChange::class, mappedBy: 'requestRecipient')]
+    #[ORM\OrderBy(['orderId' => 'DESC'])]
+    #[Groups(['DispatchRequestRecipient:output'])]
     private $statusChanges;
 
     public function __construct()

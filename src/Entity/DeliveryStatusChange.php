@@ -11,11 +11,8 @@ use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(name="dispatch_delivery_status_changes")
- */
+#[ORM\Table(name: 'dispatch_delivery_status_changes')]
+#[ORM\Entity]
 class DeliveryStatusChange
 {
     public const STATUS_SUBMITTED = 1;
@@ -25,138 +22,109 @@ class DeliveryStatusChange
     public const STATUS_DUAL_DELIVERY_REQUEST_SUCCESS = 5;
     public const STATUS_STATUS_REQUEST_FAILED = 10;
 
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $identifier;
 
     /**
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
-     *
      * @var \DateTimeInterface
      */
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $dateCreated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RequestRecipient", inversedBy="statusChanges")
-     *
-     * @ORM\JoinColumn(name="dispatch_request_recipient_identifier", referencedColumnName="identifier")
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output"})
-     *
      * @var RequestRecipient
      */
+    #[ORM\JoinColumn(name: 'dispatch_request_recipient_identifier', referencedColumnName: 'identifier')]
+    #[ORM\ManyToOne(targetEntity: RequestRecipient::class, inversedBy: 'statusChanges')]
+    #[Groups(['DispatchDeliveryStatusChange:output'])]
     private $requestRecipient;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchDeliveryStatusChange:output'])]
     private $dispatchRequestRecipientIdentifier;
 
     /**
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
-     *
      * @var int
      */
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $statusType;
 
     /**
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $dispatchStatus;
 
     /**
-     * @ORM\Column(type="text")
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output", "DispatchRequest:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'text')]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $description;
 
     /**
-     * @ORM\Column(type="binary", length=209715200)
-     *
      * @var resource|string|int|false
      */
+    #[ORM\Column(type: 'binary', length: 209715200)]
     private $fileData;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
     private $fileFormat;
 
     /**
-     * @Groups({"DispatchDeliveryStatusChange:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchDeliveryStatusChange:output'])]
     private $fileContentUrl;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 100)]
     private $fileStorageSystem;
 
     /**
-     * @ORM\Column(type="string", length=1000)
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 1000)]
     private $fileStorageIdentifier;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
-     *
      * @var \DateTimeInterface|null
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
     private $fileDateAdded;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
     private $fileUploaderIdentifier;
 
     /**
-     * @ORM\Column(type="boolean")
-     *
-     * @Groups({"DispatchDeliveryStatusChange:output", "DispatchRequestRecipient:output"})
-     *
      * @var bool
      */
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
     private $fileIsUploadedManually;
 
     /**
-     * @ORM\Column(type="integer")
-     *
      * @var int
      */
+    #[ORM\Column(type: 'integer')]
     private $orderId;
 
     public function getIdentifier(): string

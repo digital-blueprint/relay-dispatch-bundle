@@ -11,207 +11,125 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(name="dispatch_requests")
- */
+#[ORM\Table(name: 'dispatch_requests')]
+#[ORM\Entity]
 class Request
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchRequest:output"})
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchRequest:output'])]
     private $identifier;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Groups({"DispatchRequest:output:name", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['DispatchRequest:output:name', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $name;
 
     /**
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"DispatchRequest:output"})
-     *
      * @var \DateTimeInterface
      */
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['DispatchRequest:output'])]
     private $dateCreated;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     *
-     * @Groups({"DispatchRequest:output"})
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['DispatchRequest:output'])]
     private $personIdentifier;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $senderFullName;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $senderOrganizationName;
 
     /**
-     * @ORM\Column(type="datetime")
-     *
-     * @Groups({"DispatchRequest:output"})
-     *
      * @var \DateTimeInterface
      */
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['DispatchRequest:output'])]
     private $dateSubmitted;
 
     /**
-     * @ORM\Column(type="string", length=2)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=2,
-     *     maxMessage="Only {{ limit }} letter country codes are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 2)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 2, maxMessage: 'Only {{ limit }} letter country codes are allowed')]
     private $senderAddressCountry;
 
     /**
-     * @ORM\Column(type="string", length=20)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=20,
-     *     maxMessage="Only {{ limit }} letter postal codes are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 20)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 20, maxMessage: 'Only {{ limit }} letter postal codes are allowed')]
     private $senderPostalCode;
 
     /**
-     * @ORM\Column(type="string", length=120)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=120,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 120)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $senderAddressLocality;
 
     /**
-     * @ORM\Column(type="string", length=120)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=120,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 120)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $senderStreetAddress;
 
     /**
-     * @ORM\Column(type="string", length=10)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=10,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 10)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 10, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $senderBuildingNumber;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
-     * @Assert\NotNull
-     *
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
+    #[Assert\NotNull]
     private $groupId;
 
     /**
-     * @ORM\Column(type="string", length=25)
-     *
-     * @Groups({"DispatchRequest:output", "DispatchRequest:input"})
-     *
-     * @Assert\Length(
-     *     max=25,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var ?string
      */
+    #[ORM\Column(type: 'string', length: 25)]
+    #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
+    #[Assert\Length(max: 25, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $referenceNumber;
 
-    /**
-     * @ORM\OneToMany(targetEntity="RequestRecipient", mappedBy="request")
-     *
-     * @ORM\OrderBy({"dateCreated" = "ASC"})
-     *
-     * @Groups({"DispatchRequest:output"})
-     */
+    #[ORM\OneToMany(targetEntity: RequestRecipient::class, mappedBy: 'request')]
+    #[ORM\OrderBy(['dateCreated' => 'ASC'])]
+    #[Groups(['DispatchRequest:output'])]
     private $recipients;
 
-    /**
-     * @ORM\OneToMany(targetEntity="RequestFile", mappedBy="request")
-     *
-     * @ORM\OrderBy({"dateCreated" = "ASC"})
-     *
-     * @Groups({"DispatchRequest:output:files"})
-     */
+    #[ORM\OneToMany(targetEntity: RequestFile::class, mappedBy: 'request')]
+    #[ORM\OrderBy(['dateCreated' => 'ASC'])]
+    #[Groups(['DispatchRequest:output:files'])]
     private $files;
 
     public function __construct()

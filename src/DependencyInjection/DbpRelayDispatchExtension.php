@@ -82,7 +82,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
                         'connection' => 'dbp_relay_dispatch_bundle',
                         'mappings' => [
                             'dbp_relay_dispatch' => [
-                                'type' => 'annotation',
+                                'type' => 'attribute',
                                 'dir' => __DIR__.'/../Entity',
                                 'prefix' => 'Dbp\Relay\DispatchBundle\Entity',
                             ],

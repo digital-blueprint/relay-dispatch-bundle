@@ -11,50 +11,34 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class PreAddressingRequest
 {
-    /**
-     * @Groups({"DispatchPreAddressingRequest:output"})
-     */
+    #[Groups(['DispatchPreAddressingRequest:output'])]
     private $identifier;
 
     /**
-     * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input", "DispatchRequest:output"})
-     *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[Groups(['DispatchPreAddressingRequest:output', 'DispatchPreAddressingRequest:input', 'DispatchRequest:output'])]
+    #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $givenName;
 
     /**
-     * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input", "DispatchRequest:output"})
-     *
-     * @Assert\Length(
-     *     max=255,
-     *     maxMessage="Only {{ limit }} letters are allowed"
-     * )
-     *
      * @var string
      */
+    #[Groups(['DispatchPreAddressingRequest:output', 'DispatchPreAddressingRequest:input', 'DispatchRequest:output'])]
+    #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     private $familyName;
 
     /**
-     * @Groups({"DispatchPreAddressingRequest:output", "DispatchPreAddressingRequest:input"})
-     * I could not find an Assert that doesn't cause an error to do proper checks
-     *
-     * @Assert\NotBlank
-     *
      * @var \DateTimeInterface
      */
+    #[Groups(['DispatchPreAddressingRequest:output', 'DispatchPreAddressingRequest:input'])] // I could not find an Assert that doesn't cause an error to do proper checks
+    #[Assert\NotBlank]
     private $birthDate;
 
     /**
-     * @Groups({"DispatchPreAddressingRequest:output"})
-     *
      * @var string
      */
+    #[Groups(['DispatchPreAddressingRequest:output'])]
     private $dualDeliveryID;
 
     public function __construct()
