@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.2
+
+* Port to PHPUnit 10
+* Port from doctrine annotations to php attributes
+* Fix the file-upload endpoints with api-platform 3.3+ (returned 415 otherwise)
+
 ## 0.6.1
 
 * Removed personalIdentifier workaround
