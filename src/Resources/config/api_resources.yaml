@@ -70,6 +70,8 @@ resources:
         uriTemplate: '/dispatch/request-status-changes/{identifier}/file'
         method: 'POST'
         deserialize: false
+        inputFormats:
+          multipart: "multipart/form-data"
         openapiContext:
           tags: ["Dispatch"]
           responses:
@@ -280,6 +282,8 @@ resources:
         uriTemplate: "/dispatch/request-files"
         method: 'POST'
         deserialize: false
+        inputFormats:
+          multipart: "multipart/form-data"
         openapiContext:
           tags: ["Dispatch"]
           responses:
