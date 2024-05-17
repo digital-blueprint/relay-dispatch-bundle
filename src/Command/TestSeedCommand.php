@@ -50,6 +50,9 @@ class TestSeedCommand extends Command
             ->addOption('submit', 's', InputOption::VALUE_NONE, 'Submit request after creation')
             ->addOption('direct', 'd', InputOption::VALUE_NONE, 'When submitting don\'t use the queue, but submit directly')
             ->addOption('output-request-xml', null, InputOption::VALUE_NONE, 'Output the request XML (only works when sending directly)')
+            ->addOption('output-json', null, InputOption::VALUE_NONE, 'Set output to json')
+            ->addOption('group-id', null, InputOption::VALUE_OPTIONAL, 'Organization group id')
+            ->addOption('request-subject', null, InputOption::VALUE_OPTIONAL, 'Request subject')
             ->addOption('recipient-given-name', null, InputOption::VALUE_OPTIONAL, 'Recipient given name')
             ->addOption('recipient-family-name', null, InputOption::VALUE_OPTIONAL, 'Recipient family name')
             ->addOption('recipient-birth-date', null, InputOption::VALUE_OPTIONAL, 'Recipient birth date')
@@ -69,6 +72,8 @@ class TestSeedCommand extends Command
         $doSubmit = (bool) $input->getOption('submit');
         $isDirect = (bool) $input->getOption('direct');
         $isOutputRequestXml = (bool) $input->getOption('output-request-xml');
+        $jsonOutput = (bool) $input->getOption('output-json');
+        $groupId = $input->getOption('group-id') ? $input->getOption('group-id') : '11072';
         $recipientGivenName = $input->getOption('recipient-given-name') ?? '';
         $recipientFamilyName = $input->getOption('recipient-family-name') ?? '';
         $recipientBirthDate = $input->getOption('recipient-birth-date');
@@ -93,12 +98,14 @@ class TestSeedCommand extends Command
 
         switch ($action) {
             case 'create':
-                $name = 'Test '.$recipientGivenName.' '.$recipientFamilyName.' '.rand(1000, 9999);
-                $output->writeln('Generating request "'.$name.'" with a recipient and a file...');
+                $name = $input->getOption('request-subject') ? $input->getOption('request-subject') : 'Test '.$recipientGivenName.' '.$recipientFamilyName.' '.rand(1000, 9999);
+                if (!$jsonOutput) {
+                    $output->writeln('Generating request "'.$name.'" with a recipient and a file...');
+                }
 
                 $request = new Request();
                 $request->setName($name);
-                $request->setGroupId('11072');
+                $request->setGroupId($groupId);
                 $request->setPersonIdentifier($requestPersonId);
                 $request->setSenderFullName('Hans Tester');
                 $request->setSenderOrganizationName('Test Organisation');
@@ -132,8 +139,17 @@ class TestSeedCommand extends Command
                 $requestRecipient->setAddressCountry($recipientAddressCountry);
 
                 $requestRecipient = $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
-                $output->writeln('isElectronicallyDeliverable: '.($requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no'));
-                $output->writeln('isPostalDeliverable: '.($requestRecipient->isPostalDeliverable() ? 'yes' : 'no'));
+                if ($jsonOutput) {
+                    $data2json = [
+                        'requestRecipient' => $requestRecipient->getIdentifier(),
+                        'isElectronicallyDeliverable' => $requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no',
+                        'isPostalDeliverable' => $requestRecipient->isPostalDeliverable() ? 'yes' : 'no',
+                    ];
+                } else {
+                    $output->writeln('requestRecipient: '.$requestRecipient->getIdentifier());
+                    $output->writeln('isElectronicallyDeliverable: '.($requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no'));
+                    $output->writeln('isPostalDeliverable: '.($requestRecipient->isPostalDeliverable() ? 'yes' : 'no'));
+                }
 
                 $request->setRequestRecipients(new ArrayCollection([$requestRecipient]));
 
@@ -150,28 +166,47 @@ class TestSeedCommand extends Command
                 $request->setRequestFiles(new ArrayCollection([$file]));
 
                 if ($doSubmit) {
-                    $output->writeln('Submitting request...');
+                    if (!$jsonOutput) {
+                        $output->writeln('Submitting request...');
+                    }
 
                     // Check and submit request
                     $this->dispatchService->checkRequestReadyForSubmit($request);
 
-                    if ($isOutputRequestXml) {
+                    if ($isOutputRequestXml && !$jsonOutput) {
                         $output->writeln('');
                         $output->writeln('Request XML:');
                     }
 
                     $this->dispatchService->submitRequest($request, $isDirect, $isOutputRequestXml);
 
-                    if ($isOutputRequestXml) {
+                    if ($isOutputRequestXml && !$jsonOutput) {
                         $output->writeln('');
                     }
 
-                    $output->writeln('Request submitted!');
-                    $output->writeln('AppDeliveryID: '.$requestRecipient->getAppDeliveryID());
+                    if ($jsonOutput) {
+                        $outputMessages = array_merge($data2json, [
+                            'RequestSubmitted' => true,
+                            'AppDeliveryID' => $requestRecipient->getAppDeliveryID(),
+                        ]);
+                        $jsonData = json_encode($outputMessages, JSON_PRETTY_PRINT);
+                        $output->writeln($jsonData);
+                    } else {
+                        $output->writeln('Request submitted!');
+                        $output->writeln('AppDeliveryID: '.$requestRecipient->getAppDeliveryID());
+                    }
                 }
                 break;
             default:
-                $output->writeln('Action not found!');
+                if ($jsonOutput) {
+                    $data2json = [
+                        'ActionNotFound!' => true,
+                    ];
+                    $jsonData = json_encode($data2json, JSON_PRETTY_PRINT);
+                    $output->writeln($jsonData);
+                } else {
+                    $output->writeln('Action not found!');
+                }
 
                 return 1;
         }
