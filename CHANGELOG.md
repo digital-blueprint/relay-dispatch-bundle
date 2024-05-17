@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.3
+
+* Add `request-subject`, `group-id` and `output-json` options to cli test-seed command
+
 ## 0.6.2
 
 * Port to PHPUnit 10
