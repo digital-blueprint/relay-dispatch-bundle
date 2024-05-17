@@ -67,7 +67,7 @@ class TestSeedCommand extends Command
     {
         $action = $input->getArgument('action');
         $doSubmit = (bool) $input->getOption('submit');
-        $isDirect = (bool) $input->getOption('submit');
+        $isDirect = (bool) $input->getOption('direct');
         $isOutputRequestXml = (bool) $input->getOption('output-request-xml');
         $recipientGivenName = $input->getOption('recipient-given-name') ?? '';
         $recipientFamilyName = $input->getOption('recipient-family-name') ?? '';
