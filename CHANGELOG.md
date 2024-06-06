@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.4
+
+* Fix behavior that leads to a keycloak request happening at bundle init time
+
 ## 0.6.3
 
 * Add `request-subject`, `group-id` and `output-json` options to cli test-seed command
