@@ -676,7 +676,6 @@ class DispatchService implements LoggerAwareInterface
 
     public function removeDeliveryStatusChangeByRecipientId(string $recipentIdentifier): void
     {
-        /** @var DeliveryStatusChange $requestFile */
         $deliveryStatusChangesQuery = $this->em
             ->getRepository(DeliveryStatusChange::class)
             ->createQueryBuilder('s')
@@ -687,7 +686,6 @@ class DispatchService implements LoggerAwareInterface
         $deliveryStatusChanges = $deliveryStatusChangesQuery->getResult();
 
         foreach ($deliveryStatusChanges as $deliveryStatusChange) {
-
             // Remove DeliveryStatusChangeFiles
             $this->removeDeliveryStatusChangeFileById($deliveryStatusChange->getIdentifier());
 
