@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.6
+
+* Fix linting errors
+
 ## 0.6.5
 
 * Add removeDeliveryStatusChangeByRecipientId method to delete DeliveryStatusChanges by recipient id
