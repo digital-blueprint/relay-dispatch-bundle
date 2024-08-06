@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.5
+
+* Add removeDeliveryStatusChangeByRecipientId method to delete DeliveryStatusChanges by recipient id
+
 ## 0.6.4
 
 * Fix behavior that leads to a keycloak request happening at bundle init time
