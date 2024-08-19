@@ -12,17 +12,5 @@
   },
   "constraintsFiltering": "strict",
   "packageRules": [
-    {
-      "matchPackagePrefixes": ["symfony/"],
-      "allowedVersions": "<6"
-    },
-    {
-      "matchPackagePrefixes": ["api-platform/core"],
-      "allowedVersions": "<3"
-    },
-    {
-      "matchPackageNames": ["phpunit/phpunit"],
-      "allowedVersions": "<10"
-    }
   ]
 }
