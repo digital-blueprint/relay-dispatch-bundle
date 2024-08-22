@@ -639,7 +639,7 @@ class DispatchService implements LoggerAwareInterface
             $this->em->persist($deliveryStatusChange);
             $this->em->flush();
         } catch (\Exception $e) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange could not be created!', 'dispatch:request-status-file-not-created', ['message' => $e->getMessage()]);
         }
 
         return $deliveryStatusChange;
@@ -670,7 +670,7 @@ class DispatchService implements LoggerAwareInterface
             $this->em->persist($deliveryStatusChange);
             $this->em->flush();
         } catch (\Exception $e) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange file could not be deleted!', 'dispatch:request-status-file-not-created', ['message' => $e->getMessage()]);
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange file could not be deleted!', 'dispatch:request-status-file-not-deleted', ['message' => $e->getMessage()]);
         }
     }
 

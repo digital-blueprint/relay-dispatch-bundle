@@ -41,6 +41,7 @@ Can have one of the following values: `failure`, `success`, `pending`, `unknown`
 | `dispatch:request-file-blob-delete-error`                          | `500`       | `RequestFile could not be deleted from the Blob service!`                          |
 | `dispatch:delivery-status-change-file-blob-delete-error`           | `500`       | `DeliveryStatusChange file could not be deleted from the Blob service!`            |
 | `dispatch:request-status-not-created`                              | `500`       | `DeliveryStatusChange could not be created!`                                       |
+| `dispatch:request-status-file-not-created`                         | `500`       | `DeliveryStatusChange file could not be created!`                                  |
 | `dispatch:request-status-file-not-deleted`                         | `500`       | `DeliveryStatusChange file could not be deleted!`                                  |
 | `dispatch:request-already-submitted`                               | `400`       | `Request was already submitted!`                                                   |
 | `dispatch:request-has-no-recipients`                               | `400`       | `Request has no recipients!`                                                       |
