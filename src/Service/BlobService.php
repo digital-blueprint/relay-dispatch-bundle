@@ -130,6 +130,7 @@ class BlobService implements LoggerAwareInterface
 
         try {
             // This will delete blob files for request files and delivery status changes
+            // TODO: In the future we need to make sure that all files are deleted if deleteFilesByPrefix returns that there will be more files to delete
             $api->deleteFilesByPrefix($this->getBlobPrefix($dispatchRequestIdentifier));
         } catch (BlobApiError $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFiles could not be deleted from Blob!', 'dispatch:request-file-blob-delete-error', ['request-identifier' => $dispatchRequestIdentifier, 'message' => $e->getMessage()]);
