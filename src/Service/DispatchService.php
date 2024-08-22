@@ -674,13 +674,13 @@ class DispatchService implements LoggerAwareInterface
         }
     }
 
-    public function removeDeliveryStatusChangeByRecipientId(string $recipentIdentifier): void
+    public function removeDeliveryStatusChangeByRecipientId(string $recipientIdentifier): void
     {
         $deliveryStatusChangesQuery = $this->em
             ->getRepository(DeliveryStatusChange::class)
             ->createQueryBuilder('s')
             ->where('s.dispatchRequestRecipientIdentifier = :recipientIdentifier')
-            ->setParameter('recipientIdentifier', $recipentIdentifier)
+            ->setParameter('recipientIdentifier', $recipientIdentifier)
             ->getQuery();
 
         $deliveryStatusChanges = $deliveryStatusChangesQuery->getResult();
