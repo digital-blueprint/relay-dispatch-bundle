@@ -102,6 +102,7 @@ class BlobService implements LoggerAwareInterface
         $api = $this->getApi();
 
         try {
+            // Note that 404 error will be handled (and ignored) in the blob library
             $api->deleteFileByIdentifier($blobIdentifier);
         } catch (BlobApiError $e) {
             $requestFileIdentifier = $requestFile->getIdentifier();
