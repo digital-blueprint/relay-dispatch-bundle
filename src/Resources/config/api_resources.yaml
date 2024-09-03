@@ -73,6 +73,7 @@ resources:
         inputFormats:
           multipart: "multipart/form-data"
         openapiContext:
+          summary: "Updates the DispatchDeliveryStatusChange file resource."
           tags: ["Dispatch"]
           responses:
             415:
