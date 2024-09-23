@@ -12,5 +12,9 @@
   },
   "constraintsFiltering": "strict",
   "packageRules": [
+    {
+      "matchPackageNames": ["api-platform/core"],
+      "allowedVersions": "<4"
+    }
   ]
 }
