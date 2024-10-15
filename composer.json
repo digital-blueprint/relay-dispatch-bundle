@@ -11,7 +11,7 @@
         "ext-mbstring": "*",
         "ext-libxml": "*",
         "api-platform/core": "^3.2",
-        "dbp/relay-base-person-bundle": "^0.2.26",
+        "dbp/relay-base-person-bundle": "^0.2.33",
         "dbp/relay-blob-library": "^0.2.4",
         "dbp/relay-core-bundle": "^0.1.186",
         "symfony/framework-bundle": "^5.4.30 || ^6.4",
