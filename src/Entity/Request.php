@@ -203,10 +203,7 @@ class Request
 
     public function getDateSubmitted(): ?\DateTimeInterface
     {
-        /** @var \DateTimeImmutable $date */
-        $date = $this->dateSubmitted;
-
-        return $date === null ? null : $date->setTimezone(new \DateTimeZone('UTC'));
+        return $this->dateSubmitted;
     }
 
     public function isSubmitted(): bool
