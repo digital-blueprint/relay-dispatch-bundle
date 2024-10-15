@@ -42,6 +42,7 @@ use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -1273,7 +1274,7 @@ class DispatchService implements LoggerAwareInterface
             ->set('r.deliveryEndDate', ':deliveryEndDate')
             ->where('r.identifier = :identifier')
             ->setParameter('identifier', $recipient->getIdentifier())
-            ->setParameter('deliveryEndDate', new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
+            ->setParameter('deliveryEndDate', new \DateTimeImmutable('now', new \DateTimeZone('UTC')), Types::DATETIME_IMMUTABLE)
             ->getQuery();
 
         try {
