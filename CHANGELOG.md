@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.7
+
+* Add support for newer doctrine versions
+
 ## 0.6.6
 
 * Fix linting errors
