@@ -142,7 +142,7 @@ class DispatchService implements LoggerAwareInterface
 
     public function checkConnection()
     {
-        $this->em->getConnection()->connect();
+        $this->em->getConnection()->getNativeConnection();
     }
 
     /**
