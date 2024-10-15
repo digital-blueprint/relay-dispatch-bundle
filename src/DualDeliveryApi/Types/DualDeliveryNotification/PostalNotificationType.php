@@ -134,7 +134,7 @@ class PostalNotificationType extends NotificationChannelSetType
         if ($this->PostalDeliveryTime === null) {
             return null;
         } else {
-            return new \DateTime($this->PostalDeliveryTime);
+            return new \DateTimeImmutable($this->PostalDeliveryTime);
         }
     }
 

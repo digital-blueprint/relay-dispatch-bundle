@@ -25,7 +25,7 @@ class RequestRecipient
     /**
      * @var \DateTimeInterface
      */
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $dateCreated;
 
@@ -109,7 +109,7 @@ class RequestRecipient
     /**
      * @var \DateTimeInterface
      */
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'date_immutable')]
     #[Groups(['DispatchRequestRecipient:output:birthDate', 'DispatchRequestRecipient:input'])] // I could not find an Assert that doesn't cause an error to do proper checks
     private $birthDate;
 
@@ -130,7 +130,7 @@ class RequestRecipient
     /**
      * @var \DateTimeInterface|null
      */
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequestRecipient:output'])]
     private $deliveryEndDate;
 
@@ -189,7 +189,7 @@ class RequestRecipient
 
     public function setDateCreated(\DateTimeInterface $dateCreated): void
     {
-        $this->dateCreated = $dateCreated;
+        $this->dateCreated = \DateTimeImmutable::createFromInterface($dateCreated);
     }
 
     public function getDispatchRequest(): Request
@@ -310,7 +310,7 @@ class RequestRecipient
 
     public function setBirthDate(?\DateTimeInterface $birthDate): void
     {
-        $this->birthDate = $birthDate;
+        $this->birthDate = $birthDate !== null ? \DateTimeImmutable::createFromInterface($birthDate) : null;
     }
 
     public function getDualDeliveryID(): string
@@ -335,7 +335,7 @@ class RequestRecipient
 
     public function setDeliveryEndDate(\DateTimeInterface $deliveryEndDate): void
     {
-        $this->deliveryEndDate = $deliveryEndDate;
+        $this->deliveryEndDate = \DateTimeImmutable::createFromInterface($deliveryEndDate);
     }
 
     public function getAppDeliveryID(): string

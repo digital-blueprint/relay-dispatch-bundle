@@ -31,7 +31,7 @@ class Request
     /**
      * @var \DateTimeInterface
      */
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequest:output'])]
     private $dateCreated;
 
@@ -61,7 +61,7 @@ class Request
     /**
      * @var \DateTimeInterface
      */
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequest:output'])]
     private $dateSubmitted;
 
@@ -155,7 +155,7 @@ class Request
 
     public function setDateCreated(\DateTimeInterface $dateCreated): void
     {
-        $this->dateCreated = $dateCreated;
+        $this->dateCreated = \DateTimeImmutable::createFromInterface($dateCreated);
     }
 
     public function getPersonIdentifier(): ?string
@@ -203,7 +203,7 @@ class Request
 
     public function getDateSubmitted(): ?\DateTimeInterface
     {
-        /** @var \DateTime $date */
+        /** @var \DateTimeImmutable $date */
         $date = $this->dateSubmitted;
 
         return $date === null ? null : $date->setTimezone(new \DateTimeZone('UTC'));
@@ -216,7 +216,7 @@ class Request
 
     public function setDateSubmitted(\DateTimeInterface $dateSubmitted): void
     {
-        $this->dateSubmitted = $dateSubmitted;
+        $this->dateSubmitted = \DateTimeImmutable::createFromInterface($dateSubmitted);
     }
 
     public function getSenderAddressCountry(): string

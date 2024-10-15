@@ -22,7 +22,7 @@ class RequestFile
     /**
      * @var \DateTimeInterface
      */
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private $dateCreated;
 
@@ -103,7 +103,7 @@ class RequestFile
 
     public function setDateCreated(\DateTimeInterface $dateCreated): void
     {
-        $this->dateCreated = $dateCreated;
+        $this->dateCreated = \DateTimeImmutable::createFromInterface($dateCreated);
     }
 
     public function getDispatchRequest(): Request

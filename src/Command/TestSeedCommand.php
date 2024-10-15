@@ -129,7 +129,7 @@ class TestSeedCommand extends Command
                 $requestRecipient->setFamilyName($recipientFamilyName);
 
                 if ($recipientBirthDate) {
-                    $requestRecipient->setBirthDate(new \DateTime($recipientBirthDate));
+                    $requestRecipient->setBirthDate(new \DateTimeImmutable($recipientBirthDate));
                 }
 
                 $requestRecipient->setStreetAddress($recipientStreetAddress);

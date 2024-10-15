@@ -30,7 +30,7 @@ class DeliveryStatusChange
     /**
      * @var \DateTimeInterface
      */
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private $dateCreated;
 
@@ -103,7 +103,7 @@ class DeliveryStatusChange
     /**
      * @var \DateTimeInterface|null
      */
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
     private $fileDateAdded;
 
@@ -144,7 +144,7 @@ class DeliveryStatusChange
 
     public function setDateCreated(\DateTimeInterface $dateCreated): void
     {
-        $this->dateCreated = $dateCreated;
+        $this->dateCreated = \DateTimeImmutable::createFromInterface($dateCreated);
     }
 
     public function getDispatchRequestRecipient(): RequestRecipient
@@ -276,7 +276,7 @@ class DeliveryStatusChange
 
     public function setFileDateAdded(?\DateTimeInterface $fileDateAdded): void
     {
-        $this->fileDateAdded = $fileDateAdded;
+        $this->fileDateAdded = $fileDateAdded !== null ? \DateTimeImmutable::createFromInterface($fileDateAdded) : null;
     }
 
     public function getFileUploaderIdentifier(): string

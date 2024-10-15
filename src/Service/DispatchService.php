@@ -406,7 +406,7 @@ class DispatchService implements LoggerAwareInterface
         $requestRecipient->setFamilyName($person->getFamilyName());
         try {
             $birthDateString = $localData['birthDate'];
-            $birthDate = !Tools::isNullOrEmpty($birthDateString) ? new \DateTime($birthDateString) : null;
+            $birthDate = !Tools::isNullOrEmpty($birthDateString) ? new \DateTimeImmutable($birthDateString) : null;
         } catch (\Exception $e) {
             $birthDate = null;
         }
