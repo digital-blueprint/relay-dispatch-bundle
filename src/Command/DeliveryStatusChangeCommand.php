@@ -40,7 +40,7 @@ class DeliveryStatusChangeCommand extends Command
             ->addOption('status-type', null, InputOption::VALUE_OPTIONAL, 'The status type to set')
             ->addOption('description', null, InputOption::VALUE_OPTIONAL, 'The description to set')
             ->addOption('set-end-date', null, InputOption::VALUE_NONE, 'Set delivery_end_date to current date if not already set and the created status is final')
-            ->addOption('with-file', null, InputOption::VALUE_NONE, 'Wether to attach a file to the status change');
+            ->addOption('with-file', null, InputOption::VALUE_NONE, 'Whether to attach a file to the status change');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
