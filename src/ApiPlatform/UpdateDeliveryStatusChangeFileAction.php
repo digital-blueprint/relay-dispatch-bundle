@@ -16,15 +16,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final class UpdateDeliveryStatusChangeFileAction extends AbstractController
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
+    private DispatchService $dispatchService;
 
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
+    private AuthorizationService $auth;
 
     public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
     {
@@ -40,7 +34,7 @@ final class UpdateDeliveryStatusChangeFileAction extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->auth->checkCanUse();
 
-        /** @var ?string */
+        /** @var ?string $dispatchRequestIdentifier */
         $dispatchRequestIdentifier = $request->request->get('dispatchRequestIdentifier');
         if ($dispatchRequestIdentifier === null) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Missing "dispatchRequestIdentifier"!', 'dispatch:request-file-missing-request-identifier');
@@ -82,7 +76,7 @@ final class UpdateDeliveryStatusChangeFileAction extends AbstractController
 
         $uploadedFileContent = $uploadedFile->getContent();
 
-        /** @var ?string */
+        /** @var ?string $fileUploaderIdentifier */
         $fileUploaderIdentifier = $request->request->get('fileUploaderIdentifier');
 
         return $this->dispatchService->updateDeliveryStatusChangeFile($dispatchDeliveryStatusChange, $uploadedFileContent, $fileUploaderIdentifier);
