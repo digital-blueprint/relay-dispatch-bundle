@@ -944,7 +944,8 @@ class DispatchService implements LoggerAwareInterface
         }
 
         $sendingServiceMessageID = DualDeliveryService::getSendingServiceMessageIDFromDeliveryNotification($response);
-        if ($sendingServiceMessageID !== null) {
+        $recipientCountry = trim($recipient->getAddressCountry());
+        if ($sendingServiceMessageID !== null && $recipientCountry !== 'AT') {
             $description .= "\nTracking number: ".$sendingServiceMessageID;
         }
 
