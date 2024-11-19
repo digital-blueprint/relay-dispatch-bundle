@@ -12,16 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DebugCommand extends Command
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
-
-    public function __construct(DispatchService $dispatchService)
+    public function __construct(private readonly DispatchService $dispatchService)
     {
         parent::__construct();
-
-        $this->dispatchService = $dispatchService;
     }
 
     /**

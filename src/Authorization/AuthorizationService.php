@@ -69,18 +69,17 @@ class AuthorizationService extends AbstractAuthorizationService
     }
 
     /**
-     * Check if the user has write access in at least one group.
-     *
-     * @throws AccessDeniedException
+     * Tells if the user has write access in at least one group.
      */
-    public function checkCanWriteSomething(): void
+    public function getCanWriteSomething(): bool
     {
         foreach ($this->getAllGroupIds() as $groupId) {
             if ($this->getCanWrite($groupId)) {
-                return;
+                return true;
             }
         }
-        throw new AccessDeniedException();
+
+        return false;
     }
 
     /**

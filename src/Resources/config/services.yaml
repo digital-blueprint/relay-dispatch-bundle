@@ -1,6 +1,6 @@
 services:
-  Dbp\Relay\DispatchBundle\ApiPlatform\:
-    resource: '../../ApiPlatform'
+  Dbp\Relay\DispatchBundle\Rest\:
+    resource: '../../Rest'
     autowire: true
     autoconfigure: true
 

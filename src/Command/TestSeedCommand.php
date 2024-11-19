@@ -20,22 +20,11 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class TestSeedCommand extends Command
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
-
-    /**
-     * @var PersonProviderInterface
-     */
-    private $personProvider;
-
-    public function __construct(DispatchService $dispatchService, PersonProviderInterface $personProvider)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly PersonProviderInterface $personProvider)
     {
         parent::__construct();
-
-        $this->dispatchService = $dispatchService;
-        $this->personProvider = $personProvider;
     }
 
     /**

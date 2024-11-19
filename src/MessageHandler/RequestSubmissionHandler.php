@@ -9,15 +9,12 @@ use Dbp\Relay\DispatchBundle\Service\DispatchService;
 
 class RequestSubmissionHandler
 {
-    private $api;
-
-    public function __construct(DispatchService $api)
+    public function __construct(private readonly DispatchService $dispatchService)
     {
-        $this->api = $api;
     }
 
     public function __invoke(RequestSubmissionMessage $message)
     {
-        $this->api->handleRequestSubmissionMessage($message);
+        $this->dispatchService->handleRequestSubmissionMessage($message);
     }
 }

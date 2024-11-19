@@ -10,14 +10,8 @@ use Dbp\Relay\DispatchBundle\Service\DispatchService;
 
 class StatusCronJob implements CronJobInterface
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
-
-    public function __construct(DispatchService $dispatchService)
+    public function __construct(private readonly DispatchService $dispatchService)
     {
-        $this->dispatchService = $dispatchService;
     }
 
     public function getName(): string

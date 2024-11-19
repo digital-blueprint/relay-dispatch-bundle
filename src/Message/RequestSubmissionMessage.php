@@ -8,18 +8,8 @@ use Dbp\Relay\DispatchBundle\Entity\Request;
 
 class RequestSubmissionMessage
 {
-    /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * RequestSubmissionMessage constructor.
-     */
-    public function __construct(
-        Request $request
-    ) {
-        $this->request = $request;
+    public function __construct(private readonly Request $request)
+    {
     }
 
     public function getRequest(): Request

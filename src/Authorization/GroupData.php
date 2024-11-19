@@ -6,18 +6,12 @@ namespace Dbp\Relay\DispatchBundle\Authorization;
 
 class GroupData
 {
-    /**
-     * @var string
-     */
-    public $id;
-
-    public function __construct(string $id)
+    public function __construct(private readonly string $identifier)
     {
-        $this->id = $id;
     }
 
     public function getIdentifier(): string
     {
-        return $this->id;
+        return $this->identifier;
     }
 }

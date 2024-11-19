@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dbp\Relay\DispatchBundle\ApiPlatform;
+namespace Dbp\Relay\DispatchBundle\Rest;
 
 use Dbp\Relay\CoreBundle\Rest\AbstractDataProvider;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
@@ -20,14 +20,14 @@ class GroupProvider extends AbstractDataProvider
     {
     }
 
-    protected function isUserGrantedOperationAccess(int $operation): bool
+    protected function isCurrentUserGrantedOperationAccess(int $operation): bool
     {
-        return $this->isAuthenticated();
+        return $operation === self::GET_COLLECTION_OPERATION
+            || $this->authorizationService->getCanUse();
     }
 
     protected function getItemById($id, array $filters = [], array $options = []): object
     {
-        $this->authorizationService->checkCanUse();
         $this->authorizationService->checkCanReadMetadata($id);
 
         return $this->groupService->getGroupById($id);
@@ -35,11 +35,9 @@ class GroupProvider extends AbstractDataProvider
 
     protected function getPage(int $currentPageNumber, int $maxNumItemsPerPage, array $filters = [], array $options = []): array
     {
-        // No 'access denied' needed, the service only returns groups to which the authenticated user has access to
-        if (!$this->authorizationService->getCanUse()) {
-            return [];
-        }
-
-        return $this->groupService->getGroups($currentPageNumber, $maxNumItemsPerPage, $options);
+        // No 'forbidden' error needed, the service only returns groups to which the authenticated user has access to
+        return $this->authorizationService->getCanUse() ?
+            $this->groupService->getGroups($currentPageNumber, $maxNumItemsPerPage, $options) :
+            [];
     }
 }

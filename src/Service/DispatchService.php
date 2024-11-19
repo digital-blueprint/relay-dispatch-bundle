@@ -9,6 +9,7 @@ use Dbp\Relay\BasePersonBundle\Entity\Person;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\CoreBundle\Helpers\Tools;
 use Dbp\Relay\CoreBundle\Rest\Options;
+use Dbp\Relay\CoreBundle\Rest\Query\Pagination\Pagination;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\BinaryDocumentType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\Checksum;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\DualDeliveryRequest;
@@ -171,7 +172,7 @@ class DispatchService implements LoggerAwareInterface
     /**
      * Fetches a RequestFile.
      */
-    public function getRequestFileById(string $identifier): ?RequestFile
+    public function getRequestFileById(string $identifier): RequestFile
     {
         /** @var RequestFile $requestFile */
         $requestFile = $this->entityManager
@@ -235,11 +236,17 @@ class DispatchService implements LoggerAwareInterface
      *
      * @return Request[]
      */
-    public function getRequestsForGroupId(string $groupId): array
+    public function getRequestsForGroupId(string $groupId, int $currentPageNumber, int $maxNumItemsPerPage): array
     {
-        $requests = $this->entityManager
-            ->getRepository(Request::class)
-            ->findBy(['groupId' => $groupId]);
+        $queryBuilder = $this->entityManager->getRepository(Request::class)->createQueryBuilder('r');
+
+        $requests = $queryBuilder
+            ->where($queryBuilder->expr()->eq('r.groupId', ':groupId'))
+            ->setParameter('groupId', $groupId)
+            ->setFirstResult(Pagination::getFirstItemIndex($currentPageNumber, $maxNumItemsPerPage))
+            ->setMaxResults($maxNumItemsPerPage)
+            ->getQuery()
+            ->getResult();
 
         // We need to load the last status changes for every request of each recipient
         // https://plan.tugraz.at/task/39365

@@ -10,11 +10,8 @@ use Dbp\Relay\CoreBundle\HealthCheck\CheckResult;
 
 class HealthCheck implements CheckInterface
 {
-    private $authorizationService;
-
-    public function __construct(AuthorizationService $authorizationService)
+    public function __construct(private readonly AuthorizationService $authorizationService)
     {
-        $this->authorizationService = $authorizationService;
     }
 
     public function getName(): string
@@ -25,7 +22,6 @@ class HealthCheck implements CheckInterface
     public function check(CheckOptions $options): array
     {
         $result = new CheckResult('Validate Dispatch access control policies');
-
         $result->set(CheckResult::STATUS_SUCCESS);
         try {
             $this->authorizationService->validateConfiguration();

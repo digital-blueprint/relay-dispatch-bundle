@@ -6,6 +6,7 @@
 * Add property types, modernize code, and refactor
 * Set up in-memory database for testing, add API tests
 * Replace deprecate EntityNormalizer by new output group handling from core
+* Replace ApiPlatform providers/processors by our own AbstractDataProviders/AbstractDataProcessors from core
 
 ## 0.6.7
 
