@@ -22,23 +22,15 @@ class GroupService implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /** @var AuthorizationService */
-    private $auth;
+    private ?array $config = null;
 
-    /** @var IriConverterInterface */
-    private $iriConverter;
-
-    /** @var array */
-    private $config;
-
-    public function __construct(AuthorizationService $auth, IriConverterInterface $iriConverter)
+    public function __construct(
+        private readonly AuthorizationService $authorizationService,
+        private readonly IriConverterInterface $iriConverter)
     {
-        $this->config = [];
-        $this->auth = $auth;
-        $this->iriConverter = $iriConverter;
     }
 
-    public function setConfig(array $config)
+    public function setConfig(array $config): void
     {
         $this->config = $config;
     }
@@ -50,7 +42,7 @@ class GroupService implements LoggerAwareInterface
 
     public function getGroups(int $currentPageNumber, int $maxNumItemsPerPage, array $options = []): array
     {
-        $groups = $this->auth->getGroupIdsForCurrentUser();
+        $groups = $this->authorizationService->getGroupIdsForCurrentUser();
         $groupsMyAccess = [];
         foreach (array_slice($groups, Pagination::getFirstItemIndex($currentPageNumber, $maxNumItemsPerPage), $maxNumItemsPerPage) as $groupId) {
             $groupsMyAccess[] = $this->createGroup($groupId);
@@ -84,7 +76,7 @@ class GroupService implements LoggerAwareInterface
         $group->setCountry($entity->getLocalDataValue(
             $this->getAddressAttributes()[Configuration::GROUP_COUNTRY_ATTRIBUTE]) ?? '');
 
-        foreach ($this->auth->getGroupRolesForCurrentUser($groupId) as $groupRole) {
+        foreach ($this->authorizationService->getGroupRolesForCurrentUser($groupId) as $groupRole) {
             $group->addGroupRole($groupRole);
         }
 

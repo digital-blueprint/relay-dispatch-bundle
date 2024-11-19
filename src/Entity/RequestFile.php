@@ -7,6 +7,7 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 date_default_timezone_set('UTC');
 
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
+use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -17,78 +18,51 @@ class RequestFile
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
-    private $identifier;
+    private ?string $identifier = null;
 
-    /**
-     * @var \DateTimeInterface
-     */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
-    private $dateCreated;
+    private ?\DateTimeInterface $dateCreated = null;
 
-    /**
-     * @var Request
-     */
     #[ORM\JoinColumn(name: 'dispatch_request_identifier', referencedColumnName: 'identifier')]
     #[ORM\ManyToOne(targetEntity: Request::class, inversedBy: 'files')]
     #[Groups(['DispatchRequestFile:output'])]
-    private $request;
+    private ?Request $request = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 50)]
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequestFile:input'])]
-    private $dispatchRequestIdentifier;
+    private ?string $dispatchRequestIdentifier = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequestFile:input', 'DispatchRequest:output'])]
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchRequestFile:output'])]
-    private $contentUrl = '';
+    private ?string $contentUrl = null;
 
     /**
      * @var resource|string|int|false
      */
     #[ORM\Column(type: 'binary', length: 209715200)]
-    private $data;
+    private mixed $data;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 100)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
-    private $fileFormat;
+    private ?string $fileFormat = null;
 
-    /**
-     * @var int
-     */
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
-    private $contentSize;
+    private int $contentSize = 0;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 100)]
-    private $fileStorageSystem;
+    private string $fileStorageSystem = DispatchService::FILE_STORAGE_DATABASE;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 1000)]
-    private $fileStorageIdentifier;
+    #[ORM\Column(type: 'string', length: 1000, nullable: true)]
+    private ?string $fileStorageIdentifier = null;
 
-    public function getIdentifier(): string
+    public function getIdentifier(): ?string
     {
-        return (string) $this->identifier;
+        return $this->identifier;
     }
 
     public function setIdentifier(string $identifier): void
@@ -96,7 +70,7 @@ class RequestFile
         $this->identifier = $identifier;
     }
 
-    public function getDateCreated(): \DateTimeInterface
+    public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->dateCreated;
     }
@@ -106,12 +80,12 @@ class RequestFile
         $this->dateCreated = \DateTimeImmutable::createFromInterface($dateCreated);
     }
 
-    public function getDispatchRequest(): Request
+    public function getDispatchRequest(): ?Request
     {
         return $this->request;
     }
 
-    public function getDispatchRequestIdentifier(): string
+    public function getDispatchRequestIdentifier(): ?string
     {
         return $this->dispatchRequestIdentifier;
     }
@@ -121,7 +95,7 @@ class RequestFile
         $this->dispatchRequestIdentifier = $dispatchRequestIdentifier;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -136,7 +110,7 @@ class RequestFile
      *
      * @throws \Exception
      */
-    public function getData()
+    public function getData(): mixed
     {
         // If the file is stored in the blob storage system, the contentUrl should already be set at that time
         if ($this->fileStorageSystem === 'blob') {
@@ -160,7 +134,7 @@ class RequestFile
     /**
      * @param $data resource|string
      */
-    public function setData($data): void
+    public function setData(mixed $data): void
     {
         $this->contentUrl = '';
         $this->data = $data;
@@ -185,7 +159,7 @@ class RequestFile
         return $this->contentUrl;
     }
 
-    public function isContentUrlSet(): bool
+    private function isContentUrlSet(): bool
     {
         return $this->contentUrl !== '' && $this->contentUrl !== null;
     }
@@ -195,7 +169,7 @@ class RequestFile
         $this->contentUrl = $contentUrl;
     }
 
-    public function getFileFormat(): string
+    public function getFileFormat(): ?string
     {
         return $this->fileFormat;
     }
@@ -220,7 +194,7 @@ class RequestFile
         $this->fileStorageSystem = $fileStorageSystem;
     }
 
-    public function getFileStorageIdentifier(): string
+    public function getFileStorageIdentifier(): ?string
     {
         return $this->fileStorageIdentifier;
     }

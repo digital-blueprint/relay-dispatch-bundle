@@ -6,9 +6,9 @@ namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\State\Pagination\PartialPaginatorInterface;
 use ApiPlatform\State\ProviderInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\CoreBundle\Rest\Query\Pagination\Pagination;
 use Dbp\Relay\CoreBundle\Rest\Query\Pagination\WholeResultPaginator;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
@@ -22,28 +22,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class RequestProvider extends AbstractController implements ProviderInterface
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
+    use CustomControllerTrait;
 
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
-    /**
-     * @return PartialPaginatorInterface|Request
-     */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         if ($operation instanceof CollectionOperationInterface) {
             $filters = $context['filters'] ?? [];
@@ -52,7 +42,7 @@ final class RequestProvider extends AbstractController implements ProviderInterf
             if ($groupId === null) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'groupId query parameter missing');
             }
-            $this->auth->checkCanReadMetadata($groupId);
+            $this->authorizationService->checkCanReadMetadata($groupId);
 
             return new WholeResultPaginator(
                 $this->dispatchService->getRequestsForGroupId($groupId),
@@ -63,7 +53,7 @@ final class RequestProvider extends AbstractController implements ProviderInterf
             assert(is_string($id));
             $request = $this->dispatchService->getRequestById($id);
             $groupId = $request->getGroupId();
-            $this->auth->checkCanReadMetadata($groupId);
+            $this->authorizationService->checkCanReadMetadata($groupId);
 
             return $request;
         }

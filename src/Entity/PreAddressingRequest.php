@@ -12,46 +12,33 @@ use Symfony\Component\Validator\Constraints as Assert;
 class PreAddressingRequest
 {
     #[Groups(['DispatchPreAddressingRequest:output'])]
-    private $identifier;
+    private ?string $identifier = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchPreAddressingRequest:output', 'DispatchPreAddressingRequest:input', 'DispatchRequest:output'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $givenName;
+    private ?string $givenName = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchPreAddressingRequest:output', 'DispatchPreAddressingRequest:input', 'DispatchRequest:output'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $familyName;
+    private ?string $familyName = null;
 
-    /**
-     * @var \DateTimeInterface
-     */
     #[Groups(['DispatchPreAddressingRequest:output', 'DispatchPreAddressingRequest:input'])] // I could not find an Assert that doesn't cause an error to do proper checks
     #[Assert\NotBlank]
-    private $birthDate;
+    private ?\DateTimeInterface $birthDate = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchPreAddressingRequest:output'])]
-    private $dualDeliveryID;
+    private ?string $dualDeliveryID = null;
 
     public function __construct()
     {
-        //        $this->recipients = new ArrayCollection();
     }
 
-    public function getIdentifier(): string
+    public function getIdentifier(): ?string
     {
-        return (string) $this->identifier;
+        return $this->identifier;
     }
 
-    public function setIdentifier(string $identifier): void
+    public function setIdentifier(?string $identifier): void
     {
         $this->identifier = $identifier;
     }
@@ -61,7 +48,7 @@ class PreAddressingRequest
         return $this->givenName;
     }
 
-    public function setGivenName(string $givenName): void
+    public function setGivenName(?string $givenName): void
     {
         $this->givenName = $givenName;
     }
@@ -71,27 +58,27 @@ class PreAddressingRequest
         return $this->familyName;
     }
 
-    public function setFamilyName(string $familyName): void
+    public function setFamilyName(?string $familyName): void
     {
         $this->familyName = $familyName;
     }
 
-    public function getBirthDate(): \DateTimeInterface
+    public function getBirthDate(): ?\DateTimeInterface
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTimeInterface $birthDate): void
+    public function setBirthDate(?\DateTimeInterface $birthDate): void
     {
         $this->birthDate = $birthDate;
     }
 
-    public function getDualDeliveryID(): string
+    public function getDualDeliveryID(): ?string
     {
         return $this->dualDeliveryID;
     }
 
-    public function setDualDeliveryID(string $dualDeliveryID): void
+    public function setDualDeliveryID(?string $dualDeliveryID): void
     {
         $this->dualDeliveryID = $dualDeliveryID;
     }

@@ -14,7 +14,6 @@ use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDeliveryNotification\Stat
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\NullLogger;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -25,20 +24,18 @@ class DualDeliveryService implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    public const DOCUMENT_MIME_TYPE = 'application/pdf';
+
     private const APPLICATION_ID = 'relay-dispatch-bundle';
     private const APPLICATION_VERSION = '0.1';
 
-    private $config;
-
-    public const DOCUMENT_MIME_TYPE = 'application/pdf';
+    private ?array $config = null;
 
     public function __construct()
     {
-        $this->logger = new NullLogger();
-        $this->config = [];
     }
 
-    public function setConfig(array $config)
+    public function setConfig(array $config): void
     {
         $this->config = $config;
     }

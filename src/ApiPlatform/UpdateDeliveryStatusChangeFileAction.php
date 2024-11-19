@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
@@ -16,14 +17,12 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final class UpdateDeliveryStatusChangeFileAction extends AbstractController
 {
-    private DispatchService $dispatchService;
+    use CustomControllerTrait;
 
-    private AuthorizationService $auth;
-
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
     /**
@@ -31,8 +30,8 @@ final class UpdateDeliveryStatusChangeFileAction extends AbstractController
      */
     public function __invoke(Request $request): DeliveryStatusChange
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         /** @var ?string $dispatchRequestIdentifier */
         $dispatchRequestIdentifier = $request->request->get('dispatchRequestIdentifier');
@@ -41,7 +40,7 @@ final class UpdateDeliveryStatusChangeFileAction extends AbstractController
         }
         // Check if current person owns the request
         $dispatchRequest = $this->dispatchService->getRequestById($dispatchRequestIdentifier);
-        $this->auth->checkCanWrite($dispatchRequest->getGroupId());
+        $this->authorizationService->checkCanWrite($dispatchRequest->getGroupId());
 
         $dispatchDeliveryStatusChangeIdentifier = $request->attributes->get('identifier');
         $dispatchDeliveryStatusChange = $this->dispatchService->getDeliveryStatusChangeById($dispatchDeliveryStatusChangeIdentifier);

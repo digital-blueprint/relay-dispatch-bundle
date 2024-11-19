@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
@@ -20,19 +21,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RequestRecipientProcessor extends AbstractController implements ProcessorInterface
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
+    use CustomControllerTrait;
 
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
     /**
@@ -40,38 +34,23 @@ class RequestRecipientProcessor extends AbstractController implements ProcessorI
      */
     public function process($data, Operation $operation, array $uriVariables = [], array $context = [])
     {
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
+
+        assert($data instanceof RequestRecipient);
+        $requestRecipient = $data;
+
+        // Check if current person owns the request
+        $request = $this->dispatchService->getRequestById($requestRecipient->getDispatchRequestIdentifier());
+        $this->authorizationService->checkCanWrite($request->getGroupId());
+
         if ($operation instanceof DeleteOperationInterface) {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-            $this->auth->checkCanUse();
-
-            $requestRecipient = $data;
-            assert($requestRecipient instanceof RequestRecipient);
-
-            // Check if current person owns the request
-            $request = $this->dispatchService->getRequestById($requestRecipient->getDispatchRequestIdentifier());
-
-            $this->auth->checkCanWrite($request->getGroupId());
-
             if ($request->isSubmitted()) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
             }
-
             $this->dispatchService->removeRequestRecipientById($requestRecipient->getIdentifier());
         } elseif ($operation instanceof Post) {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-            $this->auth->checkCanUse();
-
-            $requestRecipient = $data;
-            assert($requestRecipient instanceof RequestRecipient);
-
-            // Check if current person owns the request
-            $request = $this->dispatchService->getRequestById($requestRecipient->getDispatchRequestIdentifier());
-
-            $this->auth->checkCanWrite($request->getGroupId());
-
-            // Check if the recipient is valid
             $requestRecipient->postValidityCheck();
-
             $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
 
             return $requestRecipient;

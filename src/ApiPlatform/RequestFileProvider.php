@@ -7,6 +7,7 @@ namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
@@ -17,19 +18,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 final class RequestFileProvider extends AbstractController implements ProviderInterface
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
+    use CustomControllerTrait;
 
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
     /**
@@ -37,8 +31,8 @@ final class RequestFileProvider extends AbstractController implements ProviderIn
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         if ($operation instanceof CollectionOperationInterface) {
             return [];
@@ -47,7 +41,7 @@ final class RequestFileProvider extends AbstractController implements ProviderIn
             assert(is_string($id));
             $requestFile = $this->dispatchService->getRequestFileById($id);
             $request = $this->dispatchService->getRequestById($requestFile->getDispatchRequestIdentifier());
-            $this->auth->checkCanReadContent($request->getGroupId());
+            $this->authorizationService->checkCanReadContent($request->getGroupId());
 
             return $requestFile;
         }

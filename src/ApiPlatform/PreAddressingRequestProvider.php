@@ -6,6 +6,7 @@ namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\PreAddressingRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,14 +17,11 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 final class PreAddressingRequestProvider extends AbstractController implements ProviderInterface
 {
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
+    use CustomControllerTrait;
 
-    public function __construct(AuthorizationService $auth)
+    public function __construct(
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->auth = $auth;
     }
 
     /**
@@ -31,8 +29,8 @@ final class PreAddressingRequestProvider extends AbstractController implements P
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         throw new MethodNotAllowedHttpException(['POST']);
     }

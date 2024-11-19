@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
@@ -16,20 +17,12 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final class CreateRequestFileAction extends AbstractController
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
+    use CustomControllerTrait;
 
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
-
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
     /**
@@ -37,8 +30,8 @@ final class CreateRequestFileAction extends AbstractController
      */
     public function __invoke(Request $request): RequestFile
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         /** @var ?string */
         $dispatchRequestIdentifier = $request->request->get('dispatchRequestIdentifier');
@@ -50,7 +43,7 @@ final class CreateRequestFileAction extends AbstractController
         // Check if current person owns the request
         $dispatchRequest = $this->dispatchService->getRequestById($dispatchRequestIdentifier);
 
-        $this->auth->checkCanWrite($dispatchRequest->getGroupId());
+        $this->authorizationService->checkCanWrite($dispatchRequest->getGroupId());
 
         if ($dispatchRequest->isSubmitted()) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');

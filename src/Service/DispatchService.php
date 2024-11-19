@@ -47,7 +47,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LogLevel;
-use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,70 +58,24 @@ class DispatchService implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var PersonProviderInterface
-     */
-    private $personProvider;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var MessageBusInterface
-     */
-    private $bus;
-
-    /**
-     * @var string
-     */
-    private $certPassword;
-
-    /**
-     * @var string
-     */
-    private $cert;
-
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var DualDeliveryService
-     */
-    private $dd;
-
-    /**
-     * @var mixed
-     */
-    private $fileStorage;
-
-    /**
-     * @var BlobService
-     */
-    private $blobService;
+    private ?string $certPassword = null;
+    private ?string $cert = null;
+    private ?string $url = null;
+    private ?string $fileStorage = null;
 
     public const FILE_STORAGE_DATABASE = 'database';
     public const FILE_STORAGE_BLOB = 'blob';
 
     public function __construct(
-        PersonProviderInterface $personProvider,
-        EntityManagerInterface $em,
-        MessageBusInterface $bus,
-        DualDeliveryService $dd,
-        BlobService $blobService
-    ) {
-        $this->personProvider = $personProvider;
-        $this->em = $em;
-        $this->bus = $bus;
-        $this->dd = $dd;
-        $this->logger = new NullLogger();
-        $this->blobService = $blobService;
+        private readonly PersonProviderInterface $personProvider,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly MessageBusInterface $bus,
+        private readonly DualDeliveryService $dualDeliveryService,
+        private readonly BlobService $blobService)
+    {
     }
 
-    public function setConfig(array $config)
+    public function setConfig(array $config): void
     {
         $this->certPassword = $config['cert_password'] ?? '';
         $this->cert = $config['cert'] ?? '';
@@ -133,17 +86,17 @@ class DispatchService implements LoggerAwareInterface
     private function getCurrentPerson(): Person
     {
         $person = $this->personProvider->getCurrentPerson();
-
         if (!$person) {
-            throw ApiError::withDetails(Response::HTTP_FORBIDDEN, "Current person wasn't found!", 'dispatch:current-person-not-found');
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, "Current person wasn't found!",
+                'dispatch:current-person-not-found');
         }
 
         return $person;
     }
 
-    public function checkConnection()
+    public function checkConnection(): void
     {
-        $this->em->getConnection()->getNativeConnection();
+        $this->entityManager->getConnection()->getNativeConnection();
     }
 
     /**
@@ -152,7 +105,7 @@ class DispatchService implements LoggerAwareInterface
     public function getRequestById(string $identifier): Request
     {
         /** @var Request $request */
-        $request = $this->em
+        $request = $this->entityManager
             ->getRepository(Request::class)
             ->find($identifier);
 
@@ -174,7 +127,7 @@ class DispatchService implements LoggerAwareInterface
     public function getDeliveryStatusChangeById(string $identifier): ?DeliveryStatusChange
     {
         /** @var DeliveryStatusChange $deliveryStatusChange */
-        $deliveryStatusChange = $this->em
+        $deliveryStatusChange = $this->entityManager
             ->getRepository(DeliveryStatusChange::class)
             ->find($identifier);
 
@@ -201,7 +154,7 @@ class DispatchService implements LoggerAwareInterface
     public function getRequestRecipientById(string $identifier): RequestRecipient
     {
         /** @var RequestRecipient $requestRecipient */
-        $requestRecipient = $this->em
+        $requestRecipient = $this->entityManager
             ->getRepository(RequestRecipient::class)
             ->find($identifier);
 
@@ -221,7 +174,7 @@ class DispatchService implements LoggerAwareInterface
     public function getRequestFileById(string $identifier): ?RequestFile
     {
         /** @var RequestFile $requestFile */
-        $requestFile = $this->em
+        $requestFile = $this->entityManager
             ->getRepository(RequestFile::class)
             ->find($identifier);
 
@@ -250,7 +203,7 @@ class DispatchService implements LoggerAwareInterface
     public function getRequestFilesByRequestId(string $identifier): array
     {
         /** @var RequestFile[] $requestFiles */
-        $requestFiles = $this->em
+        $requestFiles = $this->entityManager
             ->getRepository(RequestFile::class)
             ->findBy(['request' => $identifier]);
 
@@ -268,7 +221,7 @@ class DispatchService implements LoggerAwareInterface
      */
     public function getNotFinishedRequestRecipients(): array
     {
-        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder = $this->entityManager->createQueryBuilder();
         $query = $queryBuilder->select('rr')
             ->from(RequestRecipient::class, 'rr')
             ->leftJoin('rr.request', 'r')
@@ -284,7 +237,7 @@ class DispatchService implements LoggerAwareInterface
      */
     public function getRequestsForGroupId(string $groupId): array
     {
-        $requests = $this->em
+        $requests = $this->entityManager
             ->getRepository(Request::class)
             ->findBy(['groupId' => $groupId]);
 
@@ -305,7 +258,7 @@ class DispatchService implements LoggerAwareInterface
      */
     public function getRequestRecipients(bool $submittedOnly = false, int $limit = 100): array
     {
-        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder = $this->entityManager->createQueryBuilder();
         $query = $queryBuilder->select('rr')
             ->from(RequestRecipient::class, 'rr')
             ->leftJoin('rr.request', 'r');
@@ -342,7 +295,7 @@ class DispatchService implements LoggerAwareInterface
         // instead of using "Request::fromRequest($request)".
         // "$this->em->merge" would fix it too, but is deprecated
         /** @var Request $request */
-        $request = $this->em
+        $request = $this->entityManager
             ->getRepository(Request::class)
             ->find($request->getIdentifier());
 
@@ -350,15 +303,15 @@ class DispatchService implements LoggerAwareInterface
             $this->blobService->deleteBlobFilesByRequest($request);
         }
 
-        $this->em->remove($request);
-        $this->em->flush();
+        $this->entityManager->remove($request);
+        $this->entityManager->flush();
     }
 
     public function updateRequest(Request $request): Request
     {
         try {
-            $this->em->persist($request);
-            $this->em->flush();
+            $this->entityManager->persist($request);
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Request could not be updated!', 'dispatch:request-not-created', ['message' => $e->getMessage()]);
         }
@@ -369,7 +322,6 @@ class DispatchService implements LoggerAwareInterface
     public function createRequest(Request $request): Request
     {
         $request->setIdentifier((string) Uuid::v4());
-
         if ($request->getPersonIdentifier() === null) {
             // we only store the "creator" atm, so, only when the request is created
             $personId = $this->getCurrentPerson()->getIdentifier();
@@ -379,8 +331,8 @@ class DispatchService implements LoggerAwareInterface
         $request->setDateCreated(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         try {
-            $this->em->persist($request);
-            $this->em->flush();
+            $this->entityManager->persist($request);
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'Request could not be created!', 'dispatch:request-not-created', ['message' => $e->getMessage()]);
         }
@@ -390,32 +342,28 @@ class DispatchService implements LoggerAwareInterface
 
     public function fetchAndSetPersonData(RequestRecipient $requestRecipient): void
     {
-        $personIdentifier = trim($requestRecipient->getPersonIdentifier() ?? '');
+        if ($requestRecipient->getPersonIdentifier() !== null) {
+            $options = [];
+            Options::requestLocalDataAttributes($options, ['birthDate', 'streetAddress', 'addressLocality', 'postalCode', 'addressCountry']);
 
-        if ($personIdentifier === '') {
-            return;
+            // This already throws an exception if the person is not found
+            $person = $this->personProvider->getPerson($requestRecipient->getPersonIdentifier(), $options);
+            $localData = $person->getLocalData();
+
+            $requestRecipient->setGivenName($person->getGivenName());
+            $requestRecipient->setFamilyName($person->getFamilyName());
+            try {
+                $birthDateString = $localData['birthDate'];
+                $birthDate = !Tools::isNullOrEmpty($birthDateString) ? new \DateTimeImmutable($birthDateString) : null;
+            } catch (\Exception $e) {
+                $birthDate = null;
+            }
+            $requestRecipient->setBirthDate($birthDate);
+            $requestRecipient->setStreetAddress($localData['streetAddress'] ?? '');
+            $requestRecipient->setPostalCode($localData['postalCode'] ?? '');
+            $requestRecipient->setAddressLocality($localData['addressLocality'] ?? '');
+            $requestRecipient->setAddressCountry($localData['addressCountry'] ?? '');
         }
-
-        $options = [];
-        Options::requestLocalDataAttributes($options, ['birthDate', 'streetAddress', 'addressLocality', 'postalCode', 'addressCountry']);
-
-        // This already throws an exception if the person is not found
-        $person = $this->personProvider->getPerson($personIdentifier, $options);
-        $localData = $person->getLocalData();
-
-        $requestRecipient->setGivenName($person->getGivenName());
-        $requestRecipient->setFamilyName($person->getFamilyName());
-        try {
-            $birthDateString = $localData['birthDate'];
-            $birthDate = !Tools::isNullOrEmpty($birthDateString) ? new \DateTimeImmutable($birthDateString) : null;
-        } catch (\Exception $e) {
-            $birthDate = null;
-        }
-        $requestRecipient->setBirthDate($birthDate);
-        $requestRecipient->setStreetAddress($localData['streetAddress'] ?? '');
-        $requestRecipient->setPostalCode($localData['postalCode'] ?? '');
-        $requestRecipient->setAddressLocality($localData['addressLocality'] ?? '');
-        $requestRecipient->setAddressCountry($localData['addressCountry'] ?? '');
     }
 
     public function handleRequestRecipientStorage(RequestRecipient $requestRecipient): RequestRecipient
@@ -424,11 +372,13 @@ class DispatchService implements LoggerAwareInterface
         $requestRecipient->setPostalDeliverable($requestRecipient->hasValidAddress());
         $this->doPreAddressingSoapRequestForRequestRecipient($requestRecipient);
 
-        if ($requestRecipient->getIdentifier() === '') {
+        if ($requestRecipient->getIdentifier() === null) {
             $this->createRequestRecipient($requestRecipient);
         } else {
             if ($requestRecipient->getDispatchRequest()->isSubmitted()) {
-                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');
+                throw ApiError::withDetails(Response::HTTP_BAD_REQUEST,
+                    'Submitted requests cannot be modified!',
+                    'dispatch:request-submitted-read-only');
             }
 
             $this->updateRequestRecipient($requestRecipient);
@@ -443,14 +393,14 @@ class DispatchService implements LoggerAwareInterface
         $request = $this->getRequestById($requestRecipient->getDispatchRequestIdentifier());
 
         $requestRecipient->setIdentifier((string) Uuid::v4());
-        $requestRecipient->setAppDeliveryID($this->dd->createAppDeliveryID());
+        $requestRecipient->setAppDeliveryID($this->dualDeliveryService->createAppDeliveryID());
         $requestRecipient->setRequest($request);
         $requestRecipient->setRecipientId('');
         $requestRecipient->setDateCreated(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         try {
-            $this->em->persist($requestRecipient);
-            $this->em->flush();
+            $this->entityManager->persist($requestRecipient);
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be created!', 'dispatch:request-recipient-not-created', ['message' => $e->getMessage()]);
         }
@@ -461,8 +411,8 @@ class DispatchService implements LoggerAwareInterface
     public function updateRequestRecipient(RequestRecipient $requestRecipient): RequestRecipient
     {
         try {
-            $this->em->persist($requestRecipient);
-            $this->em->flush();
+            $this->entityManager->persist($requestRecipient);
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestRecipient could not be updated!', 'dispatch:request-recipient-not-created', ['message' => $e->getMessage()]);
         }
@@ -473,7 +423,7 @@ class DispatchService implements LoggerAwareInterface
     public function removeRequestRecipientById(string $identifier)
     {
         /** @var RequestRecipient $requestRecipient */
-        $requestRecipient = $this->em
+        $requestRecipient = $this->entityManager
             ->getRepository(RequestRecipient::class)
             ->find($identifier);
 
@@ -493,8 +443,8 @@ class DispatchService implements LoggerAwareInterface
             }
         }
 
-        $this->em->remove($requestRecipient);
-        $this->em->flush();
+        $this->entityManager->remove($requestRecipient);
+        $this->entityManager->flush();
     }
 
     public function createRequestFile(File $uploadedFile, string $dispatchRequestIdentifier): RequestFile
@@ -527,8 +477,8 @@ class DispatchService implements LoggerAwareInterface
         $requestFile->setDateCreated(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
 
         try {
-            $this->em->persist($requestFile);
-            $this->em->flush();
+            $this->entityManager->persist($requestFile);
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'RequestFile could not be created!', 'dispatch:request-file-not-created', ['message' => $e->getMessage()]);
         }
@@ -589,8 +539,8 @@ class DispatchService implements LoggerAwareInterface
         }
 
         try {
-            $this->em->persist($deliveryStatusChange);
-            $this->em->flush();
+            $this->entityManager->persist($deliveryStatusChange);
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange could not be created!', 'dispatch:request-status-not-created', ['message' => $e->getMessage()]);
         }
@@ -637,8 +587,8 @@ class DispatchService implements LoggerAwareInterface
         $deliveryStatusChange->setFileIsUploadedManually(true);
 
         try {
-            $this->em->persist($deliveryStatusChange);
-            $this->em->flush();
+            $this->entityManager->persist($deliveryStatusChange);
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange could not be created!', 'dispatch:request-status-file-not-created', ['message' => $e->getMessage()]);
         }
@@ -649,7 +599,7 @@ class DispatchService implements LoggerAwareInterface
     public function removeDeliveryStatusChangeFileById(string $identifier): void
     {
         /** @var DeliveryStatusChange $deliveryStatusChange */
-        $deliveryStatusChange = $this->em
+        $deliveryStatusChange = $this->entityManager
             ->getRepository(DeliveryStatusChange::class)
             ->find($identifier);
 
@@ -668,8 +618,8 @@ class DispatchService implements LoggerAwareInterface
         $deliveryStatusChange->setFileIsUploadedManually(null);
 
         try {
-            $this->em->persist($deliveryStatusChange);
-            $this->em->flush();
+            $this->entityManager->persist($deliveryStatusChange);
+            $this->entityManager->flush();
         } catch (\Exception $e) {
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'DeliveryStatusChange file could not be deleted!', 'dispatch:request-status-file-not-deleted', ['message' => $e->getMessage()]);
         }
@@ -677,7 +627,7 @@ class DispatchService implements LoggerAwareInterface
 
     public function removeDeliveryStatusChangeByRecipientId(string $recipientIdentifier): void
     {
-        $deliveryStatusChangesQuery = $this->em
+        $deliveryStatusChangesQuery = $this->entityManager
             ->getRepository(DeliveryStatusChange::class)
             ->createQueryBuilder('s')
             ->where('s.dispatchRequestRecipientIdentifier = :recipientIdentifier')
@@ -690,15 +640,15 @@ class DispatchService implements LoggerAwareInterface
             // Remove DeliveryStatusChangeFiles
             $this->removeDeliveryStatusChangeFileById($deliveryStatusChange->getIdentifier());
 
-            $this->em->remove($deliveryStatusChange);
-            $this->em->flush();
+            $this->entityManager->remove($deliveryStatusChange);
+            $this->entityManager->flush();
         }
     }
 
     public function removeRequestFileById(string $identifier)
     {
         /** @var RequestFile $requestFile */
-        $requestFile = $this->em
+        $requestFile = $this->entityManager
             ->getRepository(RequestFile::class)
             ->find($identifier);
 
@@ -706,8 +656,8 @@ class DispatchService implements LoggerAwareInterface
             $this->blobService->deleteBlobFileByRequestFile($requestFile);
         }
 
-        $this->em->remove($requestFile);
-        $this->em->flush();
+        $this->entityManager->remove($requestFile);
+        $this->entityManager->flush();
     }
 
     /**
@@ -768,8 +718,7 @@ class DispatchService implements LoggerAwareInterface
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, "referenceNumber wasn't set correctly!", 'dispatch:request-invalid-reference-number');
         }
 
-        $name = $request->getName();
-        if (trim($name) === '') {
+        if (!$request->getName()) {
             throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'name must not be empty!', 'dispatch:request-name-empty');
         }
 
@@ -804,13 +753,13 @@ class DispatchService implements LoggerAwareInterface
 
     public function doPreAddressingSoapRequest(string $givenName, string $familyName, \DateTimeInterface $birthDate): DualDeliveryPreAddressingResponseType
     {
-        $service = $this->dd->getClient();
-        $recipientId = $this->dd->createRecipientId();
-        $appDeliveryId = $this->dd->createAppDeliveryID();
+        $service = $this->dualDeliveryService->getClient();
+        $recipientId = $this->dualDeliveryService->createRecipientId();
+        $appDeliveryId = $this->dualDeliveryService->createAppDeliveryID();
 
         $personName = new PersonNameType($givenName, new FamilyName($familyName));
         $physicalPerson = new PhysicalPersonType($personName, $birthDate ? $birthDate->format('Y-m-d') : null);
-        $senderProfile = $this->dd->getSenderProfile();
+        $senderProfile = $this->dualDeliveryService->getSenderProfile();
         $sender = new SenderType($senderProfile);
         $recipientData = new PersonDataType($physicalPerson);
         $recipientType = new RecipientType($recipientData);
@@ -855,7 +804,7 @@ class DispatchService implements LoggerAwareInterface
         return $response;
     }
 
-    public function doPreAddressingSoapRequestForPreAddressingRequest(PreAddressingRequest &$preAddressingRequest)
+    public function doPreAddressingSoapRequestForPreAddressingRequest(PreAddressingRequest &$preAddressingRequest): void
     {
         $response = $this->doPreAddressingSoapRequest($preAddressingRequest->getGivenName(), $preAddressingRequest->getFamilyName(), $preAddressingRequest->getBirthDate());
 
@@ -868,24 +817,22 @@ class DispatchService implements LoggerAwareInterface
         $preAddressingRequest->setDualDeliveryID($addressingResults[0]->getDualDeliveryID());
     }
 
-    public function doPreAddressingSoapRequestForRequestRecipient(RequestRecipient $requestRecipient)
+    public function doPreAddressingSoapRequestForRequestRecipient(RequestRecipient $requestRecipient): void
     {
-        if (!$requestRecipient->canDoPreAddressingRequest()) {
+        if ($requestRecipient->canDoPreAddressingRequest()) {
+            $response = $this->doPreAddressingSoapRequest($requestRecipient->getGivenName(), $requestRecipient->getFamilyName(), $requestRecipient->getBirthDate());
+
+            $addressingResults = $response->getAddressingResults();
+            $addressingResultData = $addressingResults->getAddressingResult() ?? [];
+            $requestRecipient->setElectronicallyDeliverable(!empty($addressingResultData));
+        } else {
             $requestRecipient->setElectronicallyDeliverable(false);
-
-            return;
         }
-
-        $response = $this->doPreAddressingSoapRequest($requestRecipient->getGivenName(), $requestRecipient->getFamilyName(), $requestRecipient->getBirthDate());
-
-        $addressingResults = $response->getAddressingResults();
-        $addressingResultData = $addressingResults->getAddressingResult() ?? [];
-        $requestRecipient->setElectronicallyDeliverable(count($addressingResultData) > 0);
     }
 
     public function doDualDeliveryStatusRequestSoapRequest(RequestRecipient $recipient): bool
     {
-        $service = $this->dd->getClient();
+        $service = $this->dualDeliveryService->getClient();
         $appDeliveryId = $recipient->getAppDeliveryID();
         $statusRequest = new StatusRequestType(null, $appDeliveryId);
         $this->logInfo('Doing status request', [
@@ -961,7 +908,7 @@ class DispatchService implements LoggerAwareInterface
 
     public function doDualDeliveryStatusRequestSoapRequestForAppDeliveryId(string $appDeliveryId, bool $printResponseXml = false, &$responseXml = null): DualNotificationRequestType
     {
-        $service = $this->dd->getClient();
+        $service = $this->dualDeliveryService->getClient();
         $statusRequest = new StatusRequestType(null, $appDeliveryId);
 
         try {
@@ -1013,7 +960,7 @@ class DispatchService implements LoggerAwareInterface
      */
     public function doDualDeliveryRequestSoapRequest(Request &$dispatchRequest, bool $printRequestXml = false): bool
     {
-        $service = $this->dd->getClient();
+        $service = $this->dualDeliveryService->getClient();
         $dualDeliveryPayloads = [];
 
         /** @var RequestFile[] $files */
@@ -1056,7 +1003,7 @@ class DispatchService implements LoggerAwareInterface
         //
         // Set sender data with organization and address
         //
-        $senderProfile = $this->dd->getSenderProfile();
+        $senderProfile = $this->dualDeliveryService->getSenderProfile();
         $senderFullName = trim($dispatchRequest->getSenderFullName() ?? '');
         $senderOrganizationName = trim($dispatchRequest->getSenderOrganizationName() ?? '');
 
@@ -1210,7 +1157,7 @@ class DispatchService implements LoggerAwareInterface
             // To solve this issue: Either explicitly call EntityManager#persist() on this unknown entity or configure cascade persist
             // this association in the mapping for example @ManyToOne(..,cascade={\\\"persist\\\"}). If you cannot find out which entity
             // causes the problem implement 'Dbp\\\\Relay\\\\DispatchBundle\\\\Entity\\\\Request#__toString()' to get a clue.
-            $queryBuilder = $this->em->createQueryBuilder();
+            $queryBuilder = $this->entityManager->createQueryBuilder();
             $query = $queryBuilder->update(RequestRecipient::class, 'r')
                 ->set('r.dualDeliveryID', ':dualDeliveryId')
                 ->where('r.identifier = :identifier')
@@ -1256,7 +1203,7 @@ class DispatchService implements LoggerAwareInterface
 
     public function getLastStatusChange(RequestRecipient $recipient): ?DeliveryStatusChange
     {
-        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder = $this->entityManager->createQueryBuilder();
         $query = $queryBuilder->select('dsc')
             ->from(DeliveryStatusChange::class, 'dsc')
             ->where('dsc.requestRecipient = :requestRecipient')
@@ -1270,7 +1217,7 @@ class DispatchService implements LoggerAwareInterface
 
     protected function setRecipientDeliveryEndDate(RequestRecipient $recipient)
     {
-        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder = $this->entityManager->createQueryBuilder();
         $query = $queryBuilder->update(RequestRecipient::class, 'r')
             ->set('r.deliveryEndDate', ':deliveryEndDate')
             ->where('r.identifier = :identifier')

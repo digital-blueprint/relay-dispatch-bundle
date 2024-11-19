@@ -7,6 +7,7 @@ namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 use ApiPlatform\Metadata\DeleteOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
@@ -17,29 +18,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class DeliveryStatusChangeFileProcessor extends AbstractController implements ProcessorInterface
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
+    use CustomControllerTrait;
 
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
-
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
-    /**
-     * @return void
-     */
-    public function process($data, Operation $operation, array $uriVariables = [], array $context = [])
+    public function process($data, Operation $operation, array $uriVariables = [], array $context = []): void
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         if ($operation instanceof DeleteOperationInterface) {
             $deliveryStatusChange = $data;
@@ -50,7 +40,7 @@ class DeliveryStatusChangeFileProcessor extends AbstractController implements Pr
             $requestIdentifier = $requestRecipient->getDispatchRequestIdentifier();
             $request = $this->dispatchService->getRequestById($requestIdentifier);
 
-            $this->auth->checkCanWrite($request->getGroupId());
+            $this->authorizationService->checkCanWrite($request->getGroupId());
 
             $this->dispatchService->removeDeliveryStatusChangeFileById($deliveryStatusChange->getIdentifier());
         } else {

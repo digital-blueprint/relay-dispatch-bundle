@@ -8,7 +8,7 @@ services:
     autowire: true
     autoconfigure: true
     arguments:
-      $em: '@doctrine.orm.dbp_relay_dispatch_bundle_entity_manager'
+      $entityManager: '@doctrine.orm.dbp_relay_dispatch_bundle_entity_manager'
 
   Dbp\Relay\DispatchBundle\Service\BlobService:
     autowire: true
@@ -24,10 +24,6 @@ services:
     autoconfigure: true
 
   Dbp\Relay\DispatchBundle\Authorization\AuthorizationService:
-    autowire: true
-    autoconfigure: true
-
-  Dbp\Relay\DispatchBundle\Authorization\EntityNormalizer:
     autowire: true
     autoconfigure: true
 

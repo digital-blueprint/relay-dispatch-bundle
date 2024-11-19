@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\DeleteOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
@@ -19,20 +20,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RequestFileProcessor extends AbstractController implements ProcessorInterface
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
+    use CustomControllerTrait;
 
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
-
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
     /**
@@ -40,8 +33,8 @@ class RequestFileProcessor extends AbstractController implements ProcessorInterf
      */
     public function process($data, Operation $operation, array $uriVariables = [], array $context = [])
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         if ($operation instanceof DeleteOperationInterface) {
             $requestFile = $data;
@@ -49,7 +42,7 @@ class RequestFileProcessor extends AbstractController implements ProcessorInterf
 
             $request = $this->dispatchService->getRequestById($requestFile->getDispatchRequestIdentifier());
 
-            $this->auth->checkCanWrite($request->getGroupId());
+            $this->authorizationService->checkCanWrite($request->getGroupId());
 
             if ($request->isSubmitted()) {
                 throw ApiError::withDetails(Response::HTTP_BAD_REQUEST, 'Submitted requests cannot be modified!', 'dispatch:request-submitted-read-only');

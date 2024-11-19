@@ -66,11 +66,11 @@ class Configuration implements ConfigurationInterface
     private function getAuthNode(): NodeDefinition
     {
         return AuthorizationConfigDefinition::create()
-        ->addPolicy(self::ROLE_USER, 'false', 'Returns true if the user is allowed to use the dispatch API.')
-        ->addPolicy(self::ROLE_GROUP_READER_METADATA, 'false', 'Returns true if the user has read access for the given group, limited to metadata.')
-        ->addPolicy(self::ROLE_GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.')
-        ->addPolicy(self::ROLE_GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.')
-        ->addPolicy(self::ROLE_GROUP_WRITER_READ_ADDRESS, 'false', 'Returns true if the user has write access for the given group and can read recipient addresses. Implies all reader/writer roles.')
+        ->addRole(self::ROLE_USER, 'false', 'Returns true if the user is allowed to use the dispatch API.')
+        ->addResourcePermission(self::ROLE_GROUP_READER_METADATA, 'false', 'Returns true if the user has read access for the given group, limited to metadata.')
+        ->addResourcePermission(self::ROLE_GROUP_READER_CONTENT, 'false', 'Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.')
+        ->addResourcePermission(self::ROLE_GROUP_WRITER, 'false', 'Returns true if the user has write access for the given group. Implies all reader roles.')
+        ->addResourcePermission(self::ROLE_GROUP_WRITER_READ_ADDRESS, 'false', 'Returns true if the user has write access for the given group and can read recipient addresses. Implies all reader/writer roles.')
         ->addAttribute(self::ATTRIBUTE_GROUPS, '[]', 'Returns an array of available group IDs.')
         ->getNodeDefinition();
     }

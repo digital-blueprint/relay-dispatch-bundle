@@ -7,6 +7,7 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 date_default_timezone_set('UTC');
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,119 +19,80 @@ class Request
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchRequest:output'])]
-    private $identifier;
+    private ?string $identifier = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['DispatchRequest:output:name', 'DispatchRequest:input'])]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['DispatchRequest:read_content', 'DispatchRequest:input'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var \DateTimeInterface
-     */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequest:output'])]
-    private $dateCreated;
+    private ?\DateTimeInterface $dateCreated = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchRequest:output'])]
-    private $personIdentifier;
+    private ?string $personIdentifier = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $senderFullName;
+    private ?string $senderFullName = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $senderOrganizationName;
+    private ?string $senderOrganizationName = null;
 
-    /**
-     * @var \DateTimeInterface
-     */
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     #[Groups(['DispatchRequest:output'])]
-    private $dateSubmitted;
+    private ?\DateTimeInterface $dateSubmitted = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 2)]
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 2, maxMessage: 'Only {{ limit }} letter country codes are allowed')]
-    private $senderAddressCountry;
+    private string $senderAddressCountry = '';
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 20, maxMessage: 'Only {{ limit }} letter postal codes are allowed')]
-    private $senderPostalCode;
+    private string $senderPostalCode = '';
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 120)]
+    #[ORM\Column(type: 'string', length: 120, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $senderAddressLocality;
+    private string $senderAddressLocality = '';
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 120)]
+    #[ORM\Column(type: 'string', length: 120, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $senderStreetAddress;
+    private string $senderStreetAddress = '';
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 10)]
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 10, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $senderBuildingNumber;
+    private string $senderBuildingNumber = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     #[Assert\NotNull]
-    private $groupId;
+    private ?string $groupId = null;
 
-    /**
-     * @var ?string
-     */
-    #[ORM\Column(type: 'string', length: 25)]
+    #[ORM\Column(type: 'string', length: 25, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 25, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $referenceNumber;
+    private ?string $referenceNumber = null;
 
     #[ORM\OneToMany(targetEntity: RequestRecipient::class, mappedBy: 'request')]
     #[ORM\OrderBy(['dateCreated' => 'ASC'])]
     #[Groups(['DispatchRequest:output'])]
-    private $recipients;
+    private Collection $recipients;
 
     #[ORM\OneToMany(targetEntity: RequestFile::class, mappedBy: 'request')]
     #[ORM\OrderBy(['dateCreated' => 'ASC'])]
-    #[Groups(['DispatchRequest:output:files'])]
-    private $files;
+    #[Groups(['DispatchRequest:read_content'])]
+    private Collection $files;
 
     public function __construct()
     {
@@ -138,9 +100,9 @@ class Request
         $this->files = new ArrayCollection();
     }
 
-    public function getIdentifier(): string
+    public function getIdentifier(): ?string
     {
-        return (string) $this->identifier;
+        return $this->identifier;
     }
 
     public function setIdentifier(string $identifier): void
@@ -148,7 +110,7 @@ class Request
         $this->identifier = $identifier;
     }
 
-    public function getDateCreated(): \DateTimeInterface
+    public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->dateCreated;
     }
@@ -188,15 +150,12 @@ class Request
         $this->senderOrganizationName = $senderOrganizationName;
     }
 
-    /**
-     * @return ArrayCollection|RequestRecipient[]
-     */
-    public function getRecipients()
+    public function getRecipients(): Collection
     {
         return $this->recipients;
     }
 
-    public function getFiles()
+    public function getFiles(): Collection
     {
         return $this->files;
     }
@@ -266,9 +225,9 @@ class Request
         $this->senderBuildingNumber = $senderBuildingNumber;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
-        return $this->name ?? '';
+        return $this->name;
     }
 
     public function setName(string $name): void
@@ -276,7 +235,7 @@ class Request
         $this->name = $name;
     }
 
-    public function getGroupId(): string
+    public function getGroupId(): ?string
     {
         return $this->groupId;
     }
@@ -286,12 +245,12 @@ class Request
         $this->groupId = $groupId;
     }
 
-    public function setRequestRecipients(ArrayCollection $recipients)
+    public function setRequestRecipients(Collection $recipients): void
     {
         $this->recipients = $recipients;
     }
 
-    public function setRequestFiles(ArrayCollection $files)
+    public function setRequestFiles(Collection $files): void
     {
         $this->files = $files;
     }

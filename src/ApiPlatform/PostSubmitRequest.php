@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\ApiPlatform;
 
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
@@ -11,29 +12,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostSubmitRequest extends AbstractController
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
+    use CustomControllerTrait;
 
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
     public function __invoke(string $identifier): Request
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         $request = $this->dispatchService->getRequestById($identifier);
 
-        $this->auth->checkCanWrite($request->getGroupId());
+        $this->authorizationService->checkCanWrite($request->getGroupId());
 
         $this->dispatchService->checkRequestReadyForSubmit($request);
         $this->dispatchService->submitRequest($request);

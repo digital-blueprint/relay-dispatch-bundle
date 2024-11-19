@@ -20,55 +20,21 @@ class BlobService implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var mixed
-     */
-    private $blobKey;
-    /**
-     * @var mixed
-     */
-    private $blobBucketId;
+    private ?string $blobKey = null;
+    private ?string $blobBucketId = null;
 
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $router;
+    private ?string $blobBaseUrl = null;
+    private ?string $blobIdpUrl = null;
+    private ?string $blobOauthClientId = null;
+    private ?string $blobOauthClientSecret = null;
 
-    /**
-     * @var string
-     */
-    private $blobBaseUrl;
+    private ?BlobApi $blobApi = null;
 
-    /**
-     * @var ?BlobApi
-     */
-    private $blobApi;
-
-    /**
-     * @var string
-     */
-    private $blobIdpUrl;
-
-    /**
-     * @var string
-     */
-    private $blobOauthClientId;
-
-    /**
-     * @var string
-     */
-    private $blobOauthClientSecret;
-
-    public function __construct(UrlGeneratorInterface $router)
+    public function __construct(private readonly UrlGeneratorInterface $router)
     {
-        $this->router = $router;
-        $this->blobBaseUrl = '';
-        $this->blobKey = '';
-        $this->blobBucketId = '';
-        $this->blobApi = null;
     }
 
-    public function setConfig(array $config)
+    public function setConfig(array $config): void
     {
         $this->blobBaseUrl = $config['blob_base_url'] ?? '';
         $this->blobKey = $config['blob_key'] ?? '';

@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\Rest\CustomControllerTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
@@ -21,42 +22,32 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RequestProcessor extends AbstractController implements ProcessorInterface
 {
-    /**
-     * @var DispatchService
-     */
-    private $dispatchService;
+    use CustomControllerTrait;
 
-    /**
-     * @var AuthorizationService
-     */
-    private $auth;
-
-    public function __construct(DispatchService $dispatchService, AuthorizationService $auth)
+    public function __construct(
+        private readonly DispatchService $dispatchService,
+        private readonly AuthorizationService $authorizationService)
     {
-        $this->dispatchService = $dispatchService;
-        $this->auth = $auth;
     }
 
     /**
-     * @param mixed $data
-     *
      * @return Request|void
      */
-    public function process($data, Operation $operation, array $uriVariables = [], array $context = [])
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $this->auth->checkCanUse();
+        $this->requireAuthentication();
+        $this->authorizationService->checkCanUse();
 
         // We need to make sure the user has write access to the old group in case the user changes it
         if (isset($context['previous_data'])) {
             $previousData = $context['previous_data'];
             assert($previousData instanceof Request);
-            $this->auth->checkCanWrite($previousData->getGroupId());
+            $this->authorizationService->checkCanWrite($previousData->getGroupId());
         }
 
         $request = $data;
         assert($request instanceof Request);
-        $this->auth->checkCanWrite($request->getGroupId());
+        $this->authorizationService->checkCanWrite($request->getGroupId());
 
         if ($operation instanceof DeleteOperationInterface) {
             if ($request->isSubmitted()) {

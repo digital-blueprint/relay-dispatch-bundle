@@ -8,6 +8,7 @@ date_default_timezone_set('UTC');
 
 use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\Vendo;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
+use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -25,111 +26,66 @@ class DeliveryStatusChange
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $identifier;
+    private ?string $identifier = null;
 
-    /**
-     * @var \DateTimeInterface
-     */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $dateCreated;
+    private ?\DateTimeInterface $dateCreated = null;
 
-    /**
-     * @var RequestRecipient
-     */
     #[ORM\JoinColumn(name: 'dispatch_request_recipient_identifier', referencedColumnName: 'identifier')]
     #[ORM\ManyToOne(targetEntity: RequestRecipient::class, inversedBy: 'statusChanges')]
     #[Groups(['DispatchDeliveryStatusChange:output'])]
-    private $requestRecipient;
+    private ?RequestRecipient $requestRecipient = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchDeliveryStatusChange:output'])]
-    private $dispatchRequestRecipientIdentifier;
+    private ?string $dispatchRequestRecipientIdentifier = null;
 
-    /**
-     * @var int
-     */
     #[ORM\Column(type: 'integer')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $statusType;
+    private ?int $statusType = null;
 
-    /**
-     * @var string
-     */
-    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $dispatchStatus;
-
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'text')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $description;
+    private ?string $description = null;
 
     /**
      * @var resource|string|int|false
      */
-    #[ORM\Column(type: 'binary', length: 209715200)]
+    #[ORM\Column(type: 'binary', length: 209715200, nullable: true)]
     private $fileData;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
-    private $fileFormat;
+    private ?string $fileFormat = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchDeliveryStatusChange:output'])]
-    private $fileContentUrl;
+    private ?string $fileContentUrl = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 100)]
-    private $fileStorageSystem;
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private string $fileStorageSystem = DispatchService::FILE_STORAGE_DATABASE;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 1000)]
-    private $fileStorageIdentifier;
+    #[ORM\Column(type: 'string', length: 1000, nullable: true)]
+    private ?string $fileStorageIdentifier = null;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
-    private $fileDateAdded;
+    private ?\DateTimeInterface $fileDateAdded = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 50)]
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
-    private $fileUploaderIdentifier;
+    private ?string $fileUploaderIdentifier = null;
 
-    /**
-     * @var bool
-     */
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
-    private $fileIsUploadedManually;
+    private ?bool $fileIsUploadedManually = null;
 
-    /**
-     * @var int
-     */
     #[ORM\Column(type: 'integer')]
-    private $orderId;
+    private ?int $orderId = null;
 
     public function getIdentifier(): string
     {
-        return (string) $this->identifier;
+        return $this->identifier;
     }
 
     public function setIdentifier(string $identifier): void
@@ -137,7 +93,7 @@ class DeliveryStatusChange
         $this->identifier = $identifier;
     }
 
-    public function getDateCreated(): \DateTimeInterface
+    public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->dateCreated;
     }
@@ -147,12 +103,12 @@ class DeliveryStatusChange
         $this->dateCreated = \DateTimeImmutable::createFromInterface($dateCreated);
     }
 
-    public function getDispatchRequestRecipient(): RequestRecipient
+    public function getDispatchRequestRecipient(): ?RequestRecipient
     {
         return $this->requestRecipient;
     }
 
-    public function getDispatchRequestRecipientIdentifier(): string
+    public function getDispatchRequestRecipientIdentifier(): ?string
     {
         return $this->dispatchRequestRecipientIdentifier;
     }
@@ -162,7 +118,7 @@ class DeliveryStatusChange
         $this->dispatchRequestRecipientIdentifier = $dispatchRequestRecipientIdentifier;
     }
 
-    public function getStatusType(): int
+    public function getStatusType(): ?int
     {
         return $this->statusType;
     }
@@ -206,7 +162,7 @@ class DeliveryStatusChange
         $this->fileContentUrl = $contentUrl;
     }
 
-    public function getFileFormat(): string
+    public function getFileFormat(): ?string
     {
         return $this->fileFormat;
     }
@@ -249,7 +205,7 @@ class DeliveryStatusChange
         $this->fileData = $data;
     }
 
-    public function getFileStorageSystem(): ?string
+    public function getFileStorageSystem(): string
     {
         return $this->fileStorageSystem;
     }
@@ -259,7 +215,7 @@ class DeliveryStatusChange
         $this->fileStorageSystem = $fileStorageSystem;
     }
 
-    public function getFileStorageIdentifier(): string
+    public function getFileStorageIdentifier(): ?string
     {
         return $this->fileStorageIdentifier;
     }
@@ -269,7 +225,7 @@ class DeliveryStatusChange
         $this->fileStorageIdentifier = $fileStorageIdentifier;
     }
 
-    public function getFileDateAdded(): \DateTimeInterface
+    public function getFileDateAdded(): ?\DateTimeInterface
     {
         return $this->fileDateAdded;
     }
@@ -279,7 +235,7 @@ class DeliveryStatusChange
         $this->fileDateAdded = $fileDateAdded !== null ? \DateTimeImmutable::createFromInterface($fileDateAdded) : null;
     }
 
-    public function getFileUploaderIdentifier(): string
+    public function getFileUploaderIdentifier(): ?string
     {
         return $this->fileUploaderIdentifier;
     }
@@ -289,7 +245,7 @@ class DeliveryStatusChange
         $this->fileUploaderIdentifier = $fileUploaderIdentifier;
     }
 
-    public function getFileIsUploadedManually(): bool
+    public function getFileIsUploadedManually(): ?bool
     {
         return $this->fileIsUploadedManually;
     }

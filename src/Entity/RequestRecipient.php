@@ -8,6 +8,7 @@ date_default_timezone_set('UTC');
 
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -20,161 +21,104 @@ class RequestRecipient
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $identifier;
+    private ?string $identifier = null;
 
-    /**
-     * @var \DateTimeInterface
-     */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $dateCreated;
+    private ?\DateTimeInterface $dateCreated = null;
 
-    /**
-     * @var Request
-     */
-    #[ORM\JoinColumn(name: 'dispatch_request_identifier', referencedColumnName: 'identifier')]
+    #[ORM\JoinColumn(name: 'dispatch_request_identifier', referencedColumnName: 'identifier', nullable: true)]
     #[ORM\ManyToOne(targetEntity: Request::class, inversedBy: 'recipients')]
     #[Groups(['DispatchRequestRecipient:output'])]
-    private $request;
+    private ?Request $request = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 50)]
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequestRecipient:input'])]
-    private $dispatchRequestIdentifier;
+    private ?string $dispatchRequestIdentifier = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 50)]
-    private $recipientId;
+    private ?string $recipientId = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequestRecipient:input', 'DispatchRequest:output'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $givenName;
+    private ?string $givenName = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequestRecipient:input', 'DispatchRequest:output'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $familyName;
+    private ?string $familyName = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 2)]
-    #[Groups(['DispatchRequestRecipient:output:addressCountry', 'DispatchRequestRecipient:input'])]
+    #[ORM\Column(type: 'string', length: 2, nullable: true)]
+    #[Groups(['DispatchRequestRecipient:read_address', 'DispatchRequestRecipient:input'])]
     #[Assert\Length(max: 2, maxMessage: 'Only {{ limit }} letter country codes are allowed')]
-    private $addressCountry;
+    private ?string $addressCountry = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 20)]
-    #[Groups(['DispatchRequestRecipient:output:postalCode', 'DispatchRequestRecipient:input'])]
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    #[Groups(['DispatchRequestRecipient:read_address', 'DispatchRequestRecipient:input'])]
     #[Assert\Length(max: 20, maxMessage: 'Only {{ limit }} letter postal codes are allowed')]
-    private $postalCode;
+    private ?string $postalCode = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 120)]
-    #[Groups(['DispatchRequestRecipient:output:addressLocality', 'DispatchRequestRecipient:input'])]
+    #[ORM\Column(type: 'string', length: 120, nullable: true)]
+    #[Groups(['DispatchRequestRecipient:read_address', 'DispatchRequestRecipient:input'])]
     #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $addressLocality;
+    private ?string $addressLocality = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 120)]
-    #[Groups(['DispatchRequestRecipient:output:streetAddress', 'DispatchRequestRecipient:input'])]
+    #[ORM\Column(type: 'string', length: 120, nullable: true)]
+    #[Groups(['DispatchRequestRecipient:read_address', 'DispatchRequestRecipient:input'])]
     #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $streetAddress;
+    private ?string $streetAddress = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 10)]
-    #[Groups(['DispatchRequestRecipient:output:buildingNumber', 'DispatchRequestRecipient:input'])]
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    #[Groups(['DispatchRequestRecipient:read_address', 'DispatchRequestRecipient:input'])]
     #[Assert\Length(max: 10, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $buildingNumber;
+    private ?string $buildingNumber = null;
 
-    /**
-     * @var \DateTimeInterface
-     */
-    #[ORM\Column(type: 'date_immutable')]
-    #[Groups(['DispatchRequestRecipient:output:birthDate', 'DispatchRequestRecipient:input'])] // I could not find an Assert that doesn't cause an error to do proper checks
-    private $birthDate;
+    #[ORM\Column(type: 'date_immutable', nullable: true)]
+    #[Groups(['DispatchRequestRecipient:read_birth_date', 'DispatchRequestRecipient:input'])] // I could not find an Assert that doesn't cause an error to do proper checks
+    private ?\DateTimeInterface $birthDate = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 50)]
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[Groups(['DispatchRequestRecipient:output'])]
-    private $dualDeliveryID;
+    private ?string $dualDeliveryID = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     #[Groups(['DispatchRequestRecipient:output'])]
-    private $appDeliveryID;
+    private ?string $appDeliveryID = null;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     #[Groups(['DispatchRequestRecipient:output'])]
-    private $deliveryEndDate;
+    private ?\DateTimeInterface $deliveryEndDate = null;
 
-    /**
-     * @var string
-     */
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequestRecipient:input', 'DispatchRequest:output'])]
     #[Assert\Length(max: 100, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private $personIdentifier;
+    private ?string $personIdentifier = null;
 
-    /**
-     * @var bool
-     */
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $postalDeliverable;
+    private bool $postalDeliverable = false;
 
-    /**
-     * @var bool
-     */
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $electronicallyDeliverable;
+    private bool $electronicallyDeliverable = false;
 
-    /**
-     * @var ?DeliveryStatusChange
-     */
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private $lastStatusChange;
+    private ?DeliveryStatusChange $lastStatusChange = null;
 
     #[ORM\OneToMany(targetEntity: DeliveryStatusChange::class, mappedBy: 'requestRecipient')]
     #[ORM\OrderBy(['orderId' => 'DESC'])]
     #[Groups(['DispatchRequestRecipient:output'])]
-    private $statusChanges;
+    private Collection $statusChanges;
 
     public function __construct()
     {
         $this->statusChanges = new ArrayCollection();
     }
 
-    public function getIdentifier(): string
+    public function getIdentifier(): ?string
     {
-        return (string) $this->identifier;
+        return $this->identifier;
     }
 
     public function setIdentifier(string $identifier): void
@@ -182,7 +126,7 @@ class RequestRecipient
         $this->identifier = $identifier;
     }
 
-    public function getDateCreated(): \DateTimeInterface
+    public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->dateCreated;
     }
@@ -192,12 +136,12 @@ class RequestRecipient
         $this->dateCreated = \DateTimeImmutable::createFromInterface($dateCreated);
     }
 
-    public function getDispatchRequest(): Request
+    public function getDispatchRequest(): ?Request
     {
         return $this->request;
     }
 
-    public function getDispatchRequestIdentifier(): string
+    public function getDispatchRequestIdentifier(): ?string
     {
         return $this->dispatchRequestIdentifier;
     }
@@ -207,7 +151,7 @@ class RequestRecipient
         $this->dispatchRequestIdentifier = $dispatchRequestIdentifier;
     }
 
-    public function getRecipientId(): string
+    public function getRecipientId(): ?string
     {
         return $this->recipientId;
     }
@@ -253,7 +197,7 @@ class RequestRecipient
         $this->request = $request;
     }
 
-    public function getAddressCountry(): string
+    public function getAddressCountry(): ?string
     {
         return $this->addressCountry;
     }
@@ -263,7 +207,7 @@ class RequestRecipient
         $this->addressCountry = $addressCountry;
     }
 
-    public function getPostalCode(): string
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
@@ -273,7 +217,7 @@ class RequestRecipient
         $this->postalCode = $postalCode;
     }
 
-    public function getAddressLocality(): string
+    public function getAddressLocality(): ?string
     {
         return $this->addressLocality;
     }
@@ -283,7 +227,7 @@ class RequestRecipient
         $this->addressLocality = $addressLocality;
     }
 
-    public function getStreetAddress(): string
+    public function getStreetAddress(): ?string
     {
         return $this->streetAddress;
     }
@@ -313,7 +257,7 @@ class RequestRecipient
         $this->birthDate = $birthDate !== null ? \DateTimeImmutable::createFromInterface($birthDate) : null;
     }
 
-    public function getDualDeliveryID(): string
+    public function getDualDeliveryID(): ?string
     {
         return $this->dualDeliveryID;
     }
@@ -323,7 +267,7 @@ class RequestRecipient
         $this->dualDeliveryID = $dualDeliveryID;
     }
 
-    public function getStatusChanges()
+    public function getStatusChanges(): Collection
     {
         return $this->statusChanges;
     }
@@ -362,8 +306,7 @@ class RequestRecipient
 
     public function isPostalDeliverable(): bool
     {
-        // Can be null if not set
-        return $this->postalDeliverable ?? false;
+        return $this->postalDeliverable;
     }
 
     public function setPostalDeliverable(bool $postalDeliverable): void
@@ -373,8 +316,7 @@ class RequestRecipient
 
     public function isElectronicallyDeliverable(): bool
     {
-        // Can be null if not set
-        return $this->electronicallyDeliverable ?? false;
+        return $this->electronicallyDeliverable;
     }
 
     public function setElectronicallyDeliverable(bool $electronicallyDeliverable): void
@@ -384,16 +326,16 @@ class RequestRecipient
 
     public function canDoPreAddressingRequest(): bool
     {
-        return $this->getGivenName() !== '' && $this->getFamilyName() !== '' && $this->getBirthDate();
+        return $this->getGivenName() && $this->getFamilyName() && $this->getBirthDate();
     }
 
     public function hasValidAddress(): bool
     {
         // We don't check the building number, because it's not always available
-        return $this->getStreetAddress() !== ''
-            && $this->getPostalCode() !== ''
-            && $this->getAddressLocality() !== ''
-            && $this->getAddressCountry() !== '';
+        return $this->getStreetAddress()
+            && $this->getPostalCode()
+            && $this->getAddressLocality()
+            && $this->getAddressCountry();
     }
 
     public function postValidityCheck(): void

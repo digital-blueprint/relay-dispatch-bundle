@@ -13,49 +13,31 @@ class Group
     public const ROLE_WRITE = 'w';
     public const ROLE_WRITE_READ_ADDRESS = 'wra';
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchGroup:output'])]
-    private $identifier;
+    private ?string $identifier = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchGroup:output'])]
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchGroup:output'])]
-    private $street;
+    private ?string $street = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchGroup:output'])]
-    private $locality;
+    private ?string $locality = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchGroup:output'])]
-    private $postalCode;
+    private ?string $postalCode = null;
 
-    /**
-     * @var string
-     */
     #[Groups(['DispatchGroup:output'])]
-    private $country;
+    private ?string $country = null;
 
     /**
      * @var string[]
      */
     #[Groups(['DispatchGroup:output'])]
-    private $accessRights = [];
+    private array $accessRights = [];
 
-    public function setIdentifier(string $identifier): void
+    public function setIdentifier(?string $identifier): void
     {
         $this->identifier = $identifier;
     }
@@ -70,47 +52,47 @@ class Group
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getStreet(): string
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
-    public function setStreet(string $street): void
+    public function setStreet(?string $street): void
     {
         $this->street = $street;
     }
 
-    public function getLocality(): string
+    public function getLocality(): ?string
     {
         return $this->locality;
     }
 
-    public function setLocality(string $locality): void
+    public function setLocality(?string $locality): void
     {
         $this->locality = $locality;
     }
 
-    public function getPostalCode(): string
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
 
-    public function setPostalCode(string $postalCode): void
+    public function setPostalCode(?string $postalCode): void
     {
         $this->postalCode = $postalCode;
     }
 
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->country;
     }
 
-    public function setCountry(string $country): void
+    public function setCountry(?string $country): void
     {
         $this->country = $country;
     }

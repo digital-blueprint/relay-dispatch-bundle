@@ -14,18 +14,10 @@ use Dbp\Relay\DispatchBundle\Service\GroupService;
  */
 class GroupProvider extends AbstractDataProvider
 {
-    /** @var GroupService */
-    private $groupService;
-
-    /** @var AuthorizationService */
-    private $auth;
-
-    public function __construct(GroupService $groupService, AuthorizationService $auth)
+    public function __construct(
+        private readonly GroupService $groupService,
+        private readonly AuthorizationService $authorizationService)
     {
-        parent::__construct();
-
-        $this->groupService = $groupService;
-        $this->auth = $auth;
     }
 
     protected function isUserGrantedOperationAccess(int $operation): bool
@@ -35,8 +27,8 @@ class GroupProvider extends AbstractDataProvider
 
     protected function getItemById($id, array $filters = [], array $options = []): object
     {
-        $this->auth->checkCanUse();
-        $this->auth->checkCanReadMetadata($id);
+        $this->authorizationService->checkCanUse();
+        $this->authorizationService->checkCanReadMetadata($id);
 
         return $this->groupService->getGroupById($id);
     }
@@ -44,7 +36,7 @@ class GroupProvider extends AbstractDataProvider
     protected function getPage(int $currentPageNumber, int $maxNumItemsPerPage, array $filters = [], array $options = []): array
     {
         // No 'access denied' needed, the service only returns groups to which the authenticated user has access to
-        if (!$this->auth->getCanUse()) {
+        if (!$this->authorizationService->getCanUse()) {
             return [];
         }
 

@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Authorization;
 
 use Dbp\Relay\CoreBundle\Authorization\AbstractAuthorizationService;
-use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
 use Dbp\Relay\DispatchBundle\Entity\Group;
-use Symfony\Component\HttpFoundation\Response;
+use Dbp\Relay\DispatchBundle\Entity\Request;
+use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AuthorizationService extends AbstractAuthorizationService
 {
-    /** @var string An alias variable name for the group data variable that can be used in group role expressions */
-    private const GROUP_DATA_ALIAS = 'currentGroup';
-
     /**
      * Check if the user can access the application at all.
+     *
+     * @throws AccessDeniedException
      */
     public function checkCanUse(): void
     {
-        $this->denyAccessUnlessIsGranted(Configuration::ROLE_USER);
+        $this->denyAccessUnlessIsGrantedRole(Configuration::ROLE_USER);
     }
 
     /**
@@ -28,44 +29,49 @@ class AuthorizationService extends AbstractAuthorizationService
      */
     public function getCanUse(): bool
     {
-        return $this->isGranted(Configuration::ROLE_USER);
+        return $this->isGrantedRole(Configuration::ROLE_USER);
     }
 
     /**
      * Check if the user can read the group metadata, throws if not.
+     *
+     * @throws AccessDeniedException
      */
     public function checkCanReadMetadata(string $groupId): void
     {
-        if ($this->getCanReadMetadata($groupId)) {
-            return;
+        if (!$this->getCanReadMetadata($groupId)) {
+            throw new AccessDeniedException();
         }
-        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
     }
 
     /**
      * Check if the user can read the group content, throws if not.
+     *
+     * @throws AccessDeniedException
      */
     public function checkCanReadContent(string $groupId): void
     {
-        if ($this->getCanReadContent($groupId)) {
-            return;
+        if (!$this->getCanReadContent($groupId)) {
+            throw new AccessDeniedException();
         }
-        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
     }
 
     /**
      * Check if the user can write in the group, throws if not.
+     *
+     * @throws AccessDeniedException
      */
     public function checkCanWrite(string $groupId): void
     {
-        if ($this->getCanWrite($groupId)) {
-            return;
+        if (!$this->getCanWrite($groupId)) {
+            throw new AccessDeniedException();
         }
-        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
     }
 
     /**
      * Check if the user has write access in at least one group.
+     *
+     * @throws AccessDeniedException
      */
     public function checkCanWriteSomething(): void
     {
@@ -74,7 +80,7 @@ class AuthorizationService extends AbstractAuthorizationService
                 return;
             }
         }
-        throw new ApiError(Response::HTTP_FORBIDDEN, 'access denied');
+        throw new AccessDeniedException();
     }
 
     /**
@@ -183,7 +189,7 @@ class AuthorizationService extends AbstractAuthorizationService
         return $groupIds;
     }
 
-    public function validateConfiguration()
+    public function validateConfiguration(): void
     {
         $testGroupId = '0';
 
@@ -193,6 +199,31 @@ class AuthorizationService extends AbstractAuthorizationService
         $this->getCanWrite($testGroupId);
         $this->canReadInternalAddresses($testGroupId);
         $this->getAllGroupIds();
+    }
+
+    protected function setUpInputAndOutputGroups(): void
+    {
+        $this->showOutputGroupsForEntityInstanceIf(Request::class, ['DispatchRequest:read_content'],
+            function (Request $request) {
+                return $this->getCanReadContent($request->getGroupId());
+            });
+        // personal address of recipients is returned if
+        // - it was entered manually by a user (i.e. person identifier is not set) OR
+        // - the current user has write and read personal address permissions for the group
+        $this->showOutputGroupsForEntityInstanceIf(RequestRecipient::class, ['DispatchRequestRecipient:read_address'],
+            function (RequestRecipient $recipient) {
+                return Tools::isNullOrEmpty($recipient->getPersonIdentifier())
+                    || $this->canReadInternalAddresses(
+                        $recipient->getDispatchRequest()->getGroupId());
+            });
+        // birthdate of recipients is returned if
+        // - it was entered manually by a user (i.e. person identifier is not set)
+        //   AND the current user at least has read content permissions for the group
+        $this->showOutputGroupsForEntityInstanceIf(RequestRecipient::class, ['DispatchRequestRecipient:read_birth_date'],
+            function (RequestRecipient $recipient) {
+                return Tools::isNullOrEmpty($recipient->getPersonIdentifier())
+                    && $this->getCanReadContent($recipient->getDispatchRequest()->getGroupId());
+            });
     }
 
     /**
@@ -213,6 +244,6 @@ class AuthorizationService extends AbstractAuthorizationService
 
     private function isGrantedGroupRole(string $roleName, GroupData $groupData): bool
     {
-        return $this->isGranted($roleName, $groupData, self::GROUP_DATA_ALIAS);
+        return $this->isGrantedResourcePermission($roleName, $groupData);
     }
 }

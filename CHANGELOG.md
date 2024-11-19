@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.1
+
+* Split authorization policies into roles and resource permissions
+* Add property types, modernize code, and refactor
+* Set up in-memory database for testing, add API tests
+* Replace deprecate EntityNormalizer by new output group handling from core
+
 ## 0.6.7
 
 * Add support for newer doctrine versions

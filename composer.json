@@ -13,7 +13,7 @@
         "api-platform/core": "^3.2",
         "dbp/relay-base-person-bundle": "^0.2.33",
         "dbp/relay-blob-library": "^0.2.4",
-        "dbp/relay-core-bundle": "^0.1.186",
+        "dbp/relay-core-bundle": "dev-main as 0.1.192",
         "symfony/framework-bundle": "^5.4.30 || ^6.4",
         "doctrine/orm": "^2.19 || ^3.2",
         "doctrine/doctrine-migrations-bundle": "^3.3",
