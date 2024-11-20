@@ -54,6 +54,10 @@ class Kernel extends BaseKernel
             'annotations' => false,
         ]);
 
+        $container->extension('dbp_relay_core', [
+            'queue_dsn' => 'doctrine://dbp_relay_dispatch_bundle',
+        ]);
+
         $container->extension('dbp_relay_dispatch', self::getTestConfig());
     }
 
