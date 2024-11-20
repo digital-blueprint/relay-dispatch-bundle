@@ -71,7 +71,7 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
             'dbal' => [
                 'connections' => [
                     'dbp_relay_dispatch_bundle' => [
-                        'url' => $config['database_url'] ?? '',
+                        'url' => $config['database_url'] ?? 'sqlite:///:memory:',
                     ],
                 ],
             ],
