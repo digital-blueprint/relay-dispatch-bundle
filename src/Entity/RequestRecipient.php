@@ -97,11 +97,11 @@ class RequestRecipient
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private bool $postalDeliverable = false;
+    private ?bool $postalDeliverable = false;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
-    private bool $electronicallyDeliverable = false;
+    private ?bool $electronicallyDeliverable = false;
 
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private ?DeliveryStatusChange $lastStatusChange = null;
@@ -146,7 +146,7 @@ class RequestRecipient
         return $this->dispatchRequestIdentifier;
     }
 
-    public function setDispatchRequestIdentifier(string $dispatchRequestIdentifier): void
+    public function setDispatchRequestIdentifier(?string $dispatchRequestIdentifier): void
     {
         $this->dispatchRequestIdentifier = $dispatchRequestIdentifier;
     }
@@ -177,7 +177,7 @@ class RequestRecipient
         return $this->givenName;
     }
 
-    public function setGivenName(string $givenName): void
+    public function setGivenName(?string $givenName): void
     {
         $this->givenName = $givenName;
     }
@@ -187,12 +187,12 @@ class RequestRecipient
         return $this->familyName;
     }
 
-    public function setFamilyName(string $familyName): void
+    public function setFamilyName(?string $familyName): void
     {
         $this->familyName = $familyName;
     }
 
-    public function setRequest(Request $request): void
+    public function setRequest(?Request $request): void
     {
         $this->request = $request;
     }
@@ -202,7 +202,7 @@ class RequestRecipient
         return $this->addressCountry;
     }
 
-    public function setAddressCountry(string $addressCountry): void
+    public function setAddressCountry(?string $addressCountry): void
     {
         $this->addressCountry = $addressCountry;
     }
@@ -212,7 +212,7 @@ class RequestRecipient
         return $this->postalCode;
     }
 
-    public function setPostalCode(string $postalCode): void
+    public function setPostalCode(?string $postalCode): void
     {
         $this->postalCode = $postalCode;
     }
@@ -222,7 +222,7 @@ class RequestRecipient
         return $this->addressLocality;
     }
 
-    public function setAddressLocality(string $addressLocality): void
+    public function setAddressLocality(?string $addressLocality): void
     {
         $this->addressLocality = $addressLocality;
     }
@@ -232,7 +232,7 @@ class RequestRecipient
         return $this->streetAddress;
     }
 
-    public function setStreetAddress(string $streetAddress): void
+    public function setStreetAddress(?string $streetAddress): void
     {
         $this->streetAddress = $streetAddress;
     }
@@ -242,7 +242,7 @@ class RequestRecipient
         return $this->buildingNumber;
     }
 
-    public function setBuildingNumber(string $buildingNumber): void
+    public function setBuildingNumber(?string $buildingNumber): void
     {
         $this->buildingNumber = $buildingNumber;
     }
@@ -262,7 +262,7 @@ class RequestRecipient
         return $this->dualDeliveryID;
     }
 
-    public function setDualDeliveryID(string $dualDeliveryID): void
+    public function setDualDeliveryID(?string $dualDeliveryID): void
     {
         $this->dualDeliveryID = $dualDeliveryID;
     }
@@ -277,19 +277,18 @@ class RequestRecipient
         return $this->deliveryEndDate;
     }
 
-    public function setDeliveryEndDate(\DateTimeInterface $deliveryEndDate): void
+    public function setDeliveryEndDate(?\DateTimeInterface $deliveryEndDate): void
     {
         $this->deliveryEndDate = \DateTimeImmutable::createFromInterface($deliveryEndDate);
     }
 
     public function getAppDeliveryID(): string
     {
-        return $this->appDeliveryID === null ?
-            $this->request->getIdentifier().'-'.$this->identifier :
-            $this->appDeliveryID;
+        return $this->appDeliveryID ??
+            $this->request->getIdentifier().'-'.$this->identifier;
     }
 
-    public function setAppDeliveryID(string $appDeliveryID): void
+    public function setAppDeliveryID(?string $appDeliveryID): void
     {
         $this->appDeliveryID = $appDeliveryID;
     }
@@ -299,27 +298,27 @@ class RequestRecipient
         return $this->personIdentifier;
     }
 
-    public function setPersonIdentifier(string $personIdentifier): void
+    public function setPersonIdentifier(?string $personIdentifier): void
     {
         $this->personIdentifier = $personIdentifier;
     }
 
-    public function isPostalDeliverable(): bool
+    public function isPostalDeliverable(): ?bool
     {
         return $this->postalDeliverable;
     }
 
-    public function setPostalDeliverable(bool $postalDeliverable): void
+    public function setPostalDeliverable(?bool $postalDeliverable): void
     {
         $this->postalDeliverable = $postalDeliverable;
     }
 
-    public function isElectronicallyDeliverable(): bool
+    public function isElectronicallyDeliverable(): ?bool
     {
         return $this->electronicallyDeliverable;
     }
 
-    public function setElectronicallyDeliverable(bool $electronicallyDeliverable): void
+    public function setElectronicallyDeliverable(?bool $electronicallyDeliverable): void
     {
         $this->electronicallyDeliverable = $electronicallyDeliverable;
     }

@@ -44,7 +44,7 @@ class RequestFile
      * @var resource|string|int|false
      */
     #[ORM\Column(type: 'binary', length: 209715200)]
-    private mixed $data;
+    private mixed $data = null;
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
@@ -52,10 +52,10 @@ class RequestFile
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
-    private int $contentSize = 0;
+    private ?int $contentSize = 0;
 
-    #[ORM\Column(type: 'string', length: 100)]
-    private string $fileStorageSystem = DispatchService::FILE_STORAGE_DATABASE;
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private ?string $fileStorageSystem = DispatchService::FILE_STORAGE_DATABASE;
 
     #[ORM\Column(type: 'string', length: 1000, nullable: true)]
     private ?string $fileStorageIdentifier = null;
@@ -140,28 +140,23 @@ class RequestFile
         $this->data = $data;
     }
 
-    public function getContentSize(): int
+    public function getContentSize(): ?int
     {
         return $this->contentSize;
     }
 
-    public function setContentSize(int $contentSize): void
+    public function setContentSize(?int $contentSize): void
     {
         $this->contentSize = $contentSize;
     }
 
     public function getContentUrl(): string
     {
-        if ($this->fileStorageSystem !== 'blob' && !$this->isContentUrlSet()) {
+        if ($this->fileStorageSystem !== 'blob' && !$this->contentUrl) {
             $this->contentUrl = Tools::getDataURI($this->getData(), $this->fileFormat);
         }
 
         return $this->contentUrl;
-    }
-
-    private function isContentUrlSet(): bool
-    {
-        return $this->contentUrl !== '' && $this->contentUrl !== null;
     }
 
     public function setContentUrl(string $contentUrl): void
@@ -189,7 +184,7 @@ class RequestFile
         return $this->fileStorageSystem;
     }
 
-    public function setFileStorageSystem(string $fileStorageSystem): void
+    public function setFileStorageSystem(?string $fileStorageSystem): void
     {
         $this->fileStorageSystem = $fileStorageSystem;
     }
@@ -199,7 +194,7 @@ class RequestFile
         return $this->fileStorageIdentifier;
     }
 
-    public function setFileStorageIdentifier(string $fileStorageIdentifier): void
+    public function setFileStorageIdentifier(?string $fileStorageIdentifier): void
     {
         $this->fileStorageIdentifier = $fileStorageIdentifier;
     }

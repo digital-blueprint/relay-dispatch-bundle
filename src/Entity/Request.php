@@ -51,29 +51,29 @@ class Request
     #[ORM\Column(type: 'string', length: 2, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 2, maxMessage: 'Only {{ limit }} letter country codes are allowed')]
-    private string $senderAddressCountry = '';
+    private ?string $senderAddressCountry = null;
 
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 20, maxMessage: 'Only {{ limit }} letter postal codes are allowed')]
-    private string $senderPostalCode = '';
+    private ?string $senderPostalCode = null;
 
     #[ORM\Column(type: 'string', length: 120, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private string $senderAddressLocality = '';
+    private ?string $senderAddressLocality = null;
 
     #[ORM\Column(type: 'string', length: 120, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 120, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private string $senderStreetAddress = '';
+    private ?string $senderStreetAddress = null;
 
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 10, maxMessage: 'Only {{ limit }} letters are allowed')]
-    private string $senderBuildingNumber = '';
+    private ?string $senderBuildingNumber = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['DispatchRequest:output', 'DispatchRequest:input'])]
     #[Assert\Length(max: 255, maxMessage: 'Only {{ limit }} letters are allowed')]
     #[Assert\NotNull]
@@ -135,7 +135,7 @@ class Request
         return $this->senderFullName;
     }
 
-    public function setSenderFullName(string $senderFullName): void
+    public function setSenderFullName(?string $senderFullName): void
     {
         $this->senderFullName = $senderFullName;
     }
@@ -145,7 +145,7 @@ class Request
         return $this->senderOrganizationName;
     }
 
-    public function setSenderOrganizationName(string $senderOrganizationName): void
+    public function setSenderOrganizationName(?string $senderOrganizationName): void
     {
         $this->senderOrganizationName = $senderOrganizationName;
     }
@@ -170,57 +170,57 @@ class Request
         return $this->dateSubmitted !== null;
     }
 
-    public function setDateSubmitted(\DateTimeInterface $dateSubmitted): void
+    public function setDateSubmitted(?\DateTimeInterface $dateSubmitted): void
     {
         $this->dateSubmitted = \DateTimeImmutable::createFromInterface($dateSubmitted);
     }
 
-    public function getSenderAddressCountry(): string
+    public function getSenderAddressCountry(): ?string
     {
         return $this->senderAddressCountry;
     }
 
-    public function setSenderAddressCountry(string $senderAddressCountry): void
+    public function setSenderAddressCountry(?string $senderAddressCountry): void
     {
         $this->senderAddressCountry = $senderAddressCountry;
     }
 
-    public function getSenderPostalCode(): string
+    public function getSenderPostalCode(): ?string
     {
         return $this->senderPostalCode;
     }
 
-    public function setSenderPostalCode(string $senderPostalCode): void
+    public function setSenderPostalCode(?string $senderPostalCode): void
     {
         $this->senderPostalCode = $senderPostalCode;
     }
 
-    public function getSenderAddressLocality(): string
+    public function getSenderAddressLocality(): ?string
     {
         return $this->senderAddressLocality;
     }
 
-    public function setSenderAddressLocality(string $senderAddressLocality): void
+    public function setSenderAddressLocality(?string $senderAddressLocality): void
     {
         $this->senderAddressLocality = $senderAddressLocality;
     }
 
-    public function getSenderStreetAddress(): string
+    public function getSenderStreetAddress(): ?string
     {
         return $this->senderStreetAddress;
     }
 
-    public function setSenderStreetAddress(string $senderStreetAddress): void
+    public function setSenderStreetAddress(?string $senderStreetAddress): void
     {
         $this->senderStreetAddress = $senderStreetAddress;
     }
 
-    public function getSenderBuildingNumber(): string
+    public function getSenderBuildingNumber(): ?string
     {
         return $this->senderBuildingNumber;
     }
 
-    public function setSenderBuildingNumber(string $senderBuildingNumber): void
+    public function setSenderBuildingNumber(?string $senderBuildingNumber): void
     {
         $this->senderBuildingNumber = $senderBuildingNumber;
     }
@@ -230,7 +230,7 @@ class Request
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -240,7 +240,7 @@ class Request
         return $this->groupId;
     }
 
-    public function setGroupId(string $groupId): void
+    public function setGroupId(?string $groupId): void
     {
         $this->groupId = $groupId;
     }
@@ -260,7 +260,7 @@ class Request
         return $this->referenceNumber;
     }
 
-    public function setReferenceNumber(string $referenceNumber): void
+    public function setReferenceNumber(?string $referenceNumber): void
     {
         $this->referenceNumber = $referenceNumber;
     }

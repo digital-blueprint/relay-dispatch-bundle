@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.1
+## Unreleased
 
 * Split authorization policies into roles and resource permissions
 * Add property types, modernize code, and refactor

@@ -53,7 +53,7 @@ class DeliveryStatusChange
      * @var resource|string|int|false
      */
     #[ORM\Column(type: 'binary', length: 209715200, nullable: true)]
-    private $fileData;
+    private mixed $fileData;
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
@@ -63,7 +63,7 @@ class DeliveryStatusChange
     private ?string $fileContentUrl = null;
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    private string $fileStorageSystem = DispatchService::FILE_STORAGE_DATABASE;
+    private ?string $fileStorageSystem = DispatchService::FILE_STORAGE_DATABASE;
 
     #[ORM\Column(type: 'string', length: 1000, nullable: true)]
     private ?string $fileStorageIdentifier = null;
@@ -83,7 +83,7 @@ class DeliveryStatusChange
     #[ORM\Column(type: 'integer')]
     private ?int $orderId = null;
 
-    public function getIdentifier(): string
+    public function getIdentifier(): ?string
     {
         return $this->identifier;
     }
@@ -98,7 +98,7 @@ class DeliveryStatusChange
         return $this->dateCreated;
     }
 
-    public function setDateCreated(\DateTimeInterface $dateCreated): void
+    public function setDateCreated(?\DateTimeInterface $dateCreated): void
     {
         $this->dateCreated = \DateTimeImmutable::createFromInterface($dateCreated);
     }
@@ -145,16 +145,11 @@ class DeliveryStatusChange
 
     public function getFileContentUrl(): string
     {
-        if ($this->fileStorageSystem !== 'blob' && !$this->isFileContentUrlSet()) {
+        if ($this->fileStorageSystem !== 'blob' && !$this->fileContentUrl) {
             $this->fileContentUrl = Tools::getDataURI($this->getFileData(), $this->fileFormat);
         }
 
         return $this->fileContentUrl;
-    }
-
-    public function isFileContentUrlSet(): bool
-    {
-        return $this->fileContentUrl !== '' && $this->fileContentUrl !== null;
     }
 
     public function setFileContentUrl(string $contentUrl): void
@@ -174,8 +169,10 @@ class DeliveryStatusChange
 
     /**
      * @return resource|string|int|false|null
+     *
+     * @throws \Exception
      */
-    public function getFileData()
+    public function getFileData(): mixed
     {
         // If the file is stored in the blob storage system, the contentUrl should already be set at that time
         if ($this->fileStorageSystem === 'blob') {
@@ -199,18 +196,18 @@ class DeliveryStatusChange
     /**
      * @param $data resource|string
      */
-    public function setFileData($data): void
+    public function setFileData(mixed $data): void
     {
         $this->fileContentUrl = '';
         $this->fileData = $data;
     }
 
-    public function getFileStorageSystem(): string
+    public function getFileStorageSystem(): ?string
     {
         return $this->fileStorageSystem;
     }
 
-    public function setFileStorageSystem(string $fileStorageSystem): void
+    public function setFileStorageSystem(?string $fileStorageSystem): void
     {
         $this->fileStorageSystem = $fileStorageSystem;
     }
@@ -220,7 +217,7 @@ class DeliveryStatusChange
         return $this->fileStorageIdentifier;
     }
 
-    public function setFileStorageIdentifier(string $fileStorageIdentifier): void
+    public function setFileStorageIdentifier(?string $fileStorageIdentifier): void
     {
         $this->fileStorageIdentifier = $fileStorageIdentifier;
     }
@@ -260,8 +257,7 @@ class DeliveryStatusChange
      */
     public function isFinalDualDeliveryStatus(): bool
     {
-        return in_array($this->statusType, [
-            self::STATUS_DUAL_DELIVERY_REQUEST_FAILED, ], true)
+        return $this->statusType === self::STATUS_DUAL_DELIVERY_REQUEST_FAILED
             || Vendo::isFinalStatus($this->statusType);
     }
 

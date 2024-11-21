@@ -5,18 +5,16 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Tests;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-// use ApiPlatform\Symfony\Bundle\Test\Client;
-use Dbp\Relay\BasePersonBundle\Service\DummyPersonProvider;
+use Dbp\Relay\BasePersonBundle\TestUtils\TestPersonTrait;
 use Dbp\Relay\CoreBundle\TestUtils\TestClient;
 use Dbp\Relay\CoreBundle\TestUtils\UserAuthTrait;
-// use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApiTest extends ApiTestCase
 {
     use UserAuthTrait;
+    use TestPersonTrait;
 
     private const TEST_FILE_NAME = 'test.pdf';
     private const TEST_FILE_PATH = __DIR__.'/'.self::TEST_FILE_NAME;
@@ -60,27 +58,6 @@ class ApiTest extends ApiTestCase
         $this->testClient->getClient()->disableReboot();
 
         TestEntityManager::setUpEntityManager($this->testClient->getContainer());
-    }
-
-    public function withCurrentPerson(ContainerInterface $container,
-        string $userIdentifier = TestClient::TEST_USER_IDENTIFIER,
-        string $givenName = 'Jane',
-        string $familyName = 'Doe',
-        array $localDataAttributes = []): void
-    {
-        $personProvider = $container->get(DummyPersonProvider::class);
-        $personProvider->addPerson($userIdentifier, $givenName, $familyName, $localDataAttributes);
-        $personProvider->setCurrentPersonIdentifier($userIdentifier);
-    }
-
-    public function withPerson(ContainerInterface $container,
-        string $userIdentifier = TestClient::TEST_USER_IDENTIFIER,
-        string $givenName = 'Jane',
-        string $familyName = 'Doe',
-        array $localDataAttributes = []): void
-    {
-        $personProvider = $container->get(DummyPersonProvider::class);
-        $personProvider->addPerson($userIdentifier, $givenName, $familyName, $localDataAttributes);
     }
 
     public function testGetGroupsUnauthenticated(): void
@@ -127,6 +104,26 @@ class ApiTest extends ApiTestCase
         $this->assertArrayNotHasKey('name', $dispatchRequest);
     }
 
+    public function testFoo(): void
+    {
+        $this->loginAdmin();
+        $dispatchRequest = $this->createDispatchRequest('1');
+        $dispatchRequestIdentifier = $dispatchRequest['identifier'];
+
+        $this->loginUser();
+        $dispatchRequestRecipient = $this->addRequestRecipient(
+            $dispatchRequestIdentifier, self::TEST_PERSON_IDENTIFIER);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
+        $this->assertEquals('Graben 1', $dispatchRequestRecipient['streetAddress']);
+        $this->assertEquals('Vienna', $dispatchRequestRecipient['addressLocality']);
+        $this->assertEquals('1010', $dispatchRequestRecipient['postalCode']);
+        $this->assertEquals('AT', $dispatchRequestRecipient['addressCountry']);
+
+        $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
+        $this->assertCount(1, $dispatchRequest['recipients']);
+    }
+
     public function testReadRecipientAddressGranted(): void
     {
         // personal address of recipients is returned if
@@ -142,6 +139,8 @@ class ApiTest extends ApiTestCase
         $this->loginUser();
         $dispatchRequestRecipient = $this->addRequestRecipient(
             $dispatchRequestIdentifier, self::TEST_PERSON_IDENTIFIER);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
         $this->assertEquals('Graben 1', $dispatchRequestRecipient['streetAddress']);
         $this->assertEquals('Vienna', $dispatchRequestRecipient['addressLocality']);
         $this->assertEquals('1010', $dispatchRequestRecipient['postalCode']);
@@ -149,6 +148,19 @@ class ApiTest extends ApiTestCase
 
         // same for GET:
         $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
+        $this->assertEquals('Graben 1', $dispatchRequestRecipient['streetAddress']);
+        $this->assertEquals('Vienna', $dispatchRequestRecipient['addressLocality']);
+        $this->assertEquals('1010', $dispatchRequestRecipient['postalCode']);
+        $this->assertEquals('AT', $dispatchRequestRecipient['addressCountry']);
+
+        // same for GET request:
+        $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
+        $this->assertCount(1, $dispatchRequest['recipients']);
+        $dispatchRequestRecipient = $dispatchRequest['recipients'][0];
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
         $this->assertEquals('Graben 1', $dispatchRequestRecipient['streetAddress']);
         $this->assertEquals('Vienna', $dispatchRequestRecipient['addressLocality']);
         $this->assertEquals('1010', $dispatchRequestRecipient['postalCode']);
@@ -163,6 +175,8 @@ class ApiTest extends ApiTestCase
         $this->loginUser();
         $dispatchRequestRecipient = $this->addRequestRecipient(
             $dispatchRequestIdentifier);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
         $this->assertEquals('Hauptplatz', $dispatchRequestRecipient['streetAddress']);
         $this->assertEquals('1', $dispatchRequestRecipient['buildingNumber']);
         $this->assertEquals('Graz', $dispatchRequestRecipient['addressLocality']);
@@ -171,6 +185,20 @@ class ApiTest extends ApiTestCase
 
         // same for GET:
         $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
+        $this->assertEquals('Hauptplatz', $dispatchRequestRecipient['streetAddress']);
+        $this->assertEquals('1', $dispatchRequestRecipient['buildingNumber']);
+        $this->assertEquals('Graz', $dispatchRequestRecipient['addressLocality']);
+        $this->assertEquals('8010', $dispatchRequestRecipient['postalCode']);
+        $this->assertEquals('AT', $dispatchRequestRecipient['addressCountry']);
+
+        // same for GET request:
+        $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
+        $this->assertCount(1, $dispatchRequest['recipients']);
+        $dispatchRequestRecipient = $dispatchRequest['recipients'][0];
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
         $this->assertEquals('Hauptplatz', $dispatchRequestRecipient['streetAddress']);
         $this->assertEquals('1', $dispatchRequestRecipient['buildingNumber']);
         $this->assertEquals('Graz', $dispatchRequestRecipient['addressLocality']);
@@ -189,6 +217,8 @@ class ApiTest extends ApiTestCase
         $this->loginUser();
         $dispatchRequestRecipient = $this->addRequestRecipient(
             $dispatchRequestIdentifier, self::TEST_PERSON_IDENTIFIER);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
         $this->assertArrayNotHasKey('streetAddress', $dispatchRequestRecipient);
         $this->assertArrayNotHasKey('addressLocality', $dispatchRequestRecipient);
         $this->assertArrayNotHasKey('postalCode', $dispatchRequestRecipient);
@@ -197,6 +227,8 @@ class ApiTest extends ApiTestCase
 
         // same for GET:
         $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
         $this->assertArrayNotHasKey('streetAddress', $dispatchRequestRecipient);
         $this->assertArrayNotHasKey('addressLocality', $dispatchRequestRecipient);
         $this->assertArrayNotHasKey('postalCode', $dispatchRequestRecipient);
@@ -222,6 +254,8 @@ class ApiTest extends ApiTestCase
 
         $this->loginUser();
         $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
         $this->assertEquals('1980-01-01T00:00:00+00:00', $dispatchRequestRecipient['birthDate']);
     }
 
@@ -238,6 +272,8 @@ class ApiTest extends ApiTestCase
 
         $this->loginUser();
         $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
         $this->assertArrayNotHasKey('birthDate', $dispatchRequestRecipient);
 
         // ----------------------------------------------------------------
@@ -251,6 +287,8 @@ class ApiTest extends ApiTestCase
 
         $this->loginUser();
         $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
+        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+        $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
         $this->assertArrayNotHasKey('birthDate', $dispatchRequestRecipient);
     }
 
@@ -330,6 +368,9 @@ class ApiTest extends ApiTestCase
         ];
 
         $response = $this->testClient->postJson('/dispatch/requests', $dispatchRequest);
+        if ($response->getStatusCode() !== 201) {
+            dump($response->getContent(false));
+        }
         $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
         $dispatchRequest = json_decode($response->getContent(false), true);
         $this->assertNotEmpty($dispatchRequest['identifier']);
