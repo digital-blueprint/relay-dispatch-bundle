@@ -689,10 +689,12 @@ class DispatchService implements LoggerAwareInterface
         }
     }
 
-    public function createDeliveryStatusChangeForAllRecipientsOfRequest(Request $request, int $statusType, string $description)
+    public function createDeliveryStatusChangeForAllRecipientsOfRequest(Request $request, int $statusType, string $description): void
     {
         foreach ($request->getRecipients() as $recipient) {
-            $this->createDeliveryStatusChange($recipient->getIdentifier(), $statusType, $description);
+            /** @var RequestRecipient $recipient */
+            $recipient->setLastStatusChange(
+                $this->createDeliveryStatusChange($recipient->getIdentifier(), $statusType, $description));
         }
     }
 

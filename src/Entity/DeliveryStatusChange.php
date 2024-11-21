@@ -11,6 +11,7 @@ use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 #[ORM\Table(name: 'dispatch_delivery_status_changes')]
 #[ORM\Entity]
@@ -81,7 +82,7 @@ class DeliveryStatusChange
     private ?bool $fileIsUploadedManually = null;
 
     #[ORM\Column(type: 'integer')]
-    private ?int $orderId = null;
+    private ?int $orderId = 0;
 
     public function getIdentifier(): ?string
     {
@@ -269,6 +270,8 @@ class DeliveryStatusChange
         return Vendo::isSuccessStatus($this->statusType);
     }
 
+    #[SerializedName('dispatchStatus')]
+    #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     public function getDispatchStatus(): string
     {
         if (in_array($this->statusType, [

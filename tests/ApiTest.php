@@ -8,6 +8,8 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Dbp\Relay\BasePersonBundle\TestUtils\TestPersonTrait;
 use Dbp\Relay\CoreBundle\TestUtils\TestClient;
 use Dbp\Relay\CoreBundle\TestUtils\UserAuthTrait;
+use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
+use Dbp\Relay\DispatchBundle\Entity\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -292,6 +294,42 @@ class ApiTest extends ApiTestCase
         $this->assertArrayNotHasKey('birthDate', $dispatchRequestRecipient);
     }
 
+    public function testSubmitRequestStatus(): void
+    {
+        $this->loginAdmin();
+        $dispatchRequest = $this->createDispatchRequest();
+        $dispatchRequestIdentifier = $dispatchRequest['identifier'];
+        $this->addRequestRecipient($dispatchRequestIdentifier);
+        $this->addRequestFile($dispatchRequestIdentifier);
+
+        $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
+        $this->assertCount(1, $dispatchRequest['recipients']);
+        $this->assertArrayHasKey('lastStatusChange', $dispatchRequest['recipients'][0]);
+        $this->assertEmpty($dispatchRequest['recipients'][0]['lastStatusChange']);
+
+        $dispatchRequest = $this->submitRequestById($dispatchRequestIdentifier);
+        $this->assertCount(1, $dispatchRequest['recipients']);
+        $this->assertArrayHasKey('lastStatusChange', $dispatchRequest['recipients'][0]);
+        $this->assertEquals(DeliveryStatusChange::STATUS_SUBMITTED, $dispatchRequest['recipients'][0]['lastStatusChange']['statusType']);
+        $this->assertEquals('pending', $dispatchRequest['recipients'][0]['lastStatusChange']['dispatchStatus']);
+
+        // same for GET item request:
+        $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
+        $this->assertCount(1, $dispatchRequest['recipients']);
+        $this->assertArrayHasKey('lastStatusChange', $dispatchRequest['recipients'][0]);
+        $this->assertEquals(DeliveryStatusChange::STATUS_SUBMITTED, $dispatchRequest['recipients'][0]['lastStatusChange']['statusType']);
+        $this->assertEquals('pending', $dispatchRequest['recipients'][0]['lastStatusChange']['dispatchStatus']);
+
+        // same for GET collection request:
+        $dispatchRequests = $this->getDispatchRequests();
+        $this->assertCount(1, $dispatchRequests);
+        $dispatchRequest = $dispatchRequests[0];
+        $this->assertCount(1, $dispatchRequest['recipients']);
+        $this->assertArrayHasKey('lastStatusChange', $dispatchRequest['recipients'][0]);
+        $this->assertEquals(DeliveryStatusChange::STATUS_SUBMITTED, $dispatchRequest['recipients'][0]['lastStatusChange']['statusType']);
+        $this->assertEquals('pending', $dispatchRequest['recipients'][0]['lastStatusChange']['dispatchStatus']);
+    }
+
     private function testGetUnauthenticated(string $url): void
     {
         $response = $this->testClient->get($url, token: null);
@@ -368,9 +406,6 @@ class ApiTest extends ApiTestCase
         ];
 
         $response = $this->testClient->postJson('/dispatch/requests', $dispatchRequest);
-        if ($response->getStatusCode() !== 201) {
-            dump($response->getContent(false));
-        }
         $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
         $dispatchRequest = json_decode($response->getContent(false), true);
         $this->assertNotEmpty($dispatchRequest['identifier']);
@@ -389,6 +424,15 @@ class ApiTest extends ApiTestCase
         return $dispatchRequest;
     }
 
+    private function getDispatchRequests(string $groupIdentifier = '1'): array
+    {
+        $response = $this->testClient->get('/dispatch/requests?groupId='.$groupIdentifier);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $dispatchRequestResponse = json_decode($response->getContent(false), true);
+
+        return $dispatchRequestResponse['hydra:member'];
+    }
+
     private function getDispatchRequestRecipientById(string $identifier): array
     {
         $response = $this->testClient->get('/dispatch/request-recipients/'.$identifier);
@@ -398,6 +442,16 @@ class ApiTest extends ApiTestCase
         $this->assertEquals($identifier, $dispatchRequestRecipient['identifier']);
 
         return $dispatchRequestRecipient;
+    }
+
+    private function submitRequestById(string $identifier): array
+    {
+        $response = $this->testClient->postJson("/dispatch/requests/$identifier/submit", []);
+        $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
+        $dispatchRequest = json_decode($response->getContent(false), true);
+        $this->assertEquals($identifier, $dispatchRequest['identifier']);
+
+        return $dispatchRequest;
     }
 
     private function loginUser(): void
