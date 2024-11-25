@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.6.8
+
 * Split authorization policies into roles and resource permissions
 * Add property types, modernize code, and refactor
 * Set up in-memory database for testing, add API tests
