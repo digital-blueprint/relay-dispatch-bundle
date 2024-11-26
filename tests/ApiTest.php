@@ -7,9 +7,10 @@ namespace Dbp\Relay\DispatchBundle\Tests;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Dbp\Relay\BasePersonBundle\TestUtils\TestPersonTrait;
 use Dbp\Relay\CoreBundle\TestUtils\TestClient;
+use Dbp\Relay\CoreBundle\TestUtils\TestEntityManager;
 use Dbp\Relay\CoreBundle\TestUtils\UserAuthTrait;
+use Dbp\Relay\DispatchBundle\DependencyInjection\DbpRelayDispatchExtension;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
-use Dbp\Relay\DispatchBundle\Entity\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -59,7 +60,8 @@ class ApiTest extends ApiTestCase
             ]);
         $this->testClient->getClient()->disableReboot();
 
-        TestEntityManager::setUpEntityManager($this->testClient->getContainer());
+        TestEntityManager::setUpEntityManager(
+            $this->testClient->getContainer(), DbpRelayDispatchExtension::DISPATCH_ENTITY_MANAGER_ID);
     }
 
     public function testGetGroupsUnauthenticated(): void
@@ -104,26 +106,6 @@ class ApiTest extends ApiTestCase
         $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
         $this->assertArrayNotHasKey('files', $dispatchRequest);
         $this->assertArrayNotHasKey('name', $dispatchRequest);
-    }
-
-    public function testFoo(): void
-    {
-        $this->loginAdmin();
-        $dispatchRequest = $this->createDispatchRequest('1');
-        $dispatchRequestIdentifier = $dispatchRequest['identifier'];
-
-        $this->loginUser();
-        $dispatchRequestRecipient = $this->addRequestRecipient(
-            $dispatchRequestIdentifier, self::TEST_PERSON_IDENTIFIER);
-        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
-        $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
-        $this->assertEquals('Graben 1', $dispatchRequestRecipient['streetAddress']);
-        $this->assertEquals('Vienna', $dispatchRequestRecipient['addressLocality']);
-        $this->assertEquals('1010', $dispatchRequestRecipient['postalCode']);
-        $this->assertEquals('AT', $dispatchRequestRecipient['addressCountry']);
-
-        $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
-        $this->assertCount(1, $dispatchRequest['recipients']);
     }
 
     public function testReadRecipientAddressGranted(): void
@@ -177,6 +159,7 @@ class ApiTest extends ApiTestCase
         $this->loginUser();
         $dispatchRequestRecipient = $this->addRequestRecipient(
             $dispatchRequestIdentifier);
+        $dispatchRequestRecipientIdentifier = $dispatchRequestRecipient['identifier'];
         $this->assertEquals('', $dispatchRequestRecipient['givenName']);
         $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
         $this->assertEquals('Hauptplatz', $dispatchRequestRecipient['streetAddress']);
@@ -185,8 +168,8 @@ class ApiTest extends ApiTestCase
         $this->assertEquals('8010', $dispatchRequestRecipient['postalCode']);
         $this->assertEquals('AT', $dispatchRequestRecipient['addressCountry']);
 
-        // same for GET:
-        $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
+        // same for GET recipient:
+        $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipientIdentifier);
         $this->assertEquals('', $dispatchRequestRecipient['givenName']);
         $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
         $this->assertEquals('Hauptplatz', $dispatchRequestRecipient['streetAddress']);
@@ -196,16 +179,22 @@ class ApiTest extends ApiTestCase
         $this->assertEquals('AT', $dispatchRequestRecipient['addressCountry']);
 
         // same for GET request:
+        $this->addRequestRecipient(
+            $dispatchRequestIdentifier, self::TEST_PERSON_IDENTIFIER); // add some noise
+
         $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
-        $this->assertCount(1, $dispatchRequest['recipients']);
-        $dispatchRequestRecipient = $dispatchRequest['recipients'][0];
-        $this->assertEquals('', $dispatchRequestRecipient['givenName']);
-        $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
-        $this->assertEquals('Hauptplatz', $dispatchRequestRecipient['streetAddress']);
-        $this->assertEquals('1', $dispatchRequestRecipient['buildingNumber']);
-        $this->assertEquals('Graz', $dispatchRequestRecipient['addressLocality']);
-        $this->assertEquals('8010', $dispatchRequestRecipient['postalCode']);
-        $this->assertEquals('AT', $dispatchRequestRecipient['addressCountry']);
+        $this->assertCount(2, $dispatchRequest['recipients']);
+        foreach ($dispatchRequest['recipients'] as $dispatchRequestRecipient) {
+            if ($dispatchRequestRecipient['identifier'] === $dispatchRequestRecipientIdentifier) {
+                $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+                $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
+                $this->assertEquals('Hauptplatz', $dispatchRequestRecipient['streetAddress']);
+                $this->assertEquals('1', $dispatchRequestRecipient['buildingNumber']);
+                $this->assertEquals('Graz', $dispatchRequestRecipient['addressLocality']);
+                $this->assertEquals('8010', $dispatchRequestRecipient['postalCode']);
+                $this->assertEquals('AT', $dispatchRequestRecipient['addressCountry']);
+            }
+        }
     }
 
     public function testReadRecipientAddressNotGranted(): void
@@ -219,6 +208,7 @@ class ApiTest extends ApiTestCase
         $this->loginUser();
         $dispatchRequestRecipient = $this->addRequestRecipient(
             $dispatchRequestIdentifier, self::TEST_PERSON_IDENTIFIER);
+        $dispatchRequestRecipientIdentifier = $dispatchRequestRecipient['identifier'];
         $this->assertEquals('', $dispatchRequestRecipient['givenName']);
         $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
         $this->assertArrayNotHasKey('streetAddress', $dispatchRequestRecipient);
@@ -228,7 +218,7 @@ class ApiTest extends ApiTestCase
         $this->assertArrayNotHasKey('buildingNumber', $dispatchRequestRecipient);
 
         // same for GET:
-        $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
+        $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipientIdentifier);
         $this->assertEquals('', $dispatchRequestRecipient['givenName']);
         $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
         $this->assertArrayNotHasKey('streetAddress', $dispatchRequestRecipient);
@@ -236,6 +226,23 @@ class ApiTest extends ApiTestCase
         $this->assertArrayNotHasKey('postalCode', $dispatchRequestRecipient);
         $this->assertArrayNotHasKey('addressCountry', $dispatchRequestRecipient);
         $this->assertArrayNotHasKey('buildingNumber', $dispatchRequestRecipient);
+
+        // same for GET request:
+        $this->addRequestRecipient($dispatchRequestIdentifier); // add some noise
+
+        $dispatchRequest = $this->getDispatchRequestById($dispatchRequestIdentifier);
+        $this->assertCount(2, $dispatchRequest['recipients']);
+        foreach ($dispatchRequest['recipients'] as $dispatchRequestRecipient) {
+            if ($dispatchRequestRecipient['identifier'] === $dispatchRequestRecipientIdentifier) {
+                $this->assertEquals('', $dispatchRequestRecipient['givenName']);
+                $this->assertEquals('Doe', $dispatchRequestRecipient['familyName']);
+                $this->assertArrayNotHasKey('streetAddress', $dispatchRequestRecipient);
+                $this->assertArrayNotHasKey('addressLocality', $dispatchRequestRecipient);
+                $this->assertArrayNotHasKey('postalCode', $dispatchRequestRecipient);
+                $this->assertArrayNotHasKey('addressCountry', $dispatchRequestRecipient);
+                $this->assertArrayNotHasKey('buildingNumber', $dispatchRequestRecipient);
+            }
+        }
     }
 
     public function testReadRecipientBirthdateGranted(): void

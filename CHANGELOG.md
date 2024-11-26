@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Use TestEntityManger and doctrine config helpers from core
+
 ## 0.6.8
 
 * Split authorization policies into roles and resource permissions

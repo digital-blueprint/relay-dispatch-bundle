@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
+use Dbp\Relay\CoreBundle\Doctrine\DoctrineConfiguration;
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
@@ -18,6 +19,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 class DbpRelayDispatchExtension extends ConfigurableExtension implements PrependExtensionInterface
 {
     use ExtensionTrait;
+
+    public const DISPATCH_ENTITY_MANAGER_ID = 'dbp_relay_dispatch_bundle';
+    public const DISPATCH_DB_CONNECTION_ID = 'dbp_relay_dispatch_bundle';
 
     public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
@@ -61,43 +65,13 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         $configs = $container->getExtensionConfig($this->getAlias());
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        foreach (['doctrine', 'doctrine_migrations'] as $extKey) {
-            if (!$container->hasExtension($extKey)) {
-                throw new \Exception("'".$this->getAlias()."' requires the '$extKey' bundle to be loaded!");
-            }
-        }
-
-        $container->prependExtensionConfig('doctrine', [
-            'dbal' => [
-                'connections' => [
-                    'dbp_relay_dispatch_bundle' => [
-                        'url' => $config['database_url'] ?? 'sqlite:///:memory:',
-                    ],
-                ],
-            ],
-            'orm' => [
-                'entity_managers' => [
-                    'dbp_relay_dispatch_bundle' => [
-                        'naming_strategy' => 'doctrine.orm.naming_strategy.underscore_number_aware',
-                        'connection' => 'dbp_relay_dispatch_bundle',
-                        'mappings' => [
-                            'dbp_relay_dispatch' => [
-                                'type' => 'attribute',
-                                'dir' => __DIR__.'/../Entity',
-                                'prefix' => 'Dbp\Relay\DispatchBundle\Entity',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-
-        $this->registerEntityManager($container, 'dbp_relay_dispatch_bundle');
-
-        $container->prependExtensionConfig('doctrine_migrations', [
-            'migrations_paths' => [
-                'Dbp\Relay\DispatchBundle\Migrations' => __DIR__.'/../Migrations',
-            ],
-        ]);
+        DoctrineConfiguration::prependEntityManagerConfig($container, self::DISPATCH_ENTITY_MANAGER_ID,
+            $config['database_url'] ?? '',
+            __DIR__.'/../Entity',
+            'Dbp\Relay\DispatchBundle\Entity',
+            self::DISPATCH_DB_CONNECTION_ID);
+        DoctrineConfiguration::prependMigrationsConfig($container,
+            __DIR__.'/../Migrations',
+            'Dbp\Relay\DispatchBundle\Migrations');
     }
 }

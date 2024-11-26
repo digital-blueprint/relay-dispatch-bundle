@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d2893c9869e488f0a959fb1eb040c01",
+    "content-hash": "f38ccbb9c076716516ef7e087af7280f",
     "packages": [
         {
             "name": "api-platform/core",
@@ -397,20 +397,21 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.193",
+            "version": "v0.1.194",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "d8f8a87f4d535f10446e632ca9af34709420d448"
+                "reference": "22dd4481605db9e4d27ea87fa35c29f8b8fefa46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/d8f8a87f4d535f10446e632ca9af34709420d448",
-                "reference": "d8f8a87f4d535f10446e632ca9af34709420d448",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/22dd4481605db9e4d27ea87fa35c29f8b8fefa46",
+                "reference": "22dd4481605db9e4d27ea87fa35c29f8b8fefa46",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^3.2.21",
+                "doctrine/orm": "^3.3",
                 "dragonmantank/cron-expression": "^3.3.3",
                 "ext-fileinfo": "*",
                 "ext-intl": "*",
@@ -492,9 +493,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.193"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.194"
             },
-            "time": "2024-11-25T11:58:30+00:00"
+            "time": "2024-11-26T08:42:02+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -12268,7 +12269,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -12281,7 +12282,7 @@
         "ext-simplexml": "*",
         "ext-soap": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.1"
     },

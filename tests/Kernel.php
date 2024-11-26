@@ -8,6 +8,7 @@ use ApiPlatform\Symfony\Bundle\ApiPlatformBundle;
 use Dbp\Relay\BasePersonBundle\DbpRelayBasePersonBundle;
 use Dbp\Relay\CoreBundle\DbpRelayCoreBundle;
 use Dbp\Relay\DispatchBundle\DbpRelayDispatchBundle;
+use Dbp\Relay\DispatchBundle\DependencyInjection\DbpRelayDispatchExtension;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
 use Nelmio\CorsBundle\NelmioCorsBundle;
@@ -55,7 +56,7 @@ class Kernel extends BaseKernel
         ]);
 
         $container->extension('dbp_relay_core', [
-            'queue_dsn' => 'doctrine://dbp_relay_dispatch_bundle',
+            'queue_dsn' => 'doctrine://'.DbpRelayDispatchExtension::DISPATCH_DB_CONNECTION_ID,
         ]);
 
         $container->extension('dbp_relay_dispatch', self::getTestConfig());
