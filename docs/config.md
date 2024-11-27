@@ -27,6 +27,12 @@ dbp_relay_dispatch:
   blob_bucket_id:       ~
   # Secret key for blob storage
   blob_key:             ~
+  # Identity provider base URL for blob storage API
+  blob_idp_url:         ~
+  # Identity provider client id for blob storage
+  blob_oauth_client_id: ~
+  # Identity provider client secret for corresponding client id
+  blob_oauth_client_secret: ~
   group:
     iri_template:         /base/organizations/%s
     address_attributes:
@@ -35,9 +41,11 @@ dbp_relay_dispatch:
       postal_code:          postalCode
       country:              addressCountry
   authorization:
-    policies:
+    policies:             []
+    roles:
       # Returns true if the user is allowed to use the dispatch API.
       ROLE_USER:            'false'
+    resource_permissions:
       # Returns true if the user has read access for the given group, limited to metadata.
       ROLE_GROUP_READER_METADATA: 'false'
       # Returns true if the user has read access for the given group, including delivery content. Implies the metadata reader role.
@@ -49,7 +57,6 @@ dbp_relay_dispatch:
     attributes:
       # Returns an array of available group IDs.
       GROUPS:               '[]'
-    entities:             []
 ```
 
 ## Client Certificate Tips
