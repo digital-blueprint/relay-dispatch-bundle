@@ -2,7 +2,11 @@
 
 ## Unreleased
 
+## 0.6.9
+
 * Use TestEntityManger and doctrine config helpers from core
+* Test with PHP 8.4
+* Port with phpstan v2
 
 ## 0.6.8
 
