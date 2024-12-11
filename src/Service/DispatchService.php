@@ -43,6 +43,7 @@ use Dbp\Relay\DispatchBundle\Entity\Request;
 use Dbp\Relay\DispatchBundle\Entity\RequestFile;
 use Dbp\Relay\DispatchBundle\Entity\RequestRecipient;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareInterface;
@@ -972,7 +973,7 @@ class DispatchService implements LoggerAwareInterface
         $service = $this->dualDeliveryService->getClient();
         $dualDeliveryPayloads = [];
 
-        /** @var RequestFile[] $files */
+        /** @var Collection<int, RequestFile> $files */
         $files = $dispatchRequest->getFiles();
 
         // For some reasons files are not loaded by default
