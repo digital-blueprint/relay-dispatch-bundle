@@ -32,7 +32,8 @@ class TestSeedCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('dbp:relay-dispatch:test-seed');
+        $this->setName('dbp:relay:dispatch:test-seed');
+        $this->setAliases(['dbp:relay-dispatch:test-seed']);
         $this
             ->setDescription('Test seed command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')

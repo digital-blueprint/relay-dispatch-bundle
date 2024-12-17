@@ -23,7 +23,8 @@ class ListRecipientsCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('dbp:relay-dispatch:recipient-list');
+        $this->setName('dbp:relay:dispatch:recipient-list');
+        $this->setAliases(['dbp:relay-dispatch:recipient-list']);
         $this
             ->setDescription('Outputs a list of recipients')
             ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Limit the number of results', 10)

@@ -25,7 +25,8 @@ class DeliveryStatusChangeCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('dbp:relay-dispatch:delivery-status-change');
+        $this->setName('dbp:relay:dispatch:delivery-status-change');
+        $this->setAliases(['dbp:relay-dispatch:delivery-status-change']);
         $this
             ->setDescription('DeliveryStatusChange command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: create')

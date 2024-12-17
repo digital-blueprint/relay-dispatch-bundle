@@ -22,7 +22,8 @@ class DebugCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('dbp:relay-dispatch:debug');
+        $this->setName('dbp:relay:dispatch:debug');
+        $this->setAliases(['dbp:relay-dispatch:debug']);
         $this
             ->setDescription('Debug command')
             ->addArgument('action', InputArgument::REQUIRED, 'action: generate-request-status-change|do-api-dualdelivery-request|do-api-status-requests')

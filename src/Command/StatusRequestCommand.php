@@ -26,7 +26,8 @@ class StatusRequestCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('dbp:relay-dispatch:status-request');
+        $this->setName('dbp:relay:dispatch:status-request');
+        $this->setAliases(['dbp:relay-dispatch:status-request']);
         $this
             ->setDescription('Does a status request for an AppDeliveryID')
             ->addArgument('app-delivery-id', InputArgument::REQUIRED, 'AppDeliveryID')
