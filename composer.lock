@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "api-platform/core",
-            "version": "v3.4.9",
+            "version": "v3.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "535bbf57a7fc00ba0f8d05261050d90b3cbad987"
+                "reference": "f8dae8e1154480a49e86d2393118ffbd99acc51c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/535bbf57a7fc00ba0f8d05261050d90b3cbad987",
-                "reference": "535bbf57a7fc00ba0f8d05261050d90b3cbad987",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/f8dae8e1154480a49e86d2393118ffbd99acc51c",
+                "reference": "f8dae8e1154480a49e86d2393118ffbd99acc51c",
                 "shasum": ""
             },
             "require": {
@@ -223,9 +223,9 @@
             ],
             "support": {
                 "issues": "https://github.com/api-platform/core/issues",
-                "source": "https://github.com/api-platform/core/tree/v3.4.9"
+                "source": "https://github.com/api-platform/core/tree/v3.4.10"
             },
-            "time": "2024-12-13T14:29:05+00:00"
+            "time": "2024-12-20T10:18:28+00:00"
         },
         {
             "name": "brick/math",
