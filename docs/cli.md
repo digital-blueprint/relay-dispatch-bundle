@@ -37,5 +37,5 @@
 ./bin/console dbp:relay:dispatch:status-request ADID_relay-dispatch-bundle-f839234020-c4d545db-95d1-4358-b37b-fcca31680c9e --output-response-xml
 
 # Create a DeliveryStatusChange for a request recipient with a file
-./bin/console dbp:relay:dispatch:delivery-status-change create 3e2cb1fd-b536-42aa-95d6-49cfeb53cb92  --status-type=26 --description="Just a test" --with-file
+./bin/console dbp:relay:dispatch:delivery-status-change create 3e2cb1fd-b536-42aa-95d6-49cfeb53cb92 --status-type=26 --description="Just a test" --with-file
 ```
