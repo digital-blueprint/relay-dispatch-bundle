@@ -40,9 +40,6 @@ class RequestFile
     #[Groups(['DispatchRequestFile:output'])]
     private ?string $contentUrl = null;
 
-    /**
-     * @var resource|string|int|false
-     */
     #[ORM\Column(type: 'binary', length: 209715200)]
     private mixed $data = null;
 

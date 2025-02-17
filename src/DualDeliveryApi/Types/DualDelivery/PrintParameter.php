@@ -9,7 +9,7 @@ class PrintParameter
     /**
      * Farbdruck (Default=false).
      *
-     * @var ?boolean
+     * @var ?bool
      */
     protected $Color;
 
@@ -30,7 +30,7 @@ class PrintParameter
     /**
      * Nicht abfallender (OverPrint=false, Defaultwert) oder Abfallender Druck (true).
      *
-     * @var ?boolean
+     * @var ?bool
      */
     protected $OverPrint;
 
