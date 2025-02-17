@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.6.10
+
+* Rename CLI commands to match the naming convention (old names still work)
+* Small linter fixes
+
 ## 0.6.9
 
 * Use TestEntityManger and doctrine config helpers from core
