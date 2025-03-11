@@ -18,6 +18,7 @@ class GroupProvider extends AbstractDataProvider
         private readonly GroupService $groupService,
         private readonly AuthorizationService $authorizationService)
     {
+        parent::__construct();
     }
 
     protected function isCurrentUserGrantedOperationAccess(int $operation): bool

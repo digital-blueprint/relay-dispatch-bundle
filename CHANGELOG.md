@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.6.11
+
+* add missing parent constructor calls to AbstractDataProvider children
+
 ## 0.6.10
 
 * Rename CLI commands to match the naming convention (old names still work)

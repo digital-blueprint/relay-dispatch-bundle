@@ -21,6 +21,7 @@ final class RequestFileProvider extends AbstractDataProvider
         private readonly DispatchService $dispatchService,
         private readonly AuthorizationService $authorizationService)
     {
+        parent::__construct();
     }
 
     protected function isCurrentUserGrantedOperationAccess(int $operation): bool

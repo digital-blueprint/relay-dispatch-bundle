@@ -17,6 +17,7 @@ final class PreAddressingRequestProvider extends AbstractDataProvider
     public function __construct(
         private readonly AuthorizationService $authorizationService)
     {
+        parent::__construct();
     }
 
     protected function isCurrentUserGrantedOperationAccess(int $operation): bool

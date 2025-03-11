@@ -18,6 +18,7 @@ final class RequestRecipientProvider extends AbstractDataProvider
         private readonly DispatchService $dispatchService,
         private readonly AuthorizationService $authorizationService)
     {
+        parent::__construct();
     }
 
     protected function getItemById(string $id, array $filters = [], array $options = []): ?object
