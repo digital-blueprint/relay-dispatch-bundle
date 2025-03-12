@@ -66,6 +66,84 @@ class PreAddrTest extends TestCase
   </soap:Body>
 </soap:Envelope>';
 
+    // We got this from the Vendo test system for a while
+    private static $SUCCESS_RESPONSE_RESULT_WITH_ERROR = '<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns4:DualDeliveryPreAddressingResponse
+      xmlns="http://reference.e-government.gv.at/namespace/zustellung/dual/20130121#"
+      xmlns:ns2="http://reference.e-government.gv.at/namespace/persondata/20130121#"
+      xmlns:ns3="http://reference.bbgdual.dualdelivery.at/namespace/persondata/20170308#"
+      xmlns:ns4="http://reference.e-government.gv.at/namespace/zustellung/dual_pa/20130121#"
+      xmlns:ns5="uri:general.additional.params/20130121#"
+      xmlns:ns6="http://www.w3.org/2000/09/xmldsig#"
+      xmlns:ns7="http://www.ebinterface.at/schema/4p0/"
+      xmlns:ns8="http://www.ebinterface.at/schema/4p0/extensions/sv"
+      xmlns:ns9="http://www.ebinterface.at/schema/4p0/extensions/ext"
+      xmlns:ns10="http://reference.e-government.gv.at/namespace/zustellung/msg"
+      xmlns:ns11="http://reference.e-government.gv.at/namespace/persondata/20020228#"
+      xmlns:ns12="urn:oasis:names:tc:SAML:1.0:assertion"
+      xmlns:ns13="http://reference.e-government.gv.at/namespace/zustellung/dual_notification/20130121#"
+      xmlns:ns14="http://www.e-zustellung.at/ namespaces/zuse_20090922"
+      xmlns:ns15="http://reference.e-government.gv.at/namespace/zustellung/dual_bulk/20130121#"
+      version=" 1.0">
+      <AppDeliveryID>
+        ADID_relay-dispatch-bundle-1741777007-dbe4001e-e7aa-40f8-b0c2-6fbb96c7cc00</AppDeliveryID>
+      <Status>
+        <Code>0</Code>
+        <Text>SUCCESS</Text>
+      </Status>
+      <DualDeliveryID>196193</DualDeliveryID>
+      <Errors>
+        <Error>
+          <Info>Fehler bei IO.</Info>
+          <Code>90011</Code>
+          <Severity>ERROR</Severity>
+        </Error>
+        <Error>
+          <Info>Could not send Message.</Info>
+          <Code>5</Code>
+          <Severity>ERROR</Severity>
+        </Error>
+        <Error>
+          <Info>HTTP response \'404: null\' when communicating with https://ws-q.gateway.tnvz.brz.gv.at/tnvzservice</Info>
+          <Code>5</Code>
+          <Severity>ERROR</Severity>
+        </Error>
+      </Errors>
+    </ns4:DualDeliveryPreAddressingResponse>
+  </soap:Body>
+</soap:Envelope>';
+
+    public function testPreAddressingRequestSuccessWithErrors()
+    {
+        $service = $this->getMockService(self::$SUCCESS_RESPONSE_RESULT_WITH_ERROR);
+
+        $senderProfile = new SenderProfile('TU_GRAZ', '1.0');
+        $sender = new SenderType($senderProfile);
+        $physicalPerson = new PhysicalPersonType(new PersonNameType('Max', new FamilyName('Mustermann')), '1970-06-04');
+        $personData = new PersonDataType($physicalPerson);
+        $recipient = new RecipientType($personData);
+        $recipients = new Recipients([new Recipient('424242', $recipient)]);
+        $meta = new PreMetaData('636ba1dfd012c');
+        $meta->setProcessingProfile(new ProcessingProfile(VendoProcessingProfile::ZUSE_DD, VendoProcessingProfile::VERSION_PRE_ADDRESSING));
+        $meta->setAsynchronous(false);
+        $request = new DualDeliveryPreAddressingRequestType($sender, $recipients, $meta, null, '1.0');
+        $response = $service->dualDeliveryPreAddressingRequestOperation($request);
+
+        $this->assertTrue($response instanceof DualDeliveryPreAddressingResponseType);
+        $this->assertSame('196193', $response->getDualDeliveryID());
+        $this->assertSame('ADID_relay-dispatch-bundle-1741777007-dbe4001e-e7aa-40f8-b0c2-6fbb96c7cc00', $response->getAppDeliveryID());
+        $this->assertSame('0', $response->getStatus()->getCode());
+        $this->assertSame('SUCCESS', $response->getStatus()->getText());
+        $this->assertNull($response->getAddressingResults());
+        $errors = $response->getErrors()->getError();
+        $this->assertSame(3, count($errors));
+        $this->assertSame('90011', $errors[0]->getCode());
+        $this->assertSame('Fehler bei IO.', $errors[0]->getInfo());
+        $this->assertSame('ERROR', $errors[0]->getSeverity());
+    }
+
     public function testPreAddressingRequestOperationNoResults()
     {
         $service = $this->getMockService(self::$SUCCESS_RESPONSE);

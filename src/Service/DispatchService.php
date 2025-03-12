@@ -819,7 +819,7 @@ class DispatchService implements LoggerAwareInterface
         $response = $this->doPreAddressingSoapRequest($preAddressingRequest->getGivenName(), $preAddressingRequest->getFamilyName(), $preAddressingRequest->getBirthDate());
 
         // TODO: Respond in another way?
-        $addressingResults = $response->getAddressingResults()->getAddressingResult();
+        $addressingResults = $response->getAddressingResults()?->getAddressingResult() ?? [];
         if (count($addressingResults) === 0) {
             throw ApiError::withDetails(Response::HTTP_NOT_FOUND, 'Person was not found!', 'dispatch:request-pre-addressing-not-found', ['message' => 'No addressing results found!']);
         }
@@ -832,9 +832,8 @@ class DispatchService implements LoggerAwareInterface
         if ($requestRecipient->canDoPreAddressingRequest()) {
             $response = $this->doPreAddressingSoapRequest($requestRecipient->getGivenName(), $requestRecipient->getFamilyName(), $requestRecipient->getBirthDate());
 
-            $addressingResults = $response->getAddressingResults();
-            $addressingResultData = $addressingResults->getAddressingResult() ?? [];
-            $requestRecipient->setElectronicallyDeliverable(!empty($addressingResultData));
+            $addressingResultData = $response->getAddressingResults()?->getAddressingResult() ?? [];
+            $requestRecipient->setElectronicallyDeliverable($addressingResultData !== []);
         } else {
             $requestRecipient->setElectronicallyDeliverable(false);
         }
