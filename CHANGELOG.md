@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.6.12
+
+* Handle an unhandled error in case the pre-addressing fails at dual-delivery provider
+
 ## 0.6.11
 
 * add missing parent constructor calls to AbstractDataProvider children
