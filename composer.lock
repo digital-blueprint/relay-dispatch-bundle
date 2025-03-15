@@ -289,16 +289,16 @@
         },
         {
             "name": "dbp/relay-base-person-bundle",
-            "version": "v0.2.35",
+            "version": "v0.2.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-base-person-bundle.git",
-                "reference": "520870a2a90ae4f3a8edd02e20235ce3fe79e115"
+                "reference": "3aff7a5a1749400f6bc0b67ab0976958b1194484"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-base-person-bundle/zipball/520870a2a90ae4f3a8edd02e20235ce3fe79e115",
-                "reference": "520870a2a90ae4f3a8edd02e20235ce3fe79e115",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-base-person-bundle/zipball/3aff7a5a1749400f6bc0b67ab0976958b1194484",
+                "reference": "3aff7a5a1749400f6bc0b67ab0976958b1194484",
                 "shasum": ""
             },
             "require": {
@@ -314,8 +314,9 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.50",
-                "phpstan/phpstan": "^1.10.59",
-                "phpstan/phpstan-phpunit": "^1.3.16",
+                "phpstan/phpstan": "^2.0.0",
+                "phpstan/phpstan-phpunit": "^2.0.0",
+                "phpstan/phpstan-symfony": "^2.0.0",
                 "phpunit/phpunit": "^10.1",
                 "symfony/browser-kit": "^5.4 || ^6.4",
                 "symfony/error-handler": "^5.4 || ^6.4",
@@ -337,9 +338,9 @@
             ],
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-base-person-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-base-person-bundle/tree/v0.2.35"
+                "source": "https://github.com/digital-blueprint/relay-base-person-bundle/tree/v0.2.36"
             },
-            "time": "2024-11-20T08:15:21+00:00"
+            "time": "2025-03-12T09:08:07+00:00"
         },
         {
             "name": "dbp/relay-blob-library",
@@ -397,16 +398,16 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.203",
+            "version": "v0.1.204",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "4444920da7b51df531fce0aacd461c2716ac96d9"
+                "reference": "431157d57306e74fc5c10b5e6402faf54d1abf3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/4444920da7b51df531fce0aacd461c2716ac96d9",
-                "reference": "4444920da7b51df531fce0aacd461c2716ac96d9",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/431157d57306e74fc5c10b5e6402faf54d1abf3a",
+                "reference": "431157d57306e74fc5c10b5e6402faf54d1abf3a",
                 "shasum": ""
             },
             "require": {
@@ -493,9 +494,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.203"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.204"
             },
-            "time": "2025-03-06T09:54:21+00:00"
+            "time": "2025-03-11T13:27:48+00:00"
         },
         {
             "name": "doctrine/cache",
