@@ -17,6 +17,8 @@ services:
   Dbp\Relay\DispatchBundle\Service\GroupService:
     autowire: true
     autoconfigure: true
+    arguments:
+      $iriConverter: '@api_platform.iri_converter'
 
   Dbp\Relay\DispatchBundle\Command\:
     resource: '../../Command'

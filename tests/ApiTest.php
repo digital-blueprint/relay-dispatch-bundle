@@ -6,6 +6,7 @@ namespace Dbp\Relay\DispatchBundle\Tests;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Dbp\Relay\BasePersonBundle\TestUtils\TestPersonTrait;
+use Dbp\Relay\CoreBundle\TestUtils\AbstractApiTest;
 use Dbp\Relay\CoreBundle\TestUtils\TestClient;
 use Dbp\Relay\CoreBundle\TestUtils\TestEntityManager;
 use Dbp\Relay\CoreBundle\TestUtils\UserAuthTrait;
@@ -14,7 +15,7 @@ use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiTest extends ApiTestCase
+class ApiTest extends AbstractApiTest
 {
     use UserAuthTrait;
     use TestPersonTrait;
@@ -26,8 +27,6 @@ class ApiTest extends ApiTestCase
     private const TEST_ADMIN_IDENTIFIER = 'admin';
 
     private const TEST_PERSON_IDENTIFIER = 'test_person';
-
-    private ?TestClient $testClient = null;
 
     private array $testUserAttributes = [
         'READ_METADATA_GROUPS' => ['1', '2', '3', '4'],

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Service;
 
-use ApiPlatform\Api\IriConverterInterface;
+use ApiPlatform\Metadata\IriConverterInterface;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
 use Dbp\Relay\CoreBundle\LocalData\LocalData;
 use Dbp\Relay\CoreBundle\LocalData\LocalDataAwareInterface;
@@ -24,9 +24,12 @@ class GroupService implements LoggerAwareInterface
 
     private ?array $config = null;
 
+    /**
+     * @param IriConverterInterface $iriConverter
+     */
     public function __construct(
         private readonly AuthorizationService $authorizationService,
-        private readonly IriConverterInterface $iriConverter)
+        private readonly object $iriConverter)
     {
     }
 
