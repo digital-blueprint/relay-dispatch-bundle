@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.6.13
+
+* Drop support for PHP 8.1
+* Add support for api-platform 4.1
+
 ## 0.6.12
 
 * Handle an unhandled error in case the pre-addressing fails at dual-delivery provider
