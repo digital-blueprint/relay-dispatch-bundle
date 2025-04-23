@@ -6,13 +6,103 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 date_default_timezone_set('UTC');
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\OpenApi\Model\Operation;
+use ApiPlatform\OpenApi\Model\RequestBody;
+use ApiPlatform\OpenApi\Model\Response;
 use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\Vendo;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
+use Dbp\Relay\DispatchBundle\Rest\DeliveryStatusChangeProcessor;
+use Dbp\Relay\DispatchBundle\Rest\DeliveryStatusChangeProvider;
+use Dbp\Relay\DispatchBundle\Rest\UpdateDeliveryStatusChangeFileAction;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
+#[ApiResource(
+    shortName: 'DispatchDeliveryStatusChange',
+    types: ['https://schema.org/Status'],
+    operations: [
+        new Get(
+            uriTemplate: '/dispatch/request-status-changes/{identifier}',
+            openapi: new Operation(
+                tags: ['Dispatch']
+            ),
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            provider: DeliveryStatusChangeProvider::class
+        ),
+        new GetCollection(
+            uriTemplate: '/dispatch/request-status-changes',
+            openapi: new Operation(
+                tags: ['Dispatch']
+            ),
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            provider: DeliveryStatusChangeProvider::class
+        ),
+        new Delete(
+            uriTemplate: '/dispatch/request-status-changes/{identifier}/file',
+            openapi: new Operation(
+                tags: ['Dispatch'],
+                summary: 'Removes the DispatchDeliveryStatusChange file resource.'
+            ),
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            provider: DeliveryStatusChangeProvider::class,
+            processor: DeliveryStatusChangeProcessor::class
+        ),
+        new Post(
+            uriTemplate: '/dispatch/request-status-changes/{identifier}/file',
+            inputFormats: [
+                'multipart' => 'multipart/form-data',
+            ],
+            controller: UpdateDeliveryStatusChangeFileAction::class,
+            openapi: new Operation(
+                tags: ['Dispatch'],
+                responses: [
+                    415 => new Response(description: 'Unsupported Media Type - Only PDF files can be added!'),
+                ],
+                summary: 'Updates the DispatchDeliveryStatusChange file resource.',
+                requestBody: new RequestBody(
+                    content: new \ArrayObject([
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'required' => ['file', 'dispatchRequestIdentifier', 'fileUploaderIdentifier'],
+                                'properties' => [
+                                    'dispatchRequestIdentifier' => [
+                                        'description' => 'ID of the request',
+                                        'type' => 'string',
+                                        'example' => '4d553985-d44f-404f-acf3-cd0eac7ae9c2',
+                                    ],
+                                    'file' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                    'fileUploaderIdentifier' => [
+                                        'description' => 'User ID of the file uploader',
+                                        'type' => 'string',
+                                        'example' => 'F957F2400C941B72',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ])
+                )
+            ),
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            deserialize: false,
+            provider: DeliveryStatusChangeProvider::class
+        ),
+    ],
+    normalizationContext: [
+        'groups' => ['DispatchDeliveryStatusChange:output'],
+    ]
+)]
 #[ORM\Table(name: 'dispatch_delivery_status_changes')]
 #[ORM\Entity]
 class DeliveryStatusChange
@@ -24,28 +114,34 @@ class DeliveryStatusChange
     public const STATUS_DUAL_DELIVERY_REQUEST_SUCCESS = 5;
     public const STATUS_STATUS_REQUEST_FAILED = 10;
 
+    #[ApiProperty(identifier: true)]
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private ?string $identifier = null;
 
+    #[ApiProperty(iris: ['https://schema.org/dateCreated'])]
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private ?\DateTimeInterface $dateCreated = null;
 
+    #[ApiProperty]
     #[ORM\JoinColumn(name: 'dispatch_request_recipient_identifier', referencedColumnName: 'identifier')]
     #[ORM\ManyToOne(targetEntity: RequestRecipient::class, inversedBy: 'statusChanges')]
     #[Groups(['DispatchDeliveryStatusChange:output'])]
     private ?RequestRecipient $requestRecipient = null;
 
+    #[ApiProperty(iris: ['https://schema.org/identifier'])]
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchDeliveryStatusChange:output'])]
     private ?string $dispatchRequestRecipientIdentifier = null;
 
+    #[ApiProperty(iris: ['https://schema.org/statusType'])]
     #[ORM\Column(type: 'integer')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private ?int $statusType = null;
 
+    #[ApiProperty(iris: ['https://schema.org/description'])]
     #[ORM\Column(type: 'text')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private ?string $description = null;
@@ -56,10 +152,12 @@ class DeliveryStatusChange
     #[ORM\Column(type: 'binary', length: 209715200, nullable: true)]
     private mixed $fileData;
 
+    #[ApiProperty(iris: ['https://schema.org/fileFormat'])]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
     private ?string $fileFormat = null;
 
+    #[ApiProperty(iris: ['http://schema.org/contentUrl'])]
     #[Groups(['DispatchDeliveryStatusChange:output'])]
     private ?string $fileContentUrl = null;
 
@@ -270,6 +368,7 @@ class DeliveryStatusChange
         return Vendo::isSuccessStatus($this->statusType);
     }
 
+    #[ApiProperty(iris: ['https://schema.org/statusType'])]
     #[SerializedName('dispatchStatus')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     public function getDispatchStatus(): string

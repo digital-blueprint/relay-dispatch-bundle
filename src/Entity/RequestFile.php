@@ -6,47 +6,131 @@ namespace Dbp\Relay\DispatchBundle\Entity;
 
 date_default_timezone_set('UTC');
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\OpenApi\Model\Operation;
+use ApiPlatform\OpenApi\Model\RequestBody;
+use ApiPlatform\OpenApi\Model\Response;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
+use Dbp\Relay\DispatchBundle\Rest\CreateRequestFileAction;
+use Dbp\Relay\DispatchBundle\Rest\RequestFileProcessor;
+use Dbp\Relay\DispatchBundle\Rest\RequestFileProvider;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    shortName: 'DispatchRequestFile',
+    types: ['https://schema.org/DigitalDocument'],
+    operations: [
+        new Get(
+            uriTemplate: '/dispatch/request-files/{identifier}',
+            openapi: new Operation(
+                tags: ['Dispatch']
+            ),
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            provider: RequestFileProvider::class
+        ),
+        new Delete(
+            uriTemplate: '/dispatch/request-files/{identifier}',
+            openapi: new Operation(
+                tags: ['Dispatch']
+            ),
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            provider: RequestFileProvider::class,
+            processor: RequestFileProcessor::class
+        ),
+        new Post(
+            uriTemplate: '/dispatch/request-files',
+            inputFormats: [
+                'multipart' => 'multipart/form-data',
+            ],
+            controller: CreateRequestFileAction::class,
+            openapi: new Operation(
+                tags: ['Dispatch'],
+                responses: [
+                    415 => new Response(description: 'Unsupported Media Type - Only PDF files can be added!'),
+                ],
+                requestBody: new RequestBody(
+                    content: new \ArrayObject([
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'required' => ['file', 'dispatchRequestIdentifier'],
+                                'properties' => [
+                                    'dispatchRequestIdentifier' => [
+                                        'description' => 'ID of the request',
+                                        'type' => 'string',
+                                        'example' => '4d553985-d44f-404f-acf3-cd0eac7ae9c2',
+                                    ],
+                                    'file' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ])
+                )
+            ),
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            deserialize: false
+        ),
+    ],
+    normalizationContext: [
+        'groups' => ['DispatchRequestFile:output', 'DispatchRequest:output'],
+    ],
+    denormalizationContext: [
+        'groups' => ['DispatchRequestFile:input'],
+    ]
+)]
 #[ORM\Table(name: 'dispatch_request_files')]
 #[ORM\Entity]
 class RequestFile
 {
+    #[ApiProperty(identifier: true)]
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 50)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private ?string $identifier = null;
 
+    #[ApiProperty(iris: ['https://schema.org/dateCreated'])]
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private ?\DateTimeInterface $dateCreated = null;
 
+    #[ApiProperty]
     #[ORM\JoinColumn(name: 'dispatch_request_identifier', referencedColumnName: 'identifier')]
     #[ORM\ManyToOne(targetEntity: Request::class, inversedBy: 'files')]
     #[Groups(['DispatchRequestFile:output'])]
     private ?Request $request = null;
 
+    #[ApiProperty(iris: ['https://schema.org/identifier'])]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequestFile:input'])]
     private ?string $dispatchRequestIdentifier = null;
 
+    #[ApiProperty(iris: ['https://schema.org/name'])]
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequestFile:input', 'DispatchRequest:output'])]
     private ?string $name = null;
 
+    #[ApiProperty(iris: ['http://schema.org/contentUrl'])]
     #[Groups(['DispatchRequestFile:output'])]
     private ?string $contentUrl = null;
 
     #[ORM\Column(type: 'binary', length: 209715200)]
     private mixed $data = null;
 
+    #[ApiProperty(iris: ['https://schema.org/fileFormat'])]
     #[ORM\Column(type: 'string', length: 100)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private ?string $fileFormat = null;
 
+    #[ApiProperty(iris: ['https://schema.org/contentSize'])]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
     private ?int $contentSize = 0;

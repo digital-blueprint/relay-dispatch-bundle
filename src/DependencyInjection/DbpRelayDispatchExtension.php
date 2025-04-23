@@ -25,6 +25,8 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
 
     public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
+        $this->addResourceClassDirectory($container, __DIR__.'/../Entity');
+
         $pathsToHide = [
             '/dispatch/pre-addressing-requests/{identifier}',
             '/dispatch/pre-addressing-requests',

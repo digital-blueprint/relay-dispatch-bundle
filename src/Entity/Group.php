@@ -4,8 +4,37 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\OpenApi\Model\Operation;
+use Dbp\Relay\DispatchBundle\Rest\GroupProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    shortName: 'DispatchGroup',
+    types: ['https://schema.org/Organization'],
+    operations: [
+        new Get(
+            uriTemplate: '/dispatch/groups/{identifier}',
+            openapi: new Operation(
+                tags: ['Dispatch']
+            ),
+            provider: GroupProvider::class
+        ),
+        new GetCollection(
+            uriTemplate: '/dispatch/groups',
+            openapi: new Operation(
+                tags: ['Dispatch']
+            ),
+            provider: GroupProvider::class
+        ),
+    ],
+    normalizationContext: [
+        'groups' => ['DispatchGroup:output'],
+    ]
+)]
 class Group
 {
     public const ROLE_READ_METADATA = 'rm';
@@ -13,27 +42,34 @@ class Group
     public const ROLE_WRITE = 'w';
     public const ROLE_WRITE_READ_ADDRESS = 'wra';
 
+    #[ApiProperty(identifier: true)]
     #[Groups(['DispatchGroup:output'])]
     private ?string $identifier = null;
 
+    #[ApiProperty(iris: ['https://schema.org/name'])]
     #[Groups(['DispatchGroup:output'])]
     private ?string $name = null;
 
+    #[ApiProperty(iris: ['https://schema.org/streetAddress'])]
     #[Groups(['DispatchGroup:output'])]
     private ?string $street = null;
 
+    #[ApiProperty(iris: ['https://schema.org/addressLocality'])]
     #[Groups(['DispatchGroup:output'])]
     private ?string $locality = null;
 
+    #[ApiProperty(iris: ['https://schema.org/postalCode'])]
     #[Groups(['DispatchGroup:output'])]
     private ?string $postalCode = null;
 
+    #[ApiProperty(iris: ['https://schema.org/addressCountry'])]
     #[Groups(['DispatchGroup:output'])]
     private ?string $country = null;
 
     /**
      * @var string[]
      */
+    #[ApiProperty]
     #[Groups(['DispatchGroup:output'])]
     private array $accessRights = [];
 
