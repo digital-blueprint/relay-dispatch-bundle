@@ -27,6 +27,7 @@ jobs:
         php-version: ${{ matrix.php-versions }}
         extensions: ctype,curl,dom,gd,iconv,intl,json,mbstring,openssl,posix,sqlite,xml,zip,gmp
         coverage: xdebug
+        ini-file: development
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Cache composer cache directory
@@ -48,6 +49,8 @@ jobs:
         php-version: '8.2'
         extensions: ctype,curl,dom,gd,iconv,intl,json,mbstring,openssl,posix,sqlite,xml,zip,gmp
         coverage: xdebug
+        tools: composer-require-checker:4
+        ini-file: development
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Cache composer cache directory
@@ -61,4 +64,5 @@ jobs:
         result=0
         composer run cs || result=1
         composer run phpstan || result=1
+        composer-require-checker || result=1
         exit $result
