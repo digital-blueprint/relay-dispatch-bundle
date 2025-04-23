@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class SignaturePropertyType
 {
     /**
@@ -14,7 +12,7 @@ class SignaturePropertyType
     protected $any;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Target;
 
@@ -25,7 +23,7 @@ class SignaturePropertyType
 
     /**
      * @param string $any
-     * @param AnyURI $Target
+     * @param string $Target
      * @param string $Id
      */
     public function __construct($any, $Target, $Id)
@@ -47,12 +45,12 @@ class SignaturePropertyType
         return $this;
     }
 
-    public function getTarget(): AnyURI
+    public function getTarget(): string
     {
         return $this->Target;
     }
 
-    public function setTarget(AnyURI $Target): self
+    public function setTarget(string $Target): self
     {
         $this->Target = $Target;
 

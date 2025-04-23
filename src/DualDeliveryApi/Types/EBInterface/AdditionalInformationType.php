@@ -7,12 +7,12 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 class AdditionalInformationType
 {
     /**
-     * @var AlphaNumType
+     * @var string
      */
     protected $SerialNumber;
 
     /**
-     * @var AlphaNumType
+     * @var string
      */
     protected $ChargeNumber;
 
@@ -27,7 +27,7 @@ class AdditionalInformationType
     protected $AlternativeQuantity;
 
     /**
-     * @var AlphaNumType
+     * @var string
      */
     protected $Size;
 
@@ -47,11 +47,11 @@ class AdditionalInformationType
     protected $Color;
 
     /**
-     * @param AlphaNumType       $SerialNumber
-     * @param AlphaNumType       $ChargeNumber
+     * @param string             $SerialNumber
+     * @param string             $ChargeNumber
      * @param ClassificationType $Classification
      * @param UnitType           $AlternativeQuantity
-     * @param AlphaNumType       $Size
+     * @param string             $Size
      * @param UnitType           $Weight
      * @param int                $Boxes
      * @param string             $Color
@@ -69,7 +69,7 @@ class AdditionalInformationType
     }
 
     /**
-     * @return AlphaNumType
+     * @return string
      */
     public function getSerialNumber()
     {
@@ -77,7 +77,7 @@ class AdditionalInformationType
     }
 
     /**
-     * @param AlphaNumType $SerialNumber
+     * @param string $SerialNumber
      */
     public function setSerialNumber($SerialNumber): self
     {
@@ -87,7 +87,7 @@ class AdditionalInformationType
     }
 
     /**
-     * @return AlphaNumType
+     * @return string
      */
     public function getChargeNumber()
     {
@@ -95,7 +95,7 @@ class AdditionalInformationType
     }
 
     /**
-     * @param AlphaNumType $ChargeNumber
+     * @param string $ChargeNumber
      */
     public function setChargeNumber($ChargeNumber): self
     {
@@ -129,7 +129,7 @@ class AdditionalInformationType
     }
 
     /**
-     * @return AlphaNumType
+     * @return string
      */
     public function getSize()
     {
@@ -137,7 +137,7 @@ class AdditionalInformationType
     }
 
     /**
-     * @param AlphaNumType $Size
+     * @param string $Size
      */
     public function setSize($Size): self
     {

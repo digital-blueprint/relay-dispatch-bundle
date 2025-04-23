@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\QName;
 
 class AuthorityBindingType
@@ -15,19 +14,19 @@ class AuthorityBindingType
     protected $AuthorityKind;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Location;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Binding;
 
     /**
      * @param QName  $AuthorityKind
-     * @param AnyURI $Location
-     * @param AnyURI $Binding
+     * @param string $Location
+     * @param string $Binding
      */
     public function __construct($AuthorityKind, $Location, $Binding)
     {
@@ -54,24 +53,24 @@ class AuthorityBindingType
         return $this;
     }
 
-    public function getLocation(): AnyURI
+    public function getLocation(): string
     {
         return $this->Location;
     }
 
-    public function setLocation(AnyURI $Location): self
+    public function setLocation(string $Location): self
     {
         $this->Location = $Location;
 
         return $this;
     }
 
-    public function getBinding(): AnyURI
+    public function getBinding(): string
     {
         return $this->Binding;
     }
 
-    public function setBinding(AnyURI $Binding): self
+    public function setBinding(string $Binding): self
     {
         $this->Binding = $Binding;
 

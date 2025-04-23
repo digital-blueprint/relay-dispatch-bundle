@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class AuthenticationStatementType extends SubjectStatementAbstractType
 {
     /**
@@ -19,7 +17,7 @@ class AuthenticationStatementType extends SubjectStatementAbstractType
     protected $AuthorityBinding;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $AuthenticationMethod;
 
@@ -32,7 +30,7 @@ class AuthenticationStatementType extends SubjectStatementAbstractType
      * @param SubjectType          $Subject
      * @param SubjectLocalityType  $SubjectLocality
      * @param AuthorityBindingType $AuthorityBinding
-     * @param AnyURI               $AuthenticationMethod
+     * @param string               $AuthenticationMethod
      */
     public function __construct($Subject, $SubjectLocality, $AuthorityBinding, $AuthenticationMethod, \DateTime $AuthenticationInstant)
     {
@@ -67,12 +65,12 @@ class AuthenticationStatementType extends SubjectStatementAbstractType
         return $this;
     }
 
-    public function getAuthenticationMethod(): AnyURI
+    public function getAuthenticationMethod(): string
     {
         return $this->AuthenticationMethod;
     }
 
-    public function setAuthenticationMethod(AnyURI $AuthenticationMethod): self
+    public function setAuthenticationMethod(string $AuthenticationMethod): self
     {
         $this->AuthenticationMethod = $AuthenticationMethod;
 

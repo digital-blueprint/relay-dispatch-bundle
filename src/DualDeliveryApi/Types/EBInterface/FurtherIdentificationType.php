@@ -7,7 +7,7 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 class FurtherIdentificationType
 {
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $_;
 
@@ -17,8 +17,8 @@ class FurtherIdentificationType
     protected $IdentificationType;
 
     /**
-     * @param AlphaNumIDType $_
-     * @param string         $IdentificationType
+     * @param string $_
+     * @param string $IdentificationType
      */
     public function __construct($_, $IdentificationType)
     {
@@ -27,7 +27,7 @@ class FurtherIdentificationType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function get_()
     {
@@ -35,7 +35,7 @@ class FurtherIdentificationType
     }
 
     /**
-     * @param AlphaNumIDType $_
+     * @param string $_
      */
     public function set_($_): self
     {

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class ActionType
 {
     /**
@@ -14,13 +12,13 @@ class ActionType
     protected $_;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Namespace;
 
     /**
      * @param string $_
-     * @param AnyURI $Namespace
+     * @param string $Namespace
      */
     public function __construct($_, $Namespace)
     {
@@ -40,12 +38,12 @@ class ActionType
         return $this;
     }
 
-    public function getNamespace(): AnyURI
+    public function getNamespace(): string
     {
         return $this->Namespace;
     }
 
-    public function setNamespace(AnyURI $Namespace): self
+    public function setNamespace(string $Namespace): self
     {
         $this->Namespace = $Namespace;
 

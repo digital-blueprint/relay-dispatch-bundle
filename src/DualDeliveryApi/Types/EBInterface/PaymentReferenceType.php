@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\CheckSumType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Digit12Type;
 
 class PaymentReferenceType
 {
     /**
-     * @var Digit12Type
+     * @var string
      */
     protected $_;
 
@@ -20,7 +19,7 @@ class PaymentReferenceType
     protected $CheckSum;
 
     /**
-     * @param Digit12Type  $_
+     * @param string       $_
      * @param CheckSumType $CheckSum
      */
     public function __construct($_, $CheckSum)
@@ -30,7 +29,7 @@ class PaymentReferenceType
     }
 
     /**
-     * @return Digit12Type
+     * @return string
      */
     public function get_()
     {
@@ -38,7 +37,7 @@ class PaymentReferenceType
     }
 
     /**
-     * @param Digit12Type $_
+     * @param string $_
      */
     public function set_($_): self
     {

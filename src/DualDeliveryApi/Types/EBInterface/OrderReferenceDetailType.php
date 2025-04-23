@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumType;
-
 class OrderReferenceDetailType
 {
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $OrderID;
 
     /**
-     * @var AlphaNumType
+     * @var string
      */
     protected $OrderPositionNumber;
 
     /**
-     * @param AlphaNumIDType $OrderID
-     * @param AlphaNumType   $OrderPositionNumber
+     * @param string $OrderID
+     * @param string $OrderPositionNumber
      */
     public function __construct($OrderID, $OrderPositionNumber)
     {
@@ -30,7 +27,7 @@ class OrderReferenceDetailType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getOrderID()
     {
@@ -38,7 +35,7 @@ class OrderReferenceDetailType
     }
 
     /**
-     * @param AlphaNumIDType $OrderID
+     * @param string $OrderID
      */
     public function setOrderID($OrderID): self
     {
@@ -48,7 +45,7 @@ class OrderReferenceDetailType
     }
 
     /**
-     * @return AlphaNumType
+     * @return string
      */
     public function getOrderPositionNumber()
     {
@@ -56,7 +53,7 @@ class OrderReferenceDetailType
     }
 
     /**
-     * @param AlphaNumType $OrderPositionNumber
+     * @param string $OrderPositionNumber
      */
     public function setOrderPositionNumber($OrderPositionNumber): self
     {

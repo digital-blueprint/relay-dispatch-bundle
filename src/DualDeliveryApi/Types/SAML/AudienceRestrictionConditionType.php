@@ -4,29 +4,27 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class AudienceRestrictionConditionType extends ConditionAbstractType
 {
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Audience;
 
     /**
-     * @param AnyURI $Audience
+     * @param string $Audience
      */
     public function __construct($Audience)
     {
         $this->Audience = $Audience;
     }
 
-    public function getAudience(): AnyURI
+    public function getAudience(): string
     {
         return $this->Audience;
     }
 
-    public function setAudience(AnyURI $Audience): self
+    public function setAudience(string $Audience): self
     {
         $this->Audience = $Audience;
 

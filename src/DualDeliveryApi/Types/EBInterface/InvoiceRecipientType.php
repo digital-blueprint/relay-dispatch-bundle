@@ -12,7 +12,7 @@ class InvoiceRecipientType
     protected $VATIdentificationNumber;
 
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $BillersInvoiceRecipientID;
 
@@ -43,7 +43,7 @@ class InvoiceRecipientType
 
     /**
      * @param string                        $VATIdentificationNumber
-     * @param AlphaNumIDType                $BillersInvoiceRecipientID
+     * @param string                        $BillersInvoiceRecipientID
      * @param AccountingAreaType            $AccountingArea
      * @param string                        $SubOrganizationID
      * @param OrderReferenceType            $OrderReference
@@ -74,7 +74,7 @@ class InvoiceRecipientType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getBillersInvoiceRecipientID()
     {
@@ -82,7 +82,7 @@ class InvoiceRecipientType
     }
 
     /**
-     * @param AlphaNumIDType $BillersInvoiceRecipientID
+     * @param string $BillersInvoiceRecipientID
      */
     public function setBillersInvoiceRecipientID($BillersInvoiceRecipientID): self
     {

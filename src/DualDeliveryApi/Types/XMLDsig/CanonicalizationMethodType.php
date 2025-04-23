@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class CanonicalizationMethodType
 {
     /**
@@ -14,13 +12,13 @@ class CanonicalizationMethodType
     protected $any;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Algorithm;
 
     /**
      * @param string $any
-     * @param AnyURI $Algorithm
+     * @param string $Algorithm
      */
     public function __construct($any, $Algorithm)
     {
@@ -40,12 +38,12 @@ class CanonicalizationMethodType
         return $this;
     }
 
-    public function getAlgorithm(): AnyURI
+    public function getAlgorithm(): string
     {
         return $this->Algorithm;
     }
 
-    public function setAlgorithm(AnyURI $Algorithm): self
+    public function setAlgorithm(string $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
 

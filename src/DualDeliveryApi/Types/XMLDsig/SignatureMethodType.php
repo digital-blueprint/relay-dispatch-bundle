@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class SignatureMethodType
 {
     /**
-     * @var HMACOutputLengthType
+     * @var int
      */
     protected $HMACOutputLength;
 
@@ -19,13 +17,13 @@ class SignatureMethodType
     protected $any;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Algorithm;
 
     /**
      * @param string $any
-     * @param AnyURI $Algorithm
+     * @param string $Algorithm
      */
     public function __construct($any, $Algorithm)
     {
@@ -34,7 +32,7 @@ class SignatureMethodType
     }
 
     /**
-     * @return HMACOutputLengthType
+     * @return int
      */
     public function getHMACOutputLength()
     {
@@ -42,7 +40,7 @@ class SignatureMethodType
     }
 
     /**
-     * @param HMACOutputLengthType $HMACOutputLength
+     * @param int $HMACOutputLength
      */
     public function setHMACOutputLength($HMACOutputLength): self
     {
@@ -63,12 +61,12 @@ class SignatureMethodType
         return $this;
     }
 
-    public function getAlgorithm(): AnyURI
+    public function getAlgorithm(): string
     {
         return $this->Algorithm;
     }
 
-    public function setAlgorithm(AnyURI $Algorithm): self
+    public function setAlgorithm(string $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
 

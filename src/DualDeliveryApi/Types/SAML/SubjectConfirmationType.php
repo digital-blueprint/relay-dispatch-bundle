@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\KeyInfoType;
 
 class SubjectConfirmationType
 {
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $ConfirmationMethod;
 
@@ -25,7 +24,7 @@ class SubjectConfirmationType
     protected $KeyInfo;
 
     /**
-     * @param AnyURI      $ConfirmationMethod
+     * @param string      $ConfirmationMethod
      * @param mixed       $SubjectConfirmationData
      * @param KeyInfoType $KeyInfo
      */
@@ -36,12 +35,12 @@ class SubjectConfirmationType
         $this->KeyInfo = $KeyInfo;
     }
 
-    public function getConfirmationMethod(): AnyURI
+    public function getConfirmationMethod(): string
     {
         return $this->ConfirmationMethod;
     }
 
-    public function setConfirmationMethod(AnyURI $ConfirmationMethod): self
+    public function setConfirmationMethod(string $ConfirmationMethod): self
     {
         $this->ConfirmationMethod = $ConfirmationMethod;
 

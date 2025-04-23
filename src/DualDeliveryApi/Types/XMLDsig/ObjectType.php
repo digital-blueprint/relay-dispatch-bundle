@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class ObjectType
 {
     /**
@@ -24,7 +22,7 @@ class ObjectType
     protected $MimeType;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Encoding;
 
@@ -32,7 +30,7 @@ class ObjectType
      * @param string $any
      * @param string $Id
      * @param string $MimeType
-     * @param AnyURI $Encoding
+     * @param string $Encoding
      */
     public function __construct($any, $Id, $MimeType, $Encoding)
     {
@@ -78,12 +76,12 @@ class ObjectType
         return $this;
     }
 
-    public function getEncoding(): AnyURI
+    public function getEncoding(): string
     {
         return $this->Encoding;
     }
 
-    public function setEncoding(AnyURI $Encoding): self
+    public function setEncoding(string $Encoding): self
     {
         $this->Encoding = $Encoding;
 

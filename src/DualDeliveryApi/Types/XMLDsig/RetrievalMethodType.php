@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class RetrievalMethodType
 {
     /**
@@ -14,18 +12,18 @@ class RetrievalMethodType
     protected $Transforms;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $URI;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Type;
 
     /**
-     * @param AnyURI $URI
-     * @param AnyURI $Type
+     * @param string $URI
+     * @param string $Type
      */
     public function __construct($URI, $Type)
     {
@@ -45,24 +43,24 @@ class RetrievalMethodType
         return $this;
     }
 
-    public function getURI(): AnyURI
+    public function getURI(): string
     {
         return $this->URI;
     }
 
-    public function setURI(AnyURI $URI): self
+    public function setURI(string $URI): self
     {
         $this->URI = $URI;
 
         return $this;
     }
 
-    public function getType(): AnyURI
+    public function getType(): string
     {
         return $this->Type;
     }
 
-    public function setType(AnyURI $Type): self
+    public function setType(string $Type): self
     {
         $this->Type = $Type;
 

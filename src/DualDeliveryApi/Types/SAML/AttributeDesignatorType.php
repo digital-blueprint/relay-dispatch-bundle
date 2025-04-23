@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class AttributeDesignatorType
 {
     /**
@@ -14,13 +12,13 @@ class AttributeDesignatorType
     protected $AttributeName;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $AttributeNamespace;
 
     /**
      * @param string $AttributeName
-     * @param AnyURI $AttributeNamespace
+     * @param string $AttributeNamespace
      */
     public function __construct($AttributeName, $AttributeNamespace)
     {
@@ -40,12 +38,12 @@ class AttributeDesignatorType
         return $this;
     }
 
-    public function getAttributeNamespace(): AnyURI
+    public function getAttributeNamespace(): string
     {
         return $this->AttributeNamespace;
     }
 
-    public function setAttributeNamespace(AnyURI $AttributeNamespace): self
+    public function setAttributeNamespace(string $AttributeNamespace): self
     {
         $this->AttributeNamespace = $AttributeNamespace;
 

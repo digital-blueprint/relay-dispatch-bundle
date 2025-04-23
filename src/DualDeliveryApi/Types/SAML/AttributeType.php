@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class AttributeType extends AttributeDesignatorType
 {
     /**
@@ -15,7 +13,7 @@ class AttributeType extends AttributeDesignatorType
 
     /**
      * @param string $AttributeName
-     * @param AnyURI $AttributeNamespace
+     * @param string $AttributeNamespace
      * @param mixed  $AttributeValue
      */
     public function __construct($AttributeName, $AttributeNamespace, $AttributeValue)

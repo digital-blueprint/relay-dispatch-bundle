@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\date;
 
 class DeliveryType
 {
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $DeliveryID;
 
@@ -40,7 +39,7 @@ class DeliveryType
     protected $DeliveryExtension;
 
     /**
-     * @param AlphaNumIDType        $DeliveryID
+     * @param string                $DeliveryID
      * @param date                  $Date
      * @param PeriodType            $Period
      * @param AddressType           $Address
@@ -58,7 +57,7 @@ class DeliveryType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getDeliveryID()
     {
@@ -66,7 +65,7 @@ class DeliveryType
     }
 
     /**
-     * @param AlphaNumIDType $DeliveryID
+     * @param string $DeliveryID
      */
     public function setDeliveryID($DeliveryID): self
     {

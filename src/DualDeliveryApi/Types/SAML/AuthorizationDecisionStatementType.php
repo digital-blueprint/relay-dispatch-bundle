@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class AuthorizationDecisionStatementType extends SubjectStatementAbstractType
 {
     /**
@@ -19,7 +17,7 @@ class AuthorizationDecisionStatementType extends SubjectStatementAbstractType
     protected $Evidence;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Resource;
 
@@ -32,7 +30,7 @@ class AuthorizationDecisionStatementType extends SubjectStatementAbstractType
      * @param SubjectType  $Subject
      * @param ActionType   $Action
      * @param EvidenceType $Evidence
-     * @param AnyURI       $Resource
+     * @param string       $Resource
      * @param DecisionType $Decision
      */
     public function __construct($Subject, $Action, $Evidence, $Resource, $Decision)
@@ -68,12 +66,12 @@ class AuthorizationDecisionStatementType extends SubjectStatementAbstractType
         return $this;
     }
 
-    public function getResource(): AnyURI
+    public function getResource(): string
     {
         return $this->Resource;
     }
 
-    public function setResource(AnyURI $Resource): self
+    public function setResource(string $Resource): self
     {
         $this->Resource = $Resource;
 

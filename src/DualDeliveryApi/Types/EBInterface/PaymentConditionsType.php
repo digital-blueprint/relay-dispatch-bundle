@@ -6,7 +6,6 @@ namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\date;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Decimal2Type;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DiscountType;
 
 class PaymentConditionsType
 {

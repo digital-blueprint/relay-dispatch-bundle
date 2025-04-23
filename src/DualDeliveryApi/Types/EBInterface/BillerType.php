@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\FurtherIdentificationType;
-
 class BillerType
 {
     /**
@@ -20,12 +17,12 @@ class BillerType
     protected $FurtherIdentification;
 
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $ConsolidatorsBillerID;
 
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $InvoiceRecipientsBillerID;
 
@@ -47,8 +44,8 @@ class BillerType
     /**
      * @param string                    $VATIdentificationNumber
      * @param FurtherIdentificationType $FurtherIdentification
-     * @param AlphaNumIDType            $ConsolidatorsBillerID
-     * @param AlphaNumIDType            $InvoiceRecipientsBillerID
+     * @param string                    $ConsolidatorsBillerID
+     * @param string                    $InvoiceRecipientsBillerID
      * @param OrderReferenceType        $OrderReference
      * @param AddressType               $Address
      * @param BillerExtensionType       $BillerExtension
@@ -89,7 +86,7 @@ class BillerType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getConsolidatorsBillerID()
     {
@@ -97,7 +94,7 @@ class BillerType
     }
 
     /**
-     * @param AlphaNumIDType $ConsolidatorsBillerID
+     * @param string $ConsolidatorsBillerID
      */
     public function setConsolidatorsBillerID($ConsolidatorsBillerID): self
     {
@@ -107,7 +104,7 @@ class BillerType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getInvoiceRecipientsBillerID()
     {
@@ -115,7 +112,7 @@ class BillerType
     }
 
     /**
-     * @param AlphaNumIDType $InvoiceRecipientsBillerID
+     * @param string $InvoiceRecipientsBillerID
      */
     public function setInvoiceRecipientsBillerID($InvoiceRecipientsBillerID): self
     {

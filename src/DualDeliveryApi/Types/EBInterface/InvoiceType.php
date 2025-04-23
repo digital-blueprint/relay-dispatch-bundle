@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\date;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\Decimal2Type;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DetailsType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\InvoiceRecipientType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\PaymentMethodType;
 use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig\SignatureType;
 
 class InvoiceType
@@ -20,7 +16,7 @@ class InvoiceType
     protected $Signature;
 
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $InvoiceNumber;
 
@@ -95,7 +91,7 @@ class InvoiceType
     protected $GeneratingSystem;
 
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $CancelledOriginalDocument;
 
@@ -126,7 +122,7 @@ class InvoiceType
 
     /**
      * @param SignatureType                    $Signature
-     * @param AlphaNumIDType                   $InvoiceNumber
+     * @param string                           $InvoiceNumber
      * @param date                             $InvoiceDate
      * @param DeliveryType                     $Delivery
      * @param BillerType                       $Biller
@@ -141,7 +137,7 @@ class InvoiceType
      * @param PresentationDetailsType          $PresentationDetails
      * @param InvoiceRootExtensionType         $InvoiceRootExtension
      * @param string                           $GeneratingSystem
-     * @param AlphaNumIDType                   $CancelledOriginalDocument
+     * @param string                           $CancelledOriginalDocument
      * @param DocumentTypeType                 $DocumentType
      * @param CurrencyType                     $InvoiceCurrency
      * @param bool                             $ManualProcessing
@@ -187,7 +183,7 @@ class InvoiceType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getInvoiceNumber()
     {
@@ -195,7 +191,7 @@ class InvoiceType
     }
 
     /**
-     * @param AlphaNumIDType $InvoiceNumber
+     * @param string $InvoiceNumber
      */
     public function setInvoiceNumber($InvoiceNumber): self
     {
@@ -385,7 +381,7 @@ class InvoiceType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getCancelledOriginalDocument()
     {
@@ -393,7 +389,7 @@ class InvoiceType
     }
 
     /**
-     * @param AlphaNumIDType $CancelledOriginalDocument
+     * @param string $CancelledOriginalDocument
      */
     public function setCancelledOriginalDocument($CancelledOriginalDocument): self
     {

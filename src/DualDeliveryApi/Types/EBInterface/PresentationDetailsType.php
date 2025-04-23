@@ -4,23 +4,20 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class PresentationDetailsType
 {
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $URL;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $LogoURL;
 
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $LayoutID;
 
@@ -35,9 +32,9 @@ class PresentationDetailsType
     protected $PresentationDetailsExtension;
 
     /**
-     * @param AnyURI                           $URL
-     * @param AnyURI                           $LogoURL
-     * @param AlphaNumIDType                   $LayoutID
+     * @param string                           $URL
+     * @param string                           $LogoURL
+     * @param string                           $LayoutID
      * @param bool                             $SuppressZero
      * @param PresentationDetailsExtensionType $PresentationDetailsExtension
      */
@@ -50,24 +47,24 @@ class PresentationDetailsType
         $this->PresentationDetailsExtension = $PresentationDetailsExtension;
     }
 
-    public function getURL(): AnyURI
+    public function getURL(): string
     {
         return $this->URL;
     }
 
-    public function setURL(AnyURI $URL): self
+    public function setURL(string $URL): self
     {
         $this->URL = $URL;
 
         return $this;
     }
 
-    public function getLogoURL(): AnyURI
+    public function getLogoURL(): string
     {
         return $this->LogoURL;
     }
 
-    public function setLogoURL(AnyURI $LogoURL): self
+    public function setLogoURL(string $LogoURL): self
     {
         $this->LogoURL = $LogoURL;
 
@@ -75,7 +72,7 @@ class PresentationDetailsType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getLayoutID()
     {
@@ -83,7 +80,7 @@ class PresentationDetailsType
     }
 
     /**
-     * @param AlphaNumIDType $LayoutID
+     * @param string $LayoutID
      */
     public function setLayoutID($LayoutID): self
     {

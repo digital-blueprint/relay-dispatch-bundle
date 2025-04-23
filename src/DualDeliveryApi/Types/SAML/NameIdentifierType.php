@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class NameIdentifierType
 {
     /**
@@ -19,14 +17,14 @@ class NameIdentifierType
     protected $NameQualifier;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Format;
 
     /**
      * @param string $_
      * @param string $NameQualifier
-     * @param AnyURI $Format
+     * @param string $Format
      */
     public function __construct($_, $NameQualifier, $Format)
     {
@@ -59,12 +57,12 @@ class NameIdentifierType
         return $this;
     }
 
-    public function getFormat(): AnyURI
+    public function getFormat(): string
     {
         return $this->Format;
     }
 
-    public function setFormat(AnyURI $Format): self
+    public function setFormat(string $Format): self
     {
         $this->Format = $Format;
 

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-
 class TransformType
 {
     /**
@@ -19,14 +17,14 @@ class TransformType
     protected $XPath;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Algorithm;
 
     /**
      * @param string $any
      * @param string $XPath
-     * @param AnyURI $Algorithm
+     * @param string $Algorithm
      */
     public function __construct($any, $XPath, $Algorithm)
     {
@@ -59,12 +57,12 @@ class TransformType
         return $this;
     }
 
-    public function getAlgorithm(): AnyURI
+    public function getAlgorithm(): string
     {
         return $this->Algorithm;
     }
 
-    public function setAlgorithm(AnyURI $Algorithm): self
+    public function setAlgorithm(string $Algorithm): self
     {
         $this->Algorithm = $Algorithm;
 

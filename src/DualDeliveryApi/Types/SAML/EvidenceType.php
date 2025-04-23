@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\SAML;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DualDelivery\IDReferenceType;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\stringReferenceType;
-
 class EvidenceType
 {
     /**
-     * @var stringReferenceType
+     * @var string
      */
     protected $AssertionIDReference;
 
@@ -20,8 +17,8 @@ class EvidenceType
     protected $Assertion;
 
     /**
-     * @param IDReferenceType $AssertionIDReference
-     * @param AssertionType   $Assertion
+     * @param string        $AssertionIDReference
+     * @param AssertionType $Assertion
      */
     public function __construct($AssertionIDReference, $Assertion)
     {
@@ -30,14 +27,14 @@ class EvidenceType
     }
 
     /**
-     * @return stringReferenceType
+     * @return string
      */
     public function getAssertionIDReference()
     {
         return $this->AssertionIDReference;
     }
 
-    public function setAssertionIDReference(IDReferenceType $AssertionIDReference): self
+    public function setAssertionIDReference(string $AssertionIDReference): self
     {
         $this->AssertionIDReference = $AssertionIDReference;
 

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\XMLDsig;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AnyURI;
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\DigestValueType;
-
 class ReferenceType
 {
     /**
@@ -20,7 +17,7 @@ class ReferenceType
     protected $DigestMethod;
 
     /**
-     * @var DigestValueType
+     * @var string
      */
     protected $DigestValue;
 
@@ -30,22 +27,22 @@ class ReferenceType
     protected $Id;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $URI;
 
     /**
-     * @var AnyURI
+     * @var string
      */
     protected $Type;
 
     /**
      * @param TransformsType   $Transforms
      * @param DigestMethodType $DigestMethod
-     * @param DigestValueType  $DigestValue
+     * @param string           $DigestValue
      * @param string           $Id
-     * @param AnyURI           $URI
-     * @param AnyURI           $Type
+     * @param string           $URI
+     * @param string           $Type
      */
     public function __construct($Transforms, $DigestMethod, $DigestValue, $Id, $URI, $Type)
     {
@@ -82,7 +79,7 @@ class ReferenceType
     }
 
     /**
-     * @return DigestValueType
+     * @return string
      */
     public function getDigestValue()
     {
@@ -90,7 +87,7 @@ class ReferenceType
     }
 
     /**
-     * @param DigestValueType $DigestValue
+     * @param string $DigestValue
      */
     public function setDigestValue($DigestValue): self
     {
@@ -111,24 +108,24 @@ class ReferenceType
         return $this;
     }
 
-    public function getURI(): AnyURI
+    public function getURI(): string
     {
         return $this->URI;
     }
 
-    public function setURI(AnyURI $URI): self
+    public function setURI(string $URI): self
     {
         $this->URI = $URI;
 
         return $this;
     }
 
-    public function getType(): AnyURI
+    public function getType(): string
     {
         return $this->Type;
     }
 
-    public function setType(AnyURI $Type): self
+    public function setType(string $Type): self
     {
         $this->Type = $Type;
 

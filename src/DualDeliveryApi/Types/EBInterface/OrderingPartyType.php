@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\EBInterface;
 
-use Dbp\Relay\DispatchBundle\DualDeliveryApi\Types\AlphaNumIDType;
-
 class OrderingPartyType
 {
     /**
@@ -14,7 +12,7 @@ class OrderingPartyType
     protected $VATIdentificationNumber;
 
     /**
-     * @var AlphaNumIDType
+     * @var string
      */
     protected $BillersOrderingPartyID;
 
@@ -35,7 +33,7 @@ class OrderingPartyType
 
     /**
      * @param string                     $VATIdentificationNumber
-     * @param AlphaNumIDType             $BillersOrderingPartyID
+     * @param string                     $BillersOrderingPartyID
      * @param OrderReferenceType         $OrderReference
      * @param AddressType                $Address
      * @param OrderingPartyExtensionType $OrderingPartyExtension
@@ -62,7 +60,7 @@ class OrderingPartyType
     }
 
     /**
-     * @return AlphaNumIDType
+     * @return string
      */
     public function getBillersOrderingPartyID()
     {
@@ -70,7 +68,7 @@ class OrderingPartyType
     }
 
     /**
-     * @param AlphaNumIDType $BillersOrderingPartyID
+     * @param string $BillersOrderingPartyID
      */
     public function setBillersOrderingPartyID($BillersOrderingPartyID): self
     {
