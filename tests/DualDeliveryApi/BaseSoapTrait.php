@@ -17,7 +17,7 @@ trait BaseSoapTrait
             ->setConstructorArgs(['nope', null, true])
             ->onlyMethods(['__doRequest'])
             ->getMock();
-        $soapClientMock->method('__doRequest')->will($this->returnValue($response));
+        $soapClientMock->method('__doRequest')->willReturn($response);
 
         return $soapClientMock;
     }
