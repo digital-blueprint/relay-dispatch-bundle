@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
+use Dbp\Relay\BlobLibrary\Api\BlobApi;
 use Dbp\Relay\CoreBundle\Authorization\AuthorizationConfigDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -79,7 +80,8 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('dbp_relay_dispatch');
 
-        $treeBuilder->getRootNode()
+        $rootNode = $treeBuilder->getRootNode();
+        $rootNode
             ->children()
                 ->scalarNode('database_url')
                     ->isRequired()
@@ -111,28 +113,12 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('database')
                     ->info('The way files are persisted. Can be "database" or "blob". Defaults to "database"')
                 ->end()
-                ->scalarNode('blob_base_url')
-                    ->info('Base URL for blob storage API')
-                ->end()
-                ->scalarNode('blob_bucket_id')
-                    ->info('Bucket id for blob storage')
-                ->end()
-                ->scalarNode('blob_key')
-                    ->info('Secret key for blob storage')
-                ->end()
-                ->scalarNode('blob_idp_url')
-                    ->info('Identity provider base URL for blob storage API')
-                ->end()
-                ->scalarNode('blob_oauth_client_id')
-                    ->info('Identity provider client id for blob storage')
-                ->end()
-                ->scalarNode('blob_oauth_client_secret')
-                    ->info('Identity provider client secret for corresponding client id')
-                ->end()
             ->end()
             ->append($this->getGroupNode())
             ->append($this->getAuthNode())
             ->end();
+
+        $rootNode->append(BlobApi::getConfigNodeDefinition());
 
         return $treeBuilder;
     }

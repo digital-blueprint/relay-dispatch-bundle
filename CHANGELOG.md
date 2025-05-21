@@ -2,96 +2,98 @@
 
 ## Unreleased
 
+- Update to blob library v3, which can be configured to access blob locally (via PHP) or remotely (via HTTP)
+
 ## 0.6.13
 
-* Drop support for PHP 8.1
-* Add support for api-platform 4.1
+- Drop support for PHP 8.1
+- Add support for api-platform 4.1
 
 ## 0.6.12
 
-* Handle an unhandled error in case the pre-addressing fails at dual-delivery provider
+- Handle an unhandled error in case the pre-addressing fails at dual-delivery provider
 
 ## 0.6.11
 
-* add missing parent constructor calls to AbstractDataProvider children
+- add missing parent constructor calls to AbstractDataProvider children
 
 ## 0.6.10
 
-* Rename CLI commands to match the naming convention (old names still work)
-* Small linter fixes
+- Rename CLI commands to match the naming convention (old names still work)
+- Small linter fixes
 
 ## 0.6.9
 
-* Use TestEntityManger and doctrine config helpers from core
-* Test with PHP 8.4
-* Port with phpstan v2
+- Use TestEntityManger and doctrine config helpers from core
+- Test with PHP 8.4
+- Port with phpstan v2
 
 ## 0.6.8
 
-* Split authorization policies into roles and resource permissions
-* Add property types, modernize code, and refactor
-* Set up in-memory database for testing, add API tests
-* Replace deprecate EntityNormalizer by new output group handling from core
-* Replace ApiPlatform providers/processors by our own AbstractDataProviders/AbstractDataProcessors from core
+- Split authorization policies into roles and resource permissions
+- Add property types, modernize code, and refactor
+- Set up in-memory database for testing, add API tests
+- Replace deprecate EntityNormalizer by new output group handling from core
+- Replace ApiPlatform providers/processors by our own AbstractDataProviders/AbstractDataProcessors from core
 
 ## 0.6.7
 
-* Add support for newer doctrine versions
+- Add support for newer doctrine versions
 
 ## 0.6.6
 
-* Fix linting errors
+- Fix linting errors
 
 ## 0.6.5
 
-* Add removeDeliveryStatusChangeByRecipientId method to delete DeliveryStatusChanges by recipient id
+- Add removeDeliveryStatusChangeByRecipientId method to delete DeliveryStatusChanges by recipient id
 
 ## 0.6.4
 
-* Fix behavior that leads to a keycloak request happening at bundle init time
+- Fix behavior that leads to a keycloak request happening at bundle init time
 
 ## 0.6.3
 
-* Add `request-subject`, `group-id` and `output-json` options to cli test-seed command
+- Add `request-subject`, `group-id` and `output-json` options to cli test-seed command
 
 ## 0.6.2
 
-* Port to PHPUnit 10
-* Port from doctrine annotations to php attributes
-* Fix the file-upload endpoints with api-platform 3.3+ (returned 415 otherwise)
+- Port to PHPUnit 10
+- Port from doctrine annotations to php attributes
+- Fix the file-upload endpoints with api-platform 3.3+ (returned 415 otherwise)
 
 ## 0.6.1
 
-* Removed personalIdentifier workaround
-* Add --set-end-date option to cli command deliveryStatusChange create
+- Removed personalIdentifier workaround
+- Add --set-end-date option to cli command deliveryStatusChange create
 
 ## 0.6.0
 
-* The `SendingServiceMessageID` will now be fetched for StatusChange messages and put into the description field
-* Add POST and DELETE endpoints `/dispatch/request-status-changes/{identifier}/file` for DeliveryStatusChange file upload
+- The `SendingServiceMessageID` will now be fetched for StatusChange messages and put into the description field
+- Add POST and DELETE endpoints `/dispatch/request-status-changes/{identifier}/file` for DeliveryStatusChange file upload
 
 ## 0.5.5
 
-* Psalm errors were suppress
+- Psalm errors were suppress
 
 ## 0.5.4
 
-* Add support for api-platform 3.2
+- Add support for api-platform 3.2
 
 ## 0.5.3
 
-* Work around person provider no longer supporting IRI lookup
+- Work around person provider no longer supporting IRI lookup
 
 ## 0.5.2
-* Add Blob OAuth support for additional authentication
+- Add Blob OAuth support for additional authentication
 
 ## 0.5.1
 
-* Fix the accepted content type for the new PATCH method for compatibility with the upcoming ApiPlatform upgrade
+- Fix the accepted content type for the new PATCH method for compatibility with the upcoming ApiPlatform upgrade
 
 ## 0.5.0
 
-* Replace PUT with PATCH for upcoming ApiPlatform upgrade and standard compliant Http PUT
+- Replace PUT with PATCH for upcoming ApiPlatform upgrade and standard compliant Http PUT
 
 ## 0.4.20
 

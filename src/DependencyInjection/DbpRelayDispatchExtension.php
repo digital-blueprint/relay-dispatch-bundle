@@ -8,6 +8,8 @@ use Dbp\Relay\CoreBundle\Doctrine\DoctrineConfiguration;
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
 use Dbp\Relay\DispatchBundle\Message\RequestSubmissionMessage;
+use Dbp\Relay\DispatchBundle\Service\BlobService;
+use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Dbp\Relay\DispatchBundle\Service\DualDeliveryService;
 use Dbp\Relay\DispatchBundle\Service\GroupService;
 use Symfony\Component\Config\FileLocator;
@@ -45,10 +47,10 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
         );
         $loader->load('services.yaml');
 
-        $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\BlobService');
+        $definition = $container->getDefinition(BlobService::class);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
 
-        $definition = $container->getDefinition('Dbp\Relay\DispatchBundle\Service\DispatchService');
+        $definition = $container->getDefinition(DispatchService::class);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
 
         $definition = $container->getDefinition(AuthorizationService::class);
