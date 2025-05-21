@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.7.0
+
 - Update to blob library v3, which can be configured to access blob locally (via PHP) or remotely (via HTTP)
 
 ## 0.6.13
