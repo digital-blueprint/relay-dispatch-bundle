@@ -112,7 +112,7 @@ class BlobService implements LoggerAwareInterface
             $blobFile->setFile($fileData);
             $blobFile->setPrefix(self::getBlobPrefix($dispatchRequestIdentifier));
 
-            return $this->getBlobApi()->addFile($blobFile)->getContentUrl() ?? '';
+            return $this->getBlobApi()->addFile($blobFile)->getIdentifier();
         } catch (BlobApiError $blobApiError) {
             $this->logBlobApiError($blobApiError);
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR,
