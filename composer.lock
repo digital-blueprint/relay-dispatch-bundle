@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "api-platform/core",
-            "version": "v4.1.15",
+            "version": "v4.1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "53577fd78b1e6730eae9ef7cab9abbbd3309dc9a"
+                "reference": "64ff50f9b7206e7ac324ea221537f753194889b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/53577fd78b1e6730eae9ef7cab9abbbd3309dc9a",
-                "reference": "53577fd78b1e6730eae9ef7cab9abbbd3309dc9a",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/64ff50f9b7206e7ac324ea221537f753194889b3",
+                "reference": "64ff50f9b7206e7ac324ea221537f753194889b3",
                 "shasum": ""
             },
             "require": {
@@ -218,9 +218,9 @@
             ],
             "support": {
                 "issues": "https://github.com/api-platform/core/issues",
-                "source": "https://github.com/api-platform/core/tree/v4.1.15"
+                "source": "https://github.com/api-platform/core/tree/v4.1.16"
             },
-            "time": "2025-06-06T15:00:10+00:00"
+            "time": "2025-06-13T13:00:13+00:00"
         },
         {
             "name": "brick/math",
@@ -340,16 +340,16 @@
         },
         {
             "name": "dbp/relay-blob-library",
-            "version": "v0.3.7",
+            "version": "v0.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-blob-library.git",
-                "reference": "de3b1ba3044e1b1e3ddbc93bdc5abd8898cbaff8"
+                "reference": "e4add3ffc7dd20d7d7bc60468653259b6695e73e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-blob-library/zipball/de3b1ba3044e1b1e3ddbc93bdc5abd8898cbaff8",
-                "reference": "de3b1ba3044e1b1e3ddbc93bdc5abd8898cbaff8",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-blob-library/zipball/e4add3ffc7dd20d7d7bc60468653259b6695e73e",
+                "reference": "e4add3ffc7dd20d7d7bc60468653259b6695e73e",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +368,7 @@
                 "phpstan/phpstan": "^2.0.0",
                 "phpstan/phpstan-phpunit": "^2.0.0",
                 "phpstan/phpstan-symfony": "^2.0",
-                "phpunit/phpunit": "^10.3"
+                "phpunit/phpunit": "^11"
             },
             "type": "library",
             "autoload": {
@@ -383,22 +383,22 @@
             "description": "PHP helper library for interaction with the dbp/relay-blob-bundle.",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-blob-library/issues",
-                "source": "https://github.com/digital-blueprint/relay-blob-library/tree/v0.3.7"
+                "source": "https://github.com/digital-blueprint/relay-blob-library/tree/v0.3.10"
             },
-            "time": "2025-05-27T09:10:23+00:00"
+            "time": "2025-06-10T09:15:53+00:00"
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.212",
+            "version": "v0.1.213",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "4e1ee1e68b30a3338e1c72def11d808b0c005823"
+                "reference": "f8edb772fe2d7852a224bc1c2979328da37fcc63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/4e1ee1e68b30a3338e1c72def11d808b0c005823",
-                "reference": "4e1ee1e68b30a3338e1c72def11d808b0c005823",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/f8edb772fe2d7852a224bc1c2979328da37fcc63",
+                "reference": "f8edb772fe2d7852a224bc1c2979328da37fcc63",
                 "shasum": ""
             },
             "require": {
@@ -488,9 +488,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.212"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.213"
             },
-            "time": "2025-05-19T09:02:19+00:00"
+            "time": "2025-06-12T12:11:28+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -9199,16 +9199,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.22",
+            "version": "11.5.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4cd72faaa8f811e4cc63040cba167757660a5538"
+                "reference": "86ebcd8a3dbcd1857d88505109b2a2b376501cde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4cd72faaa8f811e4cc63040cba167757660a5538",
-                "reference": "4cd72faaa8f811e4cc63040cba167757660a5538",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/86ebcd8a3dbcd1857d88505109b2a2b376501cde",
+                "reference": "86ebcd8a3dbcd1857d88505109b2a2b376501cde",
                 "shasum": ""
             },
             "require": {
@@ -9280,7 +9280,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.22"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.23"
             },
             "funding": [
                 {
@@ -9304,7 +9304,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-06T02:48:05+00:00"
+            "time": "2025-06-13T05:47:49+00:00"
         },
         {
             "name": "react/cache",
