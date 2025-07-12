@@ -284,21 +284,21 @@
         },
         {
             "name": "dbp/relay-base-person-bundle",
-            "version": "v0.2.39",
+            "version": "v0.2.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-base-person-bundle.git",
-                "reference": "2a5825933551b4c7098149f5470ac2ca177ecde7"
+                "reference": "6d11ac75f6d0000e21c3dd05fdee562c17da21af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-base-person-bundle/zipball/2a5825933551b4c7098149f5470ac2ca177ecde7",
-                "reference": "2a5825933551b4c7098149f5470ac2ca177ecde7",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-base-person-bundle/zipball/6d11ac75f6d0000e21c3dd05fdee562c17da21af",
+                "reference": "6d11ac75f6d0000e21c3dd05fdee562c17da21af",
                 "shasum": ""
             },
             "require": {
-                "api-platform/core": "^3.4 || ^4.1",
-                "dbp/relay-core-bundle": "^0.1.210",
+                "api-platform/core": "^4.1",
+                "dbp/relay-core-bundle": "^0.1.216",
                 "ext-json": "*",
                 "php": ">=8.2",
                 "symfony/config": "^6.4",
@@ -334,9 +334,9 @@
             ],
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-base-person-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-base-person-bundle/tree/v0.2.39"
+                "source": "https://github.com/digital-blueprint/relay-base-person-bundle/tree/v0.2.40"
             },
-            "time": "2025-06-26T08:04:00+00:00"
+            "time": "2025-07-09T10:11:31+00:00"
         },
         {
             "name": "dbp/relay-blob-library",
@@ -389,20 +389,23 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.215",
+            "version": "v0.1.217",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "851f55deabbce129cc3d7edddeba7aae790ff8d9"
+                "reference": "137972bb5ae33331b8585cba7048f7dd72386150"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/851f55deabbce129cc3d7edddeba7aae790ff8d9",
-                "reference": "851f55deabbce129cc3d7edddeba7aae790ff8d9",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/137972bb5ae33331b8585cba7048f7dd72386150",
+                "reference": "137972bb5ae33331b8585cba7048f7dd72386150",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^3.4 | ^4.1",
+                "doctrine/dbal": "^4.2",
+                "doctrine/doctrine-migrations-bundle": "^3.4",
+                "doctrine/migrations": "^3.9",
                 "doctrine/orm": "^3.3",
                 "dragonmantank/cron-expression": "^3.3.3",
                 "ext-fileinfo": "*",
@@ -455,9 +458,12 @@
             "conflict": {
                 "dbp/relay-auth-bundle": "*",
                 "dbp/relay-core-connector-oidc-bundle": "<=0.1.33",
+                "doctrine/doctrine-bundle": "<2.13.1",
                 "symfony/amqp-messenger": ">=6.0 <6.4",
+                "symfony/doctrine-bridge": "<6.4.7",
                 "symfony/property-info": ">=6.0 <6.4",
                 "symfony/twig-bridge": ">=6.0 <6.4",
+                "symfony/web-link": "<6.4.7",
                 "willdurand/negotiation": "<3"
             },
             "require-dev": {
@@ -488,9 +494,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.215"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.217"
             },
-            "time": "2025-07-01T11:28:29+00:00"
+            "time": "2025-07-09T10:27:43+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -8458,16 +8464,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.13.1",
+            "version": "1.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c"
+                "reference": "faed855a7b5f4d4637717c2b3863e277116beb36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/1720ddd719e16cf0db4eb1c6eca108031636d46c",
-                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/faed855a7b5f4d4637717c2b3863e277116beb36",
+                "reference": "faed855a7b5f4d4637717c2b3863e277116beb36",
                 "shasum": ""
             },
             "require": {
@@ -8506,7 +8512,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.3"
             },
             "funding": [
                 {
@@ -8514,7 +8520,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-04-29T12:36:36+00:00"
+            "time": "2025-07-05T12:25:42+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -9211,16 +9217,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.26",
+            "version": "11.5.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4ad8fe263a0b55b54a8028c38a18e3c5bef312e0"
+                "reference": "446d43867314781df7e9adf79c3ec7464956fd8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4ad8fe263a0b55b54a8028c38a18e3c5bef312e0",
-                "reference": "4ad8fe263a0b55b54a8028c38a18e3c5bef312e0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/446d43867314781df7e9adf79c3ec7464956fd8f",
+                "reference": "446d43867314781df7e9adf79c3ec7464956fd8f",
                 "shasum": ""
             },
             "require": {
@@ -9230,7 +9236,7 @@
                 "ext-mbstring": "*",
                 "ext-xml": "*",
                 "ext-xmlwriter": "*",
-                "myclabs/deep-copy": "^1.13.1",
+                "myclabs/deep-copy": "^1.13.3",
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.2",
@@ -9292,7 +9298,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.26"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.27"
             },
             "funding": [
                 {
@@ -9316,7 +9322,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-04T05:58:21+00:00"
+            "time": "2025-07-11T04:10:06+00:00"
         },
         {
             "name": "react/cache",
