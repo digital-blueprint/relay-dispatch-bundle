@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.7.2
+
+- Drop support for api-platfrom 3
+- Dependency cleanups
+
 ## 0.7.1
 
 - Fix BlobService file upload return value
