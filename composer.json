@@ -11,7 +11,8 @@
         "ext-pdo_sqlite": "*",
         "ext-simplexml": "*",
         "ext-soap": "*",
-        "api-platform/core": "^4.1",
+        "api-platform/metadata": "^4.1",
+        "api-platform/openapi": "^4.1",
         "dbp/relay-base-person-bundle": "^0.2.35",
         "dbp/relay-blob-library": "^0.3.1",
         "dbp/relay-core-bundle": "^0.1.210",
@@ -37,6 +38,7 @@
         "symfony/validator": "^6.4"
     },
     "require-dev": {
+        "api-platform/symfony": "^4.1",
         "friendsofphp/php-cs-fixer": "^3.50",
         "phpstan/phpstan": "^2.0.0",
         "phpstan/phpstan-phpunit": "^2.0.0",
