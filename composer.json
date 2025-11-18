@@ -11,7 +11,7 @@
         "ext-pdo_sqlite": "*",
         "ext-simplexml": "*",
         "ext-soap": "*",
-        "api-platform/core": "^3.4 || ^4.1",
+        "api-platform/core": "^4.1",
         "dbp/relay-base-person-bundle": "^0.2.35",
         "dbp/relay-blob-library": "^0.3.1",
         "dbp/relay-core-bundle": "^0.1.210",
