@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dbp\Relay\DispatchBundle\Authorization;
 
 use Dbp\Relay\CoreBundle\Authorization\AbstractAuthorizationService;
+use Dbp\Relay\CoreBundle\Authorization\Serializer\EntityNormalizer;
 use Dbp\Relay\CoreBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\DependencyInjection\Configuration;
 use Dbp\Relay\DispatchBundle\Entity\Group;
@@ -14,6 +15,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AuthorizationService extends AbstractAuthorizationService
 {
+    public function __construct(
+        private readonly EntityNormalizer $entityNormalizer)
+    {
+        parent::__construct();
+
+        $this->setRestrictedOutputGroupVisibility();
+    }
+
     /**
      * Check if the user can access the application at all.
      *
@@ -200,16 +209,16 @@ class AuthorizationService extends AbstractAuthorizationService
         $this->getAllGroupIds();
     }
 
-    protected function setUpInputAndOutputGroups(): void
+    protected function setRestrictedOutputGroupVisibility(): void
     {
-        $this->showOutputGroupsForEntityInstanceIf(Request::class, ['DispatchRequest:read_content'],
+        $this->entityNormalizer->showOutputGroupsForEntityInstanceIf(Request::class, ['DispatchRequest:read_content'],
             function (Request $request) {
                 return $this->getCanReadContent($request->getGroupId());
             });
-        // personal address of recipients is returned if
+        // the personal address of recipients is returned if
         // - it was entered manually by a user (i.e. person identifier is not set) OR
-        // - the current user has write and read personal address permissions for the group
-        $this->showOutputGroupsForEntityInstanceIf(RequestRecipient::class, ['DispatchRequestRecipient:read_address'],
+        // - the current user has read-and-write personal address permissions for the group
+        $this->entityNormalizer->showOutputGroupsForEntityInstanceIf(RequestRecipient::class, ['DispatchRequestRecipient:read_address'],
             function (RequestRecipient $recipient) {
                 return Tools::isNullOrEmpty($recipient->getPersonIdentifier())
                     || $this->canReadInternalAddresses(
@@ -218,7 +227,7 @@ class AuthorizationService extends AbstractAuthorizationService
         // birthdate of recipients is returned if
         // - it was entered manually by a user (i.e. person identifier is not set)
         //   AND the current user at least has read content permissions for the group
-        $this->showOutputGroupsForEntityInstanceIf(RequestRecipient::class, ['DispatchRequestRecipient:read_birth_date'],
+        $this->entityNormalizer->showOutputGroupsForEntityInstanceIf(RequestRecipient::class, ['DispatchRequestRecipient:read_birth_date'],
             function (RequestRecipient $recipient) {
                 return Tools::isNullOrEmpty($recipient->getPersonIdentifier())
                     && $this->getCanReadContent($recipient->getDispatchRequest()->getGroupId());

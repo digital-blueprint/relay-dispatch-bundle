@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "389866808721a3020a2782f82aab4764",
+    "content-hash": "e93bf735c39cfd3883018b31df23f50c",
     "packages": [
         {
             "name": "api-platform/documentation",
@@ -1146,16 +1146,16 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.224",
+            "version": "v0.1.225",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "c8f70d78c7566a7d7c5be8ad144eb117e9d30c8a"
+                "reference": "467538420d876f9608cfef8334184ac1a309db21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/c8f70d78c7566a7d7c5be8ad144eb117e9d30c8a",
-                "reference": "c8f70d78c7566a7d7c5be8ad144eb117e9d30c8a",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/467538420d876f9608cfef8334184ac1a309db21",
+                "reference": "467538420d876f9608cfef8334184ac1a309db21",
                 "shasum": ""
             },
             "require": {
@@ -1252,9 +1252,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.224"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.225"
             },
-            "time": "2025-11-11T13:09:06+00:00"
+            "time": "2025-11-26T15:00:33+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -12557,5 +12557,5 @@
     "platform-overrides": {
         "php": "8.2"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update core and adapt
+
 ## 0.7.2
 
 - Drop support for api-platfrom 3
