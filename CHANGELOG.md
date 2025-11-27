@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.7.3
+
 - Update core and adapt
 
 ## 0.7.2
