@@ -399,16 +399,16 @@
         },
         {
             "name": "api-platform/metadata",
-            "version": "v4.2.10",
+            "version": "v4.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/metadata.git",
-                "reference": "0071674a851f1c9564e4b16b9812495cceef154d"
+                "reference": "533774ca55a4f2be9da72da344d5e3e2982fbc86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/metadata/zipball/0071674a851f1c9564e4b16b9812495cceef154d",
-                "reference": "0071674a851f1c9564e4b16b9812495cceef154d",
+                "url": "https://api.github.com/repos/api-platform/metadata/zipball/533774ca55a4f2be9da72da344d5e3e2982fbc86",
+                "reference": "533774ca55a4f2be9da72da344d5e3e2982fbc86",
                 "shasum": ""
             },
             "require": {
@@ -491,13 +491,13 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/metadata/tree/v4.2.10"
+                "source": "https://github.com/api-platform/metadata/tree/v4.2.11"
             },
-            "time": "2025-12-11T16:36:37+00:00"
+            "time": "2025-12-18T14:34:13+00:00"
         },
         {
             "name": "api-platform/openapi",
-            "version": "v4.2.10",
+            "version": "v4.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/openapi.git",
@@ -581,7 +581,7 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/openapi/tree/v4.2.10"
+                "source": "https://github.com/api-platform/openapi/tree/v4.2.11"
             },
             "time": "2025-11-30T12:55:42+00:00"
         },
