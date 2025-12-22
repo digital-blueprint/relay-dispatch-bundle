@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.7.4
+
+- Add support for Symfony 7
+
 ## 0.7.3
 
 - Update core and adapt
