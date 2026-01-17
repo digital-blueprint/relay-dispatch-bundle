@@ -399,16 +399,16 @@
         },
         {
             "name": "api-platform/metadata",
-            "version": "v4.2.12",
+            "version": "v4.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/metadata.git",
-                "reference": "429ee219f930efd274a9f4e91e92921add7f988a"
+                "reference": "590195d1038e66a039f1847b43040b7e6b78475f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/metadata/zipball/429ee219f930efd274a9f4e91e92921add7f988a",
-                "reference": "429ee219f930efd274a9f4e91e92921add7f988a",
+                "url": "https://api.github.com/repos/api-platform/metadata/zipball/590195d1038e66a039f1847b43040b7e6b78475f",
+                "reference": "590195d1038e66a039f1847b43040b7e6b78475f",
                 "shasum": ""
             },
             "require": {
@@ -491,22 +491,22 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/metadata/tree/v4.2.12"
+                "source": "https://github.com/api-platform/metadata/tree/v4.2.13"
             },
-            "time": "2025-12-27T22:15:57+00:00"
+            "time": "2026-01-12T13:36:15+00:00"
         },
         {
             "name": "api-platform/openapi",
-            "version": "v4.2.12",
+            "version": "v4.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/openapi.git",
-                "reference": "3417415125f3ebbcb620f84ef9dd1cd07e2b2621"
+                "reference": "3600d57bf2729c8fa82d831edbdd21244037ee1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/openapi/zipball/3417415125f3ebbcb620f84ef9dd1cd07e2b2621",
-                "reference": "3417415125f3ebbcb620f84ef9dd1cd07e2b2621",
+                "url": "https://api.github.com/repos/api-platform/openapi/zipball/3600d57bf2729c8fa82d831edbdd21244037ee1b",
+                "reference": "3600d57bf2729c8fa82d831edbdd21244037ee1b",
                 "shasum": ""
             },
             "require": {
@@ -581,9 +581,9 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/openapi/tree/v4.2.12"
+                "source": "https://github.com/api-platform/openapi/tree/v4.2.13"
             },
-            "time": "2026-01-08T18:17:35+00:00"
+            "time": "2026-01-16T15:43:25+00:00"
         },
         {
             "name": "api-platform/serializer",
@@ -10213,16 +10213,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.46",
+            "version": "11.5.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "75dfe79a2aa30085b7132bb84377c24062193f33"
+                "reference": "fe3665c15e37140f55aaf658c81a2eb9030b6d89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/75dfe79a2aa30085b7132bb84377c24062193f33",
-                "reference": "75dfe79a2aa30085b7132bb84377c24062193f33",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fe3665c15e37140f55aaf658c81a2eb9030b6d89",
+                "reference": "fe3665c15e37140f55aaf658c81a2eb9030b6d89",
                 "shasum": ""
             },
             "require": {
@@ -10236,7 +10236,7 @@
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.2",
-                "phpunit/php-code-coverage": "^11.0.11",
+                "phpunit/php-code-coverage": "^11.0.12",
                 "phpunit/php-file-iterator": "^5.1.0",
                 "phpunit/php-invoker": "^5.0.1",
                 "phpunit/php-text-template": "^4.0.1",
@@ -10294,7 +10294,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.46"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.48"
             },
             "funding": [
                 {
@@ -10318,7 +10318,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-12-06T08:01:15+00:00"
+            "time": "2026-01-16T16:26:27+00:00"
         },
         {
             "name": "react/cache",
