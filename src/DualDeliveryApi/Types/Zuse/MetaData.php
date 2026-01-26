@@ -160,9 +160,9 @@ class MetaData
     {
         if ($this->StartNotificationBefore === null) {
             return null;
-        } else {
-            return new \DateTimeImmutable($this->StartNotificationBefore);
         }
+
+        return new \DateTimeImmutable($this->StartNotificationBefore);
     }
 
     public function setStartNotificationBefore(\DateTime $StartNotificationBefore): void
@@ -174,9 +174,9 @@ class MetaData
     {
         if ($this->DeliverBefore === null) {
             return null;
-        } else {
-            return new \DateTimeImmutable($this->DeliverBefore);
         }
+
+        return new \DateTimeImmutable($this->DeliverBefore);
     }
 
     public function setDeliverBefore(\DateTime $DeliverBefore): void

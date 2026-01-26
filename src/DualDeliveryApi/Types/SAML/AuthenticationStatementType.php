@@ -84,12 +84,11 @@ class AuthenticationStatementType extends SubjectStatementAbstractType
     {
         if ($this->AuthenticationInstant === null) {
             return null;
-        } else {
-            try {
-                return new \DateTime($this->AuthenticationInstant);
-            } catch (\Exception $e) {
-                return false;
-            }
+        }
+        try {
+            return new \DateTime($this->AuthenticationInstant);
+        } catch (\Exception $e) {
+            return false;
         }
     }
 

@@ -40,9 +40,9 @@ class EMailDeliveryType extends DeliveryChannelSetType
     {
         if ($this->RegMailDepositUntil === null) {
             return null;
-        } else {
-            return new \DateTimeImmutable($this->RegMailDepositUntil);
         }
+
+        return new \DateTimeImmutable($this->RegMailDepositUntil);
     }
 
     public function setRegMailDepositUntil(\DateTimeInterface $RegMailDepositUntil): void

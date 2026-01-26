@@ -263,12 +263,11 @@ class AssertionType
     {
         if ($this->IssueInstant === null) {
             return null;
-        } else {
-            try {
-                return new \DateTime($this->IssueInstant);
-            } catch (\Exception $e) {
-                return false;
-            }
+        }
+        try {
+            return new \DateTime($this->IssueInstant);
+        } catch (\Exception $e) {
+            return false;
         }
     }
 

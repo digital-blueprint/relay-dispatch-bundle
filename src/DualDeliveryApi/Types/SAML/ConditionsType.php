@@ -69,12 +69,11 @@ class ConditionsType
     {
         if ($this->NotBefore === null) {
             return null;
-        } else {
-            try {
-                return new \DateTime($this->NotBefore);
-            } catch (\Exception $e) {
-                return false;
-            }
+        }
+        try {
+            return new \DateTime($this->NotBefore);
+        } catch (\Exception $e) {
+            return false;
         }
     }
 
@@ -92,12 +91,11 @@ class ConditionsType
     {
         if ($this->NotOnOrAfter === null) {
             return null;
-        } else {
-            try {
-                return new \DateTime($this->NotOnOrAfter);
-            } catch (\Exception $e) {
-                return false;
-            }
+        }
+        try {
+            return new \DateTime($this->NotOnOrAfter);
+        } catch (\Exception $e) {
+            return false;
         }
     }
 
