@@ -89,9 +89,9 @@ class PostalNotificationType extends NotificationChannelSetType
     {
         if ($this->Printtime === null) {
             return null;
-        } else {
-            return new \DateTimeImmutable($this->Printtime);
         }
+
+        return new \DateTimeImmutable($this->Printtime);
     }
 
     public function setPrinttime(\DateTimeInterface $Printtime): void
@@ -133,9 +133,9 @@ class PostalNotificationType extends NotificationChannelSetType
     {
         if ($this->PostalDeliveryTime === null) {
             return null;
-        } else {
-            return new \DateTimeImmutable($this->PostalDeliveryTime);
         }
+
+        return new \DateTimeImmutable($this->PostalDeliveryTime);
     }
 
     public function setPostalDeliveryTime(\DateTimeInterface $PostalDeliveryTime): void
@@ -147,9 +147,9 @@ class PostalNotificationType extends NotificationChannelSetType
     {
         if ($this->ServiceDeliveryTime === null) {
             return null;
-        } else {
-            return new \DateTimeImmutable($this->ServiceDeliveryTime);
         }
+
+        return new \DateTimeImmutable($this->ServiceDeliveryTime);
     }
 
     public function setServiceDeliveryTime(\DateTimeInterface $ServiceDeliveryTime): void

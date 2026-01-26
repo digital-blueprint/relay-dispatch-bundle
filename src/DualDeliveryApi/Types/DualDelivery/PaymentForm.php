@@ -162,9 +162,9 @@ class PaymentForm
     {
         if ($this->DueDate === null) {
             return null;
-        } else {
-            return new \DateTimeImmutable($this->DueDate);
         }
+
+        return new \DateTimeImmutable($this->DueDate);
     }
 
     public function setDueDate(\DateTimeInterface $DueDate): void

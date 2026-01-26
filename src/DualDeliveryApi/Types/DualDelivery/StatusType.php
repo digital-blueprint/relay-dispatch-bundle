@@ -56,9 +56,9 @@ class StatusType
     {
         if ($this->Timestamp === null) {
             return null;
-        } else {
-            return new \DateTimeImmutable($this->Timestamp);
         }
+
+        return new \DateTimeImmutable($this->Timestamp);
     }
 
     public function setTimestamp(\DateTimeInterface $Timestamp): void
