@@ -36,7 +36,7 @@ class TestSeedCommand extends Command
         $this->setAliases(['dbp:relay-dispatch:test-seed']);
         $this
             ->setDescription('Test seed command')
-            ->addArgument('action', InputArgument::REQUIRED, 'action: create')
+            ->addArgument('action', InputArgument::REQUIRED, 'action: create, add-recipient')
             ->addOption('submit', 's', InputOption::VALUE_NONE, 'Submit request after creation')
             ->addOption('direct', 'd', InputOption::VALUE_NONE, 'When submitting don\'t use the queue, but submit directly')
             ->addOption('output-request-xml', null, InputOption::VALUE_NONE, 'Output the request XML (only works when sending directly)')
@@ -52,8 +52,64 @@ class TestSeedCommand extends Command
             ->addOption('recipient-address-locality', null, InputOption::VALUE_OPTIONAL, 'Recipient address locality')
             ->addOption('recipient-address-country', null, InputOption::VALUE_OPTIONAL, 'Recipient address country', 'AT')
             ->addOption('recipient-person-id', null, InputOption::VALUE_OPTIONAL, 'Recipient person identifier')
-            ->addOption('request-person-id', null, InputOption::VALUE_REQUIRED, 'Request person identifier')
+            ->addOption('request-person-id', null, InputOption::VALUE_OPTIONAL, 'Request person identifier')
+            ->addOption('request-id', null, InputOption::VALUE_OPTIONAL, 'Request identifier')
             ->addOption('request-reference-number', null, InputOption::VALUE_OPTIONAL, 'Request reference number', date('YmdHis'));
+    }
+
+    private function createRequestRecipient(
+        Request $request,
+        string $recipientGivenName,
+        string $recipientFamilyName,
+        ?string $recipientBirthDate,
+        string $recipientStreetAddress,
+        string $recipientBuildingNumber,
+        string $recipientPostalCode,
+        string $recipientAddressLocality,
+        ?string $recipientAddressCountry
+    ): RequestRecipient {
+        $requestRecipient = new RequestRecipient();
+        $requestRecipient->setRequest($request);
+        $requestRecipient->setDispatchRequestIdentifier($request->getIdentifier());
+
+        // You can't use the person identifier to fetch the rest of the person data without the permission of the person
+        // {"message":"access to local data attribute 'streetAddress' denied","errorId":"","errorDetails":[]}
+        //                $requestRecipient->setPersonIdentifier($recipientPersonId);
+
+        $requestRecipient->setGivenName($recipientGivenName);
+        $requestRecipient->setFamilyName($recipientFamilyName);
+
+        if ($recipientBirthDate) {
+            $requestRecipient->setBirthDate(new \DateTimeImmutable($recipientBirthDate));
+        }
+
+        $requestRecipient->setStreetAddress($recipientStreetAddress);
+        $requestRecipient->setBuildingNumber($recipientBuildingNumber);
+        $requestRecipient->setPostalCode($recipientPostalCode);
+        $requestRecipient->setAddressLocality($recipientAddressLocality);
+        $requestRecipient->setAddressCountry($recipientAddressCountry);
+
+        return $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
+    }
+
+    private function outputRequestRecipient(
+        OutputInterface $output,
+        RequestRecipient $requestRecipient,
+        bool $jsonOutput
+    ): array {
+        if ($jsonOutput) {
+            return [
+                'requestRecipient' => $requestRecipient->getIdentifier(),
+                'isElectronicallyDeliverable' => $requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no',
+                'isPostalDeliverable' => $requestRecipient->isPostalDeliverable() ? 'yes' : 'no',
+            ];
+        }
+
+        $output->writeln('requestRecipient: '.$requestRecipient->getIdentifier());
+        $output->writeln('isElectronicallyDeliverable: '.($requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no'));
+        $output->writeln('isPostalDeliverable: '.($requestRecipient->isPostalDeliverable() ? 'yes' : 'no'));
+
+        return [];
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -84,10 +140,24 @@ class TestSeedCommand extends Command
         }
 
         $requestPersonId = $input->getOption('request-person-id');
+        $requestId = $input->getOption('request-id');
         $requestReferenceNumber = $input->getOption('request-reference-number');
 
         switch ($action) {
             case 'create':
+                if (!$requestPersonId) {
+                    if ($jsonOutput) {
+                        $data2json = [
+                            'MissingRequestPersonId!' => true,
+                        ];
+                        $jsonData = json_encode($data2json, JSON_PRETTY_PRINT);
+                        $output->writeln($jsonData);
+                    } else {
+                        $output->writeln('Missing request-person-id option!');
+                    }
+
+                    return 1;
+                }
                 $name = $input->getOption('request-subject') ? $input->getOption('request-subject') : 'Test '.$recipientGivenName.' '.$recipientFamilyName.' '.rand(1000, 9999);
                 if (!$jsonOutput) {
                     $output->writeln('Generating request "'.$name.'" with a recipient and a file...');
@@ -107,39 +177,18 @@ class TestSeedCommand extends Command
                 $request->setReferenceNumber($requestReferenceNumber);
                 $request = $this->dispatchService->createRequest($request);
 
-                $requestRecipient = new RequestRecipient();
-                $requestRecipient->setRequest($request);
-                $requestRecipient->setDispatchRequestIdentifier($request->getIdentifier());
-
-                // You can't use the person identifier to fetch the rest of the person data without the permission of the person
-                // {"message":"access to local data attribute 'streetAddress' denied","errorId":"","errorDetails":[]}
-                //                $requestRecipient->setPersonIdentifier($recipientPersonId);
-
-                $requestRecipient->setGivenName($recipientGivenName);
-                $requestRecipient->setFamilyName($recipientFamilyName);
-
-                if ($recipientBirthDate) {
-                    $requestRecipient->setBirthDate(new \DateTimeImmutable($recipientBirthDate));
-                }
-
-                $requestRecipient->setStreetAddress($recipientStreetAddress);
-                $requestRecipient->setBuildingNumber($recipientBuildingNumber);
-                $requestRecipient->setPostalCode($recipientPostalCode);
-                $requestRecipient->setAddressLocality($recipientAddressLocality);
-                $requestRecipient->setAddressCountry($recipientAddressCountry);
-
-                $requestRecipient = $this->dispatchService->handleRequestRecipientStorage($requestRecipient);
-                if ($jsonOutput) {
-                    $data2json = [
-                        'requestRecipient' => $requestRecipient->getIdentifier(),
-                        'isElectronicallyDeliverable' => $requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no',
-                        'isPostalDeliverable' => $requestRecipient->isPostalDeliverable() ? 'yes' : 'no',
-                    ];
-                } else {
-                    $output->writeln('requestRecipient: '.$requestRecipient->getIdentifier());
-                    $output->writeln('isElectronicallyDeliverable: '.($requestRecipient->isElectronicallyDeliverable() ? 'yes' : 'no'));
-                    $output->writeln('isPostalDeliverable: '.($requestRecipient->isPostalDeliverable() ? 'yes' : 'no'));
-                }
+                $requestRecipient = $this->createRequestRecipient(
+                    $request,
+                    $recipientGivenName,
+                    $recipientFamilyName,
+                    $recipientBirthDate,
+                    $recipientStreetAddress,
+                    $recipientBuildingNumber,
+                    $recipientPostalCode,
+                    $recipientAddressLocality,
+                    $recipientAddressCountry
+                );
+                $data2json = $this->outputRequestRecipient($output, $requestRecipient, $jsonOutput);
 
                 $request->setRequestRecipients(new ArrayCollection([$requestRecipient]));
 
@@ -185,6 +234,47 @@ class TestSeedCommand extends Command
                         $output->writeln('Request submitted!');
                         $output->writeln('AppDeliveryID: '.$requestRecipient->getAppDeliveryID());
                     }
+                }
+                break;
+            case 'add-recipient':
+                if (!$requestId) {
+                    if ($jsonOutput) {
+                        $data2json = [
+                            'MissingRequestId!' => true,
+                        ];
+                        $jsonData = json_encode($data2json, JSON_PRETTY_PRINT);
+                        $output->writeln($jsonData);
+                    } else {
+                        $output->writeln('Missing request-id option!');
+                    }
+
+                    return 1;
+                }
+
+                $request = $this->dispatchService->getRequestById($requestId);
+                if (!$jsonOutput) {
+                    $recipientName = trim($recipientGivenName.' '.$recipientFamilyName);
+                    $recipientLabel = $recipientName !== '' ? ' "'.$recipientName.'"' : '';
+                    $output->writeln('Adding recipient'.$recipientLabel.' to request "'.$request->getName().'"...');
+                }
+
+                $requestRecipient = $this->createRequestRecipient(
+                    $request,
+                    $recipientGivenName,
+                    $recipientFamilyName,
+                    $recipientBirthDate,
+                    $recipientStreetAddress,
+                    $recipientBuildingNumber,
+                    $recipientPostalCode,
+                    $recipientAddressLocality,
+                    $recipientAddressCountry
+                );
+                $data2json = $this->outputRequestRecipient($output, $requestRecipient, $jsonOutput);
+                $request->getRecipients()->add($requestRecipient);
+
+                if ($jsonOutput) {
+                    $jsonData = json_encode($data2json, JSON_PRETTY_PRINT);
+                    $output->writeln($jsonData);
                 }
                 break;
             default:

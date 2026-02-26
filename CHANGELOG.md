@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add test-seed CLI add-recipient action and docs
+
 ## 0.7.4
 
 - Add support for Symfony 7

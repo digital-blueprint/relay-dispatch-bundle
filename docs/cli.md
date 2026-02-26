@@ -13,6 +13,9 @@
 # Create request for user id 1234567890, directly submit it without queue and show the xml of the request
 ./bin/console dbp:relay:dispatch:test-seed create --request-person-id=4455667788 --recipient-person-id=1234567890 --submit --direct --output-request-xml
 
+# Add a recipient to an existing request
+./bin/console dbp:relay:dispatch:test-seed add-recipient --request-id=4d553985-d44f-404f-acf3-cd0eac7ae9c2 --recipient-person-id=1234567890
+
 # Create and submit request for Heinrich Mustermann for the address "Am Umweg 9" and show the xml of the request
 ./bin/console dbp:relay:dispatch:test-seed create \
     --request-person-id=4455667788 \
