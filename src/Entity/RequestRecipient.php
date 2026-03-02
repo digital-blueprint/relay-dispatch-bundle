@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Entity;
 
-date_default_timezone_set('UTC');
-
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
@@ -22,6 +20,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Context;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -100,7 +100,7 @@ class RequestRecipient
     private ?string $identifier = null;
 
     #[ApiProperty(iris: ['https://schema.org/dateCreated'])]
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc')]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private ?\DateTimeInterface $dateCreated = null;
 
@@ -161,8 +161,20 @@ class RequestRecipient
     private ?string $buildingNumber = null;
 
     #[ApiProperty(iris: ['http://schema.org/birthDate'])]
-    #[ORM\Column(type: 'date_immutable', nullable: true)]
+    #[ORM\Column(type: 'relay_dispatch_date_immutable_utc', nullable: true)]
     #[Groups(['DispatchRequestRecipient:read_birth_date', 'DispatchRequestRecipient:input'])] // I could not find an Assert that doesn't cause an error to do proper checks
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::FORMAT_KEY => 'Y-m-d',
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ],
+        denormalizationContext: [
+            // XXX: this should be FORMAT_KEY='Y-m-d' too, but we allowed other formats.
+            // can be fixed once https://github.com/digital-blueprint/dispatch-app/commit/aa13563cf97205e13d04cc29a8
+            // is deployed
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ],
+    )]
     private ?\DateTimeInterface $birthDate = null;
 
     #[ApiProperty]
@@ -176,7 +188,7 @@ class RequestRecipient
     private ?string $appDeliveryID = null;
 
     #[ApiProperty(iris: ['https://schema.org/endDate'])]
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc', nullable: true)]
     #[Groups(['DispatchRequestRecipient:output'])]
     private ?\DateTimeInterface $deliveryEndDate = null;
 

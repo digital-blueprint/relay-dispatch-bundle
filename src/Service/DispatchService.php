@@ -362,7 +362,7 @@ class DispatchService implements LoggerAwareInterface
             $requestRecipient->setFamilyName($person->getFamilyName());
             try {
                 $birthDateString = $localData['birthDate'];
-                $birthDate = !Tools::isNullOrEmpty($birthDateString) ? new \DateTimeImmutable($birthDateString) : null;
+                $birthDate = !Tools::isNullOrEmpty($birthDateString) ? new \DateTimeImmutable($birthDateString, new \DateTimeZone('UTC')) : null;
             } catch (\Exception $e) {
                 $birthDate = null;
             }

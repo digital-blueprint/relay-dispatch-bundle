@@ -80,7 +80,7 @@ class TestSeedCommand extends Command
         $requestRecipient->setFamilyName($recipientFamilyName);
 
         if ($recipientBirthDate) {
-            $requestRecipient->setBirthDate(new \DateTimeImmutable($recipientBirthDate));
+            $requestRecipient->setBirthDate(new \DateTimeImmutable($recipientBirthDate, new \DateTimeZone('UTC')));
         }
 
         $requestRecipient->setStreetAddress($recipientStreetAddress);

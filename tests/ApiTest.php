@@ -264,7 +264,7 @@ class ApiTest extends AbstractApiTest
         $dispatchRequestRecipient = $this->getDispatchRequestRecipientById($dispatchRequestRecipient['identifier']);
         $this->assertEquals('', $dispatchRequestRecipient['givenName']);
         $this->assertEquals('Mustermann', $dispatchRequestRecipient['familyName']);
-        $this->assertEquals('1980-01-01T00:00:00+00:00', $dispatchRequestRecipient['birthDate']);
+        $this->assertEquals('1980-01-01', $dispatchRequestRecipient['birthDate']);
     }
 
     public function testReadRecipientBirthdateNotGranted(): void

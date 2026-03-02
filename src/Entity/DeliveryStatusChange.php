@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Entity;
 
-date_default_timezone_set('UTC');
-
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
@@ -121,7 +119,7 @@ class DeliveryStatusChange
     private ?string $identifier = null;
 
     #[ApiProperty(iris: ['https://schema.org/dateCreated'])]
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     private ?\DateTimeInterface $dateCreated = null;
 
@@ -167,7 +165,7 @@ class DeliveryStatusChange
     #[ORM\Column(type: 'string', length: 1000, nullable: true)]
     private ?string $fileStorageIdentifier = null;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc', nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
     private ?\DateTimeInterface $fileDateAdded = null;
 

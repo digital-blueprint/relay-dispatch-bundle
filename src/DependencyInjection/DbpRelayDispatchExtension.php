@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\DependencyInjection;
 
+use Dbp\Relay\CoreBundle\Doctrine\DateImmutableUtcType;
+use Dbp\Relay\CoreBundle\Doctrine\DateTimeImmutableUtcType;
 use Dbp\Relay\CoreBundle\Doctrine\DoctrineConfiguration;
 use Dbp\Relay\CoreBundle\Extension\ExtensionTrait;
 use Dbp\Relay\DispatchBundle\Authorization\AuthorizationService;
@@ -61,6 +63,11 @@ class DbpRelayDispatchExtension extends ConfigurableExtension implements Prepend
 
         $definition = $container->getDefinition(DualDeliveryService::class);
         $definition->addMethodCall('setConfig', [$mergedConfig]);
+
+        $typeDefinition = $container->getParameter('doctrine.dbal.connection_factory.types');
+        $typeDefinition['relay_dispatch_datetime_immutable_utc'] = ['class' => DateTimeImmutableUtcType::class];
+        $typeDefinition['relay_dispatch_date_immutable_utc'] = ['class' => DateImmutableUtcType::class];
+        $container->setParameter('doctrine.dbal.connection_factory.types', $typeDefinition);
     }
 
     public function prepend(ContainerBuilder $container): void
