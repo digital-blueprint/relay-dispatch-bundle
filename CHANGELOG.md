@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0
+
+- Avoid setting the global default PHP timezone to UTC, instead make sure that
+  the global timezone doesn't affect the bundle's behavior.
+- The birthDate field of a reciepient is now in the format YYYY-MM-DD and no
+  longer a full datetime string. Posting other formats is still supported but
+  deprecated.
+
 ## 0.8.0
 
 - Add test-seed CLI add-recipient action and docs
