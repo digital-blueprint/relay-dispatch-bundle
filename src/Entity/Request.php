@@ -21,6 +21,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Context;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -163,6 +165,11 @@ class Request
     #[ApiProperty(iris: ['https://schema.org/dateCreated'])]
     #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc')]
     #[Groups(['DispatchRequest:output'])]
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ]
+    )]
     private ?\DateTimeInterface $dateCreated = null;
 
     #[ApiProperty(iris: ['https://schema.org/identifier'])]
@@ -185,6 +192,11 @@ class Request
     #[ApiProperty]
     #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc', nullable: true)]
     #[Groups(['DispatchRequest:output'])]
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ]
+    )]
     private ?\DateTimeInterface $dateSubmitted = null;
 
     #[ApiProperty(iris: ['https://schema.org/addressCountry'])]

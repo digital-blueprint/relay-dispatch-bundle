@@ -19,6 +19,8 @@ use Dbp\Relay\DispatchBundle\Rest\RequestFileProvider;
 use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Context;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 #[ApiResource(
     shortName: 'DispatchRequestFile',
@@ -98,6 +100,11 @@ class RequestFile
     #[ApiProperty(iris: ['https://schema.org/dateCreated'])]
     #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc')]
     #[Groups(['DispatchRequestFile:output', 'DispatchRequest:output'])]
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ]
+    )]
     private ?\DateTimeInterface $dateCreated = null;
 
     #[ApiProperty]

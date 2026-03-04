@@ -22,6 +22,8 @@ use Dbp\Relay\DispatchBundle\Service\DispatchService;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Context;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 #[ApiResource(
     shortName: 'DispatchDeliveryStatusChange',
@@ -121,6 +123,11 @@ class DeliveryStatusChange
     #[ApiProperty(iris: ['https://schema.org/dateCreated'])]
     #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc')]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ]
+    )]
     private ?\DateTimeInterface $dateCreated = null;
 
     #[ApiProperty]
@@ -167,6 +174,11 @@ class DeliveryStatusChange
 
     #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc', nullable: true)]
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ]
+    )]
     private ?\DateTimeInterface $fileDateAdded = null;
 
     #[ORM\Column(type: 'string', length: 50, nullable: true)]

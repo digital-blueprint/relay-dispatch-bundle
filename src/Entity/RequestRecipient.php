@@ -102,6 +102,11 @@ class RequestRecipient
     #[ApiProperty(iris: ['https://schema.org/dateCreated'])]
     #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc')]
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ]
+    )]
     private ?\DateTimeInterface $dateCreated = null;
 
     #[ApiProperty]
@@ -173,6 +178,7 @@ class RequestRecipient
             // can be fixed once https://github.com/digital-blueprint/dispatch-app/commit/aa13563cf97205e13d04cc29a8
             // is deployed
             DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+            DateTimeNormalizer::FORCE_TIMEZONE_KEY => true,
         ],
     )]
     private ?\DateTimeInterface $birthDate = null;
@@ -190,6 +196,11 @@ class RequestRecipient
     #[ApiProperty(iris: ['https://schema.org/endDate'])]
     #[ORM\Column(type: 'relay_dispatch_datetime_immutable_utc', nullable: true)]
     #[Groups(['DispatchRequestRecipient:output'])]
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+        ]
+    )]
     private ?\DateTimeInterface $deliveryEndDate = null;
 
     #[ApiProperty(iris: ['https://schema.org/identifier'])]
