@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.10.0
+
+- More minor UTC fixes for when the global timezone is not UTC.
+- /pre-addressing-requests now only takes and returns "Y-m-d" formatted birth dates.
+
 ## 0.9.0
 
 - Avoid setting the global default PHP timezone to UTC, instead make sure that
