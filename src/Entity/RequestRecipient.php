@@ -359,6 +359,15 @@ class RequestRecipient
         return $this->birthDate;
     }
 
+    public function getBirthDateString(): ?string
+    {
+        if ($this->birthDate === null) {
+            return null;
+        }
+
+        return \DateTimeImmutable::createFromInterface($this->birthDate)->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d');
+    }
+
     public function setBirthDate(?\DateTimeInterface $birthDate): void
     {
         $this->birthDate = $birthDate !== null ? \DateTimeImmutable::createFromInterface($birthDate) : null;

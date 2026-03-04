@@ -83,9 +83,9 @@ class PreAddressingRequest
     private ?string $familyName = null;
 
     #[ApiProperty(iris: ['http://schema.org/birthDate'])]
-    #[Groups(['DispatchPreAddressingRequest:output', 'DispatchPreAddressingRequest:input'])] // I could not find an Assert that doesn't cause an error to do proper checks
-    #[Assert\NotBlank]
-    private ?\DateTimeInterface $birthDate = null;
+    #[Groups(['DispatchPreAddressingRequest:output', 'DispatchPreAddressingRequest:input'])]
+    #[Assert\Date]
+    private string $birthDate;
 
     #[Groups(['DispatchPreAddressingRequest:output'])]
     private ?string $dualDeliveryID = null;
@@ -124,12 +124,12 @@ class PreAddressingRequest
         $this->familyName = $familyName;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getBirthDate(): string
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(?\DateTimeInterface $birthDate): void
+    public function setBirthDate(?string $birthDate): void
     {
         $this->birthDate = $birthDate;
     }

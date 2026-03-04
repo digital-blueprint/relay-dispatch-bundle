@@ -761,14 +761,14 @@ class DispatchService implements LoggerAwareInterface
         //        $this->createDeliveryStatusChangeForAllRecipientsOfRequest($request, DeliveryStatusChange::STATUS_IN_PROGRESS, 'Request transferred to Vendo');
     }
 
-    public function doPreAddressingSoapRequest(string $givenName, string $familyName, \DateTimeInterface $birthDate): DualDeliveryPreAddressingResponseType
+    public function doPreAddressingSoapRequest(string $givenName, string $familyName, string $birthDate): DualDeliveryPreAddressingResponseType
     {
         $service = $this->dualDeliveryService->getClient();
         $recipientId = $this->dualDeliveryService->createRecipientId();
         $appDeliveryId = $this->dualDeliveryService->createAppDeliveryID();
 
         $personName = new PersonNameType($givenName, new FamilyName($familyName));
-        $physicalPerson = new PhysicalPersonType($personName, $birthDate ? $birthDate->format('Y-m-d') : null);
+        $physicalPerson = new PhysicalPersonType($personName, $birthDate);
         $senderProfile = $this->dualDeliveryService->getSenderProfile();
         $sender = new SenderType($senderProfile);
         $recipientData = new PersonDataType($physicalPerson);
@@ -830,7 +830,7 @@ class DispatchService implements LoggerAwareInterface
     public function doPreAddressingSoapRequestForRequestRecipient(RequestRecipient $requestRecipient): void
     {
         if ($requestRecipient->canDoPreAddressingRequest()) {
-            $response = $this->doPreAddressingSoapRequest($requestRecipient->getGivenName(), $requestRecipient->getFamilyName(), $requestRecipient->getBirthDate());
+            $response = $this->doPreAddressingSoapRequest($requestRecipient->getGivenName(), $requestRecipient->getFamilyName(), $requestRecipient->getBirthDateString());
 
             $addressingResultData = $response->getAddressingResults()?->getAddressingResult() ?? [];
             $requestRecipient->setElectronicallyDeliverable($addressingResultData !== []);
@@ -1063,8 +1063,7 @@ class DispatchService implements LoggerAwareInterface
         /** @var RequestRecipient $recipient */
         foreach ($dispatchRequest->getRecipients() as $recipient) {
             $personName = new PersonNameType($recipient->getGivenName(), new FamilyName($recipient->getFamilyName()));
-            $birthDate = $recipient->getBirthDate();
-            $physicalPerson = new PhysicalPersonType($personName, $birthDate ? $birthDate->format('Y-m-d') : null);
+            $physicalPerson = new PhysicalPersonType($personName, $recipient->getBirthDateString());
 
             $postalCode = trim($recipient->getPostalCode() ?? '');
             $addressLocality = trim($recipient->getAddressLocality() ?? '');

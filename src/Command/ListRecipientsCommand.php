@@ -58,8 +58,8 @@ class ListRecipientsCommand extends Command
             }
 
             $rows[] = ['AppDeliveryID', $recipient->getAppDeliveryID()];
-            $birthDate = $recipient->getBirthDate();
-            $rows[] = ['Recipient', $recipient->getFullName().' ('.($birthDate ? $birthDate->format('Y-m-d') : 'N/A').', '.$recipient->getPersonIdentifier().')'];
+            $birthDate = $recipient->getBirthDateString();
+            $rows[] = ['Recipient', $recipient->getFullName().' ('.($birthDate ?? 'N/A').', '.$recipient->getPersonIdentifier().')'];
             $rows[] = ['Address', $recipient->getFullAddress()];
             $rows[] = ['RecipientIdentifier', $recipient->getIdentifier()];
             $rows[] = ['ElectronicallyDeliverable', $recipient->isElectronicallyDeliverable() ? 'yes' : 'no'];
