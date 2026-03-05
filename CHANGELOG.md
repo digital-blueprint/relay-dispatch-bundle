@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-- Replace single configurable group address attributes by `contacts` attribute as provided by the base-organization 
+## 0.11.0
+
+- Replace single configurable group address attributes by `contacts` attribute as provided by the base-organization
 
 ## 0.10.0
 
