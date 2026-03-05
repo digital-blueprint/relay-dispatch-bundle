@@ -24,12 +24,7 @@ class Configuration implements ConfigurationInterface
 
     /** Config nodes */
     public const GROUP_NODE = 'group';
-    public const GROUP_DATA_ADDRESS_ATTRIBUTES_NODE = 'address_attributes';
     public const GROUP_DATA_IRI_TEMPLATE = 'iri_template';
-    public const GROUP_STREET_ATTRIBUTE = 'street';
-    public const GROUP_LOCALITY_ATTRIBUTE = 'locality';
-    public const GROUP_POSTAL_CODE_ATTRIBUTE = 'postal_code';
-    public const GROUP_COUNTRY_ATTRIBUTE = 'country';
 
     private function getGroupNode(): NodeDefinition
     {
@@ -40,23 +35,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode(self::GROUP_DATA_IRI_TEMPLATE)
                     ->defaultValue('/base/organizations/%s')
-                ->end()
-                ->arrayNode(self::GROUP_DATA_ADDRESS_ATTRIBUTES_NODE)
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode(self::GROUP_STREET_ATTRIBUTE)
-                            ->defaultValue('streetAddress')
-                        ->end()
-                        ->scalarNode(self::GROUP_LOCALITY_ATTRIBUTE)
-                            ->defaultValue('addressLocality')
-                        ->end()
-                        ->scalarNode(self::GROUP_POSTAL_CODE_ATTRIBUTE)
-                            ->defaultValue('postalCode')
-                        ->end()
-                        ->scalarNode(self::GROUP_COUNTRY_ATTRIBUTE)
-                            ->defaultValue('addressCountry')
-                        ->end()
-                    ->end()
                 ->end()
             ->end()
         ;

@@ -22,6 +22,13 @@ class GroupService implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    private const CONTACTS_LOCAL_DATA_ATTRIBUTE = 'contacts';
+    private const CONTACT_ADDRESS_ATTRIBUTE = 'address';
+    private const STREET_ATTRIBUTE = 'street';
+    private const POSTAL_CODE_ATTRIBUTE = 'postalCode';
+    private const CITY_ATTRIBUTE = 'city';
+    private const COUNTRY_ATTRIBUTE = 'country';
+
     private ?array $config = null;
 
     /**
@@ -57,37 +64,33 @@ class GroupService implements LoggerAwareInterface
     private function createGroup(string $groupId): Group
     {
         $filters = [];
-        Parameters::setIncludeLocal($filters, LocalData::getQueryParameterFromLocalDataAttributes($this->getAddressAttributes()));
+        Parameters::setIncludeLocal($filters,
+            LocalData::getQueryParameterFromLocalDataAttributes([self::CONTACTS_LOCAL_DATA_ATTRIBUTE]));
 
         $entity = $this->iriConverter->getResourceFromIri(sprintf($this->config[Configuration::GROUP_DATA_IRI_TEMPLATE], $groupId),
             ['filters' => $filters]);
 
         if ($entity instanceof NamedEntityInterface === false
             || $entity instanceof LocalDataAwareInterface === false) {
-            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR, 'object not suitable to provide group name and address');
+            throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR,
+                'object not suitable to provide group name and address');
         }
+
+        // try to get primary address:
+        $address = $entity->getLocalDataValue(self::CONTACTS_LOCAL_DATA_ATTRIBUTE)[0][self::CONTACT_ADDRESS_ATTRIBUTE] ?? [];
 
         $group = new Group();
         $group->setIdentifier($entity->getIdentifier());
         $group->setName($entity->getName());
-        $group->setStreet($entity->getLocalDataValue(
-            $this->getAddressAttributes()[Configuration::GROUP_STREET_ATTRIBUTE]) ?? '');
-        $group->setPostalCode($entity->getLocalDataValue(
-            $this->getAddressAttributes()[Configuration::GROUP_POSTAL_CODE_ATTRIBUTE]) ?? '');
-        $group->setLocality($entity->getLocalDataValue(
-            $this->getAddressAttributes()[Configuration::GROUP_LOCALITY_ATTRIBUTE]) ?? '');
-        $group->setCountry($entity->getLocalDataValue(
-            $this->getAddressAttributes()[Configuration::GROUP_COUNTRY_ATTRIBUTE]) ?? '');
+        $group->setStreet($address[self::STREET_ATTRIBUTE] ?? '');
+        $group->setPostalCode($address[self::POSTAL_CODE_ATTRIBUTE] ?? '');
+        $group->setLocality($address[self::CITY_ATTRIBUTE] ?? '');
+        $group->setCountry($address[self::COUNTRY_ATTRIBUTE] ?? '');
 
         foreach ($this->authorizationService->getGroupRolesForCurrentUser($groupId) as $groupRole) {
             $group->addGroupRole($groupRole);
         }
 
         return $group;
-    }
-
-    private function getAddressAttributes(): array
-    {
-        return $this->config[Configuration::GROUP_DATA_ADDRESS_ATTRIBUTES_NODE];
     }
 }

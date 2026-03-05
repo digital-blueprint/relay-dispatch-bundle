@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Replace single configurable group address attributes by `contacts` attribute as provided by the base-organization 
+
 ## 0.10.0
 
 - More minor UTC fixes for when the global timezone is not UTC.
