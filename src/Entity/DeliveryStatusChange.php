@@ -13,6 +13,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\RequestBody;
 use ApiPlatform\OpenApi\Model\Response;
+use Dbp\Relay\CoreBundle\Serializer\DateTimeUtcNormalizer;
 use Dbp\Relay\DispatchBundle\DualDeliveryProvider\Vendo\Vendo;
 use Dbp\Relay\DispatchBundle\Helpers\Tools;
 use Dbp\Relay\DispatchBundle\Rest\DeliveryStatusChangeProcessor;
@@ -23,7 +24,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Serializer\Attribute\Context;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 #[ApiResource(
     shortName: 'DispatchDeliveryStatusChange',
@@ -125,7 +125,7 @@ class DeliveryStatusChange
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     #[Context(
         normalizationContext: [
-            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+            DateTimeUtcNormalizer::CONTEXT_KEY => true,
         ]
     )]
     private ?\DateTimeInterface $dateCreated = null;
@@ -176,7 +176,7 @@ class DeliveryStatusChange
     #[Groups(['DispatchDeliveryStatusChange:output', 'DispatchRequestRecipient:output'])]
     #[Context(
         normalizationContext: [
-            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+            DateTimeUtcNormalizer::CONTEXT_KEY => true,
         ]
     )]
     private ?\DateTimeInterface $fileDateAdded = null;

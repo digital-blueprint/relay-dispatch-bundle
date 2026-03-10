@@ -14,6 +14,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\RequestBody;
+use Dbp\Relay\CoreBundle\Serializer\DateTimeUtcNormalizer;
 use Dbp\Relay\DispatchBundle\Rest\PostSubmitRequest;
 use Dbp\Relay\DispatchBundle\Rest\RequestProcessor;
 use Dbp\Relay\DispatchBundle\Rest\RequestProvider;
@@ -22,7 +23,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Attribute\Context;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -167,7 +167,7 @@ class Request
     #[Groups(['DispatchRequest:output'])]
     #[Context(
         normalizationContext: [
-            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+            DateTimeUtcNormalizer::CONTEXT_KEY => true,
         ]
     )]
     private ?\DateTimeInterface $dateCreated = null;
@@ -194,7 +194,7 @@ class Request
     #[Groups(['DispatchRequest:output'])]
     #[Context(
         normalizationContext: [
-            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+            DateTimeUtcNormalizer::CONTEXT_KEY => true,
         ]
     )]
     private ?\DateTimeInterface $dateSubmitted = null;

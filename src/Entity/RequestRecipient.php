@@ -13,6 +13,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\RequestBody;
 use Dbp\Relay\CoreBundle\Exception\ApiError;
+use Dbp\Relay\CoreBundle\Serializer\DateTimeUtcNormalizer;
 use Dbp\Relay\DispatchBundle\Rest\RequestRecipientProcessor;
 use Dbp\Relay\DispatchBundle\Rest\RequestRecipientProvider;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -104,7 +105,7 @@ class RequestRecipient
     #[Groups(['DispatchRequestRecipient:output', 'DispatchRequest:output'])]
     #[Context(
         normalizationContext: [
-            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+            DateTimeUtcNormalizer::CONTEXT_KEY => true,
         ]
     )]
     private ?\DateTimeInterface $dateCreated = null;
@@ -176,7 +177,8 @@ class RequestRecipient
         denormalizationContext: [
             // XXX: this should be FORMAT_KEY='Y-m-d' too, but we allowed other formats.
             // can be fixed once https://github.com/digital-blueprint/dispatch-app/commit/aa13563cf97205e13d04cc29a8
-            // is deployed
+            // is deployed.
+            // Or we migrate to a string after the deploy.
             DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
             DateTimeNormalizer::FORCE_TIMEZONE_KEY => true,
         ],
@@ -198,7 +200,7 @@ class RequestRecipient
     #[Groups(['DispatchRequestRecipient:output'])]
     #[Context(
         normalizationContext: [
-            DateTimeNormalizer::TIMEZONE_KEY => 'UTC',
+            DateTimeUtcNormalizer::CONTEXT_KEY => true,
         ]
     )]
     private ?\DateTimeInterface $deliveryEndDate = null;
