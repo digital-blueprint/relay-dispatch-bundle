@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.11.1
+
+- The API now uses "Y-m-d\TH:i:s.vp" ("2026-03-09T01:07:19.251Z") for date time fields
+  instead of "Y-m-d\TH:i:sP" ("2026-03-09T01:07:19+00:00").
+
 ## 0.11.0
 
 - Replace single configurable group address attributes by `contacts` attribute as provided by the base-organization
