@@ -51,10 +51,12 @@ class ApiTest extends AbstractApiTest
             '',
             'Doe',
             localDataAttributes: [
-                'streetAddress' => 'Graben 1',
-                'addressLocality' => 'Vienna',
-                'postalCode' => '1010',
-                'addressCountry' => 'AT',
+                'studentStudyAddress' => [
+                    'street' => 'Graben 1',
+                    'city' => 'Vienna',
+                    'postalCode' => '1010',
+                    'country' => 'AT',
+                ],
                 'birthDate' => '1.1.1990',
             ]);
         $this->testClient->getClient()->disableReboot();

@@ -370,9 +370,9 @@ class DispatchService implements LoggerAwareInterface
 
             $studyAddress = $localData['studentStudyAddress'] ?? [];
             $requestRecipient->setStreetAddress($studyAddress['street'] ?? '');
-            $requestRecipient->setPostalCode($localData['postalCode'] ?? '');
-            $requestRecipient->setAddressLocality($localData['city'] ?? '');
-            $requestRecipient->setAddressCountry($localData['country'] ?? '');
+            $requestRecipient->setPostalCode($studyAddress['postalCode'] ?? '');
+            $requestRecipient->setAddressLocality($studyAddress['city'] ?? '');
+            $requestRecipient->setAddressCountry($studyAddress['country'] ?? '');
         }
     }
 
