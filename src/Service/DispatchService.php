@@ -352,7 +352,7 @@ class DispatchService implements LoggerAwareInterface
     {
         if ($requestRecipient->getPersonIdentifier() !== null) {
             $options = [];
-            Options::requestLocalDataAttributes($options, ['birthDate', 'streetAddress', 'addressLocality', 'postalCode', 'addressCountry']);
+            Options::requestLocalDataAttributes($options, ['birthDate', 'studentStudyAddress']);
 
             // This already throws an exception if the person is not found
             $person = $this->personProvider->getPerson($requestRecipient->getPersonIdentifier(), $options);
@@ -363,14 +363,16 @@ class DispatchService implements LoggerAwareInterface
             try {
                 $birthDateString = $localData['birthDate'];
                 $birthDate = !Tools::isNullOrEmpty($birthDateString) ? new \DateTimeImmutable($birthDateString, new \DateTimeZone('UTC')) : null;
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $birthDate = null;
             }
             $requestRecipient->setBirthDate($birthDate);
-            $requestRecipient->setStreetAddress($localData['streetAddress'] ?? '');
+
+            $studyAddress = $localData['studentStudyAddress'] ?? [];
+            $requestRecipient->setStreetAddress($studyAddress['street'] ?? '');
             $requestRecipient->setPostalCode($localData['postalCode'] ?? '');
-            $requestRecipient->setAddressLocality($localData['addressLocality'] ?? '');
-            $requestRecipient->setAddressCountry($localData['addressCountry'] ?? '');
+            $requestRecipient->setAddressLocality($localData['city'] ?? '');
+            $requestRecipient->setAddressCountry($localData['country'] ?? '');
         }
     }
 

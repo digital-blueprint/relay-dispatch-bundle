@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Replace single student study address local data attributes by one structured address attribute `studentStudyAddress`
+
 ## 0.11.1
 
 - The API now uses "Y-m-d\TH:i:s.vp" ("2026-03-09T01:07:19.251Z") for date time fields
