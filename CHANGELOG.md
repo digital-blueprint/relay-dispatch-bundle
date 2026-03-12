@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.12.0
+
 - Replace single student study address local data attributes by one structured address attribute `studentStudyAddress`
 
 ## 0.11.1
