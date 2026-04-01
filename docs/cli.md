@@ -33,12 +33,12 @@
 # Show last 5 submitted recipients after sending status requests
 ./bin/console dbp:relay:dispatch:recipient-list --limit 5 --submitted-only --status-requests
 
-# Do status request for an AppDeliveryID
+# Do status request for AppDeliveryID ADID_relay-dispatch-bundle-f839234020-c4d545db-95d1-4358-b37b-fcca31680c9e
 ./bin/console dbp:relay:dispatch:status-request ADID_relay-dispatch-bundle-f839234020-c4d545db-95d1-4358-b37b-fcca31680c9e
 
-# Do status request for an AppDeliveryID and output the response xml
+# Do status request for AppDeliveryID ADID_relay-dispatch-bundle-f839234020-c4d545db-95d1-4358-b37b-fcca31680c9e and output the response xml
 ./bin/console dbp:relay:dispatch:status-request ADID_relay-dispatch-bundle-f839234020-c4d545db-95d1-4358-b37b-fcca31680c9e --output-response-xml
 
-# Create a DeliveryStatusChange for a request recipient with a file
+# Create a DeliveryStatusChange for request recipient 3e2cb1fd-b536-42aa-95d6-49cfeb53cb92 with a file
 ./bin/console dbp:relay:dispatch:delivery-status-change create 3e2cb1fd-b536-42aa-95d6-49cfeb53cb92 --status-type=26 --description="Just a test" --with-file
 ```
