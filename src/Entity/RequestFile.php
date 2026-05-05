@@ -200,7 +200,7 @@ class RequestFile
     {
         // If the file is stored in the blob storage system, the contentUrl should already be set at that time
         if ($this->fileStorageSystem === 'blob') {
-            if ($this->contentUrl === '') {
+            if ($this->contentUrl === '' || $this->contentUrl === null) {
                 return null;
             }
 

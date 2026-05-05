@@ -285,7 +285,7 @@ class DeliveryStatusChange
     {
         // If the file is stored in the blob storage system, the contentUrl should already be set at that time
         if ($this->fileStorageSystem === 'blob') {
-            if ($this->fileContentUrl === '') {
+            if ($this->fileContentUrl === '' || $this->fileContentUrl === null) {
                 return null;
             }
 
