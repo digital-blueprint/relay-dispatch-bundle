@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.12.1
+
+- Fix submitting requests when the blob backend is configured.
+
 ## 0.12.0
 
 - Replace single student study address local data attributes by one structured address attribute `studentStudyAddress`
