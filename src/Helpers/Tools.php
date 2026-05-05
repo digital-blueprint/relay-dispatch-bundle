@@ -17,7 +17,7 @@ class Tools
     /**
      * @throws \Exception
      */
-    public static function dataUriToBinary($dataUri)
+    public static function dataUriToBinary(string $dataUri): string
     {
         $dataUriParts = explode(',', $dataUri, 2);
 

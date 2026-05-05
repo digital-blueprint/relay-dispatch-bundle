@@ -200,7 +200,7 @@ class RequestFile
     {
         // If the file is stored in the blob storage system, the contentUrl should already be set at that time
         if ($this->fileStorageSystem === 'blob') {
-            if ($this->contentUrl === '' || $this->contentUrl === null) {
+            if ($this->contentUrl === null) {
                 return null;
             }
 
@@ -222,7 +222,7 @@ class RequestFile
      */
     public function setData(mixed $data): void
     {
-        $this->contentUrl = '';
+        $this->contentUrl = null;
         $this->data = $data;
     }
 
@@ -236,16 +236,16 @@ class RequestFile
         $this->contentSize = $contentSize;
     }
 
-    public function getContentUrl(): string
+    public function getContentUrl(): ?string
     {
-        if ($this->fileStorageSystem !== 'blob' && !$this->contentUrl) {
+        if ($this->fileStorageSystem !== 'blob' && $this->contentUrl === null) {
             $this->contentUrl = Tools::getDataURI($this->getData(), $this->fileFormat);
         }
 
         return $this->contentUrl;
     }
 
-    public function setContentUrl(string $contentUrl): void
+    public function setContentUrl(?string $contentUrl): void
     {
         $this->contentUrl = $contentUrl;
     }

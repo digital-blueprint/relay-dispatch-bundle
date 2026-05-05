@@ -252,16 +252,16 @@ class DeliveryStatusChange
         $this->requestRecipient = $requestRecipient;
     }
 
-    public function getFileContentUrl(): string
+    public function getFileContentUrl(): ?string
     {
-        if ($this->fileStorageSystem !== 'blob' && !$this->fileContentUrl) {
+        if ($this->fileStorageSystem !== 'blob' && $this->fileContentUrl === null) {
             $this->fileContentUrl = Tools::getDataURI($this->getFileData(), $this->fileFormat);
         }
 
         return $this->fileContentUrl;
     }
 
-    public function setFileContentUrl(string $contentUrl): void
+    public function setFileContentUrl(?string $contentUrl): void
     {
         $this->fileContentUrl = $contentUrl;
     }
@@ -285,7 +285,7 @@ class DeliveryStatusChange
     {
         // If the file is stored in the blob storage system, the contentUrl should already be set at that time
         if ($this->fileStorageSystem === 'blob') {
-            if ($this->fileContentUrl === '' || $this->fileContentUrl === null) {
+            if ($this->fileContentUrl === null) {
                 return null;
             }
 
@@ -307,7 +307,7 @@ class DeliveryStatusChange
      */
     public function setFileData(mixed $data): void
     {
-        $this->fileContentUrl = '';
+        $this->fileContentUrl = null;
         $this->fileData = $data;
     }
 

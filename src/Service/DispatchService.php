@@ -620,7 +620,7 @@ class DispatchService implements LoggerAwareInterface
 
         $deliveryStatusChange->setFileData('');
         $deliveryStatusChange->setFileFormat('');
-        $deliveryStatusChange->setFileContentUrl('');
+        $deliveryStatusChange->setFileContentUrl(null);
         $deliveryStatusChange->setFileStorageSystem('');
         $deliveryStatusChange->setFileStorageIdentifier('');
         $deliveryStatusChange->setFileDateAdded(null);

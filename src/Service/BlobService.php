@@ -125,7 +125,7 @@ class BlobService implements LoggerAwareInterface
     {
         try {
             return $this->getBlobApi()->getFile($fileStorageIdentifier, [BlobApi::INCLUDE_FILE_CONTENTS_OPTION => true])
-                ->getContentUrl() ?? '';
+                ->getContentUrl();
         } catch (BlobApiError $blobApiError) {
             $this->logBlobApiError($blobApiError);
             throw ApiError::withDetails(Response::HTTP_INTERNAL_SERVER_ERROR,
