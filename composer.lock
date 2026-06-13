@@ -399,16 +399,16 @@
         },
         {
             "name": "api-platform/metadata",
-            "version": "v4.3.10",
+            "version": "v4.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/metadata.git",
-                "reference": "b835ce534861f9e7b2a316fa582f28afe4ad5fe6"
+                "reference": "86efa5375e994f4e46f3e4336dc4dc5ecc9456a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/metadata/zipball/b835ce534861f9e7b2a316fa582f28afe4ad5fe6",
-                "reference": "b835ce534861f9e7b2a316fa582f28afe4ad5fe6",
+                "url": "https://api.github.com/repos/api-platform/metadata/zipball/86efa5375e994f4e46f3e4336dc4dc5ecc9456a8",
+                "reference": "86efa5375e994f4e46f3e4336dc4dc5ecc9456a8",
                 "shasum": ""
             },
             "require": {
@@ -491,22 +491,22 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/metadata/tree/v4.3.10"
+                "source": "https://github.com/api-platform/metadata/tree/v4.3.13"
             },
-            "time": "2026-06-05T09:05:29+00:00"
+            "time": "2026-06-13T05:03:21+00:00"
         },
         {
             "name": "api-platform/openapi",
-            "version": "v4.3.10",
+            "version": "v4.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/openapi.git",
-                "reference": "21e22f4d74fafc4b01ee5790be7a264387445dcf"
+                "reference": "07c9e5c7325f810cea0cc1821ff564dbae6e57d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/openapi/zipball/21e22f4d74fafc4b01ee5790be7a264387445dcf",
-                "reference": "21e22f4d74fafc4b01ee5790be7a264387445dcf",
+                "url": "https://api.github.com/repos/api-platform/openapi/zipball/07c9e5c7325f810cea0cc1821ff564dbae6e57d5",
+                "reference": "07c9e5c7325f810cea0cc1821ff564dbae6e57d5",
                 "shasum": ""
             },
             "require": {
@@ -524,7 +524,7 @@
                 "api-platform/doctrine-common": "^4.3",
                 "api-platform/doctrine-odm": "^4.3",
                 "api-platform/doctrine-orm": "^4.3",
-                "api-platform/serializer": "^4.3",
+                "api-platform/serializer": "^4.3.12",
                 "phpspec/prophecy-phpunit": "^2.2",
                 "phpunit/phpunit": "^11.5 || ^12.2",
                 "symfony/type-info": "^7.3 || ^8.0"
@@ -582,9 +582,9 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/openapi/tree/v4.3.10"
+                "source": "https://github.com/api-platform/openapi/tree/v4.3.13"
             },
-            "time": "2026-06-03T14:37:29+00:00"
+            "time": "2026-06-13T05:11:46+00:00"
         },
         {
             "name": "api-platform/serializer",
@@ -1151,16 +1151,16 @@
         },
         {
             "name": "dbp/relay-core-bundle",
-            "version": "v0.1.244",
+            "version": "v0.1.245",
             "source": {
                 "type": "git",
                 "url": "https://github.com/digital-blueprint/relay-core-bundle.git",
-                "reference": "ae17ace6cee0b0a10e09450960681e529589f5e1"
+                "reference": "8106bd50dfbd0e16536b5c60834f438933dc3f6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/ae17ace6cee0b0a10e09450960681e529589f5e1",
-                "reference": "ae17ace6cee0b0a10e09450960681e529589f5e1",
+                "url": "https://api.github.com/repos/digital-blueprint/relay-core-bundle/zipball/8106bd50dfbd0e16536b5c60834f438933dc3f6b",
+                "reference": "8106bd50dfbd0e16536b5c60834f438933dc3f6b",
                 "shasum": ""
             },
             "require": {
@@ -1258,9 +1258,9 @@
             "description": "The core bundle of the Relay API gateway",
             "support": {
                 "issues": "https://github.com/digital-blueprint/relay-core-bundle/issues",
-                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.244"
+                "source": "https://github.com/digital-blueprint/relay-core-bundle/tree/v0.1.245"
             },
-            "time": "2026-06-02T12:38:15+00:00"
+            "time": "2026-06-10T09:38:42+00:00"
         },
         {
             "name": "doctrine/collections",
