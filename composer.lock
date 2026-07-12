@@ -399,7 +399,7 @@
         },
         {
             "name": "api-platform/metadata",
-            "version": "v4.3.16",
+            "version": "v4.3.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/metadata.git",
@@ -491,13 +491,13 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/metadata/tree/v4.3.16"
+                "source": "https://github.com/api-platform/metadata/tree/v4.3.17"
             },
             "time": "2026-07-03T06:30:28+00:00"
         },
         {
             "name": "api-platform/openapi",
-            "version": "v4.3.16",
+            "version": "v4.3.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/openapi.git",
@@ -582,7 +582,7 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/openapi/tree/v4.3.16"
+                "source": "https://github.com/api-platform/openapi/tree/v4.3.17"
             },
             "time": "2026-06-16T10:01:53+00:00"
         },
