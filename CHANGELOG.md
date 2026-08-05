@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.12.2
+
 - Add a `dbp:relay:dispatch:dd:pre-addressing` CLI command for doing a pre-addressing request
 
 ## 0.12.1
