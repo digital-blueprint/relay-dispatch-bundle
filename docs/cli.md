@@ -41,4 +41,7 @@
 
 # Create a DeliveryStatusChange for request recipient 3e2cb1fd-b536-42aa-95d6-49cfeb53cb92 with a file
 ./bin/console dbp:relay:dispatch:delivery-status-change create 3e2cb1fd-b536-42aa-95d6-49cfeb53cb92 --status-type=26 --description="Just a test" --with-file
+
+# Do a pre-addressing request for Max Mustermann, born on 1980-01-01
+./bin/console dbp:relay:dispatch:dd:pre-addressing Max Mustermann 1980-01-01
 ```

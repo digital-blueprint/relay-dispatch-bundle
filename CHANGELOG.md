@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add a `dbp:relay:dispatch:dd:pre-addressing` CLI command for doing a pre-addressing request
+
 ## 0.12.1
 
 - Fix submitting requests when the blob backend is configured.
