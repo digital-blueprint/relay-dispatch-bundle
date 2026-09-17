@@ -9,7 +9,6 @@ use Dbp\Relay\BasePersonBundle\TestUtils\TestPersonTrait;
 use Dbp\Relay\CoreBundle\TestUtils\AbstractApiTest;
 use Dbp\Relay\CoreBundle\TestUtils\TestClient;
 use Dbp\Relay\CoreBundle\TestUtils\TestEntityManager;
-use Dbp\Relay\CoreBundle\TestUtils\UserAuthTrait;
 use Dbp\Relay\DispatchBundle\DependencyInjection\DbpRelayDispatchExtension;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -17,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApiTest extends AbstractApiTest
 {
-    use UserAuthTrait;
     use TestPersonTrait;
 
     private const TEST_FILE_NAME = 'test.pdf';
