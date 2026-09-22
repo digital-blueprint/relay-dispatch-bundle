@@ -4,24 +4,23 @@ declare(strict_types=1);
 
 namespace Dbp\Relay\DispatchBundle\Tests;
 
-use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Dbp\Relay\BasePersonBundle\TestUtils\TestPersonTrait;
-use Dbp\Relay\CoreBundle\TestUtils\AbstractApiTest;
-use Dbp\Relay\CoreBundle\TestUtils\TestClient;
+use Dbp\Relay\CoreBundle\TestUtils\ApiTestCase;
+use Dbp\Relay\CoreBundle\TestUtils\ApiTestClient;
 use Dbp\Relay\CoreBundle\TestUtils\TestEntityManager;
 use Dbp\Relay\DispatchBundle\DependencyInjection\DbpRelayDispatchExtension;
 use Dbp\Relay\DispatchBundle\Entity\DeliveryStatusChange;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiTest extends AbstractApiTest
+class ApiTest extends ApiTestCase
 {
     use TestPersonTrait;
 
     private const TEST_FILE_NAME = 'test.pdf';
     private const TEST_FILE_PATH = __DIR__.'/'.self::TEST_FILE_NAME;
     private const TEST_DISPATCH_REQUEST_NAME = 'Subject 42';
-    private const TEST_USER_IDENTIFIER = TestClient::TEST_USER_IDENTIFIER;
+    private const TEST_USER_IDENTIFIER = ApiTestClient::TEST_USER_IDENTIFIER;
     private const TEST_ADMIN_IDENTIFIER = 'admin';
 
     private const TEST_PERSON_IDENTIFIER = 'test_person';
@@ -42,10 +41,10 @@ class ApiTest extends AbstractApiTest
 
     protected function setUp(): void
     {
-        $this->testClient = new TestClient(ApiTestCase::createClient());
+        $this->createTestClient();
         $this->loginUser();
         // WORKAROUND: an empty given name will cause the pre-addressing request to be omitted, which would otherwise fail
-        $this->withPerson($this->testClient->getContainer(), self::TEST_PERSON_IDENTIFIER,
+        $this->withPerson($this->getContainer(), self::TEST_PERSON_IDENTIFIER,
             '',
             'Doe',
             localDataAttributes: [
@@ -57,10 +56,9 @@ class ApiTest extends AbstractApiTest
                 ],
                 'birthDate' => '1.1.1990',
             ]);
-        $this->testClient->getClient()->disableReboot();
 
         TestEntityManager::setUpEntityManager(
-            $this->testClient->getContainer(), DbpRelayDispatchExtension::DISPATCH_ENTITY_MANAGER_ID);
+            $this->getContainer(), DbpRelayDispatchExtension::DISPATCH_ENTITY_MANAGER_ID);
     }
 
     public function testGetGroupsUnauthenticated(): void
@@ -463,12 +461,12 @@ class ApiTest extends AbstractApiTest
     private function loginUser(): void
     {
         $this->testClient->setUpUser(self::TEST_USER_IDENTIFIER, $this->testUserAttributes);
-        $this->withCurrentPerson($this->testClient->getContainer(), self::TEST_USER_IDENTIFIER);
+        $this->withCurrentPerson($this->getContainer(), self::TEST_USER_IDENTIFIER);
     }
 
     private function loginAdmin(): void
     {
         $this->testClient->setUpUser(self::TEST_ADMIN_IDENTIFIER, $this->testAdminAttributes);
-        $this->withCurrentPerson($this->testClient->getContainer(), self::TEST_ADMIN_IDENTIFIER);
+        $this->withCurrentPerson($this->getContainer(), self::TEST_ADMIN_IDENTIFIER);
     }
 }
