@@ -15,7 +15,7 @@
         "api-platform/openapi": "^4.2 || ^5.0",
         "dbp/relay-base-person-bundle": "^0.2.35",
         "dbp/relay-blob-library": "^0.3.1",
-        "dbp/relay-core-bundle": "^0.1.251",
+        "dbp/relay-core-bundle": "^0.1.253",
         "doctrine/collections": "^2",
         "doctrine/dbal": "^4.2",
         "doctrine/doctrine-bundle": "^2.13.1",
@@ -38,17 +38,12 @@
         "symfony/validator": "^7.4"
     },
     "require-dev": {
-        "api-platform/symfony": "^4.2 || ^5.0",
         "friendsofphp/php-cs-fixer": "^3.50",
         "phpstan/phpstan": "^2.0.0",
         "phpstan/phpstan-phpunit": "^2.0.0",
         "phpstan/phpstan-symfony": "^2.0.0",
         "phpunit/phpunit": "^11.0",
-        "symfony/browser-kit": "^7.4",
         "symfony/doctrine-messenger": "^7.4",
-        "symfony/error-handler": "^7.4",
-        "symfony/http-client": "^7.4",
-        "symfony/monolog-bridge": "^7.4",
         "symfony/phpunit-bridge": "^7.0.4",
         "symfony/runtime": "^7.4"
     },
